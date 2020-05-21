@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/KreiranjeOglasa"
+    xmlns:km="http://www.ftn.uns.ac.rs/KorisnickiModul"
+    xmlns:krog="http://www.ftn.uns.ac.rs/KreiranjeOglasa"
+    xmlns:auto="http://www.ftn.uns.ac.rs/Automobil" xmlns:cen="http://www.ftn.uns.ac.rs/cenovnik">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/Automobil" schemaLocation="../Automobil.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/cenovnik" schemaLocation="../Cenovnik.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/KorisnickiModul"
+        schemaLocation="../KorisnickiModul/Transakcije_Klijent_Pretraga.xsd"/>
+    <xs:element name="Oglas">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element ref="auto:Automobil"/>
+                <xs:element minOccurs="1" name="Od_datuma" type="xs:dateTime"/>
+                <xs:element name="Do_datuma" type="xs:dateTime"/>
+                <xs:element ref="cen:Cenovnik"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

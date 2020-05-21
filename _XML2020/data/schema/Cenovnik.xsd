@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/cenovnik"
+    xmlns:cen="http://www.ftn.uns.ac.rs/cenovnik">
+
+    <xs:element name="Cenovnik">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="CenaPoDanu" type="xs:int" maxOccurs="1"/>
+                <xs:element name="Naziv_cenovnika" type="xs:string"/>
+                <xs:element name="PopustZaPreko30Dana" type="xs:int"/>
+                <xs:element name="CenaCollisionDamageWaiver" type="xs:int" minOccurs="0"/>
+                <xs:element minOccurs="0" name="CenaPoKilometru" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

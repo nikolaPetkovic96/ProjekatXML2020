@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/Rezervacija"
+    xmlns:km="http://www.ftn.uns.ac.rs/KorisnickiModul"
+    xmlns:rez="http://www.ftn.uns.ac.rs/Rezervacija" xmlns:auto="http://www.ftn.uns.ac.rs/Automobil"
+    xmlns:krog="http://www.ftn.uns.ac.rs/KreiranjeOglasa"
+    xmlns:user="http://www.ftn.uns.ac.rs/korisnici">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/KorisnickiModul"
+        schemaLocation="Transakcije_Klijent_Pretraga.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/Automobil" schemaLocation="../Automobil.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/korisnici" schemaLocation="../Korisnici.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/KreiranjeOglasa"
+        schemaLocation="../AgentskiModul/Transakcije_Agent_Kreiranje_oglasa.xsd"/>
+    <xs:element name="Rezervacija">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element maxOccurs="unbounded" ref="krog:Oglas"/>
+                <xs:element name="Korisnik" type="user:TUser"/>
+                <xs:element name="Ukupna_cena" type="xs:double"/>
+                <xs:element name="Od_datuma" type="xs:dateTime"/>
+                <xs:element name="Do_datuma" type="xs:dateTime"/>
+                <xs:element minOccurs="0" name="Bundle" type="xs:boolean"/>
+                <xs:element default="PENDING" name="Status_rezervacije">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="PENDING|RESERVED|PAID|CANCELED"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="auto:Poruka"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
