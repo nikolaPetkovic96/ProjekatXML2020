@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="unqualified" targetNamespace="http://www.ftn.uns.ac.rs/vozilo"
+    xmlns="http://www.ftn.uns.ac.rs/vozilo" xmlns:cena="http://www.ftn.uns.ac.rs/cenovnik"
+    xmlns:user="http://www.ftn.uns.ac.rs/korisnik">
+
+    <xs:element name="Vozilo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BrojSasije" type="xs:string"/>
+                <xs:element name="Proizvodjac" type="xs:string"/>
+                <xs:element name="Model" type="xs:string"/>
+                <xs:element name="GodinaProizvodnje" type="xs:gYear"/>
+                <xs:element name="TrenutnaKilometraza" type="xs:int"/>
+                <xs:element name="Gorivo"/>
+                <xs:element name="TipMenjaca"/>
+                <xs:element name="KlasaAutomobila"/>
+                <xs:element name="DozvoljenaKilometrazaPriIznajmljivanju" type="xs:int"/>
+                <xs:element name="Cenovnik"/>
+                <xs:element name="Vlasnik"/>
+            </xs:sequence>
+            <xs:attribute name="BrojSedista" type="xs:int"/>
+            <xs:attribute name="BrojSedistaZaDecu" type="xs:int"/>
+            <xs:attribute name="CollisionDamageWaiver" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
