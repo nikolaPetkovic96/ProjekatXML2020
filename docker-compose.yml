@@ -1,0 +1,95 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    container_name: db
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: database
+  reservation:
+    image: ReservationApp
+    build: ./Reservation
+    environment:
+      DB_PATH: jdbc:postgresql://db:5432/database
+      DB_USER: postgres
+      DB_PASS: postgres
+    restart: unless-stopped
+    container_name: reservation
+    depends_on:
+      - eureka
+      - db
+    links:
+      - db   
+  message:
+    image: MessageApp
+    build: ./Messages
+    environment:
+      DB_PATH: jdbc:postgresql://db:5432/database
+      DB_USER: postgres
+      DB_PASS: postgres
+    restart: unless-stopped
+    container_name: message
+    depends_on:
+      - eureka
+      - db
+    links:
+      - db
+  ocena:
+    image: OcenaApp
+    build: ./_testOcena
+    environment:
+      DB_PATH: jdbc:postgresql://db:5432/database
+      DB_USER: postgres
+      DB_PASS: postgres
+    restart: unless-stopped
+    container_name: ocena
+    depends_on:
+      - eureka
+      - db
+    links:
+      - db
+  pretraga:
+    image: PretragaApp
+    build: ./_testPretraga
+    environment:
+      DB_PATH: jdbc:postgresql://db:5432/database
+      DB_USER: postgres
+      DB_PASS: postgres
+    restart: unless-stopped
+    container_name: pretraga
+    depends_on:
+      - eureka
+      - db
+    links:
+      - db
+  loginIReg:
+    image: LoginIRegApp
+    build: ./_testLoginReg
+    environment:
+      DB_PATH: jdbc:postgresql://db:5432/database
+      DB_USER: postgres
+      DB_PASS: postgres
+    restart: unless-stopped
+    container_name: loginIReg
+    depends_on:
+      - eureka
+      - db
+    links:
+      - db
+  eureka:
+    image: EurekaApp
+    build: ./Eureka
+    restart: unless-stopped
+    container_name: reservation 
+  zuul:
+    image: ZuulApp
+    build: ./Zuul
+    restart: unless-stopped
+    container_name: zuul
+    depends_on:
+      - eureka
+    ports:
+      - 2020:2020  
