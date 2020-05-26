@@ -10,86 +10,100 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: database
   reservation:
-    image: ReservationApp
+    image: reservation-app
     build: ./Reservation
     environment:
       DB_PATH: jdbc:postgresql://db:5432/database
       DB_USER: postgres
       DB_PASS: postgres
+      EUREKA_PATH: http://eureka-service:8761/eureka
     restart: unless-stopped
     container_name: reservation
     depends_on:
-      - eureka
+      - eureka-service
       - db
     links:
       - db   
+      - eureka-service
   message:
-    image: MessageApp
+    image: message-app
     build: ./Messages
     environment:
       DB_PATH: jdbc:postgresql://db:5432/database
       DB_USER: postgres
       DB_PASS: postgres
+      EUREKA_PATH: http://eureka-service:8761/eureka
     restart: unless-stopped
     container_name: message
     depends_on:
-      - eureka
+      - eureka-service
       - db
     links:
       - db
+      - eureka-service
   ocena:
-    image: OcenaApp
+    image: ocena-app
     build: ./_testOcena
     environment:
       DB_PATH: jdbc:postgresql://db:5432/database
       DB_USER: postgres
       DB_PASS: postgres
+      EUREKA_PATH: http://eureka-service:8761/eureka
     restart: unless-stopped
     container_name: ocena
     depends_on:
-      - eureka
+      - eureka-service
       - db
     links:
       - db
+      - eureka-service
   pretraga:
-    image: PretragaApp
+    image: pretraga-app
     build: ./_testPretraga
     environment:
       DB_PATH: jdbc:postgresql://db:5432/database
       DB_USER: postgres
       DB_PASS: postgres
+      EUREKA_PATH: http://eureka-service:8761/eureka
     restart: unless-stopped
     container_name: pretraga
     depends_on:
-      - eureka
+      - eureka-service
       - db
     links:
       - db
-  loginIReg:
-    image: LoginIRegApp
+      - eureka-service
+  loginreg:
+    image: login-app
     build: ./_testLoginReg
     environment:
       DB_PATH: jdbc:postgresql://db:5432/database
       DB_USER: postgres
+      EUREKA_PATH: http://eureka-service:8761/eureka
       DB_PASS: postgres
     restart: unless-stopped
     container_name: loginIReg
     depends_on:
-      - eureka
+      - eureka-service
       - db
     links:
       - db
-  eureka:
-    image: EurekaApp
+      - eureka-service
+  eureka-service:
+    image: eureka-app
     build: ./Eureka
     restart: unless-stopped
-    container_name: reservation 
+    container_name: eureka 
+    ports:
+      - 8761:8761
   zuul:
-    image: ZuulApp
+    environment:
+      EUREKA_PATH: http://eureka-service:8761/eureka
+    image: zuul-app
     build: ./Zuul
     restart: unless-stopped
     container_name: zuul
     depends_on:
-      - eureka
+      - eureka-service
     ports:
       - 2020:2020  
