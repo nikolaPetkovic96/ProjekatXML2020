@@ -10,6 +10,9 @@ package com.example.Messages.SchemaToJava2.model.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -47,11 +50,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Administrator", namespace = "http://www.ftn.uns.ac.rs/korisnici")
 @Entity
 public class Administrator
-    extends TUser
+    //extends TUser
 {
 
 //	@Column(name = "role")
 //	private static final String role = "admin";
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 	
 	@Column(name = "ime", nullable = false)
     @XmlElement(name = "Ime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
@@ -69,75 +76,63 @@ public class Administrator
 //	public static String getRole() {
 //		return role;
 //	}
+	
+	public Administrator() {
+		super();
+	}
+
+
+	public Administrator(String ime, String prezime, String jmbg) {
+		super();
+		this.ime = ime;
+		this.prezime = prezime;
+		this.jmbg = jmbg;
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
     
-    /**
-     * Gets the value of the ime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+  
     public String getIme() {
         return ime;
     }
 
-    /**
-     * Sets the value of the ime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setIme(String value) {
+	public void setIme(String value) {
         this.ime = value;
     }
 
-    /**
-     * Gets the value of the prezime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+
+	public String getJmbg() {
+		return jmbg;
+	}
+
+
+	public void setJmbg(String jmbg) {
+		this.jmbg = jmbg;
+	}
+
     public String getPrezime() {
         return prezime;
     }
 
-    /**
-     * Sets the value of the prezime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
+
     public void setPrezime(String value) {
         this.prezime = value;
     }
 
-    /**
-     * Gets the value of the jmbg property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+
     public String getJMBG() {
         return jmbg;
     }
 
-    /**
-     * Sets the value of the jmbg property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
+
     public void setJMBG(String value) {
         this.jmbg = value;
     }
