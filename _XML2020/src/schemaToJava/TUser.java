@@ -59,8 +59,10 @@ import javax.xml.bind.annotation.XmlType;
     Administrator.class,
     Agent.class
 })
-public abstract class TUser {
 
+public abstract class TUser {
+	
+	
     protected long id;
     @XmlElement(name = "Korisnicko_ime", required = true)
     protected String korisnickoIme;
