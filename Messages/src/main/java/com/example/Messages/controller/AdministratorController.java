@@ -85,7 +85,6 @@ public class AdministratorController {
 		return new ResponseEntity<>(new AdministratorDTO(updatedAdmin), HttpStatus.OK);
 	}
 
-			
 	//DELET	
 	@RequestMapping(value="/Administrator/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteAdministrator(@PathVariable Long id) {

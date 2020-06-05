@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.example.Messages.SchemaToJava2.model.user.TUser;
 
@@ -76,6 +75,20 @@ public abstract class CommonData {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@XmlElement(name = "Korisnik", required = true)
 	protected TUser korisnik;
+
+	public CommonData(Long id, Date datumKreiranja, Date datumIzmene, TUser korisnik) {
+		super();
+		this.id = id;
+		this.datumKreiranja = datumKreiranja;
+		this.datumIzmene = datumIzmene;
+		this.korisnik = korisnik;
+	}
+
+
+
+	public CommonData() {
+		super();
+	}
 
 	public Long getId() {
 		return id;

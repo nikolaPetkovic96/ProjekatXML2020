@@ -1,5 +1,6 @@
-package com.example.Reservation.model;
+/*package com.example.Reservation.model;
 
 public class TestPostgres {
 
 }
+*/

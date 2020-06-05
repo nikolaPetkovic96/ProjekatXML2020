@@ -19,6 +19,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -98,23 +99,23 @@ public class Automobil {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Marka_automobila", required = true)
     protected TMarkaAutomobila markaAutomobila;
     
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Model_automobila", required = true)
     protected TModelAutomobila modelAutomobila;
     
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Klasa_automobila", required = true)
     protected TKlasaAutomobila klasaAutomobila;
     
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Vrsta_goriva", required = true)
     protected TTipGoriva vrstaGoriva;
     
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Tip_menjaca", required = true)
     protected TTipMenjaca tipMenjaca;
     

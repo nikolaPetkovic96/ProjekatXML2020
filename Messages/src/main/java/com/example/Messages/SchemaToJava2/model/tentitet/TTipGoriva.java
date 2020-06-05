@@ -8,18 +8,23 @@
 
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 
 
@@ -66,9 +71,9 @@ public class TTipGoriva {
     @XmlElement(name = "Common_data", required = true)
     protected CommonData commonData;
 
-	 //Jedan TModelAutomobilaa se odnosi na samo jednu TAutomobila(druga strana bidirekcije)
-//  @OneToOne(fetch = FetchType.LAZY)
-//  private TAutomobila tAutomobila;
+    //Jedna tip goriva ima vise automobila, id tipa goriva se dodaje kao nova kolona u tabeli TMarkaAutombila
+  	@OneToMany(mappedBy = "vrstaGoriva", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  	 private List<Automobil> automobil;
 
     public Long getId() {
         return id;

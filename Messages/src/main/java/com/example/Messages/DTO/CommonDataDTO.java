@@ -19,6 +19,7 @@ public class CommonDataDTO {
 		this.id = id;
 		this.datumKreiranja = datumKreiranja;
 		this.datumIzmene = datumIzmene;
+		
 	}
 
 	public CommonDataDTO(CommonData c) {
