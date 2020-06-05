@@ -8,18 +8,23 @@
 
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 
 
@@ -66,11 +71,24 @@ public class TTipMenjaca {
     @XmlElement(name = "Common_data", required = true)
     protected CommonData commonData;
 
-	 //Jedan TModelAutomobilaa se odnosi na samo jednu TAutomobila(druga strana bidirekcije)
-//  @OneToOne(fetch = FetchType.LAZY)
-//  private TAutomobila tAutomobila;
+	//Jedna tip menjaca ima vise automobila, id tipa menjaca se dodaje kao nova kolona u tabeli TMarkaAutombila
+  	@OneToMany(mappedBy = "tipMenjaca", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  	private List<Automobil> automobil;
 
-    public Long getId() {
+  	public TTipMenjaca() {
+  		
+  	}
+  	
+    public TTipMenjaca(Long id, String nazivMenjaca, CommonData commonData, List<Automobil> automobil) {
+		super();
+		this.id = id;
+		this.nazivMenjaca = nazivMenjaca;
+		this.commonData = commonData;
+		this.automobil = automobil;
+	}
+
+
+	public Long getId() {
         return id;
     }
 
@@ -99,4 +117,15 @@ public class TTipMenjaca {
         this.commonData = value;
     }
 
+
+	public List<Automobil> getAutomobil() {
+		return automobil;
+	}
+
+
+	public void setAutomobil(List<Automobil> automobil) {
+		this.automobil = automobil;
+	}
+
+    
 }

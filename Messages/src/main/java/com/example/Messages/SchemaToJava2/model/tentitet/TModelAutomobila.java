@@ -8,6 +8,8 @@
 
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,12 +18,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 
 
@@ -68,16 +72,31 @@ public class TModelAutomobila {
     @XmlElement(name = "Common_data", required = true)
     protected CommonData commonData;
     
-	 //Jedan TModelAutomobilaa se odnosi na samo jednu TMarkaAutomobila(druga strana bidirekcije)
+	//Jedan TModelAutomobilaa se odnosi na samo jednu TMarkaAutomobila(druga strana bidirekcije)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private TMarkaAutomobila markaAutomobila;
+
+    //Jedan model ima vise automobila, id marke se dodaje kao nova kolona u tabeli TMarkaAutombila
+  	@OneToMany(mappedBy = "modelAutomobila", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  	protected List<Automobil> automobil;
+
+  	
+    public TModelAutomobila(Long id, String nazivModela, CommonData commonData, TMarkaAutomobila markaAutomobila,
+			List<Automobil> automobil) {
+		super();
+		this.id = id;
+		this.nazivModela = nazivModela;
+		this.commonData = commonData;
+		this.markaAutomobila = markaAutomobila;
+		this.automobil = automobil;
+	}
     
-	 //Jedan TModelAutomobilaa se odnosi na samo jednu TAutomobila(druga strana bidirekcije)
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private TAutomobila tAutomobila;
 
+	public TModelAutomobila() {
+		super();
+	}
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -114,6 +133,16 @@ public class TModelAutomobila {
 
 	public void setMarkaAutomobila(TMarkaAutomobila markaAutomobila) {
 		this.markaAutomobila = markaAutomobila;
+	}
+
+
+	public List<Automobil> getAutomobil() {
+		return automobil;
+	}
+
+
+	public void setAutomobil(List<Automobil> automobil) {
+		this.automobil = automobil;
 	}
     
     

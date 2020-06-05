@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 
 
@@ -77,9 +78,28 @@ public class TMarkaAutomobila {
 	@OneToMany(mappedBy = "markaAutomobila", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Model_automobila", required = true)
     protected List<TModelAutomobila> modelAutomobila;
+	
+	//Jedna marka ima vise automobila, id marke se dodaje kao nova kolona u tabeli TMarkaAutombila
+	@OneToMany(mappedBy = "markaAutomobila", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	 protected List<Automobil> automobil;
+	
+	
+	public TMarkaAutomobila() {
+		
+	}
+	
+    public TMarkaAutomobila(Long id, String nazivMarke, CommonData commonData, List<TModelAutomobila> modelAutomobila,
+			List<Automobil> automobil) {
+		super();
+		this.id = id;
+		this.nazivMarke = nazivMarke;
+		this.commonData = commonData;
+		this.modelAutomobila = modelAutomobila;
+		this.automobil = automobil;
+	}
 
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -116,6 +136,16 @@ public class TMarkaAutomobila {
 
 	public void setModelAutomobila(List<TModelAutomobila> modelAutomobila) {
 		this.modelAutomobila = modelAutomobila;
+	}
+
+
+	public List<Automobil> getAutomobil() {
+		return automobil;
+	}
+
+
+	public void setAutomobil(List<Automobil> automobil) {
+		this.automobil = automobil;
 	}
 
  
