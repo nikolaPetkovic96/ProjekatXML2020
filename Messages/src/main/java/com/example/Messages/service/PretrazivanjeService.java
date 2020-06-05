@@ -29,7 +29,7 @@ public class PretrazivanjeService {
 		}
 		
 		public Pretrazivanje addPretrazivanje(Pretrazivanje pretrazivanje)throws Exception{
-			  if (pretrazivanje.getId() != 0) {
+			  if (pretrazivanje.getId() != null) {
 		            throw new Exception(
 		                    "Id mora biti null prilikom perzistencije novog entiteta.");
 		        }

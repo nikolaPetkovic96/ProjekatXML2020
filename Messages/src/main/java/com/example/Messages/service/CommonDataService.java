@@ -28,7 +28,7 @@ public class CommonDataService {
 	}
 	
 	public CommonData addCommonData(CommonData commonData) throws Exception{
-		if(commonData.getId() != 0) {
+		if(commonData.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		CommonData savedCommonData = commonDataRepository.save(commonData);

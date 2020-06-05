@@ -26,7 +26,7 @@ public class TTipMenjacaService {
 		return tTipMenjacaRepository.findById(id).orElse(null);
 	}
 	public TTipMenjaca addTTipMenjaca(TTipMenjaca tTipMenjaca) throws Exception{
-		if(tTipMenjaca.getId() != 0) {
+		if(tTipMenjaca.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		TTipMenjaca savedTTipMenjaca = tTipMenjacaRepository.save(tTipMenjaca);

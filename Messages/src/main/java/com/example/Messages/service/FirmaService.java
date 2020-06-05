@@ -29,7 +29,7 @@ public class FirmaService {
 		}
 		
 		public Firma addFirma(Firma firma)throws Exception{
-			  if (firma.getId() != 0) {
+			  if (firma.getId() != null) {
 		            throw new Exception(
 		                    "Id mora biti null prilikom perzistencije novog entiteta.");
 		        }

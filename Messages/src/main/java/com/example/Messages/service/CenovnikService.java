@@ -28,7 +28,7 @@ public class CenovnikService {
 	}
 	
 	public Cenovnik addCenovnik(Cenovnik cenovnik) throws Exception{
-		if(cenovnik.getId() != 0) {
+		if(cenovnik.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		Cenovnik savedCenovnik = cenovnikRepository.save(cenovnik);

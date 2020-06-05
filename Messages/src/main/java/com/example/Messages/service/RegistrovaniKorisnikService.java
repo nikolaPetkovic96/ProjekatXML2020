@@ -29,7 +29,7 @@ public class RegistrovaniKorisnikService {
 		}
 		
 		public RegistrovaniKorisnik addRegistrovaniKorisnik(RegistrovaniKorisnik registrovanikorisnik)throws Exception{
-			  if (registrovanikorisnik.getId() != 0) {
+			  if (registrovanikorisnik.getId() != null) {
 		            throw new Exception(
 		                    "Id mora biti null prilikom perzistencije novog entiteta.");
 		        }

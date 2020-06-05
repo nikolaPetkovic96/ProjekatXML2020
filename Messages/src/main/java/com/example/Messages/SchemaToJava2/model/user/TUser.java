@@ -82,7 +82,7 @@ public abstract class TUser /*implements UserDetails */ {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
 	@Column(name = "korisnicko_ime", unique = true, nullable = false)
     @XmlElement(name = "Korisnicko_ime", required = true)
@@ -119,12 +119,12 @@ public abstract class TUser /*implements UserDetails */ {
 //	private Timestamp lastPasswordResetDate;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

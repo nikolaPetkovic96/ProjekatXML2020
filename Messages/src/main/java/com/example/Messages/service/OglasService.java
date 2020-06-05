@@ -27,7 +27,7 @@ public class OglasService {
 	}
 	
 	public Oglas addOglas(Oglas oglas) throws Exception{
-		if(oglas.getId() != 0) {
+		if(oglas.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		Oglas savedOglas = oglasRepository.save(oglas);

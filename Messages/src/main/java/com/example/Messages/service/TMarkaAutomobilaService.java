@@ -26,7 +26,7 @@ public class TMarkaAutomobilaService {
 		return tMarkaAutomobilaRepository.findById(id).orElse(null);
 	}
 	public TMarkaAutomobila addTMarkaAutomobila(TMarkaAutomobila tMarkaAutomobila) throws Exception{
-		if(tMarkaAutomobila.getId() != 0) {
+		if(tMarkaAutomobila.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		TMarkaAutomobila savedTMarkaAutomobila = tMarkaAutomobilaRepository.save(tMarkaAutomobila);

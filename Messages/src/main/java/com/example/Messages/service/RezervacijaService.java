@@ -28,7 +28,7 @@ public class RezervacijaService {
 		}
 		
 		public Rezervacija addRezervacija(Rezervacija rezervacija)throws Exception{
-			  if (rezervacija.getRezervacija_id() != 0) {
+			  if (rezervacija.getRezervacija_id() != null) {
 		            throw new Exception(
 		                    "Id mora biti null prilikom perzistencije novog entiteta.");
 		        }
