@@ -15,6 +15,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -63,14 +66,20 @@ import com.example.Messages.SchemaToJava2.model.entitet.Rezervacija;
     "komentar",
     "ocena",
     "poruka",
-    "rezervacija",
+//    "rezervacija",
     "oglas"
 })
 @XmlRootElement(name = "Registrovani_korisnik", namespace = "http://www.ftn.uns.ac.rs/korisnici")
 @Entity
 public class RegistrovaniKorisnik
-    extends TUser
+//    extends TUser
+
 {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
+	
 	@Column(name = "ime", nullable = false)
     @XmlElement(name = "Ime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
     protected String ime;
@@ -100,12 +109,23 @@ public class RegistrovaniKorisnik
 //    protected List<Rezervacija> rezervacija;
     
 	
+	
 	@OneToMany(mappedBy="reg_korisnik", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
     protected List<Oglas> oglas;
 
   
-    public String getIme() {
+    public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getIme() {
         return ime;
     }
 
@@ -158,7 +178,7 @@ public class RegistrovaniKorisnik
         return this.poruka;
     }
 
-  
+//  
 //    public List<Rezervacija> getRezervacija() {
 //        if (rezervacija == null) {
 //            rezervacija = new ArrayList<Rezervacija>();
