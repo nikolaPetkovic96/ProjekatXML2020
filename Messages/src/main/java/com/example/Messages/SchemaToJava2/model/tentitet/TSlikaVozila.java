@@ -102,4 +102,15 @@ public class TSlikaVozila {
         this.commonData = value;
     }
 
+
+	public TAutomobila gettAutomobila() {
+		return tAutomobila;
+	}
+
+
+	public void settAutomobila(TAutomobila tAutomobila) {
+		this.tAutomobila = tAutomobila;
+	}
+    
+
 }
