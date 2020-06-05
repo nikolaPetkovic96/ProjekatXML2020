@@ -6,20 +6,20 @@ public class TSlikaVozilaDTO {
     private Long id;
     private byte[] slika;
     private CommonDataDTO commonData;
-    private TAutomobilaDTO tAutomobila;
+    private AutomobilDTO automobil;
     
 	public TSlikaVozilaDTO() {}
     
-	public TSlikaVozilaDTO(Long id, byte[] slika, CommonDataDTO commonData, TAutomobilaDTO tAutomobila) {
+	public TSlikaVozilaDTO(Long id, byte[] slika, CommonDataDTO commonData, AutomobilDTO automobil) {
 		super();
 		this.id = id;
 		this.slika = slika;
 		this.commonData = commonData;
-		this.tAutomobila = tAutomobila;
+		this.automobil = automobil;
 	}
     
 	public TSlikaVozilaDTO(TSlikaVozila ts) {
-		this(ts.getId(),ts.getSlika(),new CommonDataDTO(ts.getCommonData()),new TAutomobilaDTO(ts.gettAutomobila()));
+		this(ts.getId(),ts.getSlika(),new CommonDataDTO(ts.getCommonData()),new AutomobilDTO(ts.getAutomobil()));
 	}
 
 	public Long getId() {
@@ -46,11 +46,13 @@ public class TSlikaVozilaDTO {
 		this.commonData = commonData;
 	}
 
-	public TAutomobilaDTO gettAutomobila() {
-		return tAutomobila;
+	public AutomobilDTO getAutomobil() {
+		return automobil;
 	}
 
-	public void settAutomobila(TAutomobilaDTO tAutomobila) {
-		this.tAutomobila = tAutomobila;
+	public void setAutomobil(AutomobilDTO automobil) {
+		this.automobil = automobil;
 	}
+
+
 }

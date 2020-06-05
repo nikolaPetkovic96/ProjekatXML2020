@@ -11,7 +11,11 @@ package com.example.Messages.SchemaToJava2.model.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -63,6 +67,7 @@ import com.example.Messages.SchemaToJava2.model.entitet.Rezervacija;
     "oglas"
 })
 @XmlRootElement(name = "Registrovani_korisnik", namespace = "http://www.ftn.uns.ac.rs/korisnici")
+@Entity
 public class RegistrovaniKorisnik
     extends TUser
 {
@@ -78,120 +83,58 @@ public class RegistrovaniKorisnik
     @XmlElement(name = "JMBG", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
     protected String jmbg;
 	
-	
+	@OneToMany(mappedBy="reg_korisnik", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Komentar", required = true)
     protected List<Komentar> komentar;
     
-    
+	@OneToMany(mappedBy="reg_korisnik", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Ocena", required = true)
     protected List<Ocena> ocena;
     
-    
+	@OneToMany(mappedBy="reg_korisnik", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Poruka", required = true)
     protected List<Poruka> poruka;
     
+//	@OneToMany(mappedBy="reg_korisnik", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @XmlElement(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
+//    protected List<Rezervacija> rezervacija;
     
-    @XmlElement(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
-    protected List<Rezervacija> rezervacija;
-    
-    
+	
+	@OneToMany(mappedBy="reg_korisnik", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
     protected List<Oglas> oglas;
 
-    /**
-     * Gets the value of the ime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+  
     public String getIme() {
         return ime;
     }
 
-    /**
-     * Sets the value of the ime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
+   
     public void setIme(String value) {
         this.ime = value;
     }
 
-    /**
-     * Gets the value of the jmbg property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+  
     public String getJMBG() {
         return jmbg;
     }
 
-    /**
-     * Sets the value of the jmbg property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
+  
     public void setJMBG(String value) {
         this.jmbg = value;
     }
 
-    /**
-     * Gets the value of the prezime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+ 
     public String getPrezime() {
         return prezime;
     }
 
-    /**
-     * Sets the value of the prezime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
+  
     public void setPrezime(String value) {
         this.prezime = value;
     }
 
-    /**
-     * Gets the value of the komentar property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the komentar property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getKomentar().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Komentar }
-     * 
-     * 
-     */
+   
     public List<Komentar> getKomentar() {
         if (komentar == null) {
             komentar = new ArrayList<Komentar>();
@@ -199,28 +142,7 @@ public class RegistrovaniKorisnik
         return this.komentar;
     }
 
-    /**
-     * Gets the value of the ocena property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the ocena property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getOcena().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Ocena }
-     * 
-     * 
-     */
+  
     public List<Ocena> getOcena() {
         if (ocena == null) {
             ocena = new ArrayList<Ocena>();
@@ -228,28 +150,7 @@ public class RegistrovaniKorisnik
         return this.ocena;
     }
 
-    /**
-     * Gets the value of the poruka property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the poruka property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPoruka().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Poruka }
-     * 
-     * 
-     */
+  
     public List<Poruka> getPoruka() {
         if (poruka == null) {
             poruka = new ArrayList<Poruka>();
@@ -257,57 +158,15 @@ public class RegistrovaniKorisnik
         return this.poruka;
     }
 
-    /**
-     * Gets the value of the rezervacija property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the rezervacija property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getRezervacija().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Rezervacija }
-     * 
-     * 
-     */
-    public List<Rezervacija> getRezervacija() {
-        if (rezervacija == null) {
-            rezervacija = new ArrayList<Rezervacija>();
-        }
-        return this.rezervacija;
-    }
+  
+//    public List<Rezervacija> getRezervacija() {
+//        if (rezervacija == null) {
+//            rezervacija = new ArrayList<Rezervacija>();
+//        }
+//        return this.rezervacija;
+//    }
 
-    /**
-     * Gets the value of the oglas property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the oglas property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getOglas().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Oglas }
-     * 
-     * 
-     */
+   
     public List<Oglas> getOglas() {
         if (oglas == null) {
             oglas = new ArrayList<Oglas>();

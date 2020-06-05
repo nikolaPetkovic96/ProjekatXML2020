@@ -117,53 +117,18 @@ public class Firma
     
     //if jmbg != null then pib = null
 
-    /**
-     * Gets the value of the poslovniMaticniBroj property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+  
     public String getPoslovniMaticniBroj() {
         return poslovniMaticniBroj;
     }
 
-    /**
-     * Sets the value of the poslovniMaticniBroj property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
+  
     public void setPoslovniMaticniBroj(String value) {
         this.poslovniMaticniBroj = value;
     }
 
 
-    /**
-     * Gets the value of the komentar property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the komentar property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getKomentar().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Komentar }
-     * 
-     * 
-     */
+    
     public List<Komentar> getKomentar() {
         if (komentar == null) {
             komentar = new ArrayList<Komentar>();
@@ -171,28 +136,7 @@ public class Firma
         return this.komentar;
     }
 
-    /**
-     * Gets the value of the oglas property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the oglas property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getOglas().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Oglas }
-     * 
-     * 
-     */
+  
     public List<Oglas> getOglas() {
         if (oglas == null) {
             oglas = new ArrayList<Oglas>();

@@ -5,7 +5,6 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.example.Messages.SchemaToJava2.model.entitet;
 
 import javax.persistence.CascadeType;
@@ -22,11 +21,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -52,71 +55,64 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "korisnik",
-    "vrednostOcene"
-})
+@XmlType(name = "", propOrder = { "id", "korisnik", "vrednostOcene" })
 @XmlRootElement(name = "Ocena")
-@Entity 
+@Entity
 public class Ocena {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-	
-    //Jedna ocena se kreira od strane samo jednog korisnika(druga strana bidirekcije)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Korisnik", required = true)
-    protected CommonData korisnik;
-    
-    @Column(name="vredn_ocene")
-    @XmlElement(name = "Vrednost_ocene")
-    protected int vrednostOcene;
-    
-    //Jedna ocena se odnosi na samo jedan automobil(druga strana bidirekcije)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Automobil automobil;
+	protected Long id;
 
- 
-    public Long getId() {
-        return id;
-    }
+	// Jedna ocena se kreira od strane samo jednog korisnika(druga strana
+	// bidirekcije)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@XmlElement(name = "Korisnik", required = true)
+	protected CommonData korisnik;
 
+	@Column(name = "vredn_ocene")
+	@XmlElement(name = "Vrednost_ocene")
+	protected int vrednostOcene;
 
-    public void setId(Long value) {
-        this.id = value;
-    }
+	// Jedna ocena se odnosi na samo jedan automobil(druga strana bidirekcije)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Automobil automobil;
 
+	// Jedna ocena se kreira od samo jednog registrovanog korisnika(druga strana
+	// bidirekcije)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private RegistrovaniKorisnik reg_korisnik;
 
-    public CommonData getKorisnik() {
-        return korisnik;
-    }
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long value) {
+		this.id = value;
+	}
 
-    public void setKorisnik(CommonData value) {
-        this.korisnik = value;
-    }
+	public CommonData getKorisnik() {
+		return korisnik;
+	}
 
+	public void setKorisnik(CommonData value) {
+		this.korisnik = value;
+	}
 
-    public int getVrednostOcene() {
-        return vrednostOcene;
-    }
+	public int getVrednostOcene() {
+		return vrednostOcene;
+	}
 
-
-    public void setVrednostOcene(int value) {
-        this.vrednostOcene = value;
-    }
-
+	public void setVrednostOcene(int value) {
+		this.vrednostOcene = value;
+	}
 
 	public Automobil getAutomobil() {
 		return automobil;
 	}
 
-
 	public void setAutomobil(Automobil automobil) {
 		this.automobil = automobil;
 	}
 
-    
 }

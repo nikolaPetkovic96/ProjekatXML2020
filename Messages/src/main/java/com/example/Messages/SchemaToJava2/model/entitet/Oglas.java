@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.example.Messages.SchemaToJava2.model.user.Firma;
+import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
 
 
 /**
@@ -98,6 +98,9 @@ public class Oglas {
 	@JoinTable(name="oglas_rezervacija",joinColumns = @JoinColumn(name = "oglas_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rezervacija_id", referencedColumnName = "rezervacija_id"))
     private List<Rezervacija> rezervacije;
 
+    //Jedan oglas se kreira od samo jednog registrovanog korisnika(druga strana bidirekcije)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private RegistrovaniKorisnik reg_korisnik;
 
    
     public Long getId() {

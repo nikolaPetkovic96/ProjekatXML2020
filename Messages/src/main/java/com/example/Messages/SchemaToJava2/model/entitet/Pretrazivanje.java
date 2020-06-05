@@ -18,8 +18,6 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.example.Messages.SchemaToJava2.model.tentitet.TAutomobila;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -85,10 +83,6 @@ public class Pretrazivanje {
     @XmlElement(name = "MaxCena", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul", required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger maxCena;
-    
-    
-    @XmlElement(name = "Dodatni_parametri", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul", required = true)
-    protected TAutomobila dodatniParametri;
 
 	public Long getId() {
 		return id;
@@ -146,15 +140,6 @@ public class Pretrazivanje {
 
     public void setMaxCena(BigInteger value) {
         this.maxCena = value;
-    }
-
-
-    public TAutomobila getDodatniParametri() {
-        return dodatniParametri;
-    }
-
-    public void setDodatniParametri(TAutomobila value) {
-        this.dodatniParametri = value;
     }
 
 

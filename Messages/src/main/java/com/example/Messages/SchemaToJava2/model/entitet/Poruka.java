@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.example.Messages.SchemaToJava2.model.user.Firma;
+import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
 
 
 /**
@@ -84,11 +85,17 @@ public class Poruka {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Rezervacija rezervacija;
 
+    //Jedan komentar se odnosi na samo jedan automobil(druga strana bidirekcije)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Automobil automobil;
+    
+    //Jedna poruka se kreira od samo jednog registrovanog korisnika(druga strana bidirekcije)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private RegistrovaniKorisnik reg_korisnik;
 
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long value) {
         this.id = value;
@@ -132,6 +139,26 @@ public class Poruka {
 
 	public void setRezervacija(Rezervacija rezervacija) {
 		this.rezervacija = rezervacija;
+	}
+
+
+	public Automobil getAutomobil() {
+		return automobil;
+	}
+
+
+	public void setAutomobil(Automobil automobil) {
+		this.automobil = automobil;
+	}
+
+
+	public RegistrovaniKorisnik getReg_korisnik() {
+		return reg_korisnik;
+	}
+
+
+	public void setReg_korisnik(RegistrovaniKorisnik reg_korisnik) {
+		this.reg_korisnik = reg_korisnik;
 	}
     
     

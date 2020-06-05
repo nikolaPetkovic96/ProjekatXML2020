@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -57,6 +58,7 @@ import com.example.Messages.SchemaToJava2.model.entitet.Poruka;
     "poruka"
 })
 @XmlRootElement(name = "Agent", namespace = "http://www.ftn.uns.ac.rs/korisnici")
+//@Entity
 public class Agent
     extends TUser
 {
@@ -64,25 +66,25 @@ public class Agent
 //	@Column(name = "role")
 //	private static final String role = "agent";
 	
-	@Column(name = "ime", nullable = false)
+//	@Column(name = "ime", nullable = false)
     @XmlElement(name = "Ime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
     protected String ime;
     
-	@Column(name = "prezime", nullable = false)
+//	@Column(name = "prezime", nullable = false)
     @XmlElement(name = "Prezime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
     protected String prezime;
     
-	@Column(name = "jmbg", nullable = false)
+//	@Column(name = "jmbg", nullable = false)
     @XmlElement(name = "JMBG", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
     protected String jmbg;
     
-    @XmlElement(name = "Komentar", required = true)
+//    @XmlElement(name = "Komentar", required = true)
     protected List<Komentar> komentar;
     
-    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
+//    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
     protected List<Oglas> oglas;
     
-    @XmlElement(name = "Poruka", required = true)
+//    @XmlElement(name = "Poruka", required = true)
     protected List<Poruka> poruka;
 
     /**

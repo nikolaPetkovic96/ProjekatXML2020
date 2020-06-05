@@ -1,5 +1,6 @@
-package com.example.Messages.controller;
-
-public class TUserController {
-
-}
+//package com.example.Messages.controller;
+//
+////vrv ce biti RegistrationController
+//public class TUserController {
+//
+//}

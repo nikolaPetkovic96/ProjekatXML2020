@@ -14,7 +14,6 @@ import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
 import com.example.Messages.SchemaToJava2.model.tentitet.TAdresa;
-import com.example.Messages.SchemaToJava2.model.tentitet.TAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TKlasaAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TMarkaAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TModelAutomobila;
@@ -171,14 +170,6 @@ public class ObjectFactory {
      */
     public Administrator createAdministrator() {
         return new Administrator();
-    }
-
-    /**
-     * Create an instance of {@link TAutomobila }
-     * 
-     */
-    public TAutomobila createTAutomobila() {
-        return new TAutomobila();
     }
 
     /**

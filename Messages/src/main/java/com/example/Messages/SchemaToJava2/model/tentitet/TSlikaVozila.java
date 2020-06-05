@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 
 
@@ -70,7 +71,7 @@ public class TSlikaVozila {
 
 	 //Jedna slika se odnosi na samo jedan autombil(druga strana bidirekcije)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private TAutomobila tAutomobila;
+    private Automobil automobil;
 
 
     public Long getId() {
@@ -103,14 +104,15 @@ public class TSlikaVozila {
     }
 
 
-	public TAutomobila gettAutomobila() {
-		return tAutomobila;
+	public Automobil getAutomobil() {
+		return automobil;
 	}
 
 
-	public void settAutomobila(TAutomobila tAutomobila) {
-		this.tAutomobila = tAutomobila;
+	public void setAutomobil(Automobil automobil) {
+		this.automobil = automobil;
 	}
-    
+
+
 
 }
