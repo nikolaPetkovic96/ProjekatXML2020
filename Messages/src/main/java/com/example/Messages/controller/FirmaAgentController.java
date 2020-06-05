@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.Messages.DTO.FirmaAgentDTO;
 import com.example.Messages.DTO.FirmaDTO;
 import com.example.Messages.SchemaToJava2.model.user.Firma;
 import com.example.Messages.service.FirmaService;
@@ -19,8 +20,7 @@ import com.example.Messages.service.KomentarService;
 import com.example.Messages.service.OcenaService;
 import com.example.Messages.service.PorukaService;
 
-public class FirmaController {
-	
+public class FirmaAgentController {
 	@Autowired
 	private FirmaService firmaService;
 	
@@ -35,43 +35,44 @@ public class FirmaController {
 	
 	
 	//GET ALL	
-	@RequestMapping(method=RequestMethod.GET, value="/Firma", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<FirmaDTO>> getAllFirma() {
+	@RequestMapping(method=RequestMethod.GET, value="/AgentFirma", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<FirmaAgentDTO>> getAllFirma() {
 	
 		List<Firma> allFirma = firmaService.getAllFirma();
 		
-		List<FirmaDTO> firmaDTO = new ArrayList<>();
+		List<FirmaAgentDTO> firmaAgentDTO = new ArrayList<>();
 		for (Firma f : allFirma) {
-			firmaDTO.add(new FirmaDTO(f));
+			firmaAgentDTO.add(new FirmaAgentDTO(f));
 		}
 		// convert pacijent to DTOs
-		return new ResponseEntity<>(firmaDTO, HttpStatus.OK);
+		return new ResponseEntity<>(firmaAgentDTO, HttpStatus.OK);
 
 	}
 	
 	//GET
 	//@PreAuthorize("hasRole('PACIJENT')")
-	@RequestMapping(method=RequestMethod.GET, value="/Firma/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FirmaDTO> getFirma(@PathVariable("id") Long id){
+	@RequestMapping(method=RequestMethod.GET, value="/AgentFirma/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<FirmaAgentDTO> getFirma(@PathVariable("id") Long id){
 		
 		Firma firma = firmaService.findOne(id);
 		//return radnikService.getRadnik(id);
 		if (firma  == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(new FirmaDTO(firma), HttpStatus.OK);
+		return new ResponseEntity<>(new FirmaAgentDTO(firma), HttpStatus.OK);
 		
 	}
 	
 	//POST
 	//Ovo kaze metoda addTopic hendla svaki zahtev sa url '/topics' koji ima http zahtev POST:
-	@RequestMapping(method=RequestMethod.POST, value="/Firma",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FirmaDTO> addFirma(@RequestBody FirmaDTO firmaDTO)  throws Exception {
+	@RequestMapping(method=RequestMethod.POST, value="/AgentFirma",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<FirmaAgentDTO> addFirma(@RequestBody FirmaAgentDTO firmaAgentDTO)  throws Exception {
 		
-		Firma savedFirma = new Firma();
+		Firma savedFirmaAgent = new Firma();
 					
-		savedFirma.setNaziv(firmaDTO.getNaziv());			
-		savedFirma.setPoslovniMaticniBroj(firmaDTO.getPoslovniMaticniBroj());					
+		savedFirmaAgent.setNaziv(firmaAgentDTO.getIme());			
+		savedFirmaAgent.setPoslovniMaticniBroj(firmaAgentDTO.getPrezime());		
+		savedFirmaAgent.setPoslovniMaticniBroj(firmaAgentDTO.getJmbg());		
 		
 //			List<KomentarDTO> komentarDTO = regKorisnikDTO.getKomentar();
 //			ArrayList<Komentar> komentari = new ArrayList<Komentar>();
@@ -94,32 +95,33 @@ public class FirmaController {
 //				poruke.add(porukaService.findOne(p.getId()));
 //			}
 		
-		savedFirma = firmaService.addFirma(savedFirma);
-		return new ResponseEntity<>(new FirmaDTO(savedFirma), HttpStatus.CREATED);
+		savedFirmaAgent = firmaService.addFirma(savedFirmaAgent);
+		return new ResponseEntity<>(new FirmaAgentDTO(savedFirmaAgent), HttpStatus.CREATED);
 	}
 	
 	//PUT
-	@RequestMapping(method=RequestMethod.PUT, value="/Firma", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FirmaDTO> updateFirma(@RequestBody FirmaDTO firmaDTO) throws Exception{
+	@RequestMapping(method=RequestMethod.PUT, value="/AgentFirma", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<FirmaDTO> updateFirma(@RequestBody FirmaAgentDTO firmaAgentDTO) throws Exception{
 		
 		System.out.println("Usao u update profile!");
-		Firma updatedFirma = firmaService.findOne(firmaDTO.getId());
+		Firma updatedFirmaAgent = firmaService.findOne(firmaAgentDTO.getId());
 		
-		if (updatedFirma == null) {
+		if (updatedFirmaAgent == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		// we allow changing date and points for an pacijent only
-		updatedFirma.setIme(firmaDTO.getNaziv());
-		updatedFirma.setPrezime(firmaDTO.getPoslovniMaticniBroj());		
+		updatedFirmaAgent.setNaziv(firmaAgentDTO.getIme());			
+		updatedFirmaAgent.setPoslovniMaticniBroj(firmaAgentDTO.getPrezime());		
+		updatedFirmaAgent.setPoslovniMaticniBroj(firmaAgentDTO.getJmbg());		
 		
 		//updatedPacijent.setBrojOsiguranika(pacijentDTO.getBrojOsiguranika());
-		updatedFirma = firmaService.updateFirma(updatedFirma.getId(), updatedFirma);
-		return new ResponseEntity<>(new FirmaDTO(updatedFirma), HttpStatus.OK);
+		updatedFirmaAgent = firmaService.updateFirma(updatedFirmaAgent.getId(), updatedFirmaAgent);
+		return new ResponseEntity<>(new FirmaDTO(updatedFirmaAgent), HttpStatus.OK);
 	}
 	
-	//DELET	
-	@RequestMapping(value="/Firma/{id}", method=RequestMethod.DELETE)
+	//DELET	isti kao i za Firmu moze se i obrisati...
+	@RequestMapping(value="/AgentFirma/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteFirma(@PathVariable Long id) {
 		
 		Firma firma = firmaService.findOne(id);
@@ -130,5 +132,4 @@ public class FirmaController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} 
 	}
-	
 }
