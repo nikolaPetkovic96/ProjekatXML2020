@@ -9,7 +9,7 @@ import com.example.Messages.SchemaToJava2.model.entitet.Rezervacija;
 
 public class RezervacijaDTO {
 
-	private long rezervacija_id;
+	private Long rezervacija_id;
 	private double ukupnaCena;
 	private Date odDatuma;
 	private Date doDatuma;
@@ -45,7 +45,7 @@ public class RezervacijaDTO {
 		
 	}
 	
-	public RezervacijaDTO(long rezervacija_id, double ukupnaCena, Date odDatuma, Date doDatuma, Boolean bundle,
+	public RezervacijaDTO(Long rezervacija_id, double ukupnaCena, Date odDatuma, Date doDatuma, Boolean bundle,
 			String statusRezervacije, List<OglasDTO> oglas, List<PorukaDTO> poruka) {
 		super();
 		this.rezervacija_id = rezervacija_id;
@@ -58,11 +58,11 @@ public class RezervacijaDTO {
 		this.poruka = poruka;
 	}
 
-	public long getRezervacija_id() {
+	public Long getRezervacija_id() {
 		return rezervacija_id;
 	}
 
-	public void setRezervacija_id(long rezervacija_id) {
+	public void setRezervacija_id(Long rezervacija_id) {
 		this.rezervacija_id = rezervacija_id;
 	}
 

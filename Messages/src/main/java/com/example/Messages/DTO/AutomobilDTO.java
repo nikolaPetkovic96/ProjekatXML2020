@@ -38,12 +38,8 @@ public class AutomobilDTO {
 		for(Ocena o : tempOcene) {
 			ocena.add(new OcenaDTO(o));
 		}
-		
-		
-		this.id = a.getId();
-		
-		
-		
+				
+		this.id = a.getId();					
 	}
 	
 	public Long getId() {
@@ -69,8 +65,4 @@ public class AutomobilDTO {
 	public void setOcena(List<OcenaDTO> ocena) {
 		this.ocena = ocena;
 	}
-	
-	
-	
-	
 }

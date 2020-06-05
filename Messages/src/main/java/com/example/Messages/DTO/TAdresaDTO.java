@@ -11,6 +11,8 @@ public class TAdresaDTO {
 	private int broj;
 	private TAdresaDTO.KordinateDTO kordinate;	
 	
+	public TAdresaDTO() {}
+	
 	public TAdresaDTO(Long id, String mesto, int postanskiBroj, String ulica, int broj, KordinateDTO kordinate) {
 		super();
 		this.id = id;
@@ -68,11 +70,11 @@ public class TAdresaDTO {
 	}
 	////Klasa za kordinate
 	private static class KordinateDTO{
-		private long id;
+		private Long id;
 		private Float longitude;
 		private Float latitude;
 		
-		public KordinateDTO(long id, Float longitude, Float latitude) {
+		public KordinateDTO(Long id, Float longitude, Float latitude) {
 			super();
 			this.id = id;
 			this.longitude = longitude;
@@ -83,11 +85,11 @@ public class TAdresaDTO {
 			this(k.getId(),k.getLongitude(),k.getLatitude());
 		}
 
-		public long getId() {
+		public Long getId() {
 			return id;
 		}
 
-		public void setId(long id) {
+		public void setId(Long id) {
 			this.id = id;
 		}
 

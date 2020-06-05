@@ -9,7 +9,7 @@ import com.example.Messages.SchemaToJava2.model.tentitet.TAutomobila;
 
 public class PretrazivanjeDTO {
 	
-	private long id;
+	private Long id;
 	private XMLGregorianCalendar datumPreuzimanjaVozila;
 	private XMLGregorianCalendar datumPovratkaVozila;
 	private String mestoPreuzimanjaVozila;
@@ -28,7 +28,7 @@ public class PretrazivanjeDTO {
 	
 	
 	
-	public PretrazivanjeDTO(long id, XMLGregorianCalendar datumPreuzimanjaVozila,
+	public PretrazivanjeDTO(Long id, XMLGregorianCalendar datumPreuzimanjaVozila,
 			XMLGregorianCalendar datumPovratkaVozila, String mestoPreuzimanjaVozila, BigInteger minCena,
 			BigInteger maxCena, TAutomobila dodatniParametri) {
 		super();
@@ -41,10 +41,10 @@ public class PretrazivanjeDTO {
 		this.dodatniParametri = dodatniParametri;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public XMLGregorianCalendar getDatumPreuzimanjaVozila() {

@@ -4,7 +4,7 @@ import com.example.Messages.SchemaToJava2.model.entitet.Komentar;
 
 public class KomentarDTO {
 	
-	private long id;
+	private Long id;
 	private String tekstKomentara;
 	private boolean odobren;
 	private CommonDataDTO commonData;
@@ -13,7 +13,7 @@ public class KomentarDTO {
 		
 	}
 	
-	public KomentarDTO(long id, String tekstKomentara, boolean odobren, CommonDataDTO commonData) {
+	public KomentarDTO(Long id, String tekstKomentara, boolean odobren, CommonDataDTO commonData) {
 		super();
 		this.id = id;
 		this.tekstKomentara = tekstKomentara;
@@ -28,12 +28,12 @@ public class KomentarDTO {
 		this.commonData = new CommonDataDTO(k.getCommonData());
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getTekstKomentara() {

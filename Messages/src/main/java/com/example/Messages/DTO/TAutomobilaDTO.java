@@ -20,6 +20,8 @@ public class TAutomobilaDTO {
 	private int brojSedistaZaDecu;
 	private List<TSlikaVozilaDTO> slika;
 	
+	public TAutomobilaDTO() {}
+	
 	public TAutomobilaDTO(Long id, TMarkaAutomobilaDTO markaAutomobila, TModelAutomobilaDTO modelAutomobila,
 			TKlasaAutomobilaDTO klasaAutomobila, TTipGorivaDTO vrstaGoriva, TTipMenjacaDTO tipMenjaca,
 			float predjenaKilometraza, BigInteger planiranaKilometraza, boolean collisionDamageWaiver,
