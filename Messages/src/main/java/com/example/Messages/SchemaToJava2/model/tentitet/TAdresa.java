@@ -82,7 +82,7 @@ public class TAdresa {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
 	@Column(name = "mesto", nullable = false)
     @XmlElement(name = "Mesto", required = true)
@@ -105,12 +105,12 @@ public class TAdresa {
     protected TAdresa.Kordinate kordinate;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -204,7 +204,7 @@ public class TAdresa {
     	@Id
     	@GeneratedValue(strategy = GenerationType.IDENTITY)
         @XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
-        protected long id;
+        protected Long id;
     	
     	@Column(name = "longitude", nullable = false)
         @XmlAttribute(name = "longitude")
@@ -215,12 +215,12 @@ public class TAdresa {
         protected Float latitude;
 
        
-        public long getId() {
+        public Long getId() {
 			return id;
 		}
 
 
-		public void setId(long id) {
+		public void setId(Long id) {
 			this.id = id;
 		}
 

@@ -55,7 +55,7 @@ public class TKlasaAutomobila {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
 	@Column(name = "naziv_klase", nullable = false)
     @XmlElement(name = "naziv_klase", required = true)
@@ -69,7 +69,7 @@ public class TKlasaAutomobila {
      * Gets the value of the id property.
      * 
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -77,7 +77,7 @@ public class TKlasaAutomobila {
      * Sets the value of the id property.
      * 
      */
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

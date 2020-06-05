@@ -5,7 +5,6 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.example.Messages.SchemaToJava2.model.entitet;
 
 import java.util.Date;
@@ -27,11 +26,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.example.Messages.SchemaToJava2.model.user.TUser;
 
-
 /**
- * <p>Java class for common_data complex type.
+ * <p>
+ * Java class for common_data complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="common_data">
@@ -50,72 +51,62 @@ import com.example.Messages.SchemaToJava2.model.user.TUser;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "common_data", namespace = "http://www.ftn.uns.ac.rs/AdminKlijent", propOrder = {
-    "datumKreiranja",
-    "datumIzmene",
-    "korisnik"
-})
-@Entity 
+@XmlType(name = "common_data", namespace = "http://www.ftn.uns.ac.rs/AdminKlijent", propOrder = { "datumKreiranja",
+		"datumIzmene", "korisnik" })
+@Entity
 public abstract class CommonData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
-    protected long id;
-	
+	@XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
+	protected Long id;
+
 	@Column(name = "datum_kreiranja", nullable = false)
-    @XmlElement(name = "Datum_kreiranja", required = true)
-    @XmlSchemaType(name = "dateTime")
-    protected Date datumKreiranja;
-    
+	@XmlElement(name = "Datum_kreiranja", required = true)
+	@XmlSchemaType(name = "dateTime")
+	protected Date datumKreiranja;
+
 	@Column(name = "datum_izmene")
-    @XmlElement(name = "Datum_izmene", required = true)
-    @XmlSchemaType(name = "dateTime")
-    protected Date datumIzmene;
-    
-	//Jedna promena(commonData) se odnosi na samo jednog korisnika(druga strana bidirekcije)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Korisnik", required = true)
-    protected TUser korisnik;    
-    
-    
-	public long getId() {
+	@XmlElement(name = "Datum_izmene", required = true)
+	@XmlSchemaType(name = "dateTime")
+	protected Date datumIzmene;
+
+	// Jedna promena(commonData) se odnosi na samo jednog korisnika(druga strana
+	// bidirekcije)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@XmlElement(name = "Korisnik", required = true)
+	protected TUser korisnik;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-   
-    public Date getDatumKreiranja() {
-        return datumKreiranja;
-    }
 
+	public Date getDatumKreiranja() {
+		return datumKreiranja;
+	}
 
-    public void setDatumKreiranja(Date value) {
-        this.datumKreiranja = value;
-    }
+	public void setDatumKreiranja(Date value) {
+		this.datumKreiranja = value;
+	}
 
+	public Date getDatumIzmene() {
+		return datumIzmene;
+	}
 
-    public Date getDatumIzmene() {
-        return datumIzmene;
-    }
+	public void setDatumIzmene(Date value) {
+		this.datumIzmene = value;
+	}
 
+	public TUser getKorisnik() {
+		return korisnik;
+	}
 
-    public void setDatumIzmene(Date value) {
-        this.datumIzmene = value;
-    }
-
-
-    public TUser getKorisnik() {
-        return korisnik;
-    }
-
-    public void setKorisnik(TUser value) {
-        this.korisnik = value;
-    }
-
-
-
+	public void setKorisnik(TUser value) {
+		this.korisnik = value;
+	}
 
 }

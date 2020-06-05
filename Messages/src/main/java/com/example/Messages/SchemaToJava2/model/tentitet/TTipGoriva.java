@@ -56,7 +56,7 @@ public class TTipGoriva {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
     
     @Column(name = "naziv_tipa", nullable = false)
     @XmlElement(name = "naziv_tipa", required = true)
@@ -70,12 +70,12 @@ public class TTipGoriva {
 //  @OneToOne(fetch = FetchType.LAZY)
 //  private TAutomobila tAutomobila;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

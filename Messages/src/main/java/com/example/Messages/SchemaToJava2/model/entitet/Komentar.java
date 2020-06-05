@@ -70,7 +70,7 @@ public class Komentar {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(name = "Id")
-    protected long id;
+    protected Long id;
     
     @Column(name = "tekst_komentara", nullable = false)
     @XmlElement(name = "tekst_komentara", required = true)
@@ -95,12 +95,12 @@ public class Komentar {
    
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

@@ -68,7 +68,7 @@ public class Oglas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
-    protected long id;
+    protected Long id;
     
     //Jedan oglas se kreira za samo jedan automobil(druga strana bidirekcije)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -100,12 +100,12 @@ public class Oglas {
 
 
    
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
    
