@@ -4,7 +4,7 @@ import com.example.Messages.SchemaToJava2.model.entitet.Ocena;
 
 public class OcenaDTO {
 
-	private long id;
+	private Long id;
 	private int vrednostOcene;
 	
 	public OcenaDTO() {
@@ -15,18 +15,16 @@ public class OcenaDTO {
 		this(o.getId(), o.getVrednostOcene());
 	}
 	
-	public OcenaDTO(long id, int vrednostOcene) {
+	public OcenaDTO(Long id, int vrednostOcene) {
 		super();
 		this.id = id;
 		this.vrednostOcene = vrednostOcene;
 	}
-
-
-
-	public long getId() {
+	
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public int getVrednostOcene() {
@@ -34,7 +32,5 @@ public class OcenaDTO {
 	}
 	public void setVrednostOcene(int vrednostOcene) {
 		this.vrednostOcene = vrednostOcene;
-	}
-	
-	
+	}	
 }

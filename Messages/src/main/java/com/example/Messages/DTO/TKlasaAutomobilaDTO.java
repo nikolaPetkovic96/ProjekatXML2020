@@ -3,11 +3,13 @@ package com.example.Messages.DTO;
 import com.example.Messages.SchemaToJava2.model.tentitet.TKlasaAutomobila;
 
 public class TKlasaAutomobilaDTO {
-    private long id;
+    private Long id;
     private String nazivKlase;
     private CommonDataDTO commonData;
     
-	public TKlasaAutomobilaDTO(long id, String nazivKlase, CommonDataDTO commonData) {
+    public TKlasaAutomobilaDTO() {}
+    
+	public TKlasaAutomobilaDTO(Long id, String nazivKlase, CommonDataDTO commonData) {
 		super();
 		this.id = id;
 		this.nazivKlase = nazivKlase;
@@ -17,10 +19,10 @@ public class TKlasaAutomobilaDTO {
 		this(tk.getId(),tk.getNazivKlase(),new CommonDataDTO(tk.getCommonData()));		
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getNazivKlase() {

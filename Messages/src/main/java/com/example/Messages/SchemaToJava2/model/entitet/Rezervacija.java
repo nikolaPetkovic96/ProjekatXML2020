@@ -83,7 +83,7 @@ public class Rezervacija {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
-    protected long rezervacija_id;
+    protected Long rezervacija_id;
     
     @Column(name="ukupna_cena")
     @XmlElement(name = "Ukupna_cena", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
@@ -126,11 +126,11 @@ public class Rezervacija {
   	
   	
 
-	public long getRezervacija_id() {
+	public Long getRezervacija_id() {
 		return rezervacija_id;
 	}
 
-	public void setRezervacija_id(long rezervacija_id) {
+	public void setRezervacija_id(Long rezervacija_id) {
 		this.rezervacija_id = rezervacija_id;
 	}
   

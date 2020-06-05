@@ -63,7 +63,7 @@ public class Ocena {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
     //Jedna ocena se kreira od strane samo jednog korisnika(druga strana bidirekcije)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -79,12 +79,12 @@ public class Ocena {
     private Automobil automobil;
 
  
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

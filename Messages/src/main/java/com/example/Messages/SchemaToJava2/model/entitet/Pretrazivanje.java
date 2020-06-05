@@ -60,7 +60,7 @@ public class Pretrazivanje {
 	
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
 //	@Column(name="datum_preuz_voz", nullable=false)
     @XmlElement(name = "Datum_preuzimanja_vozila", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul", required = true)
@@ -90,12 +90,12 @@ public class Pretrazivanje {
     @XmlElement(name = "Dodatni_parametri", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul", required = true)
     protected TAutomobila dodatniParametri;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

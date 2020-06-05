@@ -21,6 +21,18 @@ public class CenovnikDTO {
 		
 	}
 
+	public CenovnikDTO(Long id, Integer cenaPoDanu, String nazivCenovnika, Integer popustZaPreko30Dana,
+			Integer cenaCollisionDamageWaiver, Integer cenaPoKilometru, List<OglasDTO> oglasi) {
+		super();
+		this.id = id;
+		this.cenaPoDanu = cenaPoDanu;
+		this.nazivCenovnika = nazivCenovnika;
+		this.popustZaPreko30Dana = popustZaPreko30Dana;
+		this.cenaCollisionDamageWaiver = cenaCollisionDamageWaiver;
+		this.cenaPoKilometru = cenaPoKilometru;
+		this.oglasi = oglasi;
+	}
+	
 	public CenovnikDTO(Cenovnik c) {
 		this.id = c.getId();
 		this.cenaPoDanu = c.getCenaPoDanu();
@@ -91,23 +103,4 @@ public class CenovnikDTO {
 		this.oglasi = oglasi;
 	}
 
-	public CenovnikDTO(Long id, Integer cenaPoDanu, String nazivCenovnika, Integer popustZaPreko30Dana,
-			Integer cenaCollisionDamageWaiver, Integer cenaPoKilometru, List<OglasDTO> oglasi) {
-		super();
-		this.id = id;
-		this.cenaPoDanu = cenaPoDanu;
-		this.nazivCenovnika = nazivCenovnika;
-		this.popustZaPreko30Dana = popustZaPreko30Dana;
-		this.cenaCollisionDamageWaiver = cenaCollisionDamageWaiver;
-		this.cenaPoKilometru = cenaPoKilometru;
-		this.oglasi = oglasi;
-	}
-	
-	
-	
-	
-
-	
-	
-	
 }

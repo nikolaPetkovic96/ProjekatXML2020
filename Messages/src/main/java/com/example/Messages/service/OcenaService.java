@@ -27,7 +27,7 @@ public class OcenaService {
 	}
 	
 	public Ocena addOcena(Ocena ocena) throws Exception{
-		if(ocena.getId() != 0) {
+		if(ocena.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		Ocena savedOcena = ocenaRepository.save(ocena);

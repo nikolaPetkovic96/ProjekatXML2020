@@ -63,7 +63,7 @@ public class Automobil
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
 	//Jedan automobil ima vise komentara vezanih za sebe (u tabeli komentar se cuva id automobila na kojem se ona vrsi)
 	@OneToMany(mappedBy="automobil",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -81,7 +81,7 @@ public class Automobil
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

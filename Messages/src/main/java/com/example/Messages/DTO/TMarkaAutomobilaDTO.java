@@ -8,12 +8,14 @@ import com.example.Messages.SchemaToJava2.model.tentitet.TMarkaAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TModelAutomobila;
 
 public class TMarkaAutomobilaDTO {    
-	private long id;
+	private Long id;
     private String nazivMarke;
     private CommonDataDTO commonData;
     private List<TModelAutomobilaDTO> modelAutomobila;
     
-    public TMarkaAutomobilaDTO(long id, String nazivMarke, CommonDataDTO commonData,
+    public TMarkaAutomobilaDTO() {}
+    
+    public TMarkaAutomobilaDTO(Long id, String nazivMarke, CommonDataDTO commonData,
 			List<TModelAutomobilaDTO> modelAutomobila) {
 		super();
 		this.id = id;
@@ -33,11 +35,11 @@ public class TMarkaAutomobilaDTO {
 		this.modelAutomobila=temp;		
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

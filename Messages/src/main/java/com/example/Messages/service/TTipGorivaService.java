@@ -25,7 +25,7 @@ public class TTipGorivaService {
 		return tTipGorivaRepository.findById(id).orElse(null);
 	}
 	public TTipGoriva addTTipGoriva(TTipGoriva tTipGoriva) throws Exception{
-		if(tTipGoriva.getId() != 0) {
+		if(tTipGoriva.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		TTipGoriva savedTTipGoriva = tTipGorivaRepository.save(tTipGoriva);

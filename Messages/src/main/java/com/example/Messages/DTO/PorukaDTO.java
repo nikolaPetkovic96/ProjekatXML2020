@@ -1,12 +1,11 @@
 package com.example.Messages.DTO;
 
-import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 import com.example.Messages.SchemaToJava2.model.entitet.Poruka;
 
 public class PorukaDTO {
 
 	
-	private long id;
+	private Long id;
 	private CommonDataDTO commonData;
 	private String tekstPoruke;
 	
@@ -20,17 +19,17 @@ public class PorukaDTO {
 		this.commonData = new CommonDataDTO(p.getCommonData()); 
 	}
 	
-	public PorukaDTO(long id, CommonDataDTO commonData, String tekstPoruke) {
+	public PorukaDTO(Long id, CommonDataDTO commonData, String tekstPoruke) {
 		super();
 		this.id = id;
 		this.commonData = commonData;
 		this.tekstPoruke = tekstPoruke;
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public CommonDataDTO getCommonData() {

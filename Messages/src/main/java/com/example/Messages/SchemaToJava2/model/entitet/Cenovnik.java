@@ -66,7 +66,7 @@ public class Cenovnik {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/cenovnik")
-    protected long id;
+    protected Long id;
 	
 	@Column(name = "cena_po_danu", nullable = false)
     @XmlElement(name = "CenaPoDanu", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
@@ -92,12 +92,12 @@ public class Cenovnik {
 	@OneToMany(mappedBy="cenovnik",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Oglas> oglasi;
 	
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

@@ -28,7 +28,7 @@ public class AgentService {
 	}
 	
 	public Agent addAgent(Agent agent)throws Exception{
-		  if (agent.getId() != 0) {
+		  if (agent.getId() != null) {
 	            throw new Exception(
 	                    "Id mora biti null prilikom perzistencije novog entiteta.");
 	        }

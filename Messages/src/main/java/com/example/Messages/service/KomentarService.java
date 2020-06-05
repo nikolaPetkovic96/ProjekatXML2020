@@ -27,7 +27,7 @@ public class KomentarService {
 	}
 	
 	public Komentar addKomentar(Komentar komentar) throws Exception{
-		if(komentar.getId() != 0) {
+		if(komentar.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		Komentar savedKomentar = komentarRepository.save(komentar);

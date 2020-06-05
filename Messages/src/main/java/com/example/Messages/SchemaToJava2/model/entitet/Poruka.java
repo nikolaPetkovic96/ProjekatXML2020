@@ -66,7 +66,7 @@ public class Poruka {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
 	@OneToOne(fetch = FetchType.LAZY)
     @XmlElement(name = "Korisnik", required = true)
@@ -85,12 +85,12 @@ public class Poruka {
     private Rezervacija rezervacija;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

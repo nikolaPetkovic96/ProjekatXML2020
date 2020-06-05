@@ -3,11 +3,13 @@ package com.example.Messages.DTO;
 import com.example.Messages.SchemaToJava2.model.tentitet.TTipMenjaca;
 
 public class TTipMenjacaDTO {
-    private long id;
+    private Long id;
     private String nazivMenjaca;
     private CommonDataDTO commonData;
     
-	public TTipMenjacaDTO(long id, String nazivMenjaca, CommonDataDTO commonData) {
+    public TTipMenjacaDTO() {}
+    
+	public TTipMenjacaDTO(Long id, String nazivMenjaca, CommonDataDTO commonData) {
 		super();
 		this.id = id;
 		this.nazivMenjaca = nazivMenjaca;
@@ -18,11 +20,11 @@ public class TTipMenjacaDTO {
 		this(tt.getId(),tt.getNazivMenjaca(),new CommonDataDTO(tt.getCommonData()));
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

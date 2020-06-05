@@ -6,7 +6,7 @@ import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 
 public class CommonDataDTO {
 
-	private long id;
+	private Long id;
 	private Date datumKreiranja;
 	private Date datumIzmene;
 	
@@ -14,9 +14,7 @@ public class CommonDataDTO {
 		
 	}
 	
-	
-	
-	public CommonDataDTO(long id, Date datumKreiranja, Date datumIzmene) {
+	public CommonDataDTO(Long id, Date datumKreiranja, Date datumIzmene) {
 		super();
 		this.id = id;
 		this.datumKreiranja = datumKreiranja;
@@ -27,10 +25,10 @@ public class CommonDataDTO {
 		this(c.getId(), c.getDatumKreiranja(), c.getDatumIzmene());
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public Date getDatumKreiranja() {

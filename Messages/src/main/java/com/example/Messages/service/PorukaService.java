@@ -29,7 +29,7 @@ public class PorukaService {
 		}
 		
 		public Poruka addPoruka(Poruka poruka)throws Exception{
-			  if (poruka.getId() != 0) {
+			  if (poruka.getId() != null) {
 		            throw new Exception(
 		                    "Id mora biti null prilikom perzistencije novog entiteta.");
 		        }

@@ -25,7 +25,7 @@ public class TSlikaVozilaService {
 		return tSlikaVozilaRepository.findById(id).orElse(null);
 	}
 	public TSlikaVozila addTSlikaVozila(TSlikaVozila tSlikaVozila) throws Exception{
-		if(tSlikaVozila.getId() != 0) {
+		if(tSlikaVozila.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		TSlikaVozila savedTSlikaVozila = tSlikaVozilaRepository.save(tSlikaVozila);

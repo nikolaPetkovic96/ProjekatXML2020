@@ -27,7 +27,7 @@ public class TAdresaService {
 		return tAdresaRepository.findById(id).orElse(null);
 	}
 	public TAdresa addTAdresa(TAdresa tAdresa) throws Exception{
-		if(tAdresa.getId() != 0) {
+		if(tAdresa.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		TAdresa savedTAdresa = tAdresaRepository.save(tAdresa);

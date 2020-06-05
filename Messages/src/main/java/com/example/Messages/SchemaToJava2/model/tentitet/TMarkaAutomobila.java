@@ -63,7 +63,7 @@ public class TMarkaAutomobila {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
 	@Column(name = "naziv_marke", nullable = false)
     @XmlElement(name = "naziv_marke", required = true)
@@ -79,12 +79,12 @@ public class TMarkaAutomobila {
     protected List<TModelAutomobila> modelAutomobila;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

@@ -29,7 +29,7 @@ public class TUserService {
 		}
 		
 		public TUser addTUser(TUser tuser)throws Exception{
-			  if (tuser.getId() != 0) {
+			  if (tuser.getId() != null) {
 		            throw new Exception(
 		                    "Id mora biti null prilikom perzistencije novog entiteta.");
 		        }

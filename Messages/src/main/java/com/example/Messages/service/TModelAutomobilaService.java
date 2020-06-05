@@ -26,7 +26,7 @@ public class TModelAutomobilaService {
 		return tModelAutomobilaRepository.findById(id).orElse(null);
 	}
 	public TModelAutomobila addTModelAutomobila(TModelAutomobila tModelAutomobila) throws Exception{
-		if(tModelAutomobila.getId() != 0) {
+		if(tModelAutomobila.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		TModelAutomobila savedTModelAutomobila = tModelAutomobilaRepository.save(tModelAutomobila);

@@ -58,7 +58,7 @@ public class TSlikaVozila {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 	
 	@Column(name = "slika", nullable = false)
     @XmlElement(required = true)
@@ -73,12 +73,12 @@ public class TSlikaVozila {
     private TAutomobila tAutomobila;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
  
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 

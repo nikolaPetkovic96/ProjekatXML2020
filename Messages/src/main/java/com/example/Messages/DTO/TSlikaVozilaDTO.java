@@ -3,12 +3,14 @@ package com.example.Messages.DTO;
 import com.example.Messages.SchemaToJava2.model.tentitet.TSlikaVozila;
 
 public class TSlikaVozilaDTO {
-    private long id;
+    private Long id;
     private byte[] slika;
     private CommonDataDTO commonData;
     private TAutomobilaDTO tAutomobila;
     
-	public TSlikaVozilaDTO(long id, byte[] slika, CommonDataDTO commonData, TAutomobilaDTO tAutomobila) {
+	public TSlikaVozilaDTO() {}
+    
+	public TSlikaVozilaDTO(Long id, byte[] slika, CommonDataDTO commonData, TAutomobilaDTO tAutomobila) {
 		super();
 		this.id = id;
 		this.slika = slika;
@@ -20,11 +22,11 @@ public class TSlikaVozilaDTO {
 		this(ts.getId(),ts.getSlika(),new CommonDataDTO(ts.getCommonData()),new TAutomobilaDTO(ts.gettAutomobila()));
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
