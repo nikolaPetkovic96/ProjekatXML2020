@@ -21,6 +21,7 @@ import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.Komentar;
 import com.example.Messages.SchemaToJava2.model.entitet.Ocena;
 import com.example.Messages.SchemaToJava2.model.tentitet.TKlasaAutomobila;
+import com.example.Messages.SchemaToJava2.model.tentitet.TMarkaAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TModelAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TSlikaVozila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TTipGoriva;
@@ -81,7 +82,7 @@ public class AutomobilController {
 	}
 	
 	
-	@RequestMapping(method=RequestMethod.GET, value="/Automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method=RequestMethod.POST, value="/Automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AutomobilDTO> addAutomobil(@RequestBody AutomobilDTO automobilDTO) throws Exception{
 		if(automobilDTO.getKlasaAutomobila() == null || automobilDTO.getKomentar() == null || automobilDTO.getMarkaAutomobila() == null
 			|| automobilDTO.getModelAutomobila() == null || automobilDTO.getOcena() == null || automobilDTO.getSlika() == null || automobilDTO.getTipMenjaca() == null
@@ -94,7 +95,7 @@ public class AutomobilController {
 		TModelAutomobila tModelAutomobila = tModelAutomobilaService.findOne(automobilDTO.getModelAutomobila().getId());
 		TTipGoriva tTipGoriva = tTipGorivaService.findOne(automobilDTO.getVrstaGoriva().getId());
 		TTipMenjaca tTipMenjaca = tTipMenjacaService.findOne(automobilDTO.getTipMenjaca().getId());
-		
+		TMarkaAutomobila tMarkaAutomobila = tMarkaAutomobilaService.findOne(automobilDTO.getMarkaAutomobila().getId());
 		List<KomentarDTO> comments = automobilDTO.getKomentar();
 		ArrayList<Komentar> komentari = new ArrayList<Komentar>();
 		for(KomentarDTO k : comments) {
@@ -113,12 +114,20 @@ public class AutomobilController {
 		
 		Automobil savedAutomobil = new Automobil();
 		
+		savedAutomobil.setKomentar(komentari);
+		savedAutomobil.setOcena(ocene);
+		savedAutomobil.setSlika(slike);
 		savedAutomobil.setId(automobilDTO.getId());
 		savedAutomobil.setBrojSedistaZaDecu(automobilDTO.getBrojSedistaZaDecu());
 		savedAutomobil.setCollisionDamageWaiver(automobilDTO.isCollisionDamageWaiver());
 		savedAutomobil.setPlaniranaKilometraza(automobilDTO.getPlaniranaKilometraza());
 		savedAutomobil.setPredjenaKilometraza(automobilDTO.getPredjenaKilometraza());
-		
+		savedAutomobil.setKlasaAutomobila(tKlasaAutomobila);
+		savedAutomobil.setModelAutomobila(tModelAutomobila);
+		savedAutomobil.setMarkaAutomobila(tMarkaAutomobila);
+		savedAutomobil.setTipMenjaca(tTipMenjaca);
+		savedAutomobil.setVrstaGoriva(tTipGoriva);
+
 		return new ResponseEntity<>(new AutomobilDTO(savedAutomobil), HttpStatus.CREATED);
 	}
 	
