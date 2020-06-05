@@ -50,15 +50,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Administrator", namespace = "http://www.ftn.uns.ac.rs/korisnici")
 @Entity
 public class Administrator
-    //extends TUser
+    extends TUser
 {
 
 //	@Column(name = "role")
 //	private static final String role = "admin";
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//    protected Long id;
 	
 	@Column(name = "ime", nullable = false)
     @XmlElement(name = "Ime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
