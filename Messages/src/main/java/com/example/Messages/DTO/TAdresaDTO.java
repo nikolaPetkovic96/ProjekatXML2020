@@ -69,7 +69,7 @@ public class TAdresaDTO {
 		this.kordinate = kordinate;
 	}
 	////Klasa za kordinate
-	private static class KordinateDTO{
+	public static class KordinateDTO{
 		private Long id;
 		private Float longitude;
 		private Float latitude;

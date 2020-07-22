@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Messages.SchemaToJava2.model.tentitet.TAdresa;
+import com.example.Messages.SchemaToJava2.model.tentitet.TAdresa.Kordinate;
+import com.example.Messages.repository.KordinateRepository;
 import com.example.Messages.repository.TAdresaRepository;
 
 @Service
@@ -41,9 +43,41 @@ public class TAdresaService {
 		TAdresa updateTAdresa = tAdresaRepository.save(tAdresa);
 		return updateTAdresa;
 	}
-	public void deteleTAdresa(Long id) {
+	public void deleteTAdresa(Long id) {
 		tAdresaRepository.deleteById(id);
 	}
 	
-
+ @Service
+ public class KordinateService {
+	 @Autowired
+	 private KordinateRepository kordinateRepo;
+	 
+	 public List<Kordinate> getAllKordinate(){
+		 List<Kordinate> kordinate = new ArrayList<>();
+		 kordinateRepo.findAll().forEach(kordinate::add);
+			return kordinate;
+	 }
+	 public Kordinate findOne(Long id) {
+			return kordinateRepo.findById(id).orElse(null);
+	 }
+	 public Kordinate addKordinate(Kordinate kord) throws Exception{
+			if(kord.getId() != null) {
+				throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
+			}
+			Kordinate savedKord = kordinateRepo.save(kord);
+			return savedKord;
+	 }
+	 public Kordinate updateKordinate(Long id, Kordinate kord) throws Exception{
+			Optional<Kordinate> KordinateToUpdate = kordinateRepo.findById(id);
+			if(KordinateToUpdate == null) {
+				throw new Exception("Trazeni entitet nije pronadjen."); 
+			}
+			Kordinate updateKordinate = kordinateRepo.save(kord);
+			return updateKordinate;
+	}
+	public void deleteKordinate(Long id) {
+		kordinateRepo.deleteById(id);
+	}
+ }
+ 
 }
