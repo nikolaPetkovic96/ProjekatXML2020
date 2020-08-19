@@ -5,18 +5,18 @@ import com.example.Messages.SchemaToJava2.model.tentitet.TKlasaAutomobila;
 public class TKlasaAutomobilaDTO {
     private Long id;
     private String nazivKlase;
-    private CommonDataDTO commonData;
+    private Long commonDataId;
     
     public TKlasaAutomobilaDTO() {}
     
-	public TKlasaAutomobilaDTO(Long id, String nazivKlase, CommonDataDTO commonData) {
+	public TKlasaAutomobilaDTO(Long id, String nazivKlase, Long commonDataId) {
 		super();
 		this.id = id;
 		this.nazivKlase = nazivKlase;
-		this.commonData = commonData;
+		this.commonDataId = commonDataId;
 	}
 	public TKlasaAutomobilaDTO(TKlasaAutomobila tk) {
-		this(tk.getId(),tk.getNazivKlase(),new CommonDataDTO(tk.getCommonData()));		
+		this(tk.getId(),tk.getNazivKlase(), tk.getCommonDataId());		
 	}
 
 	public Long getId() {
@@ -31,10 +31,11 @@ public class TKlasaAutomobilaDTO {
 	public void setNazivKlase(String nazivKlase) {
 		this.nazivKlase = nazivKlase;
 	}
-	public CommonDataDTO getCommonData() {
-		return commonData;
+	public Long getCommonDataId() {
+		return commonDataId;
 	}
-	public void setCommonData(CommonDataDTO commonData) {
-		this.commonData = commonData;
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
 	}
+
 }

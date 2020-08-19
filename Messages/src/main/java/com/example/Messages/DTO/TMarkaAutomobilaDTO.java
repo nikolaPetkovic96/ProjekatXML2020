@@ -11,7 +11,6 @@ public class TMarkaAutomobilaDTO {
 	private Long id;
     private String nazivMarke;
     private CommonDataDTO commonData;
-    private List<TModelAutomobilaDTO> modelAutomobila;
     
     public TMarkaAutomobilaDTO() {}
     
@@ -21,18 +20,13 @@ public class TMarkaAutomobilaDTO {
 		this.id = id;
 		this.nazivMarke = nazivMarke;
 		this.commonData = commonData;
-		this.modelAutomobila = modelAutomobila;
+	
 	}
 
-	public TMarkaAutomobilaDTO(TMarkaAutomobila ma) {
-		List<TModelAutomobilaDTO> temp=new ArrayList<TModelAutomobilaDTO>();	//popunjava listu TmodelAutommobilaDTO 
-		for(TModelAutomobila t : ma.getModelAutomobila()){						//iz liste tipa TModelAutomobila
-			temp.add(new TModelAutomobilaDTO(t));								//ako je potrebno jos negde, treba  izdvojiti ove 4 linije u posebnu metodu,
-		}																		// al mislim da nece trebati nigde vise. Nikola
+	public TMarkaAutomobilaDTO(TMarkaAutomobila ma) {														
 		this.id=ma.getId();
 		this.nazivMarke=ma.getNazivMarke();
-		this.commonData=new CommonDataDTO(ma.getCommonData());
-		this.modelAutomobila=temp;		
+		this.commonData=new CommonDataDTO(ma.getCommonData());	
 	}
 
 	public Long getId() {
@@ -59,11 +53,4 @@ public class TMarkaAutomobilaDTO {
 		this.commonData = commonData;
 	}
 
-	public List<TModelAutomobilaDTO> getModelAutomobila() {
-		return modelAutomobila;
-	}
-
-	public void setModelAutomobila(List<TModelAutomobilaDTO> modelAutomobila) {
-		this.modelAutomobila = modelAutomobila;
-	}
 }

@@ -8,14 +8,12 @@
 
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -70,8 +68,7 @@ public class TSlikaVozila {
     protected CommonData commonData;
 
 	 //Jedna slika se odnosi na samo jedan autombil(druga strana bidirekcije)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Automobil automobil;
+    private Long automobilId;
 
 
     public Long getId() {
@@ -104,13 +101,13 @@ public class TSlikaVozila {
     }
 
 
-	public Automobil getAutomobil() {
-		return automobil;
+	public Long getAutomobilId() {
+		return automobilId;
 	}
 
 
-	public void setAutomobil(Automobil automobil) {
-		this.automobil = automobil;
+	public void setAutomobil(Long automobilId) {
+		this.automobilId = automobilId;
 	}
 
 

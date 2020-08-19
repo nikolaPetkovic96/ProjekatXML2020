@@ -1,10 +1,18 @@
 package com.example.LoginReg;
 
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginRegController {
+	
 	@GetMapping(value="testLogin")
 	public String TestLoginController() {
 		
@@ -15,4 +23,7 @@ public class LoginRegController {
 		
 		return "uspesno nalazenje servisa registracije";
 	}
+	
+
+
 }

@@ -100,12 +100,34 @@ public class TAdresa {
     @XmlElement(name = "Broj")
     protected int broj;
     
-	@OneToOne(fetch = FetchType.LAZY)
-    @XmlElement(name = "Kordinate")
-    protected TAdresa.Kordinate kordinate;
+	@Column(name = "geo_duzina", nullable = false)
+    @XmlAttribute(name = "longitude")
+    protected float longitude;
+    
+	@Column(name = "geo_sirina", nullable = false)
+    @XmlAttribute(name = "latitude")
+    protected float latitude;
 
 
-    public Long getId() {
+
+    public TAdresa() {
+		super();
+	}
+
+
+	public TAdresa(Long id, String mesto, int postanskiBroj, String ulica, int broj, float longitude, float latitude) {
+		super();
+		this.id = id;
+		this.mesto = mesto;
+		this.postanskiBroj = postanskiBroj;
+		this.ulica = ulica;
+		this.broj = broj;
+		this.longitude = longitude;
+		this.latitude = latitude;
+	}
+
+
+	public Long getId() {
         return id;
     }
 
@@ -155,94 +177,24 @@ public class TAdresa {
     }
 
 
-    public TAdresa.Kordinate getKordinate() {
-        return kordinate;
+	public Float getLongitude() {
+        return longitude;
     }
 
 
-    
-    public void setKordinate(TAdresa.Kordinate value) {
-        this.kordinate = value;
+    public void setLongitude(Float value) {
+        this.longitude = value;
     }
 
 
-    /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;attribute name="longitude">
-     *         &lt;simpleType>
-     *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}float">
-     *             &lt;minInclusive value="0"/>
-     *           &lt;/restriction>
-     *         &lt;/simpleType>
-     *       &lt;/attribute>
-     *       &lt;attribute name="latitude">
-     *         &lt;simpleType>
-     *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}float">
-     *             &lt;minInclusive value="0"/>
-     *           &lt;/restriction>
-     *         &lt;/simpleType>
-     *       &lt;/attribute>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
-     */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "")
-    @Entity
-    public static class Kordinate {
-
-    	@Id
-    	@GeneratedValue(strategy = GenerationType.IDENTITY)
-        @XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
-        protected Long id;
-    	
-    	@Column(name = "longitude", nullable = false)
-        @XmlAttribute(name = "longitude")
-        protected Float longitude;
-        
-    	@Column(name = "latitude", nullable = false)
-        @XmlAttribute(name = "latitude")
-        protected Float latitude;
-
-       
-        public Long getId() {
-			return id;
-		}
-
-
-		public void setId(Long id) {
-			this.id = id;
-		}
-
-
-		public Float getLongitude() {
-            return longitude;
-        }
-
-
-        public void setLongitude(Float value) {
-            this.longitude = value;
-        }
-
-
-        public Float getLatitude() {
-            return latitude;
-        }
-
-        public void setLatitude(Float value) {
-            this.latitude = value;
-        }
-
+    public float getLatitude() {
+        return latitude;
     }
+
+    public void setLatitude(float value) {
+        this.latitude = value;
+    }
+
+
 
 }

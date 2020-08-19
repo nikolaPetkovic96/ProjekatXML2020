@@ -10,23 +10,23 @@ public class CommonDataDTO {
 	private Long id;
 	private Date datumKreiranja;
 	private Date datumIzmene;
-	private TUserDTO user;
+	private Long userId;
 	
 	public CommonDataDTO() {
 		
 	}
 	
-	public CommonDataDTO(Long id, TUser user,Date datumKreiranja, Date datumIzmene) {
+	public CommonDataDTO(Long id, Long userId,Date datumKreiranja, Date datumIzmene) {
 		super();
 		this.id = id;
 		this.datumKreiranja = datumKreiranja;
 		this.datumIzmene = datumIzmene;
-		this.user=new TUserDTO(user);
+		this.userId = userId;
 		
 	}
 
 	public CommonDataDTO(CommonData c) {
-		this(c.getId(), c.getKorisnik(),c.getDatumKreiranja(), c.getDatumIzmene());
+		this(c.getId(), c.getUserid(),c.getDatumKreiranja(), c.getDatumIzmene());
 	}
 
 	public Long getId() {
@@ -48,11 +48,14 @@ public class CommonDataDTO {
 		this.datumIzmene = datumIzmene;
 	}
 
-	public TUserDTO getUser() {
-		return user;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUser(TUserDTO user) {
-		this.user = user;
-	}	
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	
+	
+
 }

@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Messages.DTO.AutomobilDTO;
 import com.example.Messages.DTO.KomentarDTO;
 import com.example.Messages.DTO.OcenaDTO;
 import com.example.Messages.DTO.OglasDTO;
 import com.example.Messages.DTO.PorukaDTO;
 import com.example.Messages.DTO.RezervacijaDTO;
-import com.example.Messages.DTO.TSlikaVozilaDTO;
 import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.Komentar;
 import com.example.Messages.SchemaToJava2.model.entitet.Ocena;

@@ -5,29 +5,17 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
-import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
-import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
-
 
 /**
  * <p>Java class for TModel_automobila complex type.
@@ -63,34 +51,24 @@ public class TModelAutomobila {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 	
-	  
 	@Column(name = "naziv_modela", nullable = false)
     @XmlElement(name = "naziv_modela", required = true)
     protected String nazivModela;
 	
-	@OneToOne(fetch = FetchType.LAZY)
     @XmlElement(name = "Common_data", required = true)
-    protected CommonData commonData;
+    protected Long commonDataId;
     
 	//Jedan TModelAutomobilaa se odnosi na samo jednu TMarkaAutomobila(druga strana bidirekcije)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private TMarkaAutomobila markaAutomobila;
-
-    //Jedan model ima vise automobila, id marke se dodaje kao nova kolona u tabeli TMarkaAutombila
-  	@OneToMany(mappedBy = "modelAutomobila", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  	protected List<Automobil> automobil;
+    private Long markaAutomobilaId;
 
   	
-    public TModelAutomobila(Long id, String nazivModela, CommonData commonData, TMarkaAutomobila markaAutomobila,
-			List<Automobil> automobil) {
+    public TModelAutomobila(Long id, String nazivModela, Long commonDataId, Long markaAutomobilaId) {
 		super();
 		this.id = id;
 		this.nazivModela = nazivModela;
-		this.commonData = commonData;
-		this.markaAutomobila = markaAutomobila;
-		this.automobil = automobil;
+		this.commonDataId = commonDataId;
+		this.markaAutomobilaId = markaAutomobilaId;
 	}
-    
 
 	public TModelAutomobila() {
 		super();
@@ -115,36 +93,20 @@ public class TModelAutomobila {
         this.nazivModela = value;
     }
 
-
-    public CommonData getCommonData() {
-        return commonData;
-    }
-
-
-    public void setCommonData(CommonData value) {
-        this.commonData = value;
-    }
-
-
-	public TMarkaAutomobila getMarkaAutomobila() {
-		return markaAutomobila;
+	public Long getCommonDataId() {
+		return commonDataId;
 	}
 
-
-	public void setMarkaAutomobila(TMarkaAutomobila markaAutomobila) {
-		this.markaAutomobila = markaAutomobila;
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
 	}
 
-
-	public List<Automobil> getAutomobil() {
-		return automobil;
+	public Long getMarkaAutomobilaId() {
+		return markaAutomobilaId;
 	}
 
-
-	public void setAutomobil(List<Automobil> automobil) {
-		this.automobil = automobil;
+	public void setMarkaAutomobilaId(Long markaAutomobilaId) {
+		this.markaAutomobilaId = markaAutomobilaId;
 	}
-    
-    
 
 }

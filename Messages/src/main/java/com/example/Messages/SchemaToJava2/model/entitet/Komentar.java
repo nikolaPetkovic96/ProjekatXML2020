@@ -165,9 +165,5 @@ public class Komentar {
 	public void setReg_korisnik(RegistrovaniKorisnik reg_korisnik) {
 		this.reg_korisnik = reg_korisnik;
 	}
-	
-	
-
-    
-    
+	   
 }

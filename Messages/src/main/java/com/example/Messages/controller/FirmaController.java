@@ -13,10 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.Messages.DTO.FirmaDTO;
+import com.example.Messages.DTO.KomentarDTO;
+import com.example.Messages.DTO.OglasDTO;
+import com.example.Messages.DTO.PorukaDTO;
+import com.example.Messages.SchemaToJava2.model.entitet.Komentar;
+import com.example.Messages.SchemaToJava2.model.entitet.Oglas;
+import com.example.Messages.SchemaToJava2.model.entitet.Poruka;
 import com.example.Messages.SchemaToJava2.model.user.Firma;
 import com.example.Messages.service.FirmaService;
 import com.example.Messages.service.KomentarService;
-import com.example.Messages.service.OcenaService;
+import com.example.Messages.service.OglasService;
 import com.example.Messages.service.PorukaService;
 
 public class FirmaController {
@@ -28,11 +34,15 @@ public class FirmaController {
 	private KomentarService komentarService;
 	
 	@Autowired
-	private OcenaService ocenaService;
+	private OglasService oglasService;
 	
 	@Autowired
 	private PorukaService porukaService;
 	
+	@RequestMapping(method=RequestMethod.GET, value="/FirmaTest", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getTest() {
+		return "Test";
+	}
 	
 	//GET ALL	
 	@RequestMapping(method=RequestMethod.GET, value="/Firma", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,7 +60,7 @@ public class FirmaController {
 	}
 	
 	//GET
-	//@PreAuthorize("hasRole('PACIJENT')")
+	//@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.GET, value="/Firma/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<FirmaDTO> getFirma(@PathVariable("id") Long id){
 		
@@ -73,26 +83,26 @@ public class FirmaController {
 		savedFirma.setNaziv(firmaDTO.getNaziv());			
 		savedFirma.setPoslovniMaticniBroj(firmaDTO.getPoslovniMaticniBroj());					
 		
-//			List<KomentarDTO> komentarDTO = regKorisnikDTO.getKomentar();
-//			ArrayList<Komentar> komentari = new ArrayList<Komentar>();
-//			//prebacivanje iz DTO u model
-//			for (KomentarDTO k : komentarDTO) {
-//				komentari.add(komentarService.findOne(k.getId()));
-//			}
-//			
-//			List<OcenaDTO> ocenaDTO = regKorisnikDTO.getOcena();
-//			ArrayList<Ocena> ocene = new ArrayList<Ocena>();
-//			//prebacivanje iz DTO u model
-//			for (OcenaDTO o : ocenaDTO) {
-//				ocene.add(ocenaService.findOne(o.getId()));
-//			}
-//			
-//			List<PorukaDTO> porukaDTO = regKorisnikDTO.getPoruka();
-//			ArrayList<Poruka> poruke = new ArrayList<Poruka>();
-//			//prebacivanje iz DTO u model
-//			for (PorukaDTO p : porukaDTO) {
-//				poruke.add(porukaService.findOne(p.getId()));
-//			}
+			List<KomentarDTO> komentarDTO = firmaDTO.getKomentar();
+			ArrayList<Komentar> komentari = new ArrayList<Komentar>();
+			//prebacivanje iz DTO u model
+			for (KomentarDTO k : komentarDTO) {
+				komentari.add(komentarService.findOne(k.getId()));
+			}
+			
+			List<OglasDTO> oglasDTO = firmaDTO.getOglas();
+			ArrayList<Oglas> oglasi = new ArrayList<Oglas>();
+			//prebacivanje iz DTO u model
+			for (OglasDTO o : oglasDTO) {
+				oglasi.add(oglasService.findOne(o.getId()));
+			}
+			
+			List<PorukaDTO> porukaDTO = firmaDTO.getPoruka();
+			ArrayList<Poruka> poruke = new ArrayList<Poruka>();
+			//prebacivanje iz DTO u model
+			for (PorukaDTO p : porukaDTO) {
+				poruke.add(porukaService.findOne(p.getId()));
+			}
 		
 		savedFirma = firmaService.addFirma(savedFirma);
 		return new ResponseEntity<>(new FirmaDTO(savedFirma), HttpStatus.CREATED);

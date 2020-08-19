@@ -172,13 +172,13 @@ public class ObjectFactory {
         return new Administrator();
     }
 
-    /**
-     * Create an instance of {@link TAdresa.Kordinate }
-     * 
-     */
-    public TAdresa.Kordinate createTAdresaKordinate() {
-        return new TAdresa.Kordinate();
-    }
+//    /**
+//     * Create an instance of {@link TAdresa.Kordinate }
+//     * 
+//     */
+//    public TAdresa.Kordinate createTAdresaKordinate() {
+//        return new TAdresa.Kordinate();
+//    }
 
     /**
      * Create an instance of {@link Oglas }

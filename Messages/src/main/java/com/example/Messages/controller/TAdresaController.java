@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Messages.DTO.TAdresaDTO;
 import com.example.Messages.SchemaToJava2.model.tentitet.TAdresa;
-import com.example.Messages.SchemaToJava2.model.tentitet.TAdresa.Kordinate;
 import com.example.Messages.service.TAdresaService;
-import com.example.Messages.service.TAdresaService.KordinateService;
 
 
 @RestController
@@ -25,8 +23,6 @@ public class TAdresaController {
 	
 	@Autowired
 	private TAdresaService TAdresaService;
-	@Autowired
-	private KordinateService kdServ;
 		
 	//GET ALL
 	@RequestMapping(method=RequestMethod.GET, value="/TAdresa", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -62,12 +58,8 @@ public class TAdresaController {
 			savedAdr.setMesto(tadresaDTO.getMesto());
 			savedAdr.setPostanskiBroj(tadresaDTO.getPostanskiBroj());
 			savedAdr.setUlica(tadresaDTO.getUlica());
-			
-			savedAdr.getKordinate().setId(tadresaDTO.getKordinate().getId());
-			savedAdr.getKordinate().setLatitude(tadresaDTO.getKordinate().getLatitude());
-			savedAdr.getKordinate().setLongitude(tadresaDTO.getKordinate().getLongitude());		
-			
-			savedAdr.setKordinate(kdServ.addKordinate(savedAdr.getKordinate()));	//cuva korodinate u bazi i ponovo ih dodeljuje adreso
+			savedAdr.setLatitude(tadresaDTO.getLatitude());
+			savedAdr.setLongitude(tadresaDTO.getLongitude());		
 			
 			savedAdr=TAdresaService.addTAdresa(savedAdr);//cuva adresu u bazi i ponovo je dodeljuje samoj sebi
 			return new ResponseEntity<>(new TAdresaDTO(savedAdr), HttpStatus.CREATED);
@@ -85,11 +77,9 @@ public class TAdresaController {
 			upd.setPostanskiBroj(dto.getPostanskiBroj());
 			upd.setUlica(dto.getUlica());
 			
-			upd.getKordinate().setId(dto.getId());
-			upd.getKordinate().setLatitude(dto.getKordinate().getLatitude());
-			upd.getKordinate().setLongitude(dto.getKordinate().getLongitude());
-			
-			upd.setKordinate(kdServ.updateKordinate(upd.getKordinate().getId(), upd.getKordinate()));
+		
+			upd.setLatitude(dto.getLatitude());
+			upd.setLongitude(dto.getLongitude());	
 			
 			upd=TAdresaService.updateTAdresa(upd.getId(), upd);
 			return new ResponseEntity<>(new TAdresaDTO(upd), HttpStatus.OK);

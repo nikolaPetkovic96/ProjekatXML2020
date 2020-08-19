@@ -23,8 +23,6 @@ public class TUserDTO {
 	
 	private TAdresa adresa;
 	
-	private List<CommonData> commonData;
-	
 	private List<Rezervacija> rezervacije;
 	
 
@@ -40,13 +38,11 @@ public class TUserDTO {
 				tUser.getEmail(),
 				tUser.getStatus(),
 				tUser.getAdresa(),
-				tUser.getCommonData(),
 				tUser.getRezervacije()
 			);
 	}
 
-	public TUserDTO(Long id, String korisnickoIme, String lozinka, String email, String status, TAdresa adresa,
-			List<CommonData> commonData, List<Rezervacija> rezervacije) {
+	public TUserDTO(Long id, String korisnickoIme, String lozinka, String email, String status, TAdresa adresa, List<Rezervacija> rezervacije) {
 		super();
 		this.id = id;
 		this.korisnickoIme = korisnickoIme;
@@ -54,7 +50,6 @@ public class TUserDTO {
 		this.email = email;
 		this.status = status;
 		this.adresa = adresa;
-		this.commonData = commonData;
 		this.rezervacije = rezervacije;
 	}
 
@@ -104,14 +99,6 @@ public class TUserDTO {
 
 	public void setAdresa(TAdresa adresa) {
 		this.adresa = adresa;
-	}
-
-	public List<CommonData> getCommonData() {
-		return commonData;
-	}
-
-	public void setCommonData(List<CommonData> commonData) {
-		this.commonData = commonData;
 	}
 
 	public List<Rezervacija> getRezervacije() {

@@ -106,20 +106,14 @@ public abstract class TUser /*implements UserDetails */ {
 	
 	//Jedan korisnik moze da izvrsi vise izmena (commonData) (u tabeli common_data se cuva id korisnika koji je izmenu izvrsio)
 	@OneToMany(mappedBy="korisnik",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<CommonData> commonData;
-	
-	//Jedan korisnik moze da izvrsi vise izmena (commonData) (u tabeli common_data se cuva id korisnika koji je izmenu izvrsio)
-	@OneToMany(mappedBy="korisnik",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Rezervacija> rezervacije;
 	
-//	@Column(name = "enabled")
-//	private boolean enabled;
-//	
-//	@Column(name = "last_password_reset_date")
-//	private Timestamp lastPasswordResetDate;
+	
+
+//DODATI KONSTURKTORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -177,16 +171,6 @@ public abstract class TUser /*implements UserDetails */ {
     public void setStatus(String value) {
         this.status = value;
     }
-
-
-	public List<CommonData> getCommonData() {
-		return commonData;
-	}
-
-
-	public void setCommonData(List<CommonData> commonData) {
-		this.commonData = commonData;
-	}
 
 
 	public List<Rezervacija> getRezervacije() {

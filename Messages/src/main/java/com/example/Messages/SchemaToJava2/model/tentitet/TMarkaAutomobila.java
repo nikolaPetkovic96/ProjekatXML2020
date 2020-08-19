@@ -5,7 +5,6 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
 import java.util.List;
@@ -24,7 +23,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 
 
@@ -75,27 +73,16 @@ public class TMarkaAutomobila {
     protected CommonData commonData;
 	
 	//Jedna marka ima vise modela, id marke se dodaje kao nova kolona u tabeli TMarkaAutombila
-	@OneToMany(mappedBy = "markaAutomobila", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Model_automobila", required = true)
-    protected List<TModelAutomobila> modelAutomobila;
-	
-	//Jedna marka ima vise automobila, id marke se dodaje kao nova kolona u tabeli TMarkaAutombila
-	@OneToMany(mappedBy = "markaAutomobila", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	 protected List<Automobil> automobil;
-	
 	
 	public TMarkaAutomobila() {
 		
 	}
 	
-    public TMarkaAutomobila(Long id, String nazivMarke, CommonData commonData, List<TModelAutomobila> modelAutomobila,
-			List<Automobil> automobil) {
+    public TMarkaAutomobila(Long id, String nazivMarke, CommonData commonData, List<TModelAutomobila> modelAutomobila) {
 		super();
 		this.id = id;
 		this.nazivMarke = nazivMarke;
 		this.commonData = commonData;
-		this.modelAutomobila = modelAutomobila;
-		this.automobil = automobil;
 	}
 
 
@@ -127,27 +114,5 @@ public class TMarkaAutomobila {
     public void setCommonData(CommonData value) {
         this.commonData = value;
     }
-
-
-	public List<TModelAutomobila> getModelAutomobila() {
-		return modelAutomobila;
-	}
-
-
-	public void setModelAutomobila(List<TModelAutomobila> modelAutomobila) {
-		this.modelAutomobila = modelAutomobila;
-	}
-
-
-	public List<Automobil> getAutomobil() {
-		return automobil;
-	}
-
-
-	public void setAutomobil(List<Automobil> automobil) {
-		this.automobil = automobil;
-	}
-
- 
 
 }

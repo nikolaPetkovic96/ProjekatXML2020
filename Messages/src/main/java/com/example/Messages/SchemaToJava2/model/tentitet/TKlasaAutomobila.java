@@ -8,24 +8,17 @@
 
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
-import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 
 
@@ -67,97 +60,48 @@ public class TKlasaAutomobila {
     @XmlElement(name = "naziv_klase", required = true)
     protected String nazivKlase;
 	
-	@OneToOne(fetch = FetchType.LAZY)
     @XmlElement(name = "Common_data", required = true)
-    protected CommonData commonData;
-	
-	//Jedna klasa ima vise automobila, id klase automobila se dodaje kao nova kolona u tabeli TMarkaAutombila
-  	@OneToMany(mappedBy = "klasaAutomobila", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  	 private List<Automobil> automobil;
+    protected Long commonDataId;
 
   	public TKlasaAutomobila() {
   		
   	}
   	
-    public TKlasaAutomobila(Long id, String nazivKlase, CommonData commonData, List<Automobil> automobil) {
+    public TKlasaAutomobila(Long id, String nazivKlase, Long commonDataId) {
 		super();
 		this.id = id;
 		this.nazivKlase = nazivKlase;
-		this.commonData = commonData;
-		this.automobil = automobil;
+		this.commonDataId = commonDataId;
 	}
 
-	/**
-     * Gets the value of the id property.
-     * 
-     */
+
     public Long getId() {
         return id;
     }
 
-    /**
-     * Sets the value of the id property.
-     * 
-     */
+
     public void setId(Long value) {
         this.id = value;
     }
 
-    /**
-     * Gets the value of the nazivKlase property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+
     public String getNazivKlase() {
         return nazivKlase;
     }
 
-    /**
-     * Sets the value of the nazivKlase property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
+
     public void setNazivKlase(String value) {
         this.nazivKlase = value;
     }
+    
 
-    /**
-     * Gets the value of the commonData property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CommonData }
-     *     
-     */
-    public CommonData getCommonData() {
-        return commonData;
-    }
-
-    /**
-     * Sets the value of the commonData property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CommonData }
-     *     
-     */
-    public void setCommonData(CommonData value) {
-        this.commonData = value;
-    }
-
-	public List<Automobil> getAutomobil() {
-		return automobil;
+	public Long getCommonDataId() {
+		return commonDataId;
 	}
+	
 
-	public void setAutomobil(List<Automobil> automobil) {
-		this.automobil = automobil;
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
 	}
-
     
 }

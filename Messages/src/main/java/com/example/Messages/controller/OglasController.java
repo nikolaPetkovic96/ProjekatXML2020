@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Messages.DTO.AdministratorDTO;
-import com.example.Messages.DTO.AutomobilDTO;
 import com.example.Messages.DTO.OglasDTO;
 import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
 import com.example.Messages.SchemaToJava2.model.entitet.Oglas;

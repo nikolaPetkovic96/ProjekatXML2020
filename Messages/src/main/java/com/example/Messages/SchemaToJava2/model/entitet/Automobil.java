@@ -21,7 +21,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -29,12 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-import com.example.Messages.SchemaToJava2.model.tentitet.TKlasaAutomobila;
-import com.example.Messages.SchemaToJava2.model.tentitet.TMarkaAutomobila;
-import com.example.Messages.SchemaToJava2.model.tentitet.TModelAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TSlikaVozila;
-import com.example.Messages.SchemaToJava2.model.tentitet.TTipGoriva;
-import com.example.Messages.SchemaToJava2.model.tentitet.TTipMenjaca;
+
 
 
 /**
@@ -69,55 +64,25 @@ import com.example.Messages.SchemaToJava2.model.tentitet.TTipMenjaca;
 @Entity
 public class Automobil {
 	
-	public Automobil() {
-		super();
-	}
-
-
-	public Automobil(Long id, TMarkaAutomobila markaAutomobila, TModelAutomobila modelAutomobila,
-			TKlasaAutomobila klasaAutomobila, TTipGoriva vrstaGoriva, TTipMenjaca tipMenjaca, float predjenaKilometraza,
-			BigInteger planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu,
-			List<TSlikaVozila> slika, List<Komentar> komentar, List<Ocena> ocena) {
-		super();
-		this.id = id;
-		this.markaAutomobila = markaAutomobila;
-		this.modelAutomobila = modelAutomobila;
-		this.klasaAutomobila = klasaAutomobila;
-		this.vrstaGoriva = vrstaGoriva;
-		this.tipMenjaca = tipMenjaca;
-		this.predjenaKilometraza = predjenaKilometraza;
-		this.planiranaKilometraza = planiranaKilometraza;
-		this.collisionDamageWaiver = collisionDamageWaiver;
-		this.brojSedistaZaDecu = brojSedistaZaDecu;
-		this.slika = slika;
-		this.komentar = komentar;
-		this.ocena = ocena;
-	}
-
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Marka_automobila", required = true)
-    protected TMarkaAutomobila markaAutomobila;
+    protected Long markaAutomobilaId;
     
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Model_automobila", required = true)
-    protected TModelAutomobila modelAutomobila;
+    protected Long modelAutomobilaId;
     
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Klasa_automobila", required = true)
-    protected TKlasaAutomobila klasaAutomobila;
-    
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    protected Long klasaAutomobilaId;
+
     @XmlElement(name = "Vrsta_goriva", required = true)
-    protected TTipGoriva vrstaGoriva;
+    protected Long vrstaGorivaId;
     
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @XmlElement(name = "Tip_menjaca", required = true)
-    protected TTipMenjaca tipMenjaca;
+    protected Long tipMenjacaId;
     
 	@Column(name = "predj_kilom", nullable = false)
     @XmlElement(name = "Predjena_kilometraza")
@@ -135,21 +100,28 @@ public class Automobil {
 	@Column(name = "br_sedista_za_decu", nullable = false)
     @XmlElement(name = "Broj_sedista_za_decu")
     protected int brojSedistaZaDecu;
-    
-    @OneToMany(mappedBy = "automobil", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Slika", required = true)
-    protected List<TSlikaVozila> slika;
+
 	
-	
-	//Jedan automobil ima vise komentara vezanih za sebe (u tabeli komentar se cuva id automobila na kojem se ona vrsi)
-	@OneToMany(mappedBy="automobil",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Komentar", required = true)
-    protected List<Komentar> komentar;
-	
-	//Jedan automobil ima vise ocena vezanih za sebe (u tabeli ocena se cuva id automobila na kojem se ona vrsi)
-	@OneToMany(mappedBy="automobil",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Ocena", required = true)
-    protected List<Ocena> ocena;
+	public Automobil() {
+		super();
+	}
+
+
+	public Automobil(Long id, Long markaAutomobilaId,Long modelAutomobilaId,
+			Long klasaAutomobilaId, Long vrstaGorivaId,Long tipMenjacaId, float predjenaKilometraza,
+			BigInteger planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu) {
+		super();
+		this.id = id;
+		this.markaAutomobilaId = markaAutomobilaId;
+		this.modelAutomobilaId = modelAutomobilaId;
+		this.klasaAutomobilaId = klasaAutomobilaId;
+		this.vrstaGorivaId = vrstaGorivaId;
+		this.tipMenjacaId = tipMenjacaId;
+		this.predjenaKilometraza = predjenaKilometraza;
+		this.planiranaKilometraza = planiranaKilometraza;
+		this.collisionDamageWaiver = collisionDamageWaiver;
+		this.brojSedistaZaDecu = brojSedistaZaDecu;
+	}
 
 
     public Long getId() {
@@ -161,56 +133,54 @@ public class Automobil {
         this.id = value;
     }
     
-    
 
-    
-    public TMarkaAutomobila getMarkaAutomobila() {
-		return markaAutomobila;
+	public Long getMarkaAutomobilaId() {
+		return markaAutomobilaId;
 	}
 
 
-	public void setMarkaAutomobila(TMarkaAutomobila markaAutomobila) {
-		this.markaAutomobila = markaAutomobila;
+	public void setMarkaAutomobilaId(Long markaAutomobilaId) {
+		this.markaAutomobilaId = markaAutomobilaId;
 	}
 
 
-	public TModelAutomobila getModelAutomobila() {
-		return modelAutomobila;
+	public Long getModelAutomobilaId() {
+		return modelAutomobilaId;
 	}
 
 
-	public void setModelAutomobila(TModelAutomobila modelAutomobila) {
-		this.modelAutomobila = modelAutomobila;
+	public void setModelAutomobilaId(Long modelAutomobilaId) {
+		this.modelAutomobilaId = modelAutomobilaId;
 	}
 
 
-	public TKlasaAutomobila getKlasaAutomobila() {
-		return klasaAutomobila;
+	public Long getKlasaAutomobilaId() {
+		return klasaAutomobilaId;
 	}
 
 
-	public void setKlasaAutomobila(TKlasaAutomobila klasaAutomobila) {
-		this.klasaAutomobila = klasaAutomobila;
+	public void setKlasaAutomobilaId(Long klasaAutomobilaId) {
+		this.klasaAutomobilaId = klasaAutomobilaId;
 	}
 
 
-	public TTipGoriva getVrstaGoriva() {
-		return vrstaGoriva;
+	public Long getVrstaGorivaId() {
+		return vrstaGorivaId;
 	}
 
 
-	public void setVrstaGoriva(TTipGoriva vrstaGoriva) {
-		this.vrstaGoriva = vrstaGoriva;
+	public void setVrstaGorivaId(Long vrstaGorivaId) {
+		this.vrstaGorivaId = vrstaGorivaId;
 	}
 
 
-	public TTipMenjaca getTipMenjaca() {
-		return tipMenjaca;
+	public Long getTipMenjacaId() {
+		return tipMenjacaId;
 	}
 
 
-	public void setTipMenjaca(TTipMenjaca tipMenjaca) {
-		this.tipMenjaca = tipMenjaca;
+	public void setTipMenjacaId(Long tipMenjacaId) {
+		this.tipMenjacaId = tipMenjacaId;
 	}
 
 
@@ -252,42 +222,5 @@ public class Automobil {
 	public void setBrojSedistaZaDecu(int brojSedistaZaDecu) {
 		this.brojSedistaZaDecu = brojSedistaZaDecu;
 	}
-
-
-	public List<TSlikaVozila> getSlika() {
-		return slika;
-	}
-
-
-	public void setSlika(List<TSlikaVozila> slika) {
-		this.slika = slika;
-	}
-
-
-	public List<Komentar> getKomentar() {
-        if (komentar == null) {
-            komentar = new ArrayList<Komentar>();
-        }
-        return this.komentar;
-    }
-
-  
-    public List<Ocena> getOcena() {
-        if (ocena == null) {
-            ocena = new ArrayList<Ocena>();
-        }
-        return this.ocena;
-    }
-
-
-	public void setKomentar(List<Komentar> komentar) {
-		this.komentar = komentar;
-	}
-
-
-	public void setOcena(List<Ocena> ocena) {
-		this.ocena = ocena;
-	}
-
     
 }

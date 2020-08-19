@@ -5,21 +5,20 @@ import com.example.Messages.SchemaToJava2.model.tentitet.TModelAutomobila;
 public class TModelAutomobilaDTO {
 	private Long id;
 	private String nazivModela;
-	private CommonDataDTO commonData;
-    private TMarkaAutomobilaDTO markaAutomobila;
+	private Long commonDataId;
+    private Long markaAutomobilaId;
     
 	public TModelAutomobilaDTO() {}
 	
-	public TModelAutomobilaDTO(Long id, String nazivModela, CommonDataDTO commonData,
-			TMarkaAutomobilaDTO markaAutomobila) {
+	public TModelAutomobilaDTO(Long id, String nazivModela, Long commonDataId, Long markaAutomobilaId) {
 		super();
 		this.id = id;
 		this.nazivModela = nazivModela;
-		this.commonData = commonData;
-		this.markaAutomobila = markaAutomobila;
+		this.commonDataId = commonDataId;
+		this.markaAutomobilaId = markaAutomobilaId;
 	}
 	public TModelAutomobilaDTO(TModelAutomobila tm) {
-		this(tm.getId(),tm.getNazivModela(),new CommonDataDTO(tm.getCommonData()),new TMarkaAutomobilaDTO(tm.getMarkaAutomobila()));
+		this(tm.getId(),tm.getNazivModela(), tm.getMarkaAutomobilaId(), tm.getCommonDataId());
 	}
 	public Long getId() {
 		return id;
@@ -33,16 +32,21 @@ public class TModelAutomobilaDTO {
 	public void setNazivModela(String nazivModela) {
 		this.nazivModela = nazivModela;
 	}
-	public CommonDataDTO getCommonData() {
-		return commonData;
+
+	public Long getCommonDataId() {
+		return commonDataId;
 	}
-	public void setCommonData(CommonDataDTO commonData) {
-		this.commonData = commonData;
+
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
 	}
-	public TMarkaAutomobilaDTO getMarkaAutomobila() {
-		return markaAutomobila;
+
+	public Long getMarkaAutomobilaId() {
+		return markaAutomobilaId;
 	}
-	public void setMarkaAutomobila(TMarkaAutomobilaDTO markaAutomobila) {
-		this.markaAutomobila = markaAutomobila;
-	}	
+
+	public void setMarkaAutomobilaId(Long markaAutomobilaId) {
+		this.markaAutomobilaId = markaAutomobilaId;
+	}
+
 }

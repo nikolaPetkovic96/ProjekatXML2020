@@ -19,9 +19,9 @@ public class FirmaService {
 	private  FirmaRepository  firmaRepository;
 	
 	public List< Firma> getAllFirma(){
-		List< Firma>  firmaKlinCentra = new ArrayList<>();
-			firmaRepository.findAll().forEach(firmaKlinCentra::add);
-			return firmaKlinCentra;
+		List< Firma>  firma = new ArrayList<>();
+			firmaRepository.findAll().forEach(firma::add);
+			return firma;
 		}
 
 		public Firma findOne(Long id) {
@@ -33,18 +33,18 @@ public class FirmaService {
 		            throw new Exception(
 		                    "Id mora biti null prilikom perzistencije novog entiteta.");
 		        }
-			  Firma savedFirmaKlinCentra = firmaRepository.save(firma);
-		        return savedFirmaKlinCentra;
+			  Firma savedFirma = firmaRepository.save(firma);
+		        return savedFirma;
 			
 		}
 		
 		public Firma updateFirma(Long id, Firma firma) throws Exception {
-			Optional<Firma> firmaKlinCentraToUpadet = firmaRepository.findById(id);
-			if (firmaKlinCentraToUpadet == null) {
+			Optional<Firma> firmaToUpadet = firmaRepository.findById(id);
+			if (firmaToUpadet == null) {
 		           throw new Exception("Trazeni entitet nije pronadjen.");
 		    }
-			Firma updateFirmaKilCentra = firmaRepository.save(firma);
-			return updateFirmaKilCentra;
+			Firma updateFirma = firmaRepository.save(firma);
+			return updateFirma;
 		}
 		
 		public void deleteFirma(Long id) {

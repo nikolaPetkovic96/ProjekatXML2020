@@ -9,21 +9,16 @@ package com.example.Messages.SchemaToJava2.model.entitet;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-
-import com.example.Messages.SchemaToJava2.model.user.TUser;
 
 /**
  * <p>
@@ -53,11 +48,11 @@ import com.example.Messages.SchemaToJava2.model.user.TUser;
 @XmlType(name = "common_data", namespace = "http://www.ftn.uns.ac.rs/AdminKlijent", propOrder = { "datumKreiranja",
 		"datumIzmene", "korisnik" })
 @Entity
-public abstract class CommonData {
+public class CommonData {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
 
 	@Column(name = "datum_kreiranja", nullable = false)
@@ -70,25 +65,25 @@ public abstract class CommonData {
 	@XmlSchemaType(name = "dateTime")
 	protected Date datumIzmene;
 
-	// Jedna promena(commonData) se odnosi na samo jednog korisnika(druga strana
-	// bidirekcije)
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	// Jedna promena(commonData) se odnosi na samo jednog korisnika
 	@XmlElement(name = "Korisnik", required = true)
-	protected TUser korisnik;
-
-	public CommonData(Long id, Date datumKreiranja, Date datumIzmene, TUser korisnik) {
-		super();
-		this.id = id;
-		this.datumKreiranja = datumKreiranja;
-		this.datumIzmene = datumIzmene;
-		this.korisnik = korisnik;
-	}
-
-
+	@Column(name = "korisnik_id")
+	protected Long userId;
+	
 
 	public CommonData() {
 		super();
 	}
+	
+
+	public CommonData(Long id, Date datumKreiranja, Date datumIzmene, Long userId) {
+		super();
+		this.id = id;
+		this.datumKreiranja = datumKreiranja;
+		this.datumIzmene = datumIzmene;
+		this.userId = userId;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -113,13 +108,13 @@ public abstract class CommonData {
 	public void setDatumIzmene(Date value) {
 		this.datumIzmene = value;
 	}
-
-	public TUser getKorisnik() {
-		return korisnik;
+	
+	public Long getUserid() {
+		return userId;
 	}
 
-	public void setKorisnik(TUser value) {
-		this.korisnik = value;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 }

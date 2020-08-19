@@ -6,12 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Messages.DTO.CenovnikDTO;
 import com.example.Messages.DTO.CommonDataDTO;
-import com.example.Messages.DTO.OglasDTO;
-import com.example.Messages.SchemaToJava2.model.entitet.Cenovnik;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
-import com.example.Messages.SchemaToJava2.model.entitet.Oglas;
 import com.example.Messages.service.CommonDataService;
 import com.example.Messages.service.TUserService;
 
@@ -26,8 +22,6 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class CommonDataController {
 	
-	@Autowired
-	private TUserService tUserService;
 	@Autowired
 	private CommonDataService commonDataService;
 	
@@ -50,7 +44,7 @@ public class CommonDataController {
 		return new ResponseEntity<>(new CommonDataDTO(cd), HttpStatus.OK);
 	}
 	
-	/*@RequestMapping(method=RequestMethod.POST, value="/CommonData", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method=RequestMethod.POST, value="/CommonData", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CommonDataDTO> addCommonData(@RequestBody CommonDataDTO cdDTO) throws Exception{
 		if(cdDTO == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -61,12 +55,11 @@ public class CommonDataController {
 		savedCD.setId(cdDTO.getId());
 		savedCD.setDatumIzmene(cdDTO.getDatumIzmene());
 		savedCD.setDatumKreiranja(cdDTO.getDatumKreiranja());
-		savedCD.setKorisnik(null);
+		savedCD.setUserId(cdDTO.getUserId());
 		
-		//savedCD.setKorisnik
-		
-		//return new ResponseEntity<>(new CommonData(savedCD), HttpStatus.CREATED);
-	}*/
+		savedCD = commonDataService.addCommonData(savedCD);//cuva adresu u bazi i ponovo je dodeljuje samoj sebi
+		return new ResponseEntity<>(new CommonDataDTO(savedCD), HttpStatus.CREATED);
+	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/CommonData", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CommonDataDTO> updateCommonData(@RequestBody CommonDataDTO commonDataDTO) throws Exception{
@@ -80,8 +73,8 @@ public class CommonDataController {
 		updatedCD.setDatumIzmene(commonDataDTO.getDatumIzmene());
 		updatedCD.setDatumKreiranja(commonDataDTO.getDatumKreiranja());
 		
-		
-		return new ResponseEntity<>(new CommonDataDTO(updatedCD),HttpStatus.OK);
+		updatedCD = commonDataService.updateCommonData(updatedCD.getId(),updatedCD);
+		return new ResponseEntity<>(new CommonDataDTO(updatedCD), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/CommonData/{id}", method=RequestMethod.DELETE)

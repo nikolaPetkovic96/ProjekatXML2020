@@ -1,7 +1,6 @@
 package com.example.Messages.DTO;
 
 import com.example.Messages.SchemaToJava2.model.tentitet.TAdresa;
-import com.example.Messages.SchemaToJava2.model.tentitet.TAdresa.Kordinate;
 
 public class TAdresaDTO {
 	private Long id;
@@ -9,18 +8,20 @@ public class TAdresaDTO {
 	private int postanskiBroj;
 	private String ulica;
 	private int broj;
-	private TAdresaDTO.KordinateDTO kordinate;	
+	private float longitude;
+	private float latitude;
 	
 	public TAdresaDTO() {}
 	
-	public TAdresaDTO(Long id, String mesto, int postanskiBroj, String ulica, int broj, KordinateDTO kordinate) {
+	public TAdresaDTO(Long id, String mesto, int postanskiBroj, String ulica, int broj, float longitude, float latitude) {
 		super();
 		this.id = id;
 		this.mesto = mesto;
 		this.postanskiBroj = postanskiBroj;
 		this.ulica = ulica;
 		this.broj = broj;
-		this.kordinate = kordinate;
+		this.longitude = longitude;
+		this.latitude = latitude;
 	}
 	public TAdresaDTO(TAdresa a) {
 		super();
@@ -29,7 +30,8 @@ public class TAdresaDTO {
 		this.postanskiBroj = a.getPostanskiBroj();
 		this.ulica = a.getUlica();
 		this.broj = a.getBroj();
-		this.kordinate =new KordinateDTO(a.getKordinate());	
+		this.longitude = a.getLongitude();
+		this.latitude = a.getLatitude();
 	}
 
 	public Long getId() {
@@ -62,51 +64,19 @@ public class TAdresaDTO {
 	public void setBroj(int broj) {
 		this.broj = broj;
 	}
-	public TAdresaDTO.KordinateDTO getKordinate() {
-		return kordinate;
+	public Float getLongitude() {
+		return longitude;
 	}
-	public void setKordinate(TAdresaDTO.KordinateDTO kordinate) {
-		this.kordinate = kordinate;
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
 	}
-	////Klasa za kordinate
-	public static class KordinateDTO{
-		private Long id;
-		private Float longitude;
-		private Float latitude;
-		
-		public KordinateDTO(Long id, Float longitude, Float latitude) {
-			super();
-			this.id = id;
-			this.longitude = longitude;
-			this.latitude = latitude;
-		}
 
-		public KordinateDTO(Kordinate k) {			
-			this(k.getId(),k.getLongitude(),k.getLatitude());
-		}
+	public float getLatitude() {
+		return latitude;
+	}
 
-		public Long getId() {
-			return id;
-		}
-
-		public void setId(Long id) {
-			this.id = id;
-		}
-
-		public Float getLongitude() {
-			return longitude;
-		}
-
-		public void setLongitude(Float longitude) {
-			this.longitude = longitude;
-		}
-
-		public Float getLatitude() {
-			return latitude;
-		}
-
-		public void setLatitude(Float latitude) {
-			this.latitude = latitude;
-		}		
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
 	}
 }

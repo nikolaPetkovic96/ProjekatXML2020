@@ -1,5 +1,6 @@
 package com.example.Messages.DTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.Messages.SchemaToJava2.model.entitet.Komentar;
@@ -15,18 +16,18 @@ public class FirmaDTO {
 
 	 	private String poslovniMaticniBroj;
 	    
-	 	private List<Komentar> komentar;
+	 	private List<KomentarDTO> komentar;
 	    
-	 	private List<Oglas> oglas;
+	 	private List<OglasDTO> oglas;
 		
-	 	private List<Poruka> poruka;
+	 	private List<PorukaDTO> poruka;
 
 		public FirmaDTO() {
 			super();
 		}
 
-		public FirmaDTO(Long id, String naziv, String poslovniMaticniBroj, String ime, String prezime, String jmbg,
-				List<Komentar> komentar, List<Oglas> oglas, List<Poruka> poruka) {
+		public FirmaDTO(Long id, String naziv, String poslovniMaticniBroj, List<KomentarDTO> komentar,
+				List<OglasDTO> oglas, List<PorukaDTO> poruka) {
 			super();
 			this.id = id;
 			this.naziv = naziv;
@@ -36,14 +37,32 @@ public class FirmaDTO {
 			this.poruka = poruka;
 		}
 
+
+
 		public FirmaDTO(Firma firma) {
 			super();
 			this.id = firma.getId();
 			this.naziv = firma.getNaziv();
 			this.poslovniMaticniBroj = firma.getPoslovniMaticniBroj();
-			this.komentar = firma.getKomentar();
-			this.oglas = firma.getOglas();
-			this.poruka = firma.getPoruka();
+			
+//			this.komentar = firma.getKomentar();
+			List<Komentar> tempKomentari = firma.getKomentar();
+			komentar = new ArrayList<KomentarDTO>();
+			for(Komentar k : tempKomentari) {
+				komentar.add(new KomentarDTO(k));
+			}
+//			this.oglas = firma.getOglas();
+			List<Oglas> tempOglasi = firma.getOglas();
+			oglas = new ArrayList<OglasDTO>();
+			for(Oglas o : tempOglasi) {
+				oglas.add(new OglasDTO(o));
+			}
+//			this.poruka = firma.getPoruka();
+			List<Poruka> tempPoruke= firma.getPoruka();
+			poruka = new ArrayList<PorukaDTO>();
+			for(Poruka p : tempPoruke) {
+				poruka.add(new PorukaDTO(p));
+			}
 		}
 		
 		public Long getId() {
@@ -70,28 +89,32 @@ public class FirmaDTO {
 			this.poslovniMaticniBroj = poslovniMaticniBroj;
 		}
 
-		public List<Komentar> getKomentar() {
+
+		public List<KomentarDTO> getKomentar() {
 			return komentar;
 		}
 
-		public void setKomentar(List<Komentar> komentar) {
+		public void setKomentar(List<KomentarDTO> komentar) {
 			this.komentar = komentar;
 		}
 
-		public List<Oglas> getOglas() {
+
+		public List<OglasDTO> getOglas() {
 			return oglas;
 		}
 
-		public void setOglas(List<Oglas> oglas) {
+		public void setOglas(List<OglasDTO> oglas) {
 			this.oglas = oglas;
 		}
 
-		public List<Poruka> getPoruka() {
+		public List<PorukaDTO> getPoruka() {
 			return poruka;
 		}
 
-		public void setPoruka(List<Poruka> poruka) {
+		public void setPoruka(List<PorukaDTO> poruka) {
 			this.poruka = poruka;
 		}
+
+	
 
 }
