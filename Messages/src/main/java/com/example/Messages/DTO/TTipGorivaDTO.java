@@ -5,18 +5,18 @@ import com.example.Messages.SchemaToJava2.model.tentitet.TTipGoriva;
 public class TTipGorivaDTO {
 	private Long id;
 	private String nazivTipa;
-	private CommonDataDTO commonData;
+	private Long commonDataId;
 	
 	public TTipGorivaDTO() {}
     
-	public TTipGorivaDTO(Long id, String nazivTipa, CommonDataDTO commonData) {
+	public TTipGorivaDTO(Long id, String nazivTipa, Long commonDataId) {
 		super();
 		this.id = id;
 		this.nazivTipa = nazivTipa;
-		this.commonData = commonData;
+		this.commonDataId = commonDataId;
 	}
 	public TTipGorivaDTO(TTipGoriva tt) {
-		this(tt.getId(),tt.getNazivTipa(),new CommonDataDTO(tt.getCommonData()));
+		this(tt.getId(),tt.getNazivTipa(), tt.getCommonDataId());
 	}
 	public Long getId() {
 		return id;
@@ -30,10 +30,11 @@ public class TTipGorivaDTO {
 	public void setNazivTipa(String nazivTipa) {
 		this.nazivTipa = nazivTipa;
 	}
-	public CommonDataDTO getCommonData() {
-		return commonData;
+	public Long getCommonDataId() {
+		return commonDataId;
 	}
-	public void setCommonData(CommonDataDTO commonData) {
-		this.commonData = commonData;
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
 	}
+
 }

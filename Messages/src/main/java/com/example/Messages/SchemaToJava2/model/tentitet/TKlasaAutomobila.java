@@ -61,6 +61,7 @@ public class TKlasaAutomobila {
     protected String nazivKlase;
 	
     @XmlElement(name = "Common_data", required = true)
+    @Column(name = "commonDataId", nullable = false)
     protected Long commonDataId;
 
   	public TKlasaAutomobila() {

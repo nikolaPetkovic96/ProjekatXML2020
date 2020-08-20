@@ -5,24 +5,17 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
-import com.example.Messages.SchemaToJava2.model.entitet.Automobil;
-import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
-
 
 /**
  * <p>Java class for TSlika_vozila complex type.
@@ -63,42 +56,52 @@ public class TSlikaVozila {
     @XmlElement(required = true)
     protected byte[] slika;
     
-	@OneToOne(fetch = FetchType.LAZY)
+	
     @XmlElement(name = "Common_data", required = true)
-    protected CommonData commonData;
+    @Column(name = "common_data_id", nullable = false)
+    protected Long commonDataId;
 
 	 //Jedna slika se odnosi na samo jedan autombil(druga strana bidirekcije)
+    @Column(name = "automobil_id", nullable = false)
     private Long automobilId;
 
+
+	public TSlikaVozila() {
+		super();
+	}
+
+	public TSlikaVozila(Long id, byte[] slika, Long commonDataId, Long automobilId) {
+		super();
+		this.id = id;
+		this.slika = slika;
+		this.commonDataId = commonDataId;
+		this.automobilId = automobilId;
+	}
 
     public Long getId() {
         return id;
     }
 
- 
     public void setId(Long value) {
         this.id = value;
     }
-
 
     public byte[] getSlika() {
         return slika;
     }
 
-
     public void setSlika(byte[] value) {
         this.slika = ((byte[]) value);
     }
 
+    
+	public Long getCommonDataId() {
+		return commonDataId;
+	}
 
-    public CommonData getCommonData() {
-        return commonData;
-    }
-
-
-    public void setCommonData(CommonData value) {
-        this.commonData = value;
-    }
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
+	}
 
 
 	public Long getAutomobilId() {
@@ -106,7 +109,7 @@ public class TSlikaVozila {
 	}
 
 
-	public void setAutomobil(Long automobilId) {
+	public void setAutomobilId(Long automobilId) {
 		this.automobilId = automobilId;
 	}
 

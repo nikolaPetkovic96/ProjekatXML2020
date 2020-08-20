@@ -5,19 +5,19 @@ import com.example.Messages.SchemaToJava2.model.tentitet.TTipMenjaca;
 public class TTipMenjacaDTO {
     private Long id;
     private String nazivMenjaca;
-    private CommonDataDTO commonData;
+    private Long commonDataId;
     
     public TTipMenjacaDTO() {}
     
-	public TTipMenjacaDTO(Long id, String nazivMenjaca, CommonDataDTO commonData) {
+	public TTipMenjacaDTO(Long id, String nazivMenjaca, Long commonDataId) {
 		super();
 		this.id = id;
 		this.nazivMenjaca = nazivMenjaca;
-		this.commonData = commonData;
+		this.commonDataId = commonDataId;
 	}
     
 	public TTipMenjacaDTO(TTipMenjaca tt) {
-		this(tt.getId(),tt.getNazivMenjaca(),new CommonDataDTO(tt.getCommonData()));
+		this(tt.getId(),tt.getNazivMenjaca(), tt.getCommonDataId());
 	}
 	
 	public Long getId() {
@@ -36,11 +36,12 @@ public class TTipMenjacaDTO {
 		this.nazivMenjaca = nazivMenjaca;
 	}
 
-	public CommonDataDTO getCommonData() {
-		return commonData;
+	public Long getCommonDataId() {
+		return commonDataId;
 	}
 
-	public void setCommonData(CommonDataDTO commonData) {
-		this.commonData = commonData;
-	}	
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
+	}
+
 }

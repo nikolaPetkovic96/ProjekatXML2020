@@ -7,6 +7,7 @@
 
 package com.example.Messages.SchemaToJava2.model.entitet;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -58,12 +59,12 @@ public class CommonData {
 	@Column(name = "datum_kreiranja", nullable = false)
 	@XmlElement(name = "Datum_kreiranja", required = true)
 	@XmlSchemaType(name = "dateTime")
-	protected Date datumKreiranja;
+	protected LocalDateTime datumKreiranja;
 
 	@Column(name = "datum_izmene")
 	@XmlElement(name = "Datum_izmene", required = true)
 	@XmlSchemaType(name = "dateTime")
-	protected Date datumIzmene;
+	protected LocalDateTime datumIzmene;
 
 	// Jedna promena(commonData) se odnosi na samo jednog korisnika
 	@XmlElement(name = "Korisnik", required = true)
@@ -76,7 +77,7 @@ public class CommonData {
 	}
 	
 
-	public CommonData(Long id, Date datumKreiranja, Date datumIzmene, Long userId) {
+	public CommonData(Long id, LocalDateTime datumKreiranja, LocalDateTime datumIzmene, Long userId) {
 		super();
 		this.id = id;
 		this.datumKreiranja = datumKreiranja;
@@ -93,19 +94,19 @@ public class CommonData {
 		this.id = id;
 	}
 
-	public Date getDatumKreiranja() {
+	public LocalDateTime  getDatumKreiranja() {
 		return datumKreiranja;
 	}
 
-	public void setDatumKreiranja(Date value) {
+	public void setDatumKreiranja(LocalDateTime  value) {
 		this.datumKreiranja = value;
 	}
 
-	public Date getDatumIzmene() {
+	public LocalDateTime  getDatumIzmene() {
 		return datumIzmene;
 	}
 
-	public void setDatumIzmene(Date value) {
+	public void setDatumIzmene(LocalDateTime  value) {
 		this.datumIzmene = value;
 	}
 	

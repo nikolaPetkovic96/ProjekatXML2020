@@ -1,22 +1,23 @@
 package com.example.Messages.DTO;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
-import com.example.Messages.SchemaToJava2.model.user.TUser;
+//import com.example.Messages.SchemaToJava2.model.user.TUser;
 
 public class CommonDataDTO {
 
 	private Long id;
-	private Date datumKreiranja;
-	private Date datumIzmene;
+	private LocalDateTime datumKreiranja;
+	private LocalDateTime datumIzmene;
 	private Long userId;
 	
 	public CommonDataDTO() {
 		
 	}
 	
-	public CommonDataDTO(Long id, Long userId,Date datumKreiranja, Date datumIzmene) {
+	public CommonDataDTO(Long id, Long userId, LocalDateTime  datumKreiranja, LocalDateTime  datumIzmene) {
 		super();
 		this.id = id;
 		this.datumKreiranja = datumKreiranja;
@@ -35,16 +36,16 @@ public class CommonDataDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getDatumKreiranja() {
+	public LocalDateTime  getDatumKreiranja() {
 		return datumKreiranja;
 	}
-	public void setDatumKreiranja(Date datumKreiranja) {
+	public void setDatumKreiranja(LocalDateTime  datumKreiranja) {
 		this.datumKreiranja = datumKreiranja;
 	}
-	public Date getDatumIzmene() {
+	public LocalDateTime  getDatumIzmene() {
 		return datumIzmene;
 	}
-	public void setDatumIzmene(Date datumIzmene) {
+	public void setDatumIzmene(LocalDateTime  datumIzmene) {
 		this.datumIzmene = datumIzmene;
 	}
 

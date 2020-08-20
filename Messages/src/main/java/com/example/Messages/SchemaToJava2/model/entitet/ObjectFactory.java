@@ -17,13 +17,13 @@ import com.example.Messages.SchemaToJava2.model.tentitet.TAdresa;
 import com.example.Messages.SchemaToJava2.model.tentitet.TKlasaAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TMarkaAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TModelAutomobila;
-import com.example.Messages.SchemaToJava2.model.tentitet.TSlikaVozila;
-import com.example.Messages.SchemaToJava2.model.tentitet.TTipGoriva;
-import com.example.Messages.SchemaToJava2.model.tentitet.TTipMenjaca;
-import com.example.Messages.SchemaToJava2.model.user.Administrator;
-import com.example.Messages.SchemaToJava2.model.user.Agent;
-import com.example.Messages.SchemaToJava2.model.user.Firma;
-import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
+//import com.example.Messages.SchemaToJava2.model.tentitet.TSlikaVozila;
+//import com.example.Messages.SchemaToJava2.model.tentitet.TTipGoriva;
+//import com.example.Messages.SchemaToJava2.model.tentitet.TTipMenjaca;
+//import com.example.Messages.SchemaToJava2.model.user.Administrator;
+//import com.example.Messages.SchemaToJava2.model.user.Agent;
+//import com.example.Messages.SchemaToJava2.model.user.Firma;
+//import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
 
 
 /**
@@ -52,13 +52,13 @@ public class ObjectFactory {
     public ObjectFactory() {
     }
 
-    /**
-     * Create an instance of {@link Poruka }
-     * 
-     */
-    public Poruka createPoruka() {
-        return new Poruka();
-    }
+//    /**
+//     * Create an instance of {@link Poruka }
+//     * 
+//     */
+//    public Poruka createPoruka() {
+//        return new Poruka();
+//    }
 
     /**
      * Create an instance of {@link TModelAutomobila }
@@ -76,45 +76,45 @@ public class ObjectFactory {
         return new TKlasaAutomobila();
     }
 
-    /**
-     * Create an instance of {@link Pretrazivanje }
-     * 
-     */
-    public Pretrazivanje createPretrazivanje() {
-        return new Pretrazivanje();
-    }
+//    /**
+//     * Create an instance of {@link Pretrazivanje }
+//     * 
+//     */
+//    public Pretrazivanje createPretrazivanje() {
+//        return new Pretrazivanje();
+//    }
 
     /**
      * Create an instance of {@link TSlikaVozila }
      * 
      */
-    public TSlikaVozila createTSlikaVozila() {
-        return new TSlikaVozila();
-    }
+//    public TSlikaVozila createTSlikaVozila() {
+//        return new TSlikaVozila();
+//    }
 
     /**
      * Create an instance of {@link TTipGoriva }
      * 
      */
-    public TTipGoriva createTTipGoriva() {
-        return new TTipGoriva();
-    }
+//    public TTipGoriva createTTipGoriva() {
+//        return new TTipGoriva();
+//    }
 
-    /**
-     * Create an instance of {@link RegistrovaniKorisnik }
-     * 
-     */
-    public RegistrovaniKorisnik createRegistrovaniKorisnik() {
-        return new RegistrovaniKorisnik();
-    }
-
-    /**
-     * Create an instance of {@link Agent }
-     * 
-     */
-    public Agent createAgent() {
-        return new Agent();
-    }
+//    /**
+//     * Create an instance of {@link RegistrovaniKorisnik }
+//     * 
+//     */
+//    public RegistrovaniKorisnik createRegistrovaniKorisnik() {
+//        return new RegistrovaniKorisnik();
+//    }
+//
+//    /**
+//     * Create an instance of {@link Agent }
+//     * 
+//     */
+//    public Agent createAgent() {
+//        return new Agent();
+//    }
 
     /**
      * Create an instance of {@link TMarkaAutomobila }
@@ -124,13 +124,13 @@ public class ObjectFactory {
         return new TMarkaAutomobila();
     }
 
-    /**
-     * Create an instance of {@link Cenovnik }
-     * 
-     */
-    public Cenovnik createCenovnik() {
-        return new Cenovnik();
-    }
+//    /**
+//     * Create an instance of {@link Cenovnik }
+//     * 
+//     */
+//    public Cenovnik createCenovnik() {
+//        return new Cenovnik();
+//    }
 
     /**
      * Create an instance of {@link Automobil }
@@ -140,37 +140,37 @@ public class ObjectFactory {
         return new Automobil();
     }
 
-    /**
-     * Create an instance of {@link Ocena }
-     * 
-     */
-    public Ocena createOcena() {
-        return new Ocena();
-    }
-
-    /**
-     * Create an instance of {@link Rezervacija }
-     * 
-     */
-    public Rezervacija createRezervacija() {
-        return new Rezervacija();
-    }
-
-    /**
-     * Create an instance of {@link Firma }
-     * 
-     */
-    public Firma createFirma() {
-        return new Firma();
-    }
-
-    /**
-     * Create an instance of {@link Administrator }
-     * 
-     */
-    public Administrator createAdministrator() {
-        return new Administrator();
-    }
+//    /**
+//     * Create an instance of {@link Ocena }
+//     * 
+//     */
+//    public Ocena createOcena() {
+//        return new Ocena();
+//    }
+//
+//    /**
+//     * Create an instance of {@link Rezervacija }
+//     * 
+//     */
+//    public Rezervacija createRezervacija() {
+//        return new Rezervacija();
+//    }
+//
+//    /**
+//     * Create an instance of {@link Firma }
+//     * 
+//     */
+//    public Firma createFirma() {
+//        return new Firma();
+//    }
+//
+//    /**
+//     * Create an instance of {@link Administrator }
+//     * 
+//     */
+//    public Administrator createAdministrator() {
+//        return new Administrator();
+//    }
 
 //    /**
 //     * Create an instance of {@link TAdresa.Kordinate }
@@ -184,25 +184,25 @@ public class ObjectFactory {
      * Create an instance of {@link Oglas }
      * 
      */
-    public Oglas createOglas() {
-        return new Oglas();
-    }
-
-    /**
-     * Create an instance of {@link Komentar }
-     * 
-     */
-    public Komentar createKomentar() {
-        return new Komentar();
-    }
+//    public Oglas createOglas() {
+//        return new Oglas();
+//    }
+//
+//    /**
+//     * Create an instance of {@link Komentar }
+//     * 
+//     */
+//    public Komentar createKomentar() {
+//        return new Komentar();
+//    }
 
     /**
      * Create an instance of {@link TTipMenjaca }
      * 
      */
-    public TTipMenjaca createTTipMenjaca() {
-        return new TTipMenjaca();
-    }
+//    public TTipMenjaca createTTipMenjaca() {
+//        return new TTipMenjaca();
+//    }
 
     /**
      * Create an instance of {@link TAdresa }

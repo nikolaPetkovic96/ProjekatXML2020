@@ -18,7 +18,7 @@ public class TModelAutomobilaDTO {
 		this.markaAutomobilaId = markaAutomobilaId;
 	}
 	public TModelAutomobilaDTO(TModelAutomobila tm) {
-		this(tm.getId(),tm.getNazivModela(), tm.getMarkaAutomobilaId(), tm.getCommonDataId());
+		this(tm.getId(),tm.getNazivModela(),tm.getCommonDataId(), tm.getMarkaAutomobilaId());
 	}
 	public Long getId() {
 		return id;

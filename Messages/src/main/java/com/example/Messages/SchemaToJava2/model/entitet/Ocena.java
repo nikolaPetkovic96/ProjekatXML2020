@@ -3,7 +3,7 @@
 // See <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
-//
+
 
 package com.example.Messages.SchemaToJava2.model.entitet;
 
@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
+//import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
 
 /**
  * <p>
@@ -57,62 +57,62 @@ import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "id", "korisnik", "vrednostOcene" })
 @XmlRootElement(name = "Ocena")
-@Entity
+//@Entity
 public class Ocena {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
-
-	// Jedna ocena se kreira od strane samo jednog korisnika(druga strana
-	// bidirekcije)
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@XmlElement(name = "Korisnik", required = true)
-	protected CommonData korisnik;
-
-	@Column(name = "vredn_ocene")
-	@XmlElement(name = "Vrednost_ocene")
-	protected int vrednostOcene;
-
-	// Jedna ocena se odnosi na samo jedan automobil(druga strana bidirekcije)
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Automobil automobil;
-
-	// Jedna ocena se kreira od samo jednog registrovanog korisnika(druga strana
-	// bidirekcije)
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private RegistrovaniKorisnik reg_korisnik;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long value) {
-		this.id = value;
-	}
-
-	public CommonData getKorisnik() {
-		return korisnik;
-	}
-
-	public void setKorisnik(CommonData value) {
-		this.korisnik = value;
-	}
-
-	public int getVrednostOcene() {
-		return vrednostOcene;
-	}
-
-	public void setVrednostOcene(int value) {
-		this.vrednostOcene = value;
-	}
-
-	public Automobil getAutomobil() {
-		return automobil;
-	}
-
-	public void setAutomobil(Automobil automobil) {
-		this.automobil = automobil;
-	}
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	protected Long id;
+//
+//	// Jedna ocena se kreira od strane samo jednog korisnika(druga strana
+//	// bidirekcije)
+//	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@XmlElement(name = "Korisnik", required = true)
+//	protected CommonData korisnik;
+//
+//	@Column(name = "vredn_ocene")
+//	@XmlElement(name = "Vrednost_ocene")
+//	protected int vrednostOcene;
+//
+//	// Jedna ocena se odnosi na samo jedan automobil(druga strana bidirekcije)
+//	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	private Automobil automobil;
+//
+//	// Jedna ocena se kreira od samo jednog registrovanog korisnika(druga strana
+//	// bidirekcije)
+//	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	private RegistrovaniKorisnik reg_korisnik;
+//
+//	public Long getId() {
+//		return id;
+//	}
+//
+//	public void setId(Long value) {
+//		this.id = value;
+//	}
+//
+//	public CommonData getKorisnik() {
+//		return korisnik;
+//	}
+//
+//	public void setKorisnik(CommonData value) {
+//		this.korisnik = value;
+//	}
+//
+//	public int getVrednostOcene() {
+//		return vrednostOcene;
+//	}
+//
+//	public void setVrednostOcene(int value) {
+//		this.vrednostOcene = value;
+//	}
+//
+//	public Automobil getAutomobil() {
+//		return automobil;
+//	}
+//
+//	public void setAutomobil(Automobil automobil) {
+//		this.automobil = automobil;
+//	}
 
 }

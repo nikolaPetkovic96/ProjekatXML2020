@@ -1,32 +1,26 @@
 package com.example.Messages.DTO;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 import com.example.Messages.SchemaToJava2.model.tentitet.TMarkaAutomobila;
-import com.example.Messages.SchemaToJava2.model.tentitet.TModelAutomobila;
 
 public class TMarkaAutomobilaDTO {    
 	private Long id;
     private String nazivMarke;
-    private CommonDataDTO commonData;
+    private Long commonDataId;
     
     public TMarkaAutomobilaDTO() {}
     
-    public TMarkaAutomobilaDTO(Long id, String nazivMarke, CommonDataDTO commonData,
-			List<TModelAutomobilaDTO> modelAutomobila) {
+    public TMarkaAutomobilaDTO(Long id, String nazivMarke, Long commonDataId) {
 		super();
 		this.id = id;
 		this.nazivMarke = nazivMarke;
-		this.commonData = commonData;
+		this.commonDataId = commonDataId;
 	
 	}
 
 	public TMarkaAutomobilaDTO(TMarkaAutomobila ma) {														
 		this.id=ma.getId();
 		this.nazivMarke=ma.getNazivMarke();
-		this.commonData=new CommonDataDTO(ma.getCommonData());	
+		this.commonDataId= ma.getCommonDataId();	
 	}
 
 	public Long getId() {
@@ -45,12 +39,14 @@ public class TMarkaAutomobilaDTO {
 		this.nazivMarke = nazivMarke;
 	}
 
-	public CommonDataDTO getCommonData() {
-		return commonData;
+	public Long getCommonDataId() {
+		return commonDataId;
 	}
 
-	public void setCommonData(CommonDataDTO commonData) {
-		this.commonData = commonData;
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
 	}
+
+
 
 }

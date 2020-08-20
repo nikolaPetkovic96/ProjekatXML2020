@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-import com.example.Messages.SchemaToJava2.model.tentitet.TSlikaVozila;
+//import com.example.Messages.SchemaToJava2.model.tentitet.TSlikaVozila;
 
 
 
@@ -91,7 +91,7 @@ public class Automobil {
 	@Column(name = "plan_kilom", nullable = false)
     @XmlElement(name = "Planirana_kilometraza", required = true)
     @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger planiranaKilometraza;
+    protected float planiranaKilometraza;
     
 	@Column(name = "col_dmg_waiver", nullable = false)
     @XmlElement(name = "Collision_Damage_Waiver")
@@ -109,7 +109,7 @@ public class Automobil {
 
 	public Automobil(Long id, Long markaAutomobilaId,Long modelAutomobilaId,
 			Long klasaAutomobilaId, Long vrstaGorivaId,Long tipMenjacaId, float predjenaKilometraza,
-			BigInteger planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu) {
+			float planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu) {
 		super();
 		this.id = id;
 		this.markaAutomobilaId = markaAutomobilaId;
@@ -194,12 +194,12 @@ public class Automobil {
 	}
 
 
-	public BigInteger getPlaniranaKilometraza() {
+	public float getPlaniranaKilometraza() {
 		return planiranaKilometraza;
 	}
 
 
-	public void setPlaniranaKilometraza(BigInteger planiranaKilometraza) {
+	public void setPlaniranaKilometraza(float planiranaKilometraza) {
 		this.planiranaKilometraza = planiranaKilometraza;
 	}
 

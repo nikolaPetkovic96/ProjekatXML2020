@@ -4,203 +4,203 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
-
-
-package com.example.Messages.SchemaToJava2.model.user;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-import com.example.Messages.SchemaToJava2.model.entitet.Komentar;
-import com.example.Messages.SchemaToJava2.model.entitet.Oglas;
-import com.example.Messages.SchemaToJava2.model.entitet.Poruka;
-
-
-/**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="Naziv" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Adresa" type="{http://www.ftn.uns.ac.rs/korisnici}TAdresa"/>
- *         &lt;element name="Email" type="{http://www.ftn.uns.ac.rs/korisnici}TEmail"/>
- *         &lt;element name="Poslovni_maticni_broj" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Status_odobrenosti" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;sequence>
- *           &lt;element ref="{http://www.ftn.uns.ac.rs/Automobil}Komentar" maxOccurs="unbounded"/>
- *           &lt;element ref="{http://www.ftn.uns.ac.rs/KreiranjeOglasa}Oglas" maxOccurs="unbounded"/>
- *         &lt;/sequence>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "naziv",
-    "adresa",
-    "email",
-    "poslovniMaticniBroj",
-    "statusOdobrenosti",
-    "komentar",
-    "oglas"
-})
-@XmlRootElement(name = "Firma", namespace = "http://www.ftn.uns.ac.rs/korisnici")
-@Entity
-public class Firma 
-	extends TUser
-{
-	
-//	@Column(name = "role")
-//	private static final String role = "agent";
-	
-
-//    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/korisnici")
-//    protected long id;
-    
-	//za firmu
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-	
-	@Column(name = "naziv")
-    @XmlElement(name = "Naziv", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
-    protected String naziv;
-	
-	@Column(name = "pib", unique = true)
-    @XmlElement(name = "Poslovni_maticni_broj", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
-    protected String poslovniMaticniBroj;
-	
-	@Column(name = "ime")
-    @XmlElement(name = "Ime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
-    protected String ime;
-    
-	@Column(name = "prezime")
-    @XmlElement(name = "Prezime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
-    protected String prezime;
-    
-	@Column(name = "jmbg")
-    @XmlElement(name = "JMBG", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
-    protected String jmbg;
-    
-	//jedna firma moze da ima vise komentara 
-	//U tabeli komentar ce dodati jos jednu kolonu koja ce predstavljati id firme koja ga je napravila.
-	@OneToMany(mappedBy="firma", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	//DA bude set tip a ne lista???
-    @XmlElement(name = "Komentar", required = true)
-    protected List<Komentar> komentar;
-    
-	@OneToMany(mappedBy="firma", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
-    protected List<Oglas> oglas;
-	
-	@OneToMany(mappedBy="firma", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Poruka", required = true)
-    protected List<Poruka> poruka;
-    
-    //if jmbg != null then pib = null
-  
-    public String getPoslovniMaticniBroj() {
-        return poslovniMaticniBroj;
-    }
-
-    public Long getId() {
-		return id;
-	}
-    
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNaziv() {
-		return naziv;
-	}
-
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
-	}
-
-	public String getIme() {
-		return ime;
-	}
-
-	public void setIme(String ime) {
-		this.ime = ime;
-	}
-
-	public String getPrezime() {
-		return prezime;
-	}
-
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
-	}
-
-	public String getJmbg() {
-		return jmbg;
-	}
-
-	public void setJmbg(String jmbg) {
-		this.jmbg = jmbg;
-	}
-
-	public List<Poruka> getPoruka() {
-		return poruka;
-	}
-
-	public void setPoruka(List<Poruka> poruka) {
-		this.poruka = poruka;
-	}
-
-	public void setKomentar(List<Komentar> komentar) {
-		this.komentar = komentar;
-	}
-
-	public void setOglas(List<Oglas> oglas) {
-		this.oglas = oglas;
-	}
-
-	public void setPoslovniMaticniBroj(String value) {
-        this.poslovniMaticniBroj = value;
-    }
-
-    public List<Komentar> getKomentar() {
-        if (komentar == null) {
-            komentar = new ArrayList<Komentar>();
-        }
-        return this.komentar;
-    }
-
-    public List<Oglas> getOglas() {
-        if (oglas == null) {
-            oglas = new ArrayList<Oglas>();
-        }
-        return this.oglas;
-    }
-
-}
+//
+//
+//package com.example.Messages.SchemaToJava2.model.user;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import javax.persistence.CascadeType;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.FetchType;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
+//import javax.persistence.OneToMany;
+//import javax.xml.bind.annotation.XmlAccessType;
+//import javax.xml.bind.annotation.XmlAccessorType;
+//import javax.xml.bind.annotation.XmlElement;
+//import javax.xml.bind.annotation.XmlRootElement;
+//import javax.xml.bind.annotation.XmlType;
+//
+//import com.example.Messages.SchemaToJava2.model.entitet.Komentar;
+//import com.example.Messages.SchemaToJava2.model.entitet.Oglas;
+//import com.example.Messages.SchemaToJava2.model.entitet.Poruka;
+//
+//
+///**
+// * <p>Java class for anonymous complex type.
+// * 
+// * <p>The following schema fragment specifies the expected content contained within this class.
+// * 
+// * <pre>
+// * &lt;complexType>
+// *   &lt;complexContent>
+// *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+// *       &lt;sequence>
+// *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+// *         &lt;element name="Naziv" type="{http://www.w3.org/2001/XMLSchema}string"/>
+// *         &lt;element name="Adresa" type="{http://www.ftn.uns.ac.rs/korisnici}TAdresa"/>
+// *         &lt;element name="Email" type="{http://www.ftn.uns.ac.rs/korisnici}TEmail"/>
+// *         &lt;element name="Poslovni_maticni_broj" type="{http://www.w3.org/2001/XMLSchema}string"/>
+// *         &lt;element name="Status_odobrenosti" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+// *         &lt;sequence>
+// *           &lt;element ref="{http://www.ftn.uns.ac.rs/Automobil}Komentar" maxOccurs="unbounded"/>
+// *           &lt;element ref="{http://www.ftn.uns.ac.rs/KreiranjeOglasa}Oglas" maxOccurs="unbounded"/>
+// *         &lt;/sequence>
+// *       &lt;/sequence>
+// *     &lt;/restriction>
+// *   &lt;/complexContent>
+// * &lt;/complexType>
+// * </pre>
+// * 
+// * 
+// */
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(name = "", propOrder = {
+//    "id",
+//    "naziv",
+//    "adresa",
+//    "email",
+//    "poslovniMaticniBroj",
+//    "statusOdobrenosti",
+//    "komentar",
+//    "oglas"
+//})
+//@XmlRootElement(name = "Firma", namespace = "http://www.ftn.uns.ac.rs/korisnici")
+//@Entity
+//public class Firma 
+//	extends TUser
+//{
+//	
+////	@Column(name = "role")
+////	private static final String role = "agent";
+//	
+//
+////    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/korisnici")
+////    protected long id;
+//    
+//	//za firmu
+//
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//    protected Long id;
+//	
+//	@Column(name = "naziv")
+//    @XmlElement(name = "Naziv", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+//    protected String naziv;
+//	
+//	@Column(name = "pib", unique = true)
+//    @XmlElement(name = "Poslovni_maticni_broj", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+//    protected String poslovniMaticniBroj;
+//	
+//	@Column(name = "ime")
+//    @XmlElement(name = "Ime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+//    protected String ime;
+//    
+//	@Column(name = "prezime")
+//    @XmlElement(name = "Prezime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+//    protected String prezime;
+//    
+//	@Column(name = "jmbg")
+//    @XmlElement(name = "JMBG", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+//    protected String jmbg;
+//    
+//	//jedna firma moze da ima vise komentara 
+//	//U tabeli komentar ce dodati jos jednu kolonu koja ce predstavljati id firme koja ga je napravila.
+//	@OneToMany(mappedBy="firma", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	//DA bude set tip a ne lista???
+//    @XmlElement(name = "Komentar", required = true)
+//    protected List<Komentar> komentar;
+//    
+//	@OneToMany(mappedBy="firma", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
+//    protected List<Oglas> oglas;
+//	
+//	@OneToMany(mappedBy="firma", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @XmlElement(name = "Poruka", required = true)
+//    protected List<Poruka> poruka;
+//    
+//    //if jmbg != null then pib = null
+//  
+//    public String getPoslovniMaticniBroj() {
+//        return poslovniMaticniBroj;
+//    }
+//
+//    public Long getId() {
+//		return id;
+//	}
+//    
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
+//
+//	public String getNaziv() {
+//		return naziv;
+//	}
+//
+//	public void setNaziv(String naziv) {
+//		this.naziv = naziv;
+//	}
+//
+//	public String getIme() {
+//		return ime;
+//	}
+//
+//	public void setIme(String ime) {
+//		this.ime = ime;
+//	}
+//
+//	public String getPrezime() {
+//		return prezime;
+//	}
+//
+//	public void setPrezime(String prezime) {
+//		this.prezime = prezime;
+//	}
+//
+//	public String getJmbg() {
+//		return jmbg;
+//	}
+//
+//	public void setJmbg(String jmbg) {
+//		this.jmbg = jmbg;
+//	}
+//
+//	public List<Poruka> getPoruka() {
+//		return poruka;
+//	}
+//
+//	public void setPoruka(List<Poruka> poruka) {
+//		this.poruka = poruka;
+//	}
+//
+//	public void setKomentar(List<Komentar> komentar) {
+//		this.komentar = komentar;
+//	}
+//
+//	public void setOglas(List<Oglas> oglas) {
+//		this.oglas = oglas;
+//	}
+//
+//	public void setPoslovniMaticniBroj(String value) {
+//        this.poslovniMaticniBroj = value;
+//    }
+//
+//    public List<Komentar> getKomentar() {
+//        if (komentar == null) {
+//            komentar = new ArrayList<Komentar>();
+//        }
+//        return this.komentar;
+//    }
+//
+//    public List<Oglas> getOglas() {
+//        if (oglas == null) {
+//            oglas = new ArrayList<Oglas>();
+//        }
+//        return this.oglas;
+//    }
+//
+//}

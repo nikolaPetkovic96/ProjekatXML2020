@@ -5,23 +5,17 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
-import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
-
 
 /**
  * <p>Java class for TTip_menjaca complex type.
@@ -39,11 +33,11 @@ import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
+// * &lt;/complexType>
+// * </pre>
+// * 
+// * 
+// */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TTip_menjaca", propOrder = {
     "id",
@@ -62,52 +56,44 @@ public class TTipMenjaca {
     @XmlElement(name = "naziv_menjaca", required = true)
     protected String nazivMenjaca;
     
-	@OneToOne(fetch = FetchType.LAZY)
     @XmlElement(name = "Common_data", required = true)
-    protected CommonData commonData;
+	@Column(name = "common_data_id", nullable = false)
+    protected Long commonDataId;
 
   	public TTipMenjaca() {
   		
   	}
   	
-    public TTipMenjaca(Long id, String nazivMenjaca, CommonData commonData) {
+    public TTipMenjaca(Long id, String nazivMenjaca, Long commonDataId) {
 		super();
 		this.id = id;
 		this.nazivMenjaca = nazivMenjaca;
-		this.commonData = commonData;
-	
+		this.commonDataId = commonDataId;
 	}
-
 
 	public Long getId() {
         return id;
     }
 
-
     public void setId(Long value) {
         this.id = value;
     }
-
 
     public String getNazivMenjaca() {
         return nazivMenjaca;
     }
 
-
     public void setNazivMenjaca(String value) {
         this.nazivMenjaca = value;
     }
 
-    
-    public CommonData getCommonData() {
-        return commonData;
-    }
+	public Long getCommonDataId() {
+		return commonDataId;
+	}
+
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
+	}
 
 
-    public void setCommonData(CommonData value) {
-        this.commonData = value;
-    }
-
-
-    
 }

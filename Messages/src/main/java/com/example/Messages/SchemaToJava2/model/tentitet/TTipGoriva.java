@@ -5,23 +5,17 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.example.Messages.SchemaToJava2.model.tentitet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
-import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
-
 
 /**
  * <p>Java class for TTip_goriva complex type.
@@ -62,38 +56,43 @@ public class TTipGoriva {
     @XmlElement(name = "naziv_tipa", required = true)
     protected String nazivTipa;
     
-    @OneToOne(fetch = FetchType.LAZY)
     @XmlElement(name = "Common_data", required = true)
-    protected CommonData commonData;
+    @Column(name = "common_data_id", nullable = false)
+    protected Long commonDataId;
 
+    public TTipGoriva() {
+		super();
+	}
 
-    public Long getId() {
+	public TTipGoriva(Long id, String nazivTipa, Long commonDataId) {
+		super();
+		this.id = id;
+		this.nazivTipa = nazivTipa;
+		this.commonDataId = commonDataId;
+	}
+
+	public Long getId() {
         return id;
     }
-
 
     public void setId(Long value) {
         this.id = value;
     }
 
-
     public String getNazivTipa() {
         return nazivTipa;
     }
-
     
     public void setNazivTipa(String value) {
         this.nazivTipa = value;
     }
 
+	public Long getCommonDataId() {
+		return commonDataId;
+	}
 
-    public CommonData getCommonData() {
-        return commonData;
-    }
-
-
-    public void setCommonData(CommonData value) {
-        this.commonData = value;
-    }
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
+	}
 
 }

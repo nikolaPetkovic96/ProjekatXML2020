@@ -1,6 +1,5 @@
 package com.example.Messages.controller;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,84 +12,92 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Messages.DTO.TKlasaAutomobilaDTO;
 import com.example.Messages.DTO.TTipGorivaDTO;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
+import com.example.Messages.SchemaToJava2.model.tentitet.TKlasaAutomobila;
 import com.example.Messages.SchemaToJava2.model.tentitet.TTipGoriva;
 import com.example.Messages.service.CommonDataService;
 import com.example.Messages.service.TTipGorivaService;
-import com.example.Messages.service.TUserService;
 
+@RestController
 public class TTipGorivaController {
 	
 	@Autowired
-	private TTipGorivaService service;
+	private TTipGorivaService ttGorivaService;
 	@Autowired
-	private CommonDataService cmdServ;
-	@Autowired
-	private TUserService usrServ;
+	private CommonDataService comDataService;
+	
 	//GET ALL
 	@RequestMapping(method=RequestMethod.GET, value="/TTipGoriva", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TTipGorivaDTO>> getAllTTipGoriva() {
 		
 		List<TTipGorivaDTO> lista=new ArrayList<>();
-		for(TTipGoriva tg: service.getAllTTipGoriva()) {
+		for(TTipGoriva tg: ttGorivaService.getAllTTipGoriva()) {
 			lista.add(new TTipGorivaDTO(tg));
 		}
 		return new ResponseEntity<>(lista, HttpStatus.OK);	
 	}
+	
 	//GET
 	@RequestMapping(method=RequestMethod.GET, value="/TTipGoriva/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TTipGorivaDTO> getTTipGoriva(@PathVariable("id") Long id){
-		TTipGoriva tip=service.findOne(id);
+		TTipGoriva tip = ttGorivaService.findOne(id);
 		if(tip==null)
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(new TTipGorivaDTO(tip), HttpStatus.OK);	
 	}
 	//POST
 	@RequestMapping(method=RequestMethod.POST, value="/TTipGoriva",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TTipGorivaDTO> addTTipGoriva(@RequestBody TTipGoriva tipDTO)  throws Exception {
-		TTipGoriva novi= new TTipGoriva();
+	public ResponseEntity<TTipGorivaDTO> addTTipGoriva(@RequestBody TTipGorivaDTO dto)  throws Exception {
+		TTipGoriva savedTTipGoriva= new TTipGoriva();
+
+		//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
+		CommonData commonData = new CommonData();
+		LocalDateTime now = LocalDateTime.now();
+		commonData.setDatumKreiranja(now);
+		commonData = comDataService.addCommonData(commonData);
+	
+		savedTTipGoriva.setId(dto.getId());
+		savedTTipGoriva.setNazivTipa(dto.getNazivTipa());
+		savedTTipGoriva.setCommonDataId(commonData.getId());
 		
-		novi.setId(tipDTO.getId());
-		novi.setNazivTipa(tipDTO.getNazivTipa());
-		
-		novi.getCommonData().setId(null);
-		novi.getCommonData().setDatumKreiranja(Timestamp.valueOf(LocalDateTime.now()));
-		novi.getCommonData().setDatumIzmene(Timestamp.valueOf(LocalDateTime.now()));
-		//saved.getCommonData().setKorisnik(token_korisnika););//todo
-		
-		novi.setCommonData(cmdServ.addCommonData(novi.getCommonData()));
-		novi=service.addTTipGoriva(novi);
-		return new ResponseEntity<>(new TTipGorivaDTO(novi), HttpStatus.CREATED);		
+		savedTTipGoriva =  ttGorivaService.addTTipGoriva(savedTTipGoriva);
+		return new ResponseEntity<>(new TTipGorivaDTO(savedTTipGoriva), HttpStatus.CREATED);
 	}
 	//PUT	
 	@RequestMapping(method=RequestMethod.PUT, value="/TTipGoriva", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TTipGorivaDTO> updateTTipMenjaca(@RequestBody TTipGorivaDTO dto) throws Exception{
-		TTipGoriva upd=service.findOne(dto.getId());
-		if(upd==null) {
+		TTipGoriva updTTipGoriva  = (TTipGoriva) ttGorivaService.findOne(dto.getId());
+		
+		if(updTTipGoriva == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		upd.setId(dto.getId());
-		upd.setNazivTipa(dto.getNazivTipa());
 		
-		CommonData cmdUpd=cmdServ.findOne(dto.getCommonData().getId());
-		cmdUpd.setId(dto.getCommonData().getId());
-		cmdUpd.setDatumIzmene(Timestamp.valueOf(LocalDateTime.now()));
-		cmdUpd.setDatumKreiranja(dto.getCommonData().getDatumKreiranja());		
+		Long comDatId = updTTipGoriva.getCommonDataId();
 		
-		cmdUpd=cmdServ.updateCommonData(dto.getCommonData().getId(),cmdUpd);		
-		upd.setCommonData(cmdUpd); 
+		CommonData commonData = comDataService.findOne(comDatId);
+		LocalDateTime now = LocalDateTime.now();
+		commonData.setDatumIzmene(now);
+		commonData = comDataService.updateCommonData(comDatId, commonData);
 		
-		upd=service.updateTTipGoriva(upd.getId(), upd);
-		return new ResponseEntity<>(new TTipGorivaDTO(upd), HttpStatus.OK);	
+		 updTTipGoriva.setId(dto.getId());
+		 updTTipGoriva.setNazivTipa(dto.getNazivTipa());
+		 updTTipGoriva.setCommonDataId(comDatId);
+		//PROVERITI COMMON DATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
+		
+		updTTipGoriva = ttGorivaService.updateTTipGoriva(updTTipGoriva.getId(), updTTipGoriva);
+		return new ResponseEntity<>(new TTipGorivaDTO(updTTipGoriva), HttpStatus.OK);	
 	}
 	//DELET	
 	@RequestMapping(value="/TTipGoriva/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteTTipGoriva(@PathVariable Long id) {
-		TTipGoriva ttip= service.findOne(id);
+		TTipGoriva ttip = ttGorivaService.findOne(id);
 		if (ttip != null) {
-			service.deleteTTipGoriva(id);
+			ttGorivaService.deleteTTipGoriva(id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} else {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);

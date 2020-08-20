@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Messages.DTO.CommonDataDTO;
 import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 import com.example.Messages.service.CommonDataService;
-import com.example.Messages.service.TUserService;
+//import com.example.Messages.service.TUserService;
 
 import java.util.ArrayList;
 import java.util.List;

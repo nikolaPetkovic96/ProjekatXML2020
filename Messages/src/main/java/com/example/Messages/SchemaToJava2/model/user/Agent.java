@@ -19,9 +19,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.example.Messages.SchemaToJava2.model.entitet.Komentar;
-import com.example.Messages.SchemaToJava2.model.entitet.Oglas;
-import com.example.Messages.SchemaToJava2.model.entitet.Poruka;
+//import com.example.Messages.SchemaToJava2.model.entitet.Komentar;
+//import com.example.Messages.SchemaToJava2.model.entitet.Oglas;
+//import com.example.Messages.SchemaToJava2.model.entitet.Poruka;
 
 
 /**
@@ -59,191 +59,191 @@ import com.example.Messages.SchemaToJava2.model.entitet.Poruka;
 })
 @XmlRootElement(name = "Agent", namespace = "http://www.ftn.uns.ac.rs/korisnici")
 //@Entity
-public class Agent
-    extends TUser
-{
-
-//	@Column(name = "role")
-//	private static final String role = "agent";
-	
-//	@Column(name = "ime", nullable = false)
-    @XmlElement(name = "Ime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
-    protected String ime;
-    
-//	@Column(name = "prezime", nullable = false)
-    @XmlElement(name = "Prezime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
-    protected String prezime;
-    
-//	@Column(name = "jmbg", nullable = false)
-    @XmlElement(name = "JMBG", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
-    protected String jmbg;
-    
-//    @XmlElement(name = "Komentar", required = true)
-    protected List<Komentar> komentar;
-    
-//    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
-    protected List<Oglas> oglas;
-    
-//    @XmlElement(name = "Poruka", required = true)
-    protected List<Poruka> poruka;
-
-    /**
-     * Gets the value of the ime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getIme() {
-        return ime;
-    }
-
-    /**
-     * Sets the value of the ime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setIme(String value) {
-        this.ime = value;
-    }
-
-    /**
-     * Gets the value of the prezime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPrezime() {
-        return prezime;
-    }
-
-    /**
-     * Sets the value of the prezime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPrezime(String value) {
-        this.prezime = value;
-    }
-
-    /**
-     * Gets the value of the jmbg property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getJMBG() {
-        return jmbg;
-    }
-
-    /**
-     * Sets the value of the jmbg property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setJMBG(String value) {
-        this.jmbg = value;
-    }
-
-    /**
-     * Gets the value of the komentar property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the komentar property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getKomentar().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Komentar }
-     * 
-     * 
-     */
-    public List<Komentar> getKomentar() {
-        if (komentar == null) {
-            komentar = new ArrayList<Komentar>();
-        }
-        return this.komentar;
-    }
-
-    /**
-     * Gets the value of the oglas property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the oglas property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getOglas().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Oglas }
-     * 
-     * 
-     */
-    public List<Oglas> getOglas() {
-        if (oglas == null) {
-            oglas = new ArrayList<Oglas>();
-        }
-        return this.oglas;
-    }
-
-    /**
-     * Gets the value of the poruka property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the poruka property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPoruka().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Poruka }
-     * 
-     * 
-     */
-    public List<Poruka> getPoruka() {
-        if (poruka == null) {
-            poruka = new ArrayList<Poruka>();
-        }
-        return this.poruka;
-    }
+public class Agent {
+//    extends TUser
+//{
+//
+////	@Column(name = "role")
+////	private static final String role = "agent";
+//	
+////	@Column(name = "ime", nullable = false)
+//    @XmlElement(name = "Ime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+//    protected String ime;
+//    
+////	@Column(name = "prezime", nullable = false)
+//    @XmlElement(name = "Prezime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+//    protected String prezime;
+//    
+////	@Column(name = "jmbg", nullable = false)
+//    @XmlElement(name = "JMBG", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+//    protected String jmbg;
+//    
+////    @XmlElement(name = "Komentar", required = true)
+//    protected List<Komentar> komentar;
+//    
+////    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
+//    protected List<Oglas> oglas;
+//    
+////    @XmlElement(name = "Poruka", required = true)
+//    protected List<Poruka> poruka;
+//
+//    /**
+//     * Gets the value of the ime property.
+//     * 
+//     * @return
+//     *     possible object is
+//     *     {@link String }
+//     *     
+//     */
+//    public String getIme() {
+//        return ime;
+//    }
+//
+//    /**
+//     * Sets the value of the ime property.
+//     * 
+//     * @param value
+//     *     allowed object is
+//     *     {@link String }
+//     *     
+//     */
+//    public void setIme(String value) {
+//        this.ime = value;
+//    }
+//
+//    /**
+//     * Gets the value of the prezime property.
+//     * 
+//     * @return
+//     *     possible object is
+//     *     {@link String }
+//     *     
+//     */
+//    public String getPrezime() {
+//        return prezime;
+//    }
+//
+//    /**
+//     * Sets the value of the prezime property.
+//     * 
+//     * @param value
+//     *     allowed object is
+//     *     {@link String }
+//     *     
+//     */
+//    public void setPrezime(String value) {
+//        this.prezime = value;
+//    }
+//
+//    /**
+//     * Gets the value of the jmbg property.
+//     * 
+//     * @return
+//     *     possible object is
+//     *     {@link String }
+//     *     
+//     */
+//    public String getJMBG() {
+//        return jmbg;
+//    }
+//
+//    /**
+//     * Sets the value of the jmbg property.
+//     * 
+//     * @param value
+//     *     allowed object is
+//     *     {@link String }
+//     *     
+//     */
+//    public void setJMBG(String value) {
+//        this.jmbg = value;
+//    }
+//
+//    /**
+//     * Gets the value of the komentar property.
+//     * 
+//     * <p>
+//     * This accessor method returns a reference to the live list,
+//     * not a snapshot. Therefore any modification you make to the
+//     * returned list will be present inside the JAXB object.
+//     * This is why there is not a <CODE>set</CODE> method for the komentar property.
+//     * 
+//     * <p>
+//     * For example, to add a new item, do as follows:
+//     * <pre>
+//     *    getKomentar().add(newItem);
+//     * </pre>
+//     * 
+//     * 
+//     * <p>
+//     * Objects of the following type(s) are allowed in the list
+//     * {@link Komentar }
+//     * 
+//     * 
+//     */
+//    public List<Komentar> getKomentar() {
+//        if (komentar == null) {
+//            komentar = new ArrayList<Komentar>();
+//        }
+//        return this.komentar;
+//    }
+//
+//    /**
+//     * Gets the value of the oglas property.
+//     * 
+//     * <p>
+//     * This accessor method returns a reference to the live list,
+//     * not a snapshot. Therefore any modification you make to the
+//     * returned list will be present inside the JAXB object.
+//     * This is why there is not a <CODE>set</CODE> method for the oglas property.
+//     * 
+//     * <p>
+//     * For example, to add a new item, do as follows:
+//     * <pre>
+//     *    getOglas().add(newItem);
+//     * </pre>
+//     * 
+//     * 
+//     * <p>
+//     * Objects of the following type(s) are allowed in the list
+//     * {@link Oglas }
+//     * 
+//     * 
+//     */
+//    public List<Oglas> getOglas() {
+//        if (oglas == null) {
+//            oglas = new ArrayList<Oglas>();
+//        }
+//        return this.oglas;
+//    }
+//
+//    /**
+//     * Gets the value of the poruka property.
+//     * 
+//     * <p>
+//     * This accessor method returns a reference to the live list,
+//     * not a snapshot. Therefore any modification you make to the
+//     * returned list will be present inside the JAXB object.
+//     * This is why there is not a <CODE>set</CODE> method for the poruka property.
+//     * 
+//     * <p>
+//     * For example, to add a new item, do as follows:
+//     * <pre>
+//     *    getPoruka().add(newItem);
+//     * </pre>
+//     * 
+//     * 
+//     * <p>
+//     * Objects of the following type(s) are allowed in the list
+//     * {@link Poruka }
+//     * 
+//     * 
+//     */
+//    public List<Poruka> getPoruka() {
+//        if (poruka == null) {
+//            poruka = new ArrayList<Poruka>();
+//        }
+//        return this.poruka;
+//    }
 
 }

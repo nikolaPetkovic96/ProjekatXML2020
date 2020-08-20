@@ -5,223 +5,223 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
-package com.example.Messages.SchemaToJava2.model.entitet;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-
-import com.example.Messages.SchemaToJava2.model.user.TUser;
-
-/**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element ref="{http://www.ftn.uns.ac.rs/KreiranjeOglasa}Oglas" maxOccurs="unbounded"/>
- *         &lt;element name="Korisnik" type="{http://www.ftn.uns.ac.rs/korisnici}TUser"/>
- *         &lt;element name="Ukupna_cena" type="{http://www.w3.org/2001/XMLSchema}double"/>
- *         &lt;element name="Od_datuma" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
- *         &lt;element name="Do_datuma" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
- *         &lt;element name="Bundle" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="Status_rezervacije">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;pattern value="PENDING|RESERVED|PAID|CANCELED"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element ref="{http://www.ftn.uns.ac.rs/Automobil}Poruka" maxOccurs="unbounded" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "oglas",
-    "korisnik",
-    "ukupnaCena",
-    "odDatuma",
-    "doDatuma",
-    "bundle",
-    "statusRezervacije",
-    "poruka"
-})
-@XmlRootElement(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
-@Entity 
-public class Rezervacija {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
-    protected Long rezervacija_id;
-    
-    @Column(name="ukupna_cena")
-    @XmlElement(name = "Ukupna_cena", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
-    protected double ukupnaCena;
-    
-    @Column(name="od_datuma")
-    @XmlElement(name = "Od_datuma", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
-    @XmlSchemaType(name = "dateTime")
-    protected Date odDatuma;
-    
-    @Column(name="do_datuma")
-    @XmlElement(name = "Do_datuma", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
-    @XmlSchemaType(name = "dateTime")
-    protected Date doDatuma;
-    
-    @Column(name="bundle")
-    @XmlElement(name = "Bundle", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
-    protected Boolean bundle;
-    
-    @Column(name="status_rezerv")
-    @XmlElement(name = "Status_rezervacije", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true, defaultValue = "PENDING")
-    protected String statusRezervacije;
-    
-    //Jedna rezervacija se odnosi samo na jednog korisnika(druga strana bidirekcije)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
-    protected TUser korisnik;
-    
-	//   @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
-	//   protected TUser firma;
-    
-    @ManyToMany(mappedBy="rezervacije")
-    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
-    protected List<Oglas> oglas;
-    
-    //Jedna rezervacija moze da ima vise komentara vezanih za nju(u tabeli komentar se cuva id rezervacije na koji se ona ondnosi)
-  	@OneToMany(mappedBy="rezervacija",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlElement(name = "Poruka")
-    protected List<Poruka> poruka;
-  	
-  	
-
-	public Long getRezervacija_id() {
-		return rezervacija_id;
-	}
-
-	public void setRezervacija_id(Long rezervacija_id) {
-		this.rezervacija_id = rezervacija_id;
-	}
-  
-
-    public List<Oglas> getOglas() {
-        if (oglas == null) {
-            oglas = new ArrayList<Oglas>();
-        }
-        return this.oglas;
-    }
-
-
-    public TUser getKorisnik() {
-        return korisnik;
-    }
-
-
-    public void setKorisnik(TUser value) {
-        this.korisnik = value;
-    }
-
-
-    public double getUkupnaCena() {
-        return ukupnaCena;
-    }
-
-
-    public void setUkupnaCena(double value) {
-        this.ukupnaCena = value;
-    }
-
-
-    public Date getOdDatuma() {
-        return odDatuma;
-    }
-
-
-    public void setOdDatuma(Date value) {
-        this.odDatuma = value;
-    }
-
-
-    public Date getDoDatuma() {
-        return doDatuma;
-    }
-
-
-    public void setDoDatuma(Date value) {
-        this.doDatuma = value;
-    }
-
-
-    public Boolean isBundle() {
-        return bundle;
-    }
-
-
-    public void setBundle(Boolean value) {
-        this.bundle = value;
-    }
-
- 
-    public String getStatusRezervacije() {
-        return statusRezervacije;
-    }
-
-
-    public void setStatusRezervacije(String value) {
-        this.statusRezervacije = value;
-    }
-
-
-    public List<Poruka> getPoruka() {
-        if (poruka == null) {
-            poruka = new ArrayList<Poruka>();
-        }
-        return this.poruka;
-    }
-
-	public Boolean getBundle() {
-		return bundle;
-	}
-
-
-	public void setOglas(List<Oglas> oglas) {
-		this.oglas = oglas;
-	}
-
-
-	public void setPoruka(List<Poruka> poruka) {
-		this.poruka = poruka;
-	}
-
-}
+//
+//package com.example.Messages.SchemaToJava2.model.entitet;
+//
+//import java.util.ArrayList;
+//import java.util.Date;
+//import java.util.List;
+//
+//import javax.persistence.CascadeType;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.FetchType;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
+//import javax.persistence.ManyToMany;
+//import javax.persistence.ManyToOne;
+//import javax.persistence.OneToMany;
+//import javax.xml.bind.annotation.XmlAccessType;
+//import javax.xml.bind.annotation.XmlAccessorType;
+//import javax.xml.bind.annotation.XmlElement;
+//import javax.xml.bind.annotation.XmlRootElement;
+//import javax.xml.bind.annotation.XmlSchemaType;
+//import javax.xml.bind.annotation.XmlType;
+//
+//import com.example.Messages.SchemaToJava2.model.user.TUser;
+//
+///**
+// * <p>Java class for anonymous complex type.
+// * 
+// * <p>The following schema fragment specifies the expected content contained within this class.
+// * 
+// * <pre>
+// * &lt;complexType>
+// *   &lt;complexContent>
+// *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+// *       &lt;sequence>
+// *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+// *         &lt;element ref="{http://www.ftn.uns.ac.rs/KreiranjeOglasa}Oglas" maxOccurs="unbounded"/>
+// *         &lt;element name="Korisnik" type="{http://www.ftn.uns.ac.rs/korisnici}TUser"/>
+// *         &lt;element name="Ukupna_cena" type="{http://www.w3.org/2001/XMLSchema}double"/>
+// *         &lt;element name="Od_datuma" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
+// *         &lt;element name="Do_datuma" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
+// *         &lt;element name="Bundle" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+// *         &lt;element name="Status_rezervacije">
+// *           &lt;simpleType>
+// *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+// *               &lt;pattern value="PENDING|RESERVED|PAID|CANCELED"/>
+// *             &lt;/restriction>
+// *           &lt;/simpleType>
+// *         &lt;/element>
+// *         &lt;element ref="{http://www.ftn.uns.ac.rs/Automobil}Poruka" maxOccurs="unbounded" minOccurs="0"/>
+// *       &lt;/sequence>
+// *     &lt;/restriction>
+// *   &lt;/complexContent>
+// * &lt;/complexType>
+// * </pre>
+// * 
+// * 
+// */
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(name = "", propOrder = {
+//    "id",
+//    "oglas",
+//    "korisnik",
+//    "ukupnaCena",
+//    "odDatuma",
+//    "doDatuma",
+//    "bundle",
+//    "statusRezervacije",
+//    "poruka"
+//})
+//@XmlRootElement(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+//@Entity 
+//public class Rezervacija {
+//
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+//    protected Long rezervacija_id;
+//    
+//    @Column(name="ukupna_cena")
+//    @XmlElement(name = "Ukupna_cena", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+//    protected double ukupnaCena;
+//    
+//    @Column(name="od_datuma")
+//    @XmlElement(name = "Od_datuma", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
+//    @XmlSchemaType(name = "dateTime")
+//    protected Date odDatuma;
+//    
+//    @Column(name="do_datuma")
+//    @XmlElement(name = "Do_datuma", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
+//    @XmlSchemaType(name = "dateTime")
+//    protected Date doDatuma;
+//    
+//    @Column(name="bundle")
+//    @XmlElement(name = "Bundle", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+//    protected Boolean bundle;
+//    
+//    @Column(name="status_rezerv")
+//    @XmlElement(name = "Status_rezervacije", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true, defaultValue = "PENDING")
+//    protected String statusRezervacije;
+//    
+//    //Jedna rezervacija se odnosi samo na jednog korisnika(druga strana bidirekcije)
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
+//    protected TUser korisnik;
+//    
+//	//   @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
+//	//   protected TUser firma;
+//    
+//    @ManyToMany(mappedBy="rezervacije")
+//    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
+//    protected List<Oglas> oglas;
+//    
+//    //Jedna rezervacija moze da ima vise komentara vezanih za nju(u tabeli komentar se cuva id rezervacije na koji se ona ondnosi)
+//  	@OneToMany(mappedBy="rezervacija",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @XmlElement(name = "Poruka")
+//    protected List<Poruka> poruka;
+//  	
+//  	
+//
+//	public Long getRezervacija_id() {
+//		return rezervacija_id;
+//	}
+//
+//	public void setRezervacija_id(Long rezervacija_id) {
+//		this.rezervacija_id = rezervacija_id;
+//	}
+//  
+//
+//    public List<Oglas> getOglas() {
+//        if (oglas == null) {
+//            oglas = new ArrayList<Oglas>();
+//        }
+//        return this.oglas;
+//    }
+//
+//
+//    public TUser getKorisnik() {
+//        return korisnik;
+//    }
+//
+//
+//    public void setKorisnik(TUser value) {
+//        this.korisnik = value;
+//    }
+//
+//
+//    public double getUkupnaCena() {
+//        return ukupnaCena;
+//    }
+//
+//
+//    public void setUkupnaCena(double value) {
+//        this.ukupnaCena = value;
+//    }
+//
+//
+//    public Date getOdDatuma() {
+//        return odDatuma;
+//    }
+//
+//
+//    public void setOdDatuma(Date value) {
+//        this.odDatuma = value;
+//    }
+//
+//
+//    public Date getDoDatuma() {
+//        return doDatuma;
+//    }
+//
+//
+//    public void setDoDatuma(Date value) {
+//        this.doDatuma = value;
+//    }
+//
+//
+//    public Boolean isBundle() {
+//        return bundle;
+//    }
+//
+//
+//    public void setBundle(Boolean value) {
+//        this.bundle = value;
+//    }
+//
+// 
+//    public String getStatusRezervacije() {
+//        return statusRezervacije;
+//    }
+//
+//
+//    public void setStatusRezervacije(String value) {
+//        this.statusRezervacije = value;
+//    }
+//
+//
+//    public List<Poruka> getPoruka() {
+//        if (poruka == null) {
+//            poruka = new ArrayList<Poruka>();
+//        }
+//        return this.poruka;
+//    }
+//
+//	public Boolean getBundle() {
+//		return bundle;
+//	}
+//
+//
+//	public void setOglas(List<Oglas> oglas) {
+//		this.oglas = oglas;
+//	}
+//
+//
+//	public void setPoruka(List<Poruka> poruka) {
+//		this.poruka = poruka;
+//	}
+//
+//}

@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlType;
     "nazivModela",
     "commonData"
 })
-@Entity(name="ModelAutomobila")
+@Entity
 public class TModelAutomobila {
 
 	@Id
@@ -56,9 +56,11 @@ public class TModelAutomobila {
     protected String nazivModela;
 	
     @XmlElement(name = "Common_data", required = true)
+    @Column(name = "common_data_id", nullable = false)
     protected Long commonDataId;
     
 	//Jedan TModelAutomobilaa se odnosi na samo jednu TMarkaAutomobila(druga strana bidirekcije)
+    @Column(name = "marka_automobila_id", nullable = false)
     private Long markaAutomobilaId;
 
   	
