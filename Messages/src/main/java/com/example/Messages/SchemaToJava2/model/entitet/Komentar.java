@@ -4,28 +4,18 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 
-
-
 package com.example.Messages.SchemaToJava2.model.entitet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
-//import com.example.Messages.SchemaToJava2.model.user.Firma;
-//import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -65,105 +55,82 @@ import javax.xml.bind.annotation.XmlType;
 })
 
 @XmlRootElement(name = "Komentar")
-//@Entity
+@Entity
 public class Komentar {
-//
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @XmlElement(name = "Id")
-//    protected Long id;
-//    
-//    @Column(name = "tekst_komentara", nullable = false)
-//    @XmlElement(name = "tekst_komentara", required = true)
-//    protected String tekstKomentara;
-//    
-//    @Column(name = "odobren")
-//    @XmlElement(defaultValue = "false")
-//    protected boolean odobren;
-//    
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @XmlElement(name = "Korisnik", required = true)
-//    protected CommonData commonData;
-//    
-//    //Jedan komentar se odnosi na samo jedan automobil(druga strana bidirekcije)
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Automobil automobil;
-//   
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name = "Id")
+    protected Long id;
+    
+    @Column(name = "tekst_komentara", nullable = false)
+    @XmlElement(name = "tekst_komentara", required = true)
+    protected String tekstKomentara;
+    
+    @Column(name = "odobren")
+    @XmlElement(defaultValue = "false")
+    protected boolean odobren;
+    
+    @XmlElement(name = "Korisnik", required = true)
+    @Column(name="common_data_id")
+    protected Long commonDataId;
+    
+    @Column(name="automobil_id")
+    private Long automobilId;
+   
 ////    @Column(nullable = true)
 //    //Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private Firma firma;
-//    
-////    @Column(nullable = true)
+//
 //    //Jedan komentar se kreira od samo jednog registrovanog korisnika(druga strana bidirekcije)
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private RegistrovaniKorisnik reg_korisnik;
-//
-//    public Long getId() {
-//        return id;
-//    }
-//
-//
-//    public void setId(Long value) {
-//        this.id = value;
-//    }
-//
-//
-//    public CommonData getCommonData() {
-//        return commonData;
-//    }
-//
-//
-//    public void setCommonData(CommonData value) {
-//        this.commonData = value;
-//    }
-//   
-// 
-//    public String getTekstKomentara() {
-//        return tekstKomentara;
-//    }
-//
-//
-//    public void setTekstKomentara(String value) {
-//        this.tekstKomentara = value;
-//    }
-//
-//
-//    public boolean isOdobren() {
-//        return odobren;
-//    }
-//
-//
-//    public void setOdobren(boolean value) {
-//        this.odobren = value;
-//    }
-//
-//	public Firma getFirma() {
-//		return firma;
-//	}
-//
-//	public void setFirma(Firma firma) {
-//		this.firma = firma;
-//	}
-//
-//
-//	public Automobil getAutomobil() {
-//		return automobil;
-//	}
-//
-//
-//	public void setAutomobil(Automobil automobil) {
-//		this.automobil = automobil;
-//	}
-//
-//
-//	public RegistrovaniKorisnik getReg_korisnik() {
-//		return reg_korisnik;
-//	}
-//
-//
-//	public void setReg_korisnik(RegistrovaniKorisnik reg_korisnik) {
-//		this.reg_korisnik = reg_korisnik;
-//	}
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long value) {
+        this.id = value;
+    }
+
+
+    public Long getCommonDataId() {
+        return commonDataId;
+    }
+
+
+    public void setCommonDataId(Long commonDataId) {
+        this.commonDataId = commonDataId;
+    }
+   
+ 
+    public String getTekstKomentara() {
+        return tekstKomentara;
+    }
+
+
+    public void setTekstKomentara(String value) {
+        this.tekstKomentara = value;
+    }
+
+
+    public boolean isOdobren() {
+        return odobren;
+    }
+
+    
+    public void setOdobren(boolean value) {
+        this.odobren = value;
+    }
+
+	public Long getAutomobilId() {
+		return automobilId;
+	}
+
+
+	public void setAutomobilId(Long automobilId) {
+		this.automobilId = automobilId;
+	}
 	   
 }

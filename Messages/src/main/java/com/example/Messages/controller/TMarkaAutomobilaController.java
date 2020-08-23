@@ -56,6 +56,7 @@ public class TMarkaAutomobilaController {
 		
 		CommonData commonData = new CommonData();
 		LocalDateTime now = LocalDateTime.now();
+		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
 		commonData.setDatumKreiranja(now);
 		commonData = cmdServ.addCommonData(commonData);
 		

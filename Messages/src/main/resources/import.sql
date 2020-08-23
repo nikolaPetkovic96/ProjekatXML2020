@@ -45,6 +45,34 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',1)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',2)
 
+--CommonData (Za Komentar)	
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
+
+--CommonData (Za Ocenu)	
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
+
+
+--CommonData (Za Oglas)	
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
+
+
+--CommonData (Za Poruku)	
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
+
+
+--CommonData (Za Rezervacije)	
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
+
 --TAdresa
 INSERT INTO TAdresa(mesto, postanski_broj, ulica, broj, geo_duzina, geo_sirina) VALUES('Ruma', 22400,'Neznanog i znanog junaka', 35, 45.25, 32.125)
 INSERT INTO TAdresa(mesto, postanski_broj, ulica, broj, geo_duzina, geo_sirina) VALUES('Novi Sad',21000,'Deset Jugovica', 5 , 10.10, 11.111)
@@ -87,3 +115,54 @@ INSERT INTO TTip_Goriva(naziv_tipa, common_data_id) VALUES('Bezolovno', 18)
 INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, plan_kilom, predj_kilom, tip_menjaca_id, vrsta_goriva_id) VALUES (1, true, 1, 1, 1, 25000, 56000, 3, 2)
 INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, plan_kilom, predj_kilom, tip_menjaca_id, vrsta_goriva_id) VALUES (2, true, 2, 2, 3, 3000, 6700, 1, 1)
 INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, plan_kilom, predj_kilom, tip_menjaca_id, vrsta_goriva_id) VALUES (1, true, 1, 1, 1, 11000, 526000, 2, 3)
+
+--Administrator
+INSERT INTO Administrator(ime, prezime, jmbg) VALUES('Petar', 'Petrovic', '213123124')
+INSERT INTO Administrator(ime, prezime, jmbg) VALUES('Marko', 'Markovic', '766745894')
+INSERT INTO Administrator(ime, prezime, jmbg) VALUES('Ana', 'Anica', '6969696968')
+
+--Firma i Agent
+INSERT INTO Firma(ime, prezime, jmbg, naziv, pib) VALUES('Darko', 'Darkovic', '213123124',null, null)
+INSERT INTO Firma(ime, prezime, jmbg, naziv, pib) VALUES('Tanja', 'Tanjic', '766745894',null, null) 
+INSERT INTO Firma(ime, prezime, jmbg, naziv, pib) VALUES(null, null, null, 'Firma 1', '7662313')
+
+--Registrovani korisnik
+INSERT INTO Registrovani_korisnik(ime, prezime, jmbg) VALUES('Reg1', 'Korisnikovic', '213123124')
+INSERT INTO Registrovani_korisnik(ime, prezime, jmbg) VALUES('Reg2', 'Korisnikovic', '766745894') 
+INSERT INTO Registrovani_korisnik(ime, prezime, jmbg) VALUES('Reg3', 'Korisnikovic', '766231321')
+
+--TUser
+INSERT INTO TUser(korisnicko_ime, lozinka, email, adresa_id, status) VALUES ('NoobMaster69' ,'password123', 'nmaster@gmail.com', 1, 'aktivan')
+INSERT INTO TUser(korisnicko_ime, lozinka, email, adresa_id, status) VALUES ('username2' ,'password567', 'sardas@gmail.com', 2, 'aktivan')
+INSERT INTO TUser(korisnicko_ime, lozinka, email, adresa_id, status) VALUES ('username23' ,'password890', 'sadasd@gmail.com', 3, 'aktivan')
+
+--Cenovnik
+INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_km, popust30) VALUES('Porodicni paket',2500, 2200, 1200,700)
+INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_km, popust30) VALUES('Medjugradski cenovnik',3000, 3200, 1400,900)
+INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_km, popust30) VALUES('Gradski cenovnik',1800, 2000, 800,400)
+
+--Komentar
+INSERT INTO Komentar( tekst_komentara, odobren, automobil_id, common_data_id) VALUES('Ekstra kola sve pohvale', true, 1, 22)
+INSERT INTO Komentar( tekst_komentara, odobren, automobil_id, common_data_id) VALUES('Ekstra naj naj naj kola sve pohvale', true, 2, 23)
+INSERT INTO Komentar( tekst_komentara, odobren, automobil_id, common_data_id) VALUES('Nisu bas dobra kola, nema pohvale', true, 3, 24)
+
+--Ocena 
+INSERT INTO Ocena(vredn_ocene, automobil_id, common_data_id) VALUES(4, 1, 25)
+INSERT INTO Ocena(vredn_ocene, automobil_id, common_data_id) VALUES(5, 2, 26)
+INSERT INTO Ocena(vredn_ocene, automobil_id, common_data_id) VALUES(2, 3, 27)
+
+--Oglas 
+INSERT INTO Oglas(od_datuma, do_datuma, cenovnik_id, automobil_id, common_data_id) VALUES('2017-10-01 21:58:58','2018-10-02 18:57:58', 1, 1, 28)
+INSERT INTO Oglas(od_datuma, do_datuma, cenovnik_id, automobil_id, common_data_id) VALUES('2020-11-01 21:58:58','2020-12-02 18:57:58', 2, 2, 29)
+INSERT INTO Oglas(od_datuma, do_datuma, cenovnik_id, automobil_id, common_data_id) VALUES('2012-10-01 21:58:58','2012-11-02 18:57:58', 3, 3, 30)
+
+--Komentar
+INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je prva poruka.  Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 31)
+INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je druga poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 2, 2, 32)
+INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je treca poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 3, 3, 33)
+
+
+--Komentar
+INSERT INTO Rezervacija(bundle, do_datuma, od_datuma, status_rezerv, ukupna_cena, common_data_id) VALUES(true,'2021-10-01 21:58:58','2021-10-02 18:57:58', 'PENDING', 22000, 34)
+INSERT INTO Rezervacija(bundle, do_datuma, od_datuma, status_rezerv, ukupna_cena, common_data_id) VALUES(false,'2022-10-01 21:58:58','2022-10-02 18:57:58', 'PENDING', 12000, 35)
+INSERT INTO Rezervacija(bundle, do_datuma, od_datuma, status_rezerv, ukupna_cena, common_data_id) VALUES(true,'2023-10-01 21:58:58','2023-10-02 18:57:58', 'PENDING', 8000, 36)

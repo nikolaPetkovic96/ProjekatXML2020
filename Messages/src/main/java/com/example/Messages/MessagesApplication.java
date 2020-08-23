@@ -12,7 +12,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableAutoConfiguration
 public class MessagesApplication {
 	
-	
 	public static void main(String[] args) {
 		SpringApplication.run(MessagesApplication.class, args);
 	}

@@ -4,17 +4,13 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 
-
 package com.example.Messages.SchemaToJava2.model.entitet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -57,62 +53,67 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "id", "korisnik", "vrednostOcene" })
 @XmlRootElement(name = "Ocena")
-//@Entity
+@Entity
 public class Ocena {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	protected Long id;
-//
-//	// Jedna ocena se kreira od strane samo jednog korisnika(druga strana
-//	// bidirekcije)
-//	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	@XmlElement(name = "Korisnik", required = true)
-//	protected CommonData korisnik;
-//
-//	@Column(name = "vredn_ocene")
-//	@XmlElement(name = "Vrednost_ocene")
-//	protected int vrednostOcene;
-//
-//	// Jedna ocena se odnosi na samo jedan automobil(druga strana bidirekcije)
-//	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	private Automobil automobil;
-//
-//	// Jedna ocena se kreira od samo jednog registrovanog korisnika(druga strana
-//	// bidirekcije)
-//	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	private RegistrovaniKorisnik reg_korisnik;
-//
-//	public Long getId() {
-//		return id;
-//	}
-//
-//	public void setId(Long value) {
-//		this.id = value;
-//	}
-//
-//	public CommonData getKorisnik() {
-//		return korisnik;
-//	}
-//
-//	public void setKorisnik(CommonData value) {
-//		this.korisnik = value;
-//	}
-//
-//	public int getVrednostOcene() {
-//		return vrednostOcene;
-//	}
-//
-//	public void setVrednostOcene(int value) {
-//		this.vrednostOcene = value;
-//	}
-//
-//	public Automobil getAutomobil() {
-//		return automobil;
-//	}
-//
-//	public void setAutomobil(Automobil automobil) {
-//		this.automobil = automobil;
-//	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Long id;
+
+
+	@Column(name = "vredn_ocene")
+	@XmlElement(name = "Vrednost_ocene")
+	protected int vrednostOcene;
+
+    @XmlElement(name = "Korisnik", required = true)
+    @Column(name="common_data_id")
+    protected Long commonDataId;
+    
+    @Column(name="automobil_id")
+    private Long automobilId;
+
+	public Ocena() {
+		super();
+	}
+
+	public Ocena(Long id, int vrednostOcene, Long commonDataId, Long automobilId) {
+		super();
+		this.id = id;
+		this.vrednostOcene = vrednostOcene;
+		this.commonDataId = commonDataId;
+		this.automobilId = automobilId;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long value) {
+		this.id = value;
+	}
+
+	public int getVrednostOcene() {
+		return vrednostOcene;
+	}
+
+	public void setVrednostOcene(int value) {
+		this.vrednostOcene = value;
+	}
+
+	public Long getCommonDataId() {
+		return commonDataId;
+	}
+
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
+	}
+
+	public Long getAutomobilId() {
+		return automobilId;
+	}
+
+	public void setAutomobilId(Long automobilId) {
+		this.automobilId = automobilId;
+	}
 
 }

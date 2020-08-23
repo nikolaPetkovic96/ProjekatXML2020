@@ -57,6 +57,7 @@ public class TSlikaVozilaController {
 			//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
 			CommonData commonData = new CommonData();
 			LocalDateTime now = LocalDateTime.now();
+			commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
 			commonData.setDatumKreiranja(now);
 			commonData = comDataService.addCommonData(commonData);
 		

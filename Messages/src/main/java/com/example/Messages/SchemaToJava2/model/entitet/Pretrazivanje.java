@@ -9,7 +9,13 @@
 //package com.example.Messages.SchemaToJava2.model.entitet;
 //
 //import java.math.BigInteger;
+//import java.time.LocalDateTime;
 //
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
 //import javax.xml.bind.annotation.XmlAccessType;
 //import javax.xml.bind.annotation.XmlAccessorType;
 //import javax.xml.bind.annotation.XmlElement;
@@ -53,96 +59,37 @@
 //    "dodatniParametri"
 //})
 //@XmlRootElement(name = "Pretrazivanje", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul")
-////@Entity 
+//@Entity 
 //public class Pretrazivanje {
 //	
-////	@Id
-////	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //    protected Long id;
 //	
-////	@Column(name="datum_preuz_voz", nullable=false)
+//	@Column(name="datum_preuz_voz", nullable=false)
 //    @XmlElement(name = "Datum_preuzimanja_vozila", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul", required = true)
 //    @XmlSchemaType(name = "dateTime")
-//    protected XMLGregorianCalendar datumPreuzimanjaVozila;
+//    protected LocalDateTime datumPreuzimanjaVozila;
 //    
-////	@Column(name="datum_povr_voz", nullable=false)
+//	@Column(name="datum_povr_voz", nullable=false)
 //    @XmlElement(name = "Datum_povratka_vozila", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul", required = true)
 //    @XmlSchemaType(name = "dateTime")
-//    protected XMLGregorianCalendar datumPovratkaVozila;
+//    protected LocalDateTime datumPovratkaVozila;
 //     
-////	@Column(name="mesto_preuz_voz", nullable=false)
+//	@Column(name="mesto_preuz_voz", nullable=false)
 //    @XmlElement(name = "Mesto_preuzimanja_vozila", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul", required = true)
 //    protected String mestoPreuzimanjaVozila;
 //    
-////	@Column(name="min_cena", nullable=false)
+//	@Column(name="min_cena", nullable=false)
 //    @XmlElement(name = "MinCena", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul", required = true)
 //    @XmlSchemaType(name = "positiveInteger")
-//    protected BigInteger minCena;
+//    protected int minCena;
 //    
-////	@Column(name="max_cena", nullable=false)
+//	@Column(name="max_cena", nullable=false)
 //    @XmlElement(name = "MaxCena", namespace = "http://www.ftn.uns.ac.rs/KorisnickiModul", required = true)
 //    @XmlSchemaType(name = "positiveInteger")
-//    protected BigInteger maxCena;
+//    protected int maxCena;
 //
-//	public Long getId() {
-//		return id;
-//	}
-//
-//
-//	public void setId(Long id) {
-//		this.id = id;
-//	}
-//
-//
-//    public XMLGregorianCalendar getDatumPreuzimanjaVozila() {
-//        return datumPreuzimanjaVozila;
-//    }
-//
-//
-//    public void setDatumPreuzimanjaVozila(XMLGregorianCalendar value) {
-//        this.datumPreuzimanjaVozila = value;
-//    }
-//
-//
-//    public XMLGregorianCalendar getDatumPovratkaVozila() {
-//        return datumPovratkaVozila;
-//    }
-//
-//    public void setDatumPovratkaVozila(XMLGregorianCalendar value) {
-//        this.datumPovratkaVozila = value;
-//    }
-//
-//
-//    public String getMestoPreuzimanjaVozila() {
-//        return mestoPreuzimanjaVozila;
-//    }
-//
-//
-//    public void setMestoPreuzimanjaVozila(String value) {
-//        this.mestoPreuzimanjaVozila = value;
-//    }
-//
-//
-//    public BigInteger getMinCena() {
-//        return minCena;
-//    }
-//
-//
-//    public void setMinCena(BigInteger value) {
-//        this.minCena = value;
-//    }
-//
-//
-//    public BigInteger getMaxCena() {
-//        return maxCena;
-//    }
-//
-//
-//    public void setMaxCena(BigInteger value) {
-//        this.maxCena = value;
-//    }
-//
-//
-//
-//    
+//	
+//  
 //}
