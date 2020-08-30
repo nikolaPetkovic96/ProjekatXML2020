@@ -10,19 +10,22 @@ package com.example.Messages.SchemaToJava2.model.entitet;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-
+import javax.persistence.JoinColumn;
 /**
  * <p>Java class for anonymous complex type.
  * 
@@ -104,6 +107,8 @@ public class Rezervacija {
     @Column(name="commonDataId")
     protected Long commonDataId;
     
+    
+    
 	//   @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
 	//   protected TUser firma; obrsati 
     
@@ -111,6 +116,13 @@ public class Rezervacija {
 	//    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
 	//    protected List<Oglas> oglas;
 	//    protected List<Poruka> poruka;
+    
+    @ManyToMany
+	@JoinTable(
+	  name = "rezervacije_oglasi", 
+	  joinColumns = @JoinColumn(name = "rezervacija_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "oglas_id"))
+    protected List<Oglas> oglasi;
 
 	public Rezervacija() {
 		super();

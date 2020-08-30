@@ -166,3 +166,7 @@ INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) V
 INSERT INTO Rezervacija(bundle, do_datuma, od_datuma, status_rezerv, ukupna_cena, common_data_id) VALUES(true,'2021-10-01 21:58:58','2021-10-02 18:57:58', 'PENDING', 22000, 34)
 INSERT INTO Rezervacija(bundle, do_datuma, od_datuma, status_rezerv, ukupna_cena, common_data_id) VALUES(false,'2022-10-01 21:58:58','2022-10-02 18:57:58', 'PENDING', 12000, 35)
 INSERT INTO Rezervacija(bundle, do_datuma, od_datuma, status_rezerv, ukupna_cena, common_data_id) VALUES(true,'2023-10-01 21:58:58','2023-10-02 18:57:58', 'PENDING', 8000, 36)
+
+INSERT INTO rezervacije_oglasi(rezervacija_id,oglas_id) VALUES (1,1)
+INSERT INTO rezervacije_oglasi(rezervacija_id,oglas_id) VALUES (1,2)
+INSERT INTO rezervacije_oglasi(rezervacija_id,oglas_id) VALUES (2,1)

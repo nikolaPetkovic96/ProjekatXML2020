@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-
+import com.example.Messages.SchemaToJava2.model.entitet.Rezervacija;
 //import com.example.Messages.SchemaToJava2.model.user.Firma;
 //import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
 
@@ -87,7 +87,12 @@ public class Oglas {
     //Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
 	//private Firma firma;
 	//private RegistrovaniKorisnik reg_korisnik;
-	//private List<Rezervacija> rezervacije;
+    @ManyToMany
+    @JoinTable(
+    		  name = "rezervacije_oglasi", 
+    		  joinColumns = @JoinColumn(name = "oglas_id"), 
+    		  inverseJoinColumns = @JoinColumn(name = "rezervacija_id"))
+	private List<Rezervacija> rezervacije;
 
     public Oglas() {
 		super();

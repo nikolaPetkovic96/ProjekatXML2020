@@ -2,10 +2,10 @@ package com.example.Reservation.model;
 
 import javax.persistence.Entity;
 
-@Entity
+//@Entity
 public class TestPostgres {
 
-	private String test;
+	/*private String test;
 
 	public TestPostgres() {
 		super();
@@ -20,5 +20,5 @@ public class TestPostgres {
 	} 
 	
 	
-	
+	*/
 }
