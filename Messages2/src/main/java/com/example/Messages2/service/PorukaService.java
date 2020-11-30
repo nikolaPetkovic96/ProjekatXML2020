@@ -29,8 +29,8 @@ public class PorukaService {
 			return porukaKlinCentra;
 		}
 
-		public Poruka getPoruka(Long id) {
-			return porukaRepository.findById(id).orElseGet(null);
+		public PorukaDTO getPoruka(Long id) {
+			return porukaRepository.findById(id).map(por-> porMapper.toDTO(por)).orElseGet(null);
 		}
 		
 		public Poruka addPoruka(Poruka poruka)throws Exception{

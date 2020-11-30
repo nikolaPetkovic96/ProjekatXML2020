@@ -32,7 +32,7 @@ public class PorukaController {
 		return porService.getAllMessages(rezId);
 	}
 	@GetMapping(value = "/{id}")
-	public Poruka getPoruka(	@PathVariable("id") Long id
+	public PorukaDTO getPoruka(	@PathVariable("id") Long id
 			){
 		return porService.getPoruka(id);
 	}
