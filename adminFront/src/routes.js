@@ -5,7 +5,8 @@ import LoginForm from '../src/forms/LoginForm'
 import RegForm from '../src/forms/RegForm'
 
 import Homepage from './components/Homepage'
-
+import AdminProfile from './components/AdminProfile'
+import AdminProfileUpdate from './components/AdminProfileUpdate'
 
 export default [
     {
@@ -33,5 +34,15 @@ export default [
         path:'/home',
         name:'Homepage',
         component:Homepage
+    },
+    {
+        path:'/profile',
+        name:'AdminProfile',
+        component:AdminProfile
+    },
+    {
+        path:'/profile/:id/update',
+        name:'AdminProfileUpdate',
+        component:AdminProfileUpdate
     },
 ]
