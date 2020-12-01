@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.example.Reservation.dto.RezervacijaDTO;
 import com.example.Reservation.model.CommonData;
@@ -12,7 +13,7 @@ import com.example.Reservation.model.Rezervacija;
 import com.example.Reservation.repository.CommonDataRepository;
 import com.example.Reservation.repository.OglasRepository;
 import com.example.Reservation.repository.TUserRepository;
-
+@Component
 public class RezervacijaMapper {
 
 	@Autowired
