@@ -26,7 +26,7 @@
             <!-- Ads -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
-                    <router-link style='text-decoration: none;color:#35424a;' to="/ads" class="nav-link"
+                    <router-link style='text-decoration: none;color:#35424a;' to="/users" class="nav-link"
                         exact>
                         <img src="../assets/users1.2.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">

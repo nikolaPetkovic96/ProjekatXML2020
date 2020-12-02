@@ -7,6 +7,8 @@ import RegForm from '../src/forms/RegForm'
 import Homepage from './components/Homepage'
 import AdminProfile from './components/AdminProfile'
 import AdminProfileUpdate from './components/AdminProfileUpdate'
+import AdminUsersAuthorites from './components/AdminUsersAuthorities'
+
 
 export default [
     {
@@ -44,5 +46,10 @@ export default [
         path:'/profile/:id/update',
         name:'AdminProfileUpdate',
         component:AdminProfileUpdate
+    },
+    {
+        path:'/users',
+        name:'UsersAuthorites',
+        component:AdminUsersAuthorites
     },
 ]
