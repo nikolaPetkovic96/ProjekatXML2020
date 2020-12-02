@@ -86,3 +86,54 @@ article#main-col{
     width:65%;
 }
 </style>
+
+
+
+<!--
+<template>
+    <div id="car-comments">
+        <div id="car-comments">
+            <div class="container" id='page-title'>
+                <h1 style="margin-top:10px;color:#35424a;">Lista <span id='titleEffect'>Komentara</span></h1>
+                <hr style='background:#35424a;height:1px;'>
+            </div>
+
+            <div id='main' class='container'>
+                <div class="comments" v-bind:key="car.id" v-for='car in cars'>
+                    <div id='carInfo'>
+                        <div class="card-header">
+                            <h4><b>Automobil:</b> {{car.markaAut}} {{car.modelAut}}</h4>
+                            <h4><b>Klasa automobila:</b> {{car.klasaAut}}</h4>
+                            <h4><b>Vlasnik:</b> {{car.vlasnik}}</h4>
+                        </div>
+                    </div>
+                    <div v-show='isThereReviews(car)' class="card-body">
+                            <h3>Nema ocene niti komentara za ovaj automobil...</h3>
+                    </div>
+                    <div id='all-comments' v-bind:key="comment" v-for='comment in car.reviews'>
+                        <div class="single-comment">
+                            <div id='username'>{{comment.username}} </div>
+                            <div id='star-rating'>
+                                <star-rating
+                                    inactive-color="#35424a"
+                                    active-color="#e8491d"
+                                    v-bind:read-only= "true"
+                                    v-bind:star-size="25"
+                                    v-bind:show-rating="false"
+                                    v-bind:rating="comment.star">
+                                </star-rating>
+                            </div>
+                            <div id='comment'>
+                                {{comment.text}}  
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+-->

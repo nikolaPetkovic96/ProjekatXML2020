@@ -12,6 +12,7 @@ import CenovnikNew from './components/CenovnikNew'
 import CenovnikEdit from './components/CenovnikEdit'
 import Automobili from './components/Automobili'
 import AutomobiliNew from './components/AutomobiliNew'
+import AutomobiliComments from './components/AutomobiliComments'
 
 import Reservation from './components/Rezervacija'
 // import ReservationNew from './components/RezervacijaNew'
@@ -77,6 +78,13 @@ export default [
         name:'automobiliNew',
         component:AutomobiliNew
     },
+    {
+        // path:'/cars/comments',
+        path:'/carComments',
+        name:'automobiliKomentar',
+        component:AutomobiliComments
+    },
+    
     {
         path:'/reservations/',
         name:'rezervacija',
