@@ -6,7 +6,7 @@
 //
 
 
-package com.example.Reservation.model;
+package com.example.Baza.model;
 
 import java.time.LocalDateTime;
 import java.util.Date;

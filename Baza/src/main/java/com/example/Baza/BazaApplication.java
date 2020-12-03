@@ -1,4 +1,4 @@
-package com.example.Reservation;
+package com.example.Baza;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -8,12 +8,13 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EntityScan(basePackages = {"com.example.Reservation.model"}) // scan JPA entities
+@EntityScan(basePackages = {"com.example.Baza.model"}) // scan JPA entities
 @EnableAutoConfiguration
-public class ReservationApplication {
+public class BazaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ReservationApplication.class, args);
+		System.out.println("RADI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		SpringApplication.run(BazaApplication.class, args);
 	}
 
 }

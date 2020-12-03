@@ -16,7 +16,7 @@ public class RezervacijaDTO {
 	private String statusRezervacije;
 	private Long commonDataId;
 	private String username;
-	private List<Long> oglasi_id;	//oglasi koji su u rezervaciji
+	private List<Long> narudzbenice_id;	//narudzbenice koji su u rezervaciji
 	private List<Long> automobili_id; //automobili iz oglasa
 	private LocalDateTime datumKreiranja;
 	private LocalDateTime datumPoslednjeIzmene;
@@ -39,7 +39,7 @@ public class RezervacijaDTO {
 	}*/
 	
 	public RezervacijaDTO(Long id, double ukupnaCena, LocalDateTime odDatuma, LocalDateTime doDatuma, Boolean bundle, Long commonDataId,
-			String statusRezervacije, String username,List<Long> oglasi_id,List<Long> automobili_id,LocalDateTime datumKreiranja,LocalDateTime datumPoslednjeIzmene) {
+			String statusRezervacije, String username,List<Long> narudzbenice_id,List<Long> automobili_id,LocalDateTime datumKreiranja,LocalDateTime datumPoslednjeIzmene) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
@@ -49,7 +49,7 @@ public class RezervacijaDTO {
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
 		this.username = username;
-		this.oglasi_id=oglasi_id;
+		this.narudzbenice_id=narudzbenice_id;
 		this.automobili_id=automobili_id;
 		this.datumKreiranja=datumKreiranja;
 		this.datumPoslednjeIzmene=datumPoslednjeIzmene;
@@ -122,12 +122,12 @@ public class RezervacijaDTO {
 		this.username = username;
 	}
 
-	public List<Long> getOglasi_id() {
-		return oglasi_id;
+	public List<Long> getNarudzbenice_id() {
+		return narudzbenice_id;
 	}
 
-	public void setOglasi_id(List<Long> oglasi_id) {
-		this.oglasi_id = oglasi_id;
+	public void setNarudzbenice_id(List<Long> narudzbenice_id) {
+		this.narudzbenice_id = narudzbenice_id;
 	}
 
 	public List<Long> getAutomobili_id() {
