@@ -4,7 +4,7 @@
             <h1 style="margin-top:10px;color:#35424a;">Lista <span id='titleEffect'>Automobila</span></h1>
             <hr style='background:#35424a;height:1px;'>
         </div>
-
+        
         <div class='container ' id='search'>
             <nav class="navbar navbar-light bg-light justify-content-between">
                 <a class="navbar-brand">Search</a>
@@ -26,14 +26,15 @@
 
                             <span class="span_search">Lokacija</span>
                             <input class="form-control mr-sm-2" type="text" placeholder="lokacija" aria-label="Search" v-model="searchedCar.lokacija">
-                        </div> 
+                            <button style="margin-left: 5px;" class="btn btn-outline-success my-2 my-sm-0" type="button" v-on:click.prevent='searchCar()'>Search</button>
+                        </div>
+
                     </div>
                     <div style="margin-right: 20px;" id='search_icon'>
                         <span style='display:inline; margin: 15px;'>
                             <img v-on:click='isSearch = !isSearch' src='../assets/searchIcon1.png' style="display:inline;">
                         </span>
                     </div>
-
 
                     <div style='display:inline;' v-show='isSearch' id="advanced_search">
                         <div id='second-row' class="row" style="margin-top:5px;">
@@ -94,8 +95,6 @@
                             </div> <!--/third_row-->
                         </div><!--/second_row-->
                     </div><!--/advanced_search-->
-                <button style="margin-left: 5px;" class="btn btn-outline-success my-2 my-sm-0" type="button" v-on:click.prevent='searchCar()'>Search</button>
-
                 </form>
             </nav>
         </div>
@@ -133,20 +132,20 @@
                         <td>{{car.ocena}}</td>
                         <td>{{car.cena}}</td>
                         <td>{{car.kilometraza}}</td>
-                        <td><button class="btn-primary" v-on:click='showDetails(car.id)'> Details </button></td>
-                        <td><button class="btn-primary" v-on:click='makeReseravation(car.id)'> Reserve </button></td>
-                        <td><button class="btn-primary" v-on:click='editApartment(car.id)'> Edit </button></td><!--Delete mozda moze i preko edita da na toj str. bude jedno dugme-->
-                        <td> <button class="btn-danger" v-on:click='deleteApartment(car.id)'> Delete </button></td>
+                        <td><button class=" btn-sm btn-outline-primary" v-on:click='showDetails(car.id)'> Details </button></td>
+                        <td><button class=" btn-sm btn-outline-primary" v-on:click='makeReseravation(car.id)'> Reserve </button></td>
+                        <td><button class="btn-sm btn-outline-primary" v-on:click='editCar(car.id)'> Edit </button></td><!--Delete mozda moze i preko edita da na toj str. bude jedno dugme-->
+                        <td> <button class="btn btn-sm btn-danger" v-on:click='deleteCar(car.id)'> Delete </button></td>
                     </tr>
                 </tbody>
             </table>
 
             <div id='options'>
-                <router-link to="/carNew"> <button class='btn-lg classButton'>+ Dodaj vozilo</button>
+                <router-link to="/cars/new"> <button class=' btn btn-lg classButton shadow'>+ Dodaj vozilo</button>
                 </router-link>
-                <router-link to="/carComments"> <button class='classButton'>Komentari</button>
+                <router-link to="/carComments"> <button class='btn classButton shadow'>Komentari</button>
                 </router-link>
-                <router-link to="/reservations"> <button class='classButton'>Rezervacije</button>
+                <router-link to="/reservations"> <button class='btn classButton shadow'>Rezervacije</button>
                 </router-link>
             </div>
         
@@ -225,8 +224,26 @@ export default {
            
         }
     },
-    methods:{
-        // pomocna metoda za ogranicen odabir broja necega:
+    methods:{        
+
+        showDetails:function(id){
+            this.$router.push(`/cars/${id}/details`);
+        },
+
+        editCar:function(id){
+            this.$router.push(`/cars/${id}/edit`);
+        },
+
+        
+        makeReseravation:function(id){
+            alert(`Za automobil id ${id} ce biti napravljena rezervacija!`);
+        },
+
+        deleteCar:function(id){
+            alert(`Automobils sa id ${id} ce biti obrisan!`);
+        },
+
+        // pomocna metoda za ogranicen odabir broja sedista za decu:
         range(start = 1, end) {
             var ans = [];
             for (let i = start; i <= end; i++) {
@@ -235,8 +252,8 @@ export default {
             return ans;
         },
 
+        // metoda za koja salje parametre za pretragu automobila i vraca listu automobila kao rezultat
          searchCar() {
-
             console.log(`Trazite apartman:
             lokacija: ${this.searchedCar.lokacija}
             od: ${this.searchedCar.od}
@@ -307,6 +324,7 @@ export default {
             //     });
         },
 
+        // metoda za sortiranje 
         sort: function (s) {
             //if s == current sort, reverse
             if (s === this.currentSort) {
@@ -327,7 +345,8 @@ export default {
         },
     },
     created() {
-        this.brojSedZaDec = this.range(1, 5);
+        //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
+        this.brojSedZaDec = this.range(0, 5);
     }
 }
 </script>
@@ -366,6 +385,22 @@ export default {
 
 .arrow:hover{
     cursor: pointer;
+}
+
+
+.classButton{
+  margin-left: 5px;
+  color:#fff;
+  background-color:#35424a;
+  padding:10px;
+}
+
+.classButton:hover{
+  margin-left: 5px;
+  color:#fff;
+  background-color:gold;
+  font-weight: bold;
+  padding:10px;
 }
 
 </style>

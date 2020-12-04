@@ -12,26 +12,30 @@
                     <tr>
                         <th>Rezervisan od</th> <!--Korisnik koji ga rezervise-->
                         <th>Automobil</th> <!--Marka + model-->
-                        <th></th>
                         <th>Od</th>
                         <th>Do</th>
-                        <th>Night</th>
-                        <th @click="sort('price')">Price <img v-if='currentSortDir == "asc"'
+                        <th>Cena</th>
+                        <!-- <th @click="sort('price')">Cena <img v-if='currentSortDir == "asc"'
                                 src='img/up-arrow1.1.png'><img v-if='currentSortDir == "desc"'
-                                src='img/down-arrow1.1.png'></th>
-                        <th>Confirmation</th>
+                                src='img/down-arrow1.1.png'></th> -->
+                        <th>Bundle</th>
                         <th>Status</th>
-                        <th v-if='isHost'>Status</th>
+                        <th>Promena statusa</th>
                     </tr>
                 </thead>
                 <tbody>                
-                <tr v-bind:key="cenovnik.id" v-for='cenovnik in cenovnici'>
-                    <td>{{cenovnik.nazivCenovnika}}</td>
-                    <td>{{cenovnik.cenaPoDanu}}</td>
-                    <td>{{cenovnik.cenaPoKilometru}}</td>
-                    <td>{{cenovnik.cenaCollisionDamageWaiver}}</td>
-                    <td>{{cenovnik.popustZaPreko30Dana}}</td>
-                    <td><button v-on:click='openEdit(cenovnik.id)'  class="btn-primary"> edit </button></td>
+                <tr v-bind:key="rezervacija.id" v-for='rezervacija in rezervacije'>
+                    <td>{{rezervacija.user.username}}</td>
+                    <td>{{rezervacija.car.markaAut}} {{rezervacija.car.modelAut}} ({{rezervacija.car.klasaAut}})</td>
+                    <td>{{rezervacija.odDatuma}}</td>
+                    <td>{{rezervacija.doDatuma}}</td>
+                    <td>{{rezervacija.ukupnaCena}}</td>
+                    <td>{{rezervacija.bundle}}</td>
+                    <td>{{rezervacija.statusRezervacije}}</td>
+                    <td>
+                        <button v-on:click='openEdit(rezervacija.id)'  class="btn-outline-primary"> neaktivan </button>
+                        <button v-on:click='openEdit(rezervacija.id)'  class="btn-outline-primary"> potvrdi </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -57,12 +61,54 @@ export default {
             isHost: false,
             isGuest: true,
 
-            reservation:{
-                beginning: null,
-                ending: null,
-                planned_distance: 0,
-                message:''
-            }
+            rezervacije:[
+                {
+                    id:1,
+                    // user.username
+                    user:{
+                        username:'HappyUser',
+                        ime: 'Nikola',
+                        prezime:'Nikolic'
+                    },
+                    car:{
+                        id:'2',
+                        markaAut:'Mercedes',
+                        modelAut:'R8',
+                        klasaAut:'Old Tajmer',
+                        ocena:3,
+                        cena:1200,
+                        kilometraza:800,
+                    },
+                    odDatuma:'22.10.2020',
+                    doDatuma:'30.10.2020',
+                    ukupnaCena:9600,
+                    bundle:false,
+                    statusRezervacije:'aktivan'
+                },
+                {
+                    id:2,
+                    // user.username
+                    user:{
+                        username:'HappyUser2',
+                        ime: 'Darko',
+                        prezime:'Darkovic'
+                    },
+                    car:{
+                        id:'1',
+                        markaAut:'BMW',
+                        modelAut:'M5',
+                        klasaAut:'SUV',
+                        ocena:5,
+                        cena:2500,
+                        kilometraza:500,
+                    },
+                    odDatuma:'18.10.2020',
+                    doDatuma:'20.10.2020',
+                    ukupnaCena:5000,
+                    bundle:false,
+                    statusRezervacije:'aktivan'
+                },
+            ]
         }
     },
     methods:{

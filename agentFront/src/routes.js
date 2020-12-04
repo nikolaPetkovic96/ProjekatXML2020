@@ -12,8 +12,10 @@ import CenovnikNew from './components/CenovnikNew'
 import CenovnikEdit from './components/CenovnikEdit'
 import Automobili from './components/Automobili'
 import AutomobiliNew from './components/AutomobiliNew'
+import AutomobiliEdit from './components/AutomobiliEdit'
+import AutomobiliDetails from './components/AutomobiliDetails'
 import AutomobiliComments from './components/AutomobiliComments'
-
+import AutomobiliCommentsNew from './components/AutomobiliCommentsNew'
 import Reservation from './components/Rezervacija'
 // import ReservationNew from './components/RezervacijaNew'
 export default [
@@ -79,12 +81,28 @@ export default [
         component:AutomobiliNew
     },
     {
+        path:'/cars/:id/edit',
+        name:'automobiliEdit',
+        component:AutomobiliEdit
+    },
+    {
         // path:'/cars/comments',
         path:'/carComments',
         name:'automobiliKomentar',
         component:AutomobiliComments
     },
-    
+    {
+        path:'/cars/:id/details',
+        name:'automobiliDetails',
+        component:AutomobiliDetails
+    },
+
+    { 
+        path:'/carComments/:id/newComment',
+        name:'noviKomentar',
+        component:AutomobiliCommentsNew
+    },
+   
     {
         path:'/reservations/',
         name:'rezervacija',

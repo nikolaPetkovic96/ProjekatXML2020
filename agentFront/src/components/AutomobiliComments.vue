@@ -18,7 +18,7 @@
                     <div v-show='isThereReviews(car)' class="card-body">
                             <h3>Nema ocene niti komentara za ovaj automobil...</h3>
                     </div>
-                    <div id='all-comments' v-bind:key="comment" v-for='comment in car.reviews'>
+                    <div id='all-comments' v-bind:key="comment.id" v-for='comment in car.reviews'>
                         <div class="single-comment">
                             <div id='username'>{{comment.username}} </div>
                             <div id='star-rating'>
@@ -36,6 +36,7 @@
                             </div>
                         </div>
                     </div>
+                    <button class="btn btn-success marg" v-on:click='addComment(car.id)'>Ostavi komentar</button>
                 </div> <!--comments-->
             </div>
         </div>
@@ -53,7 +54,7 @@ export default {
             //trebaju da se getuju automobili sa svim komentarima vezanim za njih
             //potrebni su i podaci o vlasniku automobila
             // cars:[],
-            cars: [
+             cars: [
                 {
                     id:'1',
                     markaAut:'BMW',
@@ -70,8 +71,15 @@ export default {
                     reviews:
                     [
                         {
+                            id:'1',
                             username:'VeryHappyUser002',
                             text:'Najbolji automobil ikada! Sve pohvaleeeee! Vrh je bas',
+                            star:5,
+                        },
+                        {
+                            id:'2',
+                            username:'happyUser1',
+                            text:'Najbolji automobil ikada! Sve pohvale!',
                             star:5,
                         }
                     ]
@@ -91,16 +99,19 @@ export default {
                     },
                     reviews:[
                         {
+                            id:'3',
                             username:'NotSoHappyUser2',
                             text:'Nije netki automobil! Sda dnl, lndakd ondasjb jdba ndisa!',
                             star:2,
                         },
                         {
+                            id:'4',
                             username:'NotSoHappyUser3',
                             text:'Nije netki automobil! Moglo je to mnogo bolje! Nisam bas odusevljen uslugom',
                             star:4,
                         },
                         {
+                            id:'5',
                             username:'VeryHappyUser4',
                             text:'Sve naj naj! Dsadas dsadsd das, dasjdiod ndi assndi.',
                             star:5,
@@ -115,6 +126,7 @@ export default {
                     ocena:4,
                     cena:1800,
                     kilometraza:650,
+                    //ne treba mi kod agenta kada je agent vlasnik
                     vlasnik:{
                         ime:'Pera',
                         prezime:'Peric',
@@ -122,11 +134,7 @@ export default {
                     },
                     reviews:
                     [
-                        {
-                            username:'happyUser1',
-                            text:'Najbolji automobil ikada! Sve pohvale!',
-                            star:5,
-                        }
+     
                     ]
                 },
             ],
@@ -162,6 +170,9 @@ export default {
             else {
                 return false;
             }
+        },
+        addComment(id){
+            this.$router.push(`/carComments/${id}/newComment`);
         }
 
     },
@@ -169,6 +180,12 @@ export default {
 </script>
 
 <style scoped>
+
+#titleEffect{
+  color:gold;
+  font-weight: bold;
+}
+
 
 #car-comments #carInfo h3{
   color:#35424a;
@@ -228,5 +245,10 @@ export default {
   text-align: center;
 }
 
+
+#car-comments .marg{
+    margin-top:5px;
+    margin-bottom: 15px;
+} 
 
 </style>

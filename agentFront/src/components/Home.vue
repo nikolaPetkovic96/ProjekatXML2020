@@ -19,7 +19,7 @@
         <section id="boxes">
             <div class="container">
                 <div class="box" id='box1'>                        
-                    <img src='src/assets/searchIcon1.png'>
+                    <img src='src/assets/searchIconMain.png'>
                     <h3>Pretraga i filtracija</h3>
                     <p>Velika ponuda opcija za kreiranje i pretragu vozila, oglasa i cenovnika. Lako i brzo dodajte novo vozilo i napravite oglas, koje odgovara vasim potrebama, kroz svega nekoliko klikova!</p>
                 </div>
@@ -142,7 +142,7 @@ ul{
 #showcase{
     min-height:400px;
     /*background: url('../images/showcase.jpg') no-repeat 0 -400px;*/
-    background-image:url('../assets/showcase4.jpg');
+    background-image:url('../assets/showcaseMain.jpg');
     background-repeat: no-repeat;
     background-position: -550px -1410px;
     text-align: center;

@@ -1,0 +1,275 @@
+<template>
+    <div id="car-details">
+        <div class="container" id='page-title'>
+            <h1 style="margin-top:10px;color:#35424a;">Detalji o <span id='titleEffect'>Automobilu</span></h1>
+            <hr style='background:#35424a;height:1px;'>
+        </div>
+
+        <div id="test3" class="container">
+            <div class="col-lg-12">
+                <div id='slidebar'>
+                    <header class="container">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner" role="listbox">
+                                <!-- <img src="../assets/No_Image_Available.png" alt=""> -->
+                                <!-- <h1>{{this.car.images[0]}}</h1> -->
+                                <!-- Slide One - Set the background image for this slide in the line below  "{background-image:  'url(' + getImgUrl() + ')}"-->
+                                <div class="carousel-item active"
+                                    :style="{'background-image': 'url(' + this.car.images[0] + ')'}">
+                                </div>
+                                <!-- Slide Two - Set the background image for this slide in the line below -->
+                                <div class="carousel-item" v-bind:key="img" v-for="img in getOtherImgs"
+                                    :style="{'background-image': 'url(' + img + ')'}">
+                                </div>
+
+                            </div>
+                            <a v-show="isOtherImgs" class="carousel-control-prev" href="#carouselExampleIndicators"
+                                role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a v-show="isOtherImgs" class="carousel-control-next" href="#carouselExampleIndicators"
+                                role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </header>
+			    </div><!-- /.card -->
+            </div><!--/.slidebar-->
+            
+             <div class="card-body">
+                <div class="card-header">
+                    <h4>Details</h4>
+                </div>
+                <h3 class="card-title colr">Automobil:
+                    <span class="colrbl" style="font-size: 25px;">{{car.markaAut}}</span>
+                </h3>
+
+                <h3 class="card-title colr">Model:
+                    <span class="colrbl" style="font-size: 25px;">{{car.modelAut}}</span>
+                </h3>
+
+                <h3 class="card-title colr">Klasa:
+                    <span class="colrbl" style="font-size: 25px;">{{car.klasaAut}}</span>
+                </h3>
+
+                <h3 class="card-title colr">Tip goriva:
+                    <span class="colrbl" style="font-size: 25px;">{{car.tipGoriva}}</span>
+                </h3>
+
+                <h3 class="card-title colr">Tip menjaca:
+                    <span class="colrbl" style="font-size: 25px;">{{car.tipMenjaca}}</span>
+                </h3>
+
+                <h3 class="card-title colr">Broj sedista za decu:
+                    <span class="colrbl" style="font-size: 25px;">{{car.brojDecMesta}}</span>
+                </h3>
+
+                <h3 class="card-title colr">Broj sedista za decu:
+                    <span class="colrbl" style="font-size: 25px;">{{car.kilometraza}}</span>
+                </h3>
+
+                <h3 class="card-title colr">Colison DMG Waiver:
+                    <span class="colrbl" v-if='car.colDmgWaiv' style="font-size: 25px;">Sadrži</span>
+                    <span  class="colrbl" v-if='!car.colDmgWaiv' style="font-size: 25px;">Ne sadrži</span>
+                </h3>
+            </div>
+            <div class="card card-outline-secondary my-4">
+				<div class="card-header">
+					<h4>Apartment Reviews</h4>
+				</div>
+
+				<div class="card-body" v-bind:key="review.id" v-for="review in car.reviews" v-show="review.visible" >
+                    <div style="margin-bottom: 10px;" id='star-rating'>
+                        <star-rating inactive-color="#35424a" active-color="#e8491d" v-bind:read-only="true"
+                            v-bind:star-size="20" v-bind:show-rating="false" v-bind:rating="review.star">
+                        </star-rating>
+                    </div>
+                    <p>{{review.text}}</p>
+                    <small class="text-muted">Posted by {{review.username}}</small>
+                    <hr>
+				</div>
+
+				<div v-show='noReview' class="card-body">
+					<h3>There are no reviews for this apartment...</h3>
+				</div>
+			</div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'Car-details',
+    data:function(){
+        return {
+
+            isOtherImgs: true,
+            noReview: false,
+
+            car:{
+                id:'1',
+                markaAut:'BMW',
+                modelAut:'M5',
+                klasaAut:'SUV',
+                tipGoriva:'Dizel',
+                tipMenjaca:'Automatik',
+                ocena:5,
+                cena:2500,
+                kilometraza:500,
+                brojDecMesta:2,
+                images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
+                // images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080'],
+                // images:[],
+                // reviews:[],
+                reviews:
+                [
+                    {
+                        id:'1',
+                        username:'VeryHappyUser002',
+                        text:'Najbolji automobil ikada! Sve pohvaleeeee! Vrh je bas',
+                        star:5,
+                        visible:true,
+                    },
+                    {
+                        id:'2',
+                        username:'happyUser1',
+                        text:'Najbolji automobil ikada! Sve pohvale!',
+                        star:5,
+                        visible:true,
+                    },
+                    {
+                        id:'3',
+                        username:'happyUserTest',
+                        text:'Najbolji automobil ikada! Sve pohvale! TEST VISIBILITY',
+                        star:5,
+                        visible:false,
+                    }
+                ]
+            },
+        }
+    },
+    methods:{
+        getFirstImg: function () {
+			//provera da li ima slika za dati stan
+			if (!this.car.images.length) {
+                console.log('getFirstImg'); 
+                console.log('images.length : ' + this.car.images.length)
+				let img = ['@/assets/No_Image_Available.png'];
+				// ako nema smesti noimage sliku
+				this.car.images = img;
+				console.log(this.car.images[0])
+            }
+        },
+        noComment: function () {
+			if (this.car.reviews === undefined || this.car.reviews.length === 0) {
+				this.noReview = true;
+			}
+			else if (this.car.reviews !== undefined || this.car.reviews.length !== 0) {
+				let visible = false;
+				//ako ima komentara za dati stan, prolazimo kroz sve komentare 
+				//i proveravamo da li su odobreni ako ni jedan nije odobren opet prikazujemo poruku
+				for (let i = 0; i < this.car.reviews.length; i++) {
+					if (this.car.reviews[i].visible === false) {
+						continue;
+					}
+					else {
+						visible = true;
+						break;
+					}
+				}
+				//Ako je visibility svakog komentara false onda 
+				//prikazuje poruku kako nema komentara
+				if (visible === false) {
+					this.noReview = true;
+				}
+			}
+			else {
+				this.noReview = false;
+			}
+
+		}
+    },
+    computed: {
+        id() {
+            return this.$route.params.id; //preuzimam id automobila na cijoj sam stranici za prikaz detalja
+        },
+        getOtherImgs: function () {
+            console.log("getOtherImgs: ");
+            //Prva slika mora da se manuelno postavi, a ostale se dodaju preko v-for:
+            let imgs = this.car.images.slice(1);
+            //Ako ima samo jednu sliku onda se sklanjaju strelice < > za kretanje kroz slike. 
+            if (imgs.length === 0) {
+                console.log("imgs.lenght je = 0 ");
+                this.isOtherImgs = false;
+                console.log("this.isOtherImgs: " + this.isOtherImgs);
+            }
+            else{
+                //vec je true, ali za svaki slucaj
+                this.isOtherImgs = true;
+                return imgs;
+            }
+
+        }
+    },
+    mounted() {
+        this.carId = this.id;
+        this.getFirstImg();
+        this.noComment();
+		// this.user.username = localStorage.getItem('user');
+		// this.user.role = localStorage.getItem('role');
+
+		// if (this.user.role == "ADMIN") {
+		// 	this.isAdmin = true;
+		// } else if (this.user.role == "HOST") {
+		// 	this.isHost = true;
+		// } else {
+		// 	this.isGuest = true;
+		// }
+
+		
+		// axios
+		// 	.get(`car/${this.carId}`)
+		// 	.then(response => {
+		// 		this.apartment = response.data;
+		// 		this.getFirstImg();
+		// 		this.arrangeAmenities();
+		// 		this.noComment();
+		// 	})
+    },
+
+}
+</script>
+
+<style scoped>
+
+    #titleEffect{
+        color:gold;
+        font-weight: bold;
+    }
+
+    #car-details header .carousel-item {
+    height: 65vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    }
+
+    .colr{
+        color:#35424a;
+    }
+
+    .colrbl{
+        color:#000;
+    }
+
+</style>

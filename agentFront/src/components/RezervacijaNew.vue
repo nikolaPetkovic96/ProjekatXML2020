@@ -1,4 +1,4 @@
-<!--<template>
+<template>
     <div id="reservation-new">
     <div class="container" id='page-title'>
         <h1 style="margin-top:10px;color:#35424a;">Kreiranje <span id='titleEffect'>Rezervacije</span></h1>
@@ -15,13 +15,13 @@
         <label>Tekst rezervacije:</label>
         <textarea v-model='reservation.message' placeholder="message..."></textarea>
         <button class="btn btn-lg btn-success" v-on:click='makeReservation(vehId)'> Send </button>
-    </div> <!--main
+    </div> 
 </div>
 </template>
 
 <script>
 
-import KlijentDataService from './components/KlijentDataService'
+// import KlijentDataService from './components/KlijentDataService'
 
 export default {
     data(){
