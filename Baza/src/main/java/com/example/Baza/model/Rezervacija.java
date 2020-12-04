@@ -126,10 +126,10 @@ public class Rezervacija {
 //    protected List<Oglas> oglasi;
     
     @OneToMany(// u listu narudzbenica ubacuje sve narudzbenice gde je rez_id= id od ove rezervcacije
-            mappedBy = "rez_id"//,   
+            mappedBy = "rez"//,   
             //cascade = CascadeType.ALL,
             //orphanRemoval = true
-        )protected List<Narudzbenica> narudbenice;
+        )protected List<Narudzbenica> narudzbenice;
 
 	public Rezervacija() {
 		super();
@@ -145,7 +145,7 @@ public class Rezervacija {
 		this.bundle = bundle;
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
-		this.narudbenice=narudzbenice;
+		this.narudzbenice=narudzbenice;
 	}
 	public Rezervacija(Long id, double ukupnaCena, LocalDateTime odDatuma, LocalDateTime doDatuma, Boolean bundle,
 			String statusRezervacije, Long commonDataId) {
@@ -216,11 +216,11 @@ public class Rezervacija {
 	}
 
 	public List<Narudzbenica> getNarudbenice() {
-		return narudbenice;
+		return narudzbenice;
 	}
 
 	public void setNarudbenice(List<Narudzbenica> narudzbenice) {
-		this.narudbenice = narudzbenice;
+		this.narudzbenice = narudzbenice;
 	}
 
 //	public List<Oglas> getOglasi() {

@@ -87,12 +87,12 @@ public class Oglas {
     //Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
 	//private Firma firma;
 	//private RegistrovaniKorisnik reg_korisnik;
-    @ManyToMany
-    @JoinTable(
-    		  name = "narudzbenice_oglasi", 
-    		  joinColumns = @JoinColumn(name = "oglas_id"), 
-    		  inverseJoinColumns = @JoinColumn(name = "narudzbenica_id"))
-	private List<Narudzbenica> narudzbenice;
+//    @ManyToMany
+//    @JoinTable(
+//    		  name = "narudzbenice_oglasi", 
+//    		  joinColumns = @JoinColumn(name = "oglas_id"), 
+//    		  inverseJoinColumns = @JoinColumn(name = "narudzbenica_id"))
+//	private List<Narudzbenica> narudzbenice;
 
     public Oglas() {
 		super();
@@ -106,7 +106,7 @@ public class Oglas {
 		this.cenovnikId = cenovnikId;
 		this.commonDataId = commonDataId;
 		this.automobilId = automobilId;
-		this.narudzbenice=new ArrayList<>();
+		//this.narudzbenice=new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -167,12 +167,12 @@ public class Oglas {
 		this.automobilId = automobilId;
 	}
 
-	public List<Narudzbenica> getNarudzbenice() {
-		return narudzbenice;
-	}
-
-	public void setNarurdzbenice(List<Narudzbenica> narudzbenice) {
-		this.narudzbenice = narudzbenice;
-	}
+//	public List<Narudzbenica> getNarudzbenice() {
+//		return narudzbenice;
+//	}
+//
+//	public void setNarurdzbenice(List<Narudzbenica> narudzbenice) {
+//		this.narudzbenice = narudzbenice;
+//	}
 
 }

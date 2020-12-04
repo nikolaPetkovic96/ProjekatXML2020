@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -33,31 +34,36 @@ public class Narudzbenica {
     @Column(name="user_id")
     protected Long userId;
     
-    @Column(name="oglas_id")
+    @Column(name="oglas_ida")
     protected Long oglasId;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="rez_id") //rezervacija kojoj pripada narudzenica
-    protected Long rezId;
+    //@Column(name="rez_id") //rezervacija kojoj pripada narudzenica
+    protected Rezervacija rez;
     
-    @OneToOne(mappedBy = "narudzbenica_id", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "narudzbenica", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     protected  Izvestaj izvestaj;
     
     public Narudzbenica() {
     	super();
     }
+    
+    @ManyToOne
+    @JoinColumn(name="oglas_id")
+    private Oglas oglas;
 
-	public Narudzbenica(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long userId, Long oglasId, Long rezId,
-			Izvestaj izvestaj) {
+	public Narudzbenica(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long userId, Long oglasId, Rezervacija rez,
+			Izvestaj izvestaj, Oglas o) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma;
 		this.doDatuma = doDatuma;
 		this.userId = userId;
 		this.oglasId = oglasId;
-		this.rezId = rezId;
+		this.rez = rez;
 		this.izvestaj = izvestaj;
+		this.oglas=o;
 	}
 
 	public Long getId() {
@@ -100,12 +106,12 @@ public class Narudzbenica {
 		this.oglasId = oglasId;
 	}
 
-	public Long getRezId() {
-		return rezId;
+	public Rezervacija getRezId() {
+		return rez;
 	}
 
-	public void setRezId(Long rezId) {
-		this.rezId = rezId;
+	public void setRezId(Rezervacija rez) {
+		this.rez = rez;
 	}
 
 	public Izvestaj getIzvestaj() {
@@ -114,5 +120,22 @@ public class Narudzbenica {
 
 	public void setIzvestaj(Izvestaj izvestaj) {
 		this.izvestaj = izvestaj;
-	}  
+	}
+
+	public Rezervacija getRez() {
+		return rez;
+	}
+
+	public void setRez(Rezervacija rez) {
+		this.rez = rez;
+	}
+
+	public Oglas getOglas() {
+		return oglas;
+	}
+
+	public void setOglas(Oglas oglas) {
+		this.oglas = oglas;
+	} 
+	
 }
