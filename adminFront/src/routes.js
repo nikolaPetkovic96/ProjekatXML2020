@@ -8,7 +8,7 @@ import Homepage from './components/Homepage'
 import AdminProfile from './components/AdminProfile'
 import AdminProfileUpdate from './components/AdminProfileUpdate'
 import AdminUsersAuthorites from './components/AdminUsersAuthorities'
-
+import AdminSifrarnik from './components/AdminSifrarnik'
 
 export default [
     {
@@ -51,5 +51,10 @@ export default [
         path:'/users',
         name:'UsersAuthorites',
         component:AdminUsersAuthorites
+    },
+    {
+        path:'/car_elements',
+        name:'AdminSifrarnik',
+        component:AdminSifrarnik
     },
 ]

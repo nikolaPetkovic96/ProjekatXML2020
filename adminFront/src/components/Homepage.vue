@@ -12,7 +12,7 @@
             <!-- Cars -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
-                    <router-link style='text-decoration: none;color:#35424a;' to="/cars" class="nav-link"
+                    <router-link style='text-decoration: none;color:#35424a;' to="/car_elements" class="nav-link"
                         exact>
                         <img src="../assets/sifrarnikHomeIcon.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
