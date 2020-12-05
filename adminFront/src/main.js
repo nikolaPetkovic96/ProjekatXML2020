@@ -9,7 +9,7 @@ import Routes from './routes'
 export const bus = new Vue();
 
 Vue.use(VueRouter)
-Vue.component('star-rating', VueStarRating.default);
+// Vue.component('star-rating', VueStarRating.default);
 
 Vue.config.productionTip = false
 

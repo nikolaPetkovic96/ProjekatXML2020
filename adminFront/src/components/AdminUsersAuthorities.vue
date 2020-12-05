@@ -128,8 +128,6 @@ export default {
                         ulica:'8. Marta',
                         broj:'25',
                         postanskiBroj:'',
-                        longitude:'',
-                        latitude:'',
                     },
                 },
                 {
@@ -143,8 +141,6 @@ export default {
                         ulica:'Glavni bulevar',
                         broj:'bb',
                         postanskiBroj:'',
-                        longitude:'',
-                        latitude:'',
                     },
                 },
                 {
@@ -158,8 +154,6 @@ export default {
                         ulica:'9. Maja',
                         broj:'12',
                         postanskiBroj:'',
-                        longitude:'',
-                        latitude:'',
                     },
                 },
                 {
@@ -173,8 +167,6 @@ export default {
                         ulica:'9. Maja',
                         broj:'12',
                         postanskiBroj:'',
-                        longitude:'',
-                        latitude:'',
                     },
                 },
             ]

@@ -9,6 +9,8 @@ import AdminProfile from './components/AdminProfile'
 import AdminProfileUpdate from './components/AdminProfileUpdate'
 import AdminUsersAuthorites from './components/AdminUsersAuthorities'
 import AdminSifrarnik from './components/AdminSifrarnik'
+import AdminAgent from './components/AdminAgent'
+import AdminComments from './components/AdminComments'
 
 export default [
     {
@@ -57,4 +59,14 @@ export default [
         name:'AdminSifrarnik',
         component:AdminSifrarnik
     },
+    {
+        path:'/agent',
+        name:'UsersAgent',
+        component:AdminAgent
+    },
+    {
+        path:'/reviews',
+        name:'AdminComments',
+        component:AdminComments
+    }
 ]

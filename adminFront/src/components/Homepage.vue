@@ -40,7 +40,7 @@
             <!-- Reservations -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
-                    <router-link style='text-decoration: none;color:#35424a;' to="/reservations" class="nav-link"
+                    <router-link style='text-decoration: none;color:#35424a;' to="/reviews" class="nav-link"
                         exact>
                         <img src="../assets/reviewHomeIcon.png" class="card-img-top" alt="...">
                         <div class="card-body text-center">
@@ -54,7 +54,7 @@
             <!-- Prices-->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
-                    <router-link style='text-decoration: none;color:#35424a;' to="/price" class="nav-link" exact>
+                    <router-link style='text-decoration: none;color:#35424a;' to="/agent" class="nav-link" exact>
                         <img src="../assets/registrationHomeIcon.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-0">Registrovanje agenta</h5>

@@ -79,6 +79,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
     data(){
         return{
@@ -243,9 +244,10 @@ export default {
     computed:{
         id() {
             return this.$route.params.id; //preuzimam id usera na cijoj sam stranici za prikaz komentara
-            
-        }
-    }
+        },
+    },
+
+   
 }
 </script>
 
