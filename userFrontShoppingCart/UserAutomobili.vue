@@ -112,24 +112,21 @@
             </nav>
         </div>
 
-         <!-- Page Content -->
-        <div v-if='this.oglasip.length == 0 && isAlreadySearched==false' class="container" id='default-showcase'>
-            <div style="margin-top:10px;color:#35424a;"> 
+        <!-- Page Content -->
+        <div class="container" id='search-result'>
+            <br>
+            <div v-if='!isAlreadySearched'> 
                 <h3><b>Pretraga automobila</b></h3>
                 <h4>Unesite <b>interval</b> u kojem želite da iznajmite automobil kao i željene karakteristike </h4>
                 <h4>i iznajmite <b>automobil</b> vaših snova...</h4>
             </div>
-            <img src="../../assets/showcase1.jpg">
-        </div>
-        <!-- Page Content -->
-        <div v-if='this.oglasip.length >= 0 && isAlreadySearched==true' class="container" id='search-result'>
 
             <!-- Page Heading -->
-            <h1 class="my-4 theme-colr">
+            <h1 v-if='isAlreadySearched==true' class="my-4 theme-colr">
                 <small >Rezultat pretrage</small>
             </h1>
 
-            <div id='sort'>
+            <div  v-if='isAlreadySearched==true' id='sort'>
                 <h5 class='theme-colr'><small> <b>Sortiraj:</b>  </small></h5>
                 <button @click="sort('ocena')" class="arrow btn btn-lg btn-outline-primary"> Ocena
                     <img v-if='currentSortDir == "asc" && currentSort== "ocena"' src='../../assets/up-arrow1.1.png'>
@@ -179,7 +176,7 @@
                             <h5><b>Kilometraža: </b>{{oglas.automobil.predjenaKilometraza}} km</h5>
                         </div>
                         <button class="btn btn-outline-primary margTop" v-on:click='showDetails(oglas.automobil.id)'> Detalji </button>
-                        <button class="btn btn-outline-success margTop" v-on:click='addToCart(oglas)'> Dodaj u korpu </button>
+                        <button v-if='isAlreadySearched==true' class="btn btn-outline-success margTop" v-on:click='addToCart(oglas)'> Dodaj u korpu </button>
                     </div>
                 </div>
                 </div>
@@ -582,9 +579,7 @@ export default {
 
         // Metoda za koja salje parametre za pretragu automobila i vraca listu automobila kao rezultat
          searchCar() {     
-            // Retrieve the object from storage
-            var retrievedObject = localStorage.getItem('cart');
-            console.log('retrievedObject: ', JSON.parse(retrievedObject));              
+                    
             if (this.searchedCar.od == null) {
                 this.messages.errorDates = `<h4>Morate odabrati početni termin oglasa!</h4>`;
                 setTimeout(() => this.messages.errorDates = '', 5000);
@@ -659,15 +654,6 @@ export default {
                 if (this.searchedCar.kilometraza !== null) {
                     this.searchedQuery += '&kilometraza=' + this.searchedCar.kilometraza;
                 }
-
-                //Konvertovanje datuma u broj dana... 
-                const odDat = new Date(this.searchedCar.od);    //konvertujemo input tip u Date
-                const doDat = new Date(this.searchedCar.do);    //konvertujemo input tip u Date
-                const NoOfDays = doDat - odDat;                 //Dobijeni rezultat je u milisekundama
-                const noOFMill = 1000 * 60 * 60 * 24;           //broj milisekundi sa kojima delimo NoOfDays da se dobije broj dana.
-                
-                //const now = new Date();                       //kod za dobijanje sadasnjeg trenutka;
-                console.log(`Broj dana: ${NoOfDays/noOFMill}`);
 
                 // axios
                 //     .get('rest/apartment/search' + this.searchedQuery)
