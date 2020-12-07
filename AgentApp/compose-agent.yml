@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    container_name: db
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: database
+  agent_web:
+    image: agent37
+    build: ./AgentApp
+    environment:
+      DB_PATH: jdbc:postgresql://db:5432/database
+      DB_USER: postgres
+      DB_PASS: postgres
+    restart: unless-stopped
+    container_name: agent37
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    links:
+      - db

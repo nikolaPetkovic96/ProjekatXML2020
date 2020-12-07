@@ -1,0 +1,4 @@
+za build i run:
+docker-compose -f compose-agent.yml up --b
+za stop:
+docker-compose -f compose-agent.yml down
