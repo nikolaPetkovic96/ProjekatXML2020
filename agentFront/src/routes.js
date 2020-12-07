@@ -17,7 +17,10 @@ import AutomobiliDetails from './components/AutomobiliDetails'
 import AutomobiliComments from './components/AutomobiliComments'
 import AutomobiliCommentsNew from './components/AutomobiliCommentsNew'
 import Reservation from './components/Rezervacija'
-// import ReservationNew from './components/RezervacijaNew'
+import ReservationNew from './components/RezervacijaNew'
+import Ads from './components/Oglasi'
+import AdsNew from './components/OglasiNew'
+import Messages from './components/Poruke'
 export default [
     {
         path:'/',
@@ -96,22 +99,38 @@ export default [
         name:'automobiliDetails',
         component:AutomobiliDetails
     },
-
     { 
         path:'/carComments/:id/newComment',
         name:'noviKomentar',
         component:AutomobiliCommentsNew
     },
-   
     {
         path:'/reservations/',
         name:'rezervacija',
         component:Reservation
     },
-    // {
-    //     path:'/reservations/new',
-    //     name:'rezervacijaNew',
-    //     component:ReservationNew
-    // },
+    {
+        path:'/cars/:id/reservation',
+        name:'rezervacijaNew',
+        component:ReservationNew
+    },
+    {
+        path:'/ads/',
+        name:'oglasi',
+        component:Ads
+    },
+    {
+        path:'/ads/:id/new',
+        name:'AdsNew',
+        component:AdsNew
+    },
+
+// import Messages from './components/Poruke'
+// import MessagesNew from './components/PorukeNew'
+    {
+        path:'/messages',
+        name:'poruke',
+        component:Messages
+    },
    
 ]

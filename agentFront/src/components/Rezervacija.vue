@@ -21,6 +21,7 @@
                         <th>Bundle</th>
                         <th>Status</th>
                         <th>Promena statusa</th>
+                        <th>Details za bundle</th>
                     </tr>
                 </thead>
                 <tbody>                
@@ -33,22 +34,20 @@
                     <td>{{rezervacija.bundle}}</td>
                     <td>{{rezervacija.statusRezervacije}}</td>
                     <td>
-                        <button v-on:click='openEdit(rezervacija.id)'  class="btn-outline-primary"> neaktivan </button>
-                        <button v-on:click='openEdit(rezervacija.id)'  class="btn-outline-primary"> potvrdi </button>
+                        <button v-on:click='openEdit(rezervacija.id)'  class="btn-outline-primary"> prihvati </button>
+                        <button v-on:click='openEdit(rezervacija.id)'  class="btn-outline-primary"> odbij </button>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <button  v-on:click='openNew()' class="btn  btn-success" style='padding-left: 5px;'>Dodaj cenovnik</button>
+            <button  v-on:click='openNew()' class="btn  btn-success" style='padding-left: 5px;'>Dodaj rezervaciju</button>
         
         </div> <!--main-->
     </div>
 </template>
 
 <script>
-
 // import KlijentDataService from './components/KlijentDataService'
-
 export default {
     data(){
         return{
@@ -83,7 +82,7 @@ export default {
                     doDatuma:'30.10.2020',
                     ukupnaCena:9600,
                     bundle:false,
-                    statusRezervacije:'aktivan'
+                    statusRezervacije:'PENDING'
                 },
                 {
                     id:2,
@@ -106,7 +105,7 @@ export default {
                     doDatuma:'20.10.2020',
                     ukupnaCena:5000,
                     bundle:false,
-                    statusRezervacije:'aktivan'
+                    statusRezervacije:'PENDING'
                 },
             ]
         }

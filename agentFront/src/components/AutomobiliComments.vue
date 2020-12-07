@@ -245,7 +245,6 @@ export default {
   text-align: center;
 }
 
-
 #car-comments .marg{
     margin-top:5px;
     margin-bottom: 15px;

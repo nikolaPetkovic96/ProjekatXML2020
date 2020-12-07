@@ -83,7 +83,7 @@
                                     </select>      
 
                                     <span class="span_search">Predjena km</span>
-                                    <input class="form-control mr-sm-2" type="text" placeholder="Kilometraza" aria-label="Search" v-model="searchedCar.kilometraza">  
+                                    <input class="form-control mr-sm-2" type="text" placeholder="Kilometraza" aria-label="Search" v-model="searchedCar.predjenaKilometraza">  
                                     
                                     <span>
                                         <span class="span_search">Coll Ddmg Waiver</span>
@@ -114,14 +114,15 @@
                             <img v-if='currentSortDir == "asc"  && currentSort== "cena"' src='../assets/up-arrow1.1.png'>
                             <img v-if='currentSortDir == "desc"  && currentSort== "cena"' src='../assets/down-arrow1.1.png'>
                         </th>
-                         <th @click="sort('kilometraza')" class="arrow"> Kilometraza
-                            <img v-if='currentSortDir == "asc"  && currentSort== "kilometraza"' src='../assets/up-arrow1.1.png'>
-                            <img v-if='currentSortDir == "desc"  && currentSort== "kilometraza"' src='../assets/down-arrow1.1.png'>
+                         <th @click="sort('predjenaKilometraza')" class="arrow"> Kilometraza
+                            <img v-if='currentSortDir == "asc"  && currentSort== "predjenaKilometraza"' src='../assets/up-arrow1.1.png'>
+                            <img v-if='currentSortDir == "desc"  && currentSort== "predjenaKilometraza"' src='../assets/down-arrow1.1.png'>
                         </th>
-                        <th>Details</th>
-                        <th>Reserv</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Detalji</th>
+                        <th>Reservisi</th>
+                        <th>Oglas</th>
+                        <th>Uredi</th>
+                        <th>Ukloni</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -131,11 +132,12 @@
                         <td>{{car.klasaAut}}</td>
                         <td>{{car.ocena}}</td>
                         <td>{{car.cena}}</td>
-                        <td>{{car.kilometraza}}</td>
-                        <td><button class=" btn-sm btn-outline-primary" v-on:click='showDetails(car.id)'> Details </button></td>
-                        <td><button class=" btn-sm btn-outline-primary" v-on:click='makeReseravation(car.id)'> Reserve </button></td>
-                        <td><button class="btn-sm btn-outline-primary" v-on:click='editCar(car.id)'> Edit </button></td><!--Delete mozda moze i preko edita da na toj str. bude jedno dugme-->
-                        <td> <button class="btn btn-sm btn-danger" v-on:click='deleteCar(car.id)'> Delete </button></td>
+                        <td>{{car.predjenaKilometraza }}</td>
+                        <td><button class=" btn-sm btn-outline-primary" v-on:click='showDetails(car.id)'> Detalji </button></td>
+                        <td><button class=" btn-sm btn-outline-primary" v-on:click='makeReseravation(car.id)'> Reservisi </button></td>
+                        <td><button class=" btn-sm btn-outline-primary" v-on:click='makeAd(car.id)'> Oglas </button></td>
+                        <td><button class="btn-sm btn-outline-primary" v-on:click='editCar(car.id)'> Uredi </button></td><!--Delete mozda moze i preko edita da na toj str. bude jedno dugme-->
+                        <td> <button class="btn btn-sm btn-danger" v-on:click='deleteCar(car.id)'> Ukloni </button></td>
                     </tr>
                 </tbody>
             </table>
@@ -177,7 +179,7 @@ export default {
                 tipMenjaca:null,
                 brojSedZaDec:null,
                 ColDmgWaiv:false,
-                kilometraza:null
+                predjenaKilometraza:null
             },
 
             cars: [
@@ -188,7 +190,11 @@ export default {
                     klasaAut:'SUV',
                     ocena:5,
                     cena:2500,
-                    kilometraza:500,
+                    // cenovnik:{ //umesto cene
+                    //     id:1,
+                    //     cenaPoDanu:2500
+                    // }
+                    predjenaKilometraza:500,
                 },
                 {
                     id:'2',
@@ -197,7 +203,7 @@ export default {
                     klasaAut:'Old Tajmer',
                     ocena:3,
                     cena:1200,
-                    kilometraza:800,
+                    predjenaKilometraza:800,
                 },
                  {
                     id:'3',
@@ -206,7 +212,7 @@ export default {
                     klasaAut:'Gradski auto',
                     ocena:4,
                     cena:1800,
-                    kilometraza:650,
+                    predjenaKilometraza:650,
                 },
             ],
 
@@ -236,7 +242,13 @@ export default {
 
         
         makeReseravation:function(id){
-            alert(`Za automobil id ${id} ce biti napravljena rezervacija!`);
+            // alert(`Za automobil id ${id} ce biti napravljena rezervacija!`);
+            this.$router.push(`/cars/${id}/reservation`);
+        },
+
+        makeAd:function(id){
+            // alert(`Za automobil id ${id} ce biti napravljena rezervacija!`);
+            this.$router.push(`/ads/${id}/new`);
         },
 
         deleteCar:function(id){

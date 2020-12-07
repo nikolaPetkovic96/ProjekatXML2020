@@ -1,7 +1,7 @@
 <template>
     <div id="car-new">
         <div class="container">
-            <h1 style="margin-top:10px;color:#35424a;">Dodaj <span id='titleEffect'>automobil</span>!</h1>
+            <h1 style="margin-top:10px;color:#35424a;">Dodaj <span id='titleEffect'>automobil</span></h1>
             <hr style='background:#35424a;height:1px;'>
         </div>
 
