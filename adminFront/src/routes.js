@@ -2,6 +2,8 @@ import Home from './components/Home'
 import About from './components/About'
 
 import LoginForm from '../src/forms/LoginForm'
+import RegFormAdmin from '../src/forms/RegFormAdmin'
+import RegFormAgent from '../src/forms/RegFormAgent'
 
 import Homepage from './components/Homepage'
 import AdminProfile from './components/AdminProfile'
@@ -27,6 +29,18 @@ export default [
         path:'/login',
         name:'LoginForm',
         component:LoginForm
+    },
+
+    {
+        path:'/registration/activate-admin',
+        name:'RegFormAdmin',
+        component:RegFormAdmin 
+    },
+
+    {
+        path:'/registration/activate-agent',
+        name:'RegFormAgent',
+        component:RegFormAgent
     },
 
     {

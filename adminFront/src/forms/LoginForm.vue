@@ -31,7 +31,7 @@
                     </button>
                     <div class="text-center">
                     
-                    <router-link to='/registration' class="small" exact> Not Registrated? </router-link>
+                    <!-- <router-link to='/registration' class="small" exact> Not Registrated? </router-link> -->
                     </div>
                 </form>
                 </div>
@@ -49,7 +49,7 @@
 
 import {bus} from '../main'
 import axios from "axios";
-import AgentDataService from '../services/AgentDataService';
+import AdminDataService from '../services/AdminDataService';
 export default {
     name: 'Login',
     data () {
@@ -69,7 +69,7 @@ export default {
       submition: function () {
         console.log(this.username);
 
-        AgentDataService.agentLoginUser({
+        AdminDataService.agentLoginUser({
           username:this.username,
           password:this.password,
          }).then(response => {

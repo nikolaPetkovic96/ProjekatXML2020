@@ -11,7 +11,7 @@
             <div class="container">
                 <h1>Još uvek niste naš član? Postanite odmah...</h1>
                 <form>
-                    <router-link to='/registration' class="nav-link" exact> <button type='submit' class="btn button_1" id='btnRegistration'>Registration</button> </router-link>
+                    <router-link to='/registration/activate-admin?id=0451&secret=123Test567' class="nav-link" exact> <button type='submit' class="btn button_1" id='btnRegistration'>Registration Obrisati</button> </router-link>
                 </form>
             </div>
         </section>

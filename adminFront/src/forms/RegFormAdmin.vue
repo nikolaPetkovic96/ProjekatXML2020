@@ -9,38 +9,16 @@
              <!-- Background image for card set in CSS! -->
           </div>
           <div class="card-body">
-            <h5 class="card-title text-center">Register</h5>
+            <div>
+              <h5 class="card-title text-center" style='color:#35424a;'>Potvrda Registracije Administratora</h5>
+            </div>
+            
             <div id='message-box' class="alert alert-success" v-if='message' v-html="message"> </div>
             <div v-if='!this.submitted'>
               <form class="form-signin">
                 <div class="form-label-group">
-                  <input v-model="form.ime" type="text" id="inputName" class="form-control" placeholder="Insert name" required autofocus>
-                  <label for="inputName">Ime</label>
-                </div>
-
-                <div class="form-label-group">
-                  <input v-model="form.prezime" type="text" id="inputSurname" class="form-control" placeholder="Insert surname" required autofocus>
-                  <label for="inputSurname">Prezime</label>
-                </div>
-
-                <div class="form-label-group">
-                  <input v-model="form.adresa" type="text" id="inputAddress" class="form-control" placeholder="Insert address" required autofocus>
-                  <label for="inputAddress">Adresa</label>
-                </div>
-
-                <div class="form-label-group">
-                  <input v-model="form.email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
-                  <label for="inputEmail">Email adresa</label>
-                </div>
-
-                <div class="form-label-group">
                   <input v-model="form.username" type="text" id="inputUsername" class="form-control" placeholder="Username" required>
                   <label for="inputUsername">Korisnicko ime</label>
-                </div>
-
-                <div class="form-label-group">
-                  <input v-model="form.jmbg" type="text" id="inputJmbg" class="form-control" placeholder="Jmbg" required>
-                  <label for="inputJmbg">JMBG</label>
                 </div>
 
                 <div class="form-label-group">
@@ -56,9 +34,8 @@
                 <div class="alert alert-warning" v-if='messageConfirmPassword' v-html="messageConfirmPassword"> </div>
                 
                 <button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" v-on:click='submition'>
-                  Register
+                  Registruj se 
                 </button>
-                <a class="d-block text-center mt-2 small" href="#">Sign In</a>
                 <hr class="my-4">
               </form>
             </div>  
@@ -72,19 +49,16 @@
 
 <script>
 
-import AgentDataService from '../services/AgentDataService'
+import AdminDataService from '../services/AdminDataService'
 export default {
   name: 'Registration',
 	data() {
       return {
-        form: {
-          ime: '',
-          prezime: '',
-          adresa: '',
-          jmbg: '',
-          email: '',
-          username:'',
-          password: '',
+      form: {
+        id:'',
+        secret:'',
+        username:'',
+        password: '',
       },
       confPassword: '',
       message: '',
@@ -95,37 +69,34 @@ export default {
   methods: {
     submition:function() {
       if(this.form.password ===  this.confPassword){
-        KlijentDataService.registratingKlijent({
-          username:this.form.username,
-          password:this.form.password,
-          ime:this.form.ime,
-          jmbg:this.form.jmbg,
-          prezime:this.form.prezime,
-          adresa:this.form.adresa,
-          email:this.form.email
-        }).then(response =>{
-          this.message = `<h4>Hvala <b>${response.data.ime}</b> sto ste se registrovali! Na imejl adresu koju ste uneli Vam je poslat mejl za potvrdu registracije!</h4>`;
+        AdminDataService.confirmRegistrationAdmin(this.form)
+        .then(response =>{
+          this.message = `<h4>Hvala <b>${response.data.ime}</b> sto ste se registrovali!</h4>`;
           this.submitted = true;
         }).catch(error => {
           if(error.response.status === 500  && error.response.data.message==='Username already exists you mappet!'){
             this.messageConfirmPassword = `<h5>Vec postoji korisnik sa unetim <b>korisnickim imenom<b> ! Molimo Vas pokusajte uneti druge vrednosti !</h5>`;
-              
             setTimeout(()=>this.errorMessage='',3000);
           }
         }); 
-
       }
       else{
           this.messageConfirmPassword = `<h5>Sifre koje ste uneli se ne poklapaju!Molimo Vas pokusajte ponovo!</h5>`;
-          setTimeout(()=>this.messageConfirmPassword='',3000);
+          setTimeout(()=>this.messageConfirmPassword='', 3000);
       }
     },
 
+  },
+  created(){
+    //izvlace se parametri id i secret iz urla 
+    this.form.id = this.$route.query.id;
+    this.form.secret = this.$route.query.secret;
   }
 }
 </script>
 
 <style scoped>
+
 .form-signin .btn {
   font-size: 80%;
   border-radius: 5rem;
@@ -141,8 +112,11 @@ export default {
 }
 
 .form-label-group input {
-  height: auto;
+  height: 65px;
+  /* height: auto; */
+  text-align: center;
   border-radius: 2rem;
+  
 }
 
 .form-label-group>input,
@@ -152,8 +126,8 @@ export default {
 
 .form-label-group>label {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
+  left: 30px;
   display: block;
   width: 100%;
   margin-bottom: 0;
@@ -163,6 +137,7 @@ export default {
   border: 1px solid transparent;
   border-radius: .25rem;
   transition: all .1s ease-in-out;
+  font-size: 18px;
 }
 
 .form-label-group input::-webkit-input-placeholder {
