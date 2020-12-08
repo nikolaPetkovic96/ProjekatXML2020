@@ -2,7 +2,6 @@ import Home from './components/Home'
 import About from './components/About'
 
 import LoginForm from '../src/forms/LoginForm'
-import RegForm from '../src/forms/RegForm'
 
 import Homepage from './components/Homepage'
 import AdminProfile from './components/AdminProfile'
@@ -10,6 +9,7 @@ import AdminProfileUpdate from './components/AdminProfileUpdate'
 import AdminUsersAuthorites from './components/AdminUsersAuthorities'
 import AdminSifrarnik from './components/AdminSifrarnik'
 import AdminAgent from './components/AdminAgent'
+import AdminRegAdmin from './components/AdminRegAdmin'
 import AdminComments from './components/AdminComments'
 
 export default [
@@ -27,11 +27,6 @@ export default [
         path:'/login',
         name:'LoginForm',
         component:LoginForm
-    },
-    {
-        path:'/registration',
-        name:'RegistrationForm',
-        component:RegForm
     },
 
     {
@@ -63,6 +58,11 @@ export default [
         path:'/agent',
         name:'UsersAgent',
         component:AdminAgent
+    },
+    {
+        path:'/admin',
+        name:'AdminRegistration',
+        component:AdminRegAdmin
     },
     {
         path:'/reviews',

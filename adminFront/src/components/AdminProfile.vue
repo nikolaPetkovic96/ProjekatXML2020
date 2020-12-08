@@ -17,10 +17,10 @@
                         <h4>{{profile.ime}} {{profile.prezime}}</h4>
                     </li>
 
-                    <!-- <li class="list-group-item">
-                        <h5 class="header5">Prezime</h5>
-                        <h4>{{profile.prezime}}</h4>
-                    </li> -->
+                    <li class="list-group-item">
+                        <h5 class="header5">JMBG</h5>
+                        <h4>{{profile.jmbg}}</h4>
+                    </li>
 
                     <li class="list-group-item">
                         <h5 class="header5">Pol</h5>

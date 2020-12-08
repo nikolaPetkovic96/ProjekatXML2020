@@ -31,11 +31,7 @@ export default {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.retrivedToken.accessToken;
       }
     }
-  }/*,
-  created(){
-    localStorage.clear(); //OBAVEZNO PITATI MILANA stavio mi u localStorage Maki2 i divlja sa njim
-    this.retriveTokenFromLocalStorage();
-  }*/
+  }
 }
 </script>
 

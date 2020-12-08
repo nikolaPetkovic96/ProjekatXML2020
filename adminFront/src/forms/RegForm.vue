@@ -60,7 +60,6 @@
                 </button>
                 <a class="d-block text-center mt-2 small" href="#">Sign In</a>
                 <hr class="my-4">
-
               </form>
             </div>  
           </div>

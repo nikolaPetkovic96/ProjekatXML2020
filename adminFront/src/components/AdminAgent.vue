@@ -7,7 +7,7 @@
           <!-- Registrovati agente/firme pri cemu se registruju sledeci podaci:
             . Ime i prezime ili naziv firme
             . Adresa
-            . Poslovni mati.ni broj -->
+            . Poslovni maticni broj -->
         <div class='container'>
             <div class="form-label-group">
                 <label>Tip agenta</label>
@@ -74,7 +74,8 @@
               <input class="one-forth" placeholder="Unesite postanski broj..." v-model='noviAgent.TAdresa.postanskiBroj'>
             </div>
 
-            <button type="button" class="btn btn-lg btn-success" v-on:click='addAgent()'> Save </button>
+            <div v-if='messages.error' id='testError' class="alert alert-danger half-size" v-html="messages.error"></div>
+            <button type="button" class="btn btn-lg btn-success" v-on:click='addAgent()'> Potvrdi </button>
             <hr>
         </div><!--container-->
     </div> 
@@ -120,6 +121,7 @@ export default {
                 errorAdresa: '',
                 errorResponse: '',
                 successResponse: '',
+                error:'',
             }
         }
     },
@@ -146,41 +148,51 @@ export default {
         },
         addAgent:function(){
         //OSOBA
-            // console.log('this.agentType: ' + this.agentType);
-            console.log('this.noviAgent.ime: ' + this.noviAgent.ime);
-            console.log('this.noviAgent.prezime: ' + this.noviAgent.prezime);
-            console.log('this.noviAgent.pol: ' + this.noviAgent.pol);
-            console.log('this.noviAgent.jmbg: ' + this.noviAgent.jmbg);
-            console.log('this.noviAgent.naziv: ' + this.noviAgent.nazivFirme);
-            console.log('this.noviAgent.poslovniMaticniBroj: ' + this.noviAgent.poslovniMaticniBroj);
-            console.log('this.noviAgent.emailt: ' + this.noviAgent.email);
-            console.log('this.noviAgent.TAdresa.ulica: ' + this.noviAgent.TAdresa.ulica);
-               console.log('this.noviAgent: ' + this.noviAgent.korisnickoIme);
-          
+        
             if (this.noviAgent.ime == '' && this.agentType == 'osoba') {
                 this.messages.errorIme = `<h4> Ime agenta ne moze biti prazno polje!</h4>`;
                 setTimeout(() => this.messages.errorIme = '', 5000);
+                this.messages.error = `<h4>Greska pri unosu!</h4>`;
+                setTimeout(() => this.messages.error = '', 3000);
             }
             else if (this.noviAgent.prezime == '' && this.agentType == 'osoba') {
                 this.messages.errorPrezime = `<h4> Prezime agenta ne moze biti prazno polje!</h4>`;
                 setTimeout(() => this.messages.errorPrezime = '', 5000);
+                this.messages.error = `<h4>Greska pri unosu!</h4>`;
+                setTimeout(() => this.messages.error = '', 3000);
             }
             else if (this.noviAgent.jmbg == '' && this.agentType == 'osoba') {
                 this.messages.errorJMBG = `<h4> JMBG agenta ne moze biti prazno polje!</h4>`;
                 setTimeout(() => this.messages.errorJMBG = '', 5000);
+                this.messages.error = `<h4>Greska pri unosu!</h4>`;
+                setTimeout(() => this.messages.error = '', 3000);
+            }
+              //Provera da li je jmbg broj
+            else if(this.isNumeric(this.noviAgent.jmbg)){
+                this.messages.errorJMBG = `<h4>Vrednost JMBG admina mora biti broj!</h4>`;
+                this.messages.error = `<h4>Greska pri unosu!</h4>`;
+                setTimeout(() => this.messages.errorJMBG = '', 5000);
+                setTimeout(() => this.messages.error = '', 3000);
+              
             }
             else if (this.noviAgent.pol == '' && this.agentType == 'osoba') {
                 this.messages.errorPol = `<h4> Pol agenta ne moze biti prazno polje!</h4>`;
                 setTimeout(() => this.messages.errorPol = '', 5000);
+                this.messages.error = `<h4>Greska pri unosu!</h4>`;
+                setTimeout(() => this.messages.error = '', 3000);
             }
         //FIRMA
             else if (this.noviAgent.nazivFirme == '' && this.agentType == 'firma') {
                 this.messages.errorNaziv = `<h4> Naziv agentske firme ne moze biti prazno polje!</h4>`;
                 setTimeout(() => this.messages.errorNaziv = '', 5000);
+                this.messages.error = `<h4>Greska pri unosu!</h4>`;
+                setTimeout(() => this.messages.error = '', 3000);
             }
             else if (this.noviAgent.poslovniMaticniBroj == '' && this.agentType == 'firma') {
                 this.messages.errorPoslovniMaticniBroj = `<h4> PMB agenta ne moze biti prazno polje!</h4>`;
                 setTimeout(() => this.messages.errorPoslovniMaticniBroj = '', 5000);
+                this.messages.error = `<h4>Greska pri unosu!</h4>`;
+                setTimeout(() => this.messages.error = '', 3000);
             }
         //USER
             // else if (this.noviAgent.korisnickoIme == '') {
@@ -208,11 +220,29 @@ export default {
                 this.messages.errorAdresa = `<h4> Polje postanski broj u adresi agenta ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
+            else if(this.isNumeric(this.noviAgent.TAdresa.postanskiBroj)){
+                this.messages.errorJMBG = `<h4>Vrednost poštanskog broj mora biti broj!</h4>`;
+                setTimeout(() => this.messages.errorJMBG = '', 5000);
+            }
             else {
-                alert(this.noviAgent);
+                // console.log('this.agentType: ' + this.agentType);
+                console.log('this.noviAgent.ime: ' + this.noviAgent.ime);
+                console.log('this.noviAgent.prezime: ' + this.noviAgent.prezime);
+                console.log('this.noviAgent.pol: ' + this.noviAgent.pol);
+                console.log('this.noviAgent.jmbg: ' + this.noviAgent.jmbg);
+                console.log('this.noviAgent.naziv: ' + this.noviAgent.nazivFirme);
+                console.log('this.noviAgent.poslovniMaticniBroj: ' + this.noviAgent.poslovniMaticniBroj);
+                console.log('this.noviAgent.emailt: ' + this.noviAgent.email);
+                console.log('this.noviAgent.TAdresa.ulica: ' + this.noviAgent.TAdresa.ulica);
+                console.log('this.noviAgent: ' + this.noviAgent.korisnickoIme);
+          
             }
         },
-
+        
+        isNumeric(num) {
+            //isNaN(num) returns true if the variable does NOT contain a valid number
+            return isNaN(num);
+        }
     }
 }
 </script>

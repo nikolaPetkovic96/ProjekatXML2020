@@ -76,7 +76,6 @@ export default {
                             odobren:true,
                         },
                     ]
-                    
                 },
                 {
                     id:'2',
@@ -131,7 +130,6 @@ export default {
                     ],
                 },
             ],
-
         }
     },
     methods:{

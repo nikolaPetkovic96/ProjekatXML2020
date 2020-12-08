@@ -64,6 +64,19 @@
                 </div>
             </div>
 
+            <!-- Prices-->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-0 shadow">
+                    <router-link style='text-decoration: none;color:#35424a;' to="/admin" class="nav-link" exact>
+                        <img src="../assets/registrationAdminHomeIcon3.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-0">Registrovanje admina</h5>
+                            <div class="card-text text-black-50">Registrujte i dodajte nove administratore u sistem...</div>
+                        </div>
+                    </router-link>
+                </div>
+            </div>
+
             <!-- Profile-->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">

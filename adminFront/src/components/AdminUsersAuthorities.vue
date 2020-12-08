@@ -27,6 +27,7 @@
                         <td>{{korisnik.korisnickoIme}}</td>
                         <td>{{korisnik.ime}}</td>
                         <td>{{korisnik.prezime}}</td>
+                        <td>{{korisnik.pol}}</td>
                         <td>{{korisnik.TAdresa.Mesto}} {{korisnik.TAdresa.ulica}} {{korisnik.TAdresa.broj}}</td>
                         <td>{{korisnik.status}}</td>
                         <td>
@@ -123,6 +124,7 @@ export default {
                     ime:'Pera',
                     prezime:'Petrovic',
                     status:'aktivan',
+                    pol:'Muski',
                     TAdresa:{
                         mesto:'Ruma',
                         ulica:'8. Marta',
@@ -136,6 +138,7 @@ export default {
                     ime:'Zarko',
                     prezime:'Zarkovic',
                     status:'aktivan',
+                    pol:'Muski',
                     TAdresa:{
                         mesto:'Novi Sad',
                         ulica:'Glavni bulevar',
@@ -149,6 +152,7 @@ export default {
                     ime:'Ana',
                     prezime:'Anovic',
                     status:'aktivan',
+                    pol:'Zenski',
                     TAdresa:{
                         mesto:'Beograd',
                         ulica:'9. Maja',
@@ -162,6 +166,7 @@ export default {
                     ime:'Neaktivna',
                     prezime:'Neaktivnovic',
                     status:'blokiran',
+                    pol:'Zenski',
                     TAdresa:{
                         mesto:'Beograd',
                         ulica:'9. Maja',
