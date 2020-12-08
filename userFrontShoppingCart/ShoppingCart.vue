@@ -74,7 +74,6 @@
        
         oglasi_korpa:[  //nalaze se samo oglasi zarad prikaza u korpi i manipulaciju njima
           {
-      
             // oglas
               id:1,
               odDatuma:'25.5.2020',
@@ -109,7 +108,7 @@
                 id:'1',
                 cenaPoDanu:100,
                 nazivCenovnika:'Cenovnik 1',
-                popustZaPreko30Dana:'10%',
+                popustZaPreko30Dana:10,
                 cenaCollisionDamageWaiver:1000,
                 cenaPoKilometru:10  
               },
@@ -149,7 +148,7 @@
               id:'2',
               cenaPoDanu:500,
               nazivCenovnika:'Cenovnik 2',
-              popustZaPreko30Dana:'20%',
+              popustZaPreko30Dana:20,
               cenaCollisionDamageWaiver:null,
               cenaPoKilometru:20
             },
@@ -228,7 +227,7 @@
               id:'2',
               cenaPoDanu:585,
               nazivCenovnika:'Cenovnik 2',
-              popustZaPreko30Dana:'20%',
+              popustZaPreko30Dana:50,
               cenaCollisionDamageWaiver:null,
               cenaPoKilometru:20
             },
@@ -322,7 +321,7 @@
 
             const rezervacijaOglasDTO = {
             //rezervacija
-              ukupnaCena: oglas.cenovnik.cenaPoDanu * this.calculateNoOfDays(narudzbenica.odDatuma,narudzbenica.doDatuma),
+              ukupnaCena: 0,
               statusRezervacije:'PENDING',
               username:'Happy User 2', //u rezervDTOu za korisnika koji je rezervisao oglas.
               bundle:false,
@@ -335,12 +334,16 @@
                 agentId:oglas.agentId, // ili samo username pa na beku id da dodelimo...
               }
               //userId:null //Ili Ime i prezime onoga za koga se rezervise da li treba???
-            //Na beku se dodaje:
+              //Na beku se dodaje:
               //commonDataId: u oba
               //NarudzbenicaId: u rezervaciju
             }
+            //Racunanje ukupne cene sa popustom
+            const odabran_br_dana = this.calculateNoOfDays(narudzbenica.odDatuma, narudzbenica.doDatuma);
+            rezervacijaOglasDTO.ukupnaCena += this.calculatePrice(oglas.cenovnik.cenaPoDanu, oglas.cenovnik.popustZaPreko30Dana, odabran_br_dana);
+            
             this.rezervacije.push(rezervacijaOglasDTO);
-            // localStorage.setItem('reserv', JSON.stringify(this.rezervacije));
+            localStorage.setItem('reserv', JSON.stringify(this.rezervacije));
           }
         }
       },
@@ -366,7 +369,11 @@
                 agentId:oglas.agentId, // ili samo username pa na beku id da dodelimo...
                 //userId:null //Ili Ime i prezime onoga za koga se rezervise da li treba???
               }
-              ukupnaCena += oglas.cenovnik.cenaPoDanu * this.calculateNoOfDays(narudzbenica.odDatuma,narudzbenica.doDatuma);
+              // ukupnaCena += oglas.cenovnik.cenaPoDanu * this.calculateNoOfDays(narudzbenica.odDatuma,narudzbenica.doDatuma);
+              //Racunanje ukupne cene sa popustom
+              const odabran_br_dana = this.calculateNoOfDays(narudzbenica.odDatuma, narudzbenica.doDatuma);
+              ukupnaCena += this.calculatePrice(oglas.cenovnik.cenaPoDanu, oglas.cenovnik.popustZaPreko30Dana, odabran_br_dana);
+
               narudzbenice.push(nar);
             }
           }
@@ -471,7 +478,7 @@
         this.$router.push(`/userTest/cars/${id}/reservation_details`);
       },
 
-        //Pomocna metoda koja se poziva iz metode putInBundle
+      //Pomocna metoda koja se poziva iz metode putInBundle
       //Sluzi za proveru da li je neki oglas vec u bundlu
       //Ako jeste vraca se true, ako nije false
       isInBundle(arr, value) {
@@ -496,10 +503,48 @@
         return NoOfDays/noOFMill;
       },
 
+      //Metoda za automatsko racunanje cene rezervacija spram cene apartmana * broj nocenja
+      calculatePrice: function (cenaPoDanu, popustZaPreko30Dana, odabran_br_dana) {
+        console.log('Odabran_br_dana: ' + odabran_br_dana);
+        let popust = 0;
+        let ukupnaCena = odabran_br_dana * cenaPoDanu;
+        console.log('Cena bez pop: ' + ukupnaCena);
+        if(odabran_br_dana > 30){
+            
+          if(popustZaPreko30Dana != null){
+              popust =  ukupnaCena * (popustZaPreko30Dana/100);
+              console.log('Popust: ' + popust);
+          }
+          //Ukoliko korisnik odabere neki cenovnik koji ima popust, a zatim odabere cenovnik koji nema popust
+          //ostaje upamcen popust prethodnog cenovnika... Zato se resetuje na 0;
+          if(popustZaPreko30Dana === null && popust !== 0){
+              popust = 0;
+          }
+
+          ukupnaCena = ukupnaCena -  popust;
+          console.log('Cena sa pop: ' + ukupnaCena);
+            
+        }
+        return ukupnaCena;
+      },
+
+      countTotalPrice:function(){
+        for(let i = 0; i< this.oglasi_korpa.length; i++ ){
+          for(let j = 0; j < this.korpa.length; j++ ){
+            if(this.oglasi_korpa[i].id == this.korpa[j].oglasId){
+              console.log(`Nasli se u ${this.oglasi_korpa[i].id} i ${this.korpa[j].oglasId}`);
+              const odabran_br_dana = this.calculateNoOfDays(this.korpa[j].odDatuma , this.korpa[j].doDatuma);
+              this.total += this.calculatePrice(this.oglasi_korpa[j].cenovnik.cenaPoDanu, this.oglasi_korpa[j].cenovnik.popustZaPreko30Dana, odabran_br_dana);
+              continue;
+            }
+          }
+        }
+      },
     },
     created(){
       // Preuzimanje objekta korpa iz localStorage
       this.korpa = JSON.parse(localStorage.getItem('cart'));
+      
       // this.poruke = JSON.parse(localStorage.getItem('messages'));
       let oglasiIzKorpe = [];
       for(let i = 0; i < this.korpa.length; i++){
@@ -509,9 +554,9 @@
         //i prikazali njihovi podacu i slike vizuelno u korpi...
         //getAdsById(oglasiIzKorpe).response(this.oglasi_korpa = response)....  
       }
-      
+
+      this.countTotalPrice();
     },
-    
   }
 </script>
 
@@ -548,6 +593,7 @@
 #page-title{
   position: relative;
 }
+
 #back_button{
   position: absolute;
   right:35px;

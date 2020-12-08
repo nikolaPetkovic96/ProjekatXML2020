@@ -78,10 +78,10 @@ export default {
                 },
             ]
             */
-           narudzbenica:{
-               odDatuma:null,
-               doDatuma:null,
-           },
+            narudzbenica:{
+                odDatuma:null,
+                doDatuma:null,
+            },
             dodatneInfo:{
                 odDatuma:null,          //preuzeto iz narudzbenice
                 doDatuma:null,          //preuzeto iz narudzbenice
@@ -202,13 +202,6 @@ export default {
         this.extractDate(this.korpa, this.id);
         this.dodatneInfo.odabran_br_dana = this.calculateNoOfDays(this.dodatneInfo.odDatuma, this.dodatneInfo.doDatuma);
         this.calculatePrice();
-        alert(`Dodatne info:
-           odDatuma: ${this.dodatneInfo.odDatuma}
-           doDatuma: ${this.dodatneInfo.doDatuma}
-           br_dana: ${this.dodatneInfo.odabran_br_dana}
-           popust: ${this.dodatneInfo.popust}
-           ukCena ${this.dodatneInfo.ukupnaCena}
-        `);
 
 	}
 }
