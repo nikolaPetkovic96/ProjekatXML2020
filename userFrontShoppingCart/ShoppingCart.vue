@@ -2,6 +2,7 @@
   <div id="cart">
     <div class="container" id='page-title'>
       <h1 style="margin-top:10px;color:#35424a;">Vaša <span id='titleEffect'>Korpa</span></h1>
+      <button id='back_button' class="btn-lg btn-outline-dark" v-on:click='goBack()'> Nazad</button>
       <hr style='background:#35424a;height:1px;'>
     </div>
         
@@ -28,6 +29,7 @@
                       <h6 class="theme-colr"><b>Cena po danu: </b>{{oglas.cenovnik.cenaPoDanu}} din</h6>
                       <h6><b>Kilometraža: </b>{{oglas.automobil.predjenaKilometraza}} km</h6>
                   </div>
+                    <button class="btn-sm btn-outline-primary" v-on:click='showDetails(oglas.id)'> Detalji </button>
                     <button class="btn-sm btn-outline-danger" v-on:click='removeAds(oglas.id)'> Ukloni </button>
                     <div v-bind:id='oglas.id'>
                     </div>
@@ -235,12 +237,7 @@
 
         rezervacije:[],
         poruke:[],
-        // poruke:[
-        //   {
-        //     oglasId:1,
-        //     poruka:'Tekst poruke'
-        //   }
-        // ]
+ 
       }
     },
     methods:{
@@ -434,8 +431,6 @@
           }
           
         }
-        // localStorage.setItem('bundle', JSON.stringify(this.oglasiInBundle));
-        // console.log('Izlazi iz CreateBundle!')
 
         if(this.isInBundle(allBundles, oglas_korpa[oglas_korpa.length-1]) == false){
           console.log(`RATATATATATATAT: ${oglas_korpa[oglas_korpa.length-1].oglasId}`);
@@ -470,6 +465,10 @@
               this.oglasi_korpa.splice(i, 1);
             }
           }
+      },
+
+      showDetails:function(id){
+        this.$router.push(`/userTest/cars/${id}/reservation_details`);
       },
 
         //Pomocna metoda koja se poziva iz metode putInBundle
@@ -544,6 +543,15 @@
 
 #buttons{
   display: inline;
+}
+
+#page-title{
+  position: relative;
+}
+#back_button{
+  position: absolute;
+  right:35px;
+  top:5px;
 }
 
 .isBundle{

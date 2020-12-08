@@ -8,8 +8,8 @@
         <div class='container ' id='search'>
             <nav class="navbar navbar-light bg-light justify-content-between">
                 <a style='font-weight:bold;margin-top:10px;color:#35424a;' class="navbar-brand">Search</a>
-                <form class="form-inline">                    
-                    <div style='display:inline;'>                      
+                <form class="form-inline">
+                    <div style='display:inline;'>
                         <div style="margin-top:20px" v-if='messages.errorDates' class="alert alert-danger" v-html="messages.errorDates"></div> 
                         <div id='first-row'  class="row">
                             <span class="col-xl-2 col-md-6 mb-3 marg-top">
@@ -32,7 +32,7 @@
                             <span class="col-xl-2 col-md-6 mb-3">
                                 <span class="span_search">Lokacija</span>
                                 <input class="form-control mr-sm-2" type="text" placeholder="lokacija" aria-label="Search" v-model="searchedCar.lokacija">
-                            </span> 
+                            </span>
                             <span class="col-xl-2 col-md-6 mb-3 marg-top" >
                                 <button style="margin-left:90px;margin-top:150px" class="btn btn-outline-success my-2 my-sm-0" type="button" v-on:click.prevent='searchCar()'>Search</button>
                             </span>
@@ -57,14 +57,14 @@
                         </span>
 
                         <div style='display:inline; margin-top:15px;' id='third_raw' >
-                            <span class="col-xl-3 col-md-6 mb-3"> 
+                            <span class="col-xl-3 col-md-6 mb-3">
                                 <span class="span_search">Model</span>
                                 <select style="padding:5px;" v-model="searchedCar.modelAut">
                                     <option disabled value="">Model automobila</option>
                                     <option v-bind:key="model" v-for="model in modelAut">{{model}}</option>
                                 </select>
                             </span>
-                            <span class="col-xl-3 col-md-6 mb-3">   
+                            <span class="col-xl-3 col-md-6 mb-3">
                                 <span class="span_search">Klasa</span>
                                 <select style="padding:5px;" v-model="searchedCar.klasaAut">
                                     <option disabled value="">Klasa automobila</option>
@@ -87,12 +87,12 @@
                             </span>
 
                             <div id='fourth_raw' style='display:inline; margin-top:5px;'>
-                                <span class="col-xl-3 col-md-6 mb-2"> 
+                                <span class="col-xl-3 col-md-6 mb-2">
                                     <span class="span_search">Decija sedista</span>
                                     <select style="padding:5px;" v-model="searchedCar.brojSedZaDec">
                                         <option disabled value="">Br. sed. za decu</option>
                                         <option v-bind:key="bszd" v-for="bszd in brojSedZaDec">{{bszd}}</option>
-                                    </select> 
+                                    </select>
                                 </span>
                                 <span class="col-xl-3 col-md-6 mb-2"> 
                                     <span class="span_search">Predjena km</span>
@@ -115,10 +115,19 @@
         <!-- Page Content -->
         <div class="container" id='search-result'>
             <br>
-            <div v-if='!isAlreadySearched'> 
-                <h3><b>Pretraga automobila</b></h3>
-                <h4>Unesite <b>interval</b> u kojem želite da iznajmite automobil kao i željene karakteristike </h4>
-                <h4>i iznajmite <b>automobil</b> vaših snova...</h4>
+            <div id='before_search' v-bind:class="{'marg-bot':!isAlreadySearched}">           
+                <div id='textbs' v-if='!isAlreadySearched' > 
+                    <h3><b>Pretraga automobila</b></h3>
+                    <h4>Unesite <b>interval</b> u kojem želite da iznajmite automobil kao i željene karakteristike </h4>
+                    <h4>i iznajmite <b>automobil</b> vaših snova...</h4>
+                </div>
+
+                <div id='cartbs' v-if='cartIsNotEmpty && !isAlreadySearched' >
+                        <img src="../../assets/cartIcon2.png" alt="">
+                        <router-link to="/userTest/shopping_cart"><button class="arrow btn btn-lg btn-outline-dark">
+                            Korpa
+                        </button></router-link>
+                </div>
             </div>
 
             <!-- Page Heading -->
@@ -155,9 +164,6 @@
                 <div class="card h-100">
                     <img id='overview-img' class="card-img-top" v-bind:src="oglas.automobil.images[0]" alt="">
                     <div class="card-body">
-                    <!-- <h4 class="card-title">
-                        <a href="#">Project One</a>
-                    </h4> -->
                         <div class="card-text">
                             <h4 class="theme-colr"><b>Automobil: </b>{{oglas.automobil.markaAut}} {{oglas.automobil.modelAut}}</h4> 
                             <h4 class="theme-colr"><b>Klasa: </b>{{oglas.automobil.klasaAut}}</h4>
@@ -184,7 +190,7 @@
             <!-- /.row -->
 
             <!-- Pagination ?????-->
-            <ul class="pagination justify-content-center">
+            <!-- <ul class="pagination justify-content-center">
                 <li class="page-item">
                 <a class="page-link" href="#" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
@@ -206,7 +212,7 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </li>
-            </ul>
+            </ul> -->
 
         </div> <!-- /.container -->
     </div>
@@ -222,6 +228,7 @@ export default {
             //za prikaz kada su oglasi prazni (obrisati kasnije)
             oglasip:[],
             isAlreadySearched:false,
+            cartIsNotEmpty:false,
             //sortiranje:
             currentSort: 'cena',
             currentSortDir: 'asc',
@@ -255,8 +262,6 @@ export default {
                         ulica:'9. Marta',
                         broj:'bb',
                         postanskiBroj:'21000',
-                        longitude:'45',
-                        latitude:'54',
                     },
                     planiranaKilometraza:2000,
                     agentId:1,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
@@ -672,7 +677,6 @@ export default {
         //Ako je bio rastuci postaje opadajuci... Ako nije ista kolona vec se kliknulo na neku drugu on dodeli vrednost te kolone 
         //da je currentSort tj. da je ona nova kolona po kojoj se vrsi sortiranje... Ta nova kolona ce biti po default sortirana po rastucoj vrednosti jer je to 
         // default vrednost this.currentSortDir atributa;
-         
         sort: function (s) {
             //if s == current sort, reverse
             if (s === this.currentSort) {
@@ -711,6 +715,12 @@ export default {
     created() {
         //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
         this.brojSedZaDec = this.range(0, 5);
+
+        // Preuzimanje objekta korpa iz localStorage
+        
+        if(JSON.parse(localStorage.getItem('cart'))!= null){
+            this.cartIsNotEmpty = true;
+        }
     },
     mounted() {
         let to = new Date();
@@ -783,6 +793,10 @@ export default {
     margin-right: 10px;
     padding:5px;
 }
+
+.marg-bot{
+    margin-bottom: 150px;
+}
 .btn-clear{
     margin-right: 2px;
     
@@ -805,6 +819,26 @@ export default {
     width:45px;
     padding-bottom:3px;
     cursor: pointer;
+}
+
+#before_search{
+    position: relative;
+}
+
+#before_search #textbs{
+    position: absolute;
+    left:2px;
+    width:80%;
+    padding:5px;
+
+}
+
+#before_search #cartbs{
+    position: absolute;
+    right:2px;
+    top:35px;
+    width:15%;
+    padding:5px;
 }
 
 </style>
