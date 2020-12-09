@@ -21,8 +21,6 @@ import javax.xml.bind.annotation.XmlType;
 
 //import com.example.Messages.SchemaToJava2.model.tentitet.TSlikaVozila;
 
-
-
 /**
  * <p>Java class for anonymous complex type.
  * 
@@ -55,7 +53,6 @@ import javax.xml.bind.annotation.XmlType;
 @Entity
 public class Automobil {
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -86,7 +83,6 @@ public class Automobil {
 	
 	@Column(name = "ukupna_ocena", nullable = false)
     protected float ukupnaOcena;
-	
     
 	@Column(name = "col_dmg_waiver", nullable = false)
     @XmlElement(name = "Collision_Damage_Waiver")
@@ -96,8 +92,8 @@ public class Automobil {
     @XmlElement(name = "Broj_sedista_za_decu")
     protected int brojSedistaZaDecu;
 	
-   @Column(name="common_data_id", nullable = false)
-   private Long commonDataId;
+	@Column(name="common_data_id", nullable = false)
+    private Long commonDataId;
   
 
 	public Automobil() {
@@ -119,9 +115,7 @@ public class Automobil {
 		this.collisionDamageWaiver = collisionDamageWaiver;
 		this.brojSedistaZaDecu = brojSedistaZaDecu;
 		this.commonDataId = commonDataId;
-		
 	}
-
 
     public Long getId() {
         return id;
@@ -192,7 +186,6 @@ public class Automobil {
 		this.predjenaKilometraza = predjenaKilometraza;
 	}
 
-	
 
 	public float getUkupnaOcena() {
 		return ukupnaOcena;
