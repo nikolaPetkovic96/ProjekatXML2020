@@ -71,17 +71,21 @@ public class Ocena {
     
     @Column(name="automobil_id")
     private Long automobilId;
+    
+    @Column(name="rezervacija_id")
+    private Long rezId;
 
 	public Ocena() {
 		super();
 	}
 
-	public Ocena(Long id, int vrednostOcene, Long commonDataId, Long automobilId) {
+	public Ocena(Long id, int vrednostOcene, Long commonDataId, Long automobilId, Long rezId) {
 		super();
 		this.id = id;
 		this.vrednostOcene = vrednostOcene;
 		this.commonDataId = commonDataId;
 		this.automobilId = automobilId;
+		this.rezId=rezId;
 	}
 
 	public Long getId() {
@@ -116,4 +120,11 @@ public class Ocena {
 		this.automobilId = automobilId;
 	}
 
+	public Long getRezId() {
+		return rezId;
+	}
+
+	public void setRezId(Long rezId) {
+		this.rezId = rezId;
+	}
 }

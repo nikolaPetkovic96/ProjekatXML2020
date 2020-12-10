@@ -83,6 +83,9 @@ public class Oglas {
     @Column(name="automobil_id")
 	private Long automobilId;
     
+    @Column(name="planirana_km")
+	private int planiranaKm;
+    
     
     //Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
 	//private Firma firma;
@@ -98,7 +101,7 @@ public class Oglas {
 		super();
 	}
     
-    public Oglas(Long id, LocalDateTime  odDatuma, LocalDateTime  doDatuma, Long cenovnikId, Long commonDataId, Long automobilId) {
+    public Oglas(Long id, LocalDateTime  odDatuma, LocalDateTime  doDatuma, Long cenovnikId, Long commonDataId, Long automobilId, int planiranaKm) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma;
@@ -106,6 +109,7 @@ public class Oglas {
 		this.cenovnikId = cenovnikId;
 		this.commonDataId = commonDataId;
 		this.automobilId = automobilId;
+		this.planiranaKm=planiranaKm;
 		//this.narudzbenice=new ArrayList<>();
 	}
 
@@ -166,6 +170,16 @@ public class Oglas {
 	public void setAutomobilId(Long automobilId) {
 		this.automobilId = automobilId;
 	}
+
+	public int getPlaniranaKm() {
+		return planiranaKm;
+	}
+
+	public void setPlaniranaKm(int planiranaKm) {
+		this.planiranaKm = planiranaKm;
+	}
+	
+	
 
 //	public List<Narudzbenica> getNarudzbenice() {
 //		return narudzbenice;

@@ -100,32 +100,31 @@ public class TAdresa {
     @XmlElement(name = "Broj")
     protected int broj;
     
-	@Column(name = "geo_duzina", nullable = false)
-    @XmlAttribute(name = "longitude")
-    protected float longitude;
-    
-	@Column(name = "geo_sirina", nullable = false)
-    @XmlAttribute(name = "latitude")
-    protected float latitude;
-
-
-
+//	@Column(name = "geo_duzina", nullable = false)
+//    @XmlAttribute(name = "longitude")
+//    protected float longitude;
+//    
+//	@Column(name = "geo_sirina", nullable = false)
+//    @XmlAttribute(name = "latitude")
+//    protected float latitude;
+	@Column(name="common_data_id")
+	protected Long commonDataId;
     public TAdresa() {
 		super();
 	}
 
 
-	public TAdresa(Long id, String mesto, int postanskiBroj, String ulica, int broj, float longitude, float latitude) {
+	public TAdresa(Long id, String mesto, int postanskiBroj, String ulica, int broj, Long cmdId) {
 		super();
 		this.id = id;
 		this.mesto = mesto;
 		this.postanskiBroj = postanskiBroj;
 		this.ulica = ulica;
 		this.broj = broj;
-		this.longitude = longitude;
-		this.latitude = latitude;
+		this.commonDataId=cmdId;
+//		this.longitude = longitude;
+//		this.latitude = latitude;
 	}
-
 
 	public Long getId() {
         return id;
@@ -177,24 +176,31 @@ public class TAdresa {
     }
 
 
-	public Float getLongitude() {
-        return longitude;
-    }
+	public Long getCommonDataId() {
+		return commonDataId;
+	}
 
 
-    public void setLongitude(Float value) {
-        this.longitude = value;
-    }
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
+	}
 
-
-    public float getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(float value) {
-        this.latitude = value;
-    }
-
-
-
+//
+//	public Float getLongitude() {
+//        return longitude;
+//    }
+//
+//
+//    public void setLongitude(Float value) {
+//        this.longitude = value;
+//    }
+//
+//
+//    public float getLatitude() {
+//        return latitude;
+//    }
+//
+//    public void setLatitude(float value) {
+//        this.latitude = value;
+//    }
 }

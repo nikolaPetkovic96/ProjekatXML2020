@@ -34,36 +34,40 @@ public class Narudzbenica {
     @Column(name="user_id")
     protected Long userId;
     
-    @Column(name="oglas_ida")
+    @Column(name="oglas_id")
     protected Long oglasId;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    //@Column(name="rez_id") //rezervacija kojoj pripada narudzenica
-    protected Rezervacija rez;
+    @Column(name="rez_id")
+    protected Long rezId;
     
-    @OneToOne(mappedBy = "narudzbenica", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    protected  Izvestaj izvestaj;
+    @Column(name="common_data_id")
+    protected Long commonDataId;
+    
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    //@Column(name="rez_id") //rezervacija kojoj pripada narudzenica
+//    protected Rezervacija rez;
+//    
+//    @OneToOne(mappedBy = "narudzbenica", cascade = CascadeType.ALL)
+//    @PrimaryKeyJoinColumn
+//    protected  Izvestaj izvestaj;
+    
+//  @ManyToOne
+//  @JoinColumn(name="oglas_id")
+//  private Oglas oglas;
     
     public Narudzbenica() {
     	super();
     }
-    
-    @ManyToOne
-    @JoinColumn(name="oglas_id")
-    private Oglas oglas;
 
-	public Narudzbenica(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long userId, Long oglasId, Rezervacija rez,
-			Izvestaj izvestaj, Oglas o) {
+	public Narudzbenica(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long userId, Long oglasId, Long rez, Long cmdId) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma;
 		this.doDatuma = doDatuma;
 		this.userId = userId;
 		this.oglasId = oglasId;
-		this.rez = rez;
-		this.izvestaj = izvestaj;
-		this.oglas=o;
+		this.rezId = rez;
+		this.commonDataId=cmdId;
 	}
 
 	public Long getId() {
@@ -106,36 +110,20 @@ public class Narudzbenica {
 		this.oglasId = oglasId;
 	}
 
-	public Rezervacija getRezId() {
-		return rez;
+	public Long getRezId() {
+		return rezId;
 	}
 
-	public void setRezId(Rezervacija rez) {
-		this.rez = rez;
+	public void setRezId(Long rez) {
+		this.rezId = rez;
 	}
 
-	public Izvestaj getIzvestaj() {
-		return izvestaj;
+	public Long getCommonDataId() {
+		return commonDataId;
 	}
 
-	public void setIzvestaj(Izvestaj izvestaj) {
-		this.izvestaj = izvestaj;
-	}
-
-	public Rezervacija getRez() {
-		return rez;
-	}
-
-	public void setRez(Rezervacija rez) {
-		this.rez = rez;
-	}
-
-	public Oglas getOglas() {
-		return oglas;
-	}
-
-	public void setOglas(Oglas oglas) {
-		this.oglas = oglas;
-	} 
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
+	}	
 	
 }

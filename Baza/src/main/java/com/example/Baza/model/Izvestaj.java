@@ -14,9 +14,12 @@ public class Izvestaj {
 	
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "narudzbenica_id")
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeNarudzbenice")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeIzvestaja")
     protected Long id; 
+	
+	@Column(name="narudzbenica_id")
+	protected Long nar_id;
 	
 	@Column(name="predjena_km")
     private Long predjenaKm;
@@ -27,23 +30,25 @@ public class Izvestaj {
 	@Column(name="common_data_id")
 	private Long commonDataId;
 	
-	@OneToOne
-    @MapsId
-    @JoinColumn(name = "narudzbenica_id")
-	private Narudzbenica narudzbenica;
+//	@OneToOne
+//    @MapsId
+//    @JoinColumn(name = "narudzbenica_id")
+//	private Narudzbenica narudzbenica;
+	
+	
 	
 	public Izvestaj() {
 		super();
 		
 	}
 
-	public Izvestaj(Long id, Long predjenaKm, String poruka, Long commonDataId, Narudzbenica narudzbenica) {
+	public Izvestaj(Long id, Long nar_id ,Long predjenaKm, String poruka, Long commonDataId) {
 		super();
 		this.id = id;
+		this.nar_id=nar_id;
 		this.predjenaKm = predjenaKm;
 		this.poruka = poruka;
 		this.commonDataId = commonDataId;
-		this.narudzbenica = narudzbenica;
 	}
 
 	public Long getId() {
@@ -52,6 +57,14 @@ public class Izvestaj {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getNar_id() {
+		return nar_id;
+	}
+
+	public void setNar_id(Long nar_id) {
+		this.nar_id = nar_id;
 	}
 
 	public Long getPredjenaKm() {
@@ -76,13 +89,5 @@ public class Izvestaj {
 
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
-	}
-
-	public Narudzbenica getNarudzbenica() {
-		return narudzbenica;
-	}
-
-	public void setNarudzbenica(Narudzbenica narudzbenica) {
-		this.narudzbenica = narudzbenica;
 	}	
 }

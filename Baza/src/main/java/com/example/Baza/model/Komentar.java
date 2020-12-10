@@ -77,6 +77,9 @@ public class Komentar {
     
     @Column(name="automobil_id")
     private Long automobilId;
+    
+    @Column(name="rezervacija_id")
+    private Long rezId;
    
 ////    @Column(nullable = true)
 //    //Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
@@ -84,53 +87,66 @@ public class Komentar {
 //
 //    //Jedan komentar se kreira od samo jednog registrovanog korisnika(druga strana bidirekcije)
 //    private RegistrovaniKorisnik reg_korisnik;
+    
+    public Komentar() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-    public Long getId() {
+    public Komentar(Long id, String tekstKomentara, boolean odobren, Long commonDataId, Long automobilId, Long rezId) {
+    	super();
+    	this.id = id;
+    	this.tekstKomentara = tekstKomentara;
+    	this.odobren = odobren;
+    	this.commonDataId = commonDataId;
+    	this.automobilId = automobilId;
+    	this.rezId = rezId;
+    }
+    
+	public Long getId() {
         return id;
     }
-
-
-    public void setId(Long value) {
+	
+	public void setId(Long value) {
         this.id = value;
     }
-
 
     public Long getCommonDataId() {
         return commonDataId;
     }
 
-
     public void setCommonDataId(Long commonDataId) {
         this.commonDataId = commonDataId;
-    }
-   
+    }   
  
     public String getTekstKomentara() {
         return tekstKomentara;
     }
 
-
     public void setTekstKomentara(String value) {
         this.tekstKomentara = value;
     }
 
-
     public boolean isOdobren() {
         return odobren;
     }
-
     
     public void setOdobren(boolean value) {
         this.odobren = value;
     }
-
 	public Long getAutomobilId() {
 		return automobilId;
 	}
 
-
 	public void setAutomobilId(Long automobilId) {
 		this.automobilId = automobilId;
 	}
-	   
+
+	public Long getRezId() {
+		return rezId;
+	}
+
+	public void setRezId(Long rezId) {
+		this.rezId = rezId;
+	}	   
 }

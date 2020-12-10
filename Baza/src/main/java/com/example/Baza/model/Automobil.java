@@ -90,10 +90,10 @@ public class Automobil {
     @XmlElement(name = "Predjena_kilometraza")
     protected float predjenaKilometraza;
     
-	@Column(name = "plan_kilom", nullable = false)
-    @XmlElement(name = "Planirana_kilometraza", required = true)
-    @XmlSchemaType(name = "positiveInteger")
-    protected float planiranaKilometraza;
+//	@Column(name = "plan_kilom", nullable = false)
+//    @XmlElement(name = "Planirana_kilometraza", required = true)
+//    @XmlSchemaType(name = "positiveInteger")
+//    protected float planiranaKilometraza;
     
 	@Column(name = "col_dmg_waiver", nullable = false)
     @XmlElement(name = "Collision_Damage_Waiver")
@@ -114,7 +114,7 @@ public class Automobil {
 
 	public Automobil(Long id, Long markaAutomobilaId,Long modelAutomobilaId,
 			Long klasaAutomobilaId, Long vrstaGorivaId,Long tipMenjacaId, float predjenaKilometraza,
-			float planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId) {
+			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId) {
 		super();
 		this.id = id;
 		this.markaAutomobilaId = markaAutomobilaId;
@@ -123,7 +123,7 @@ public class Automobil {
 		this.vrstaGorivaId = vrstaGorivaId;
 		this.tipMenjacaId = tipMenjacaId;
 		this.predjenaKilometraza = predjenaKilometraza;
-		this.planiranaKilometraza = planiranaKilometraza;
+		//this.planiranaKilometraza = planiranaKilometraza;
 		this.collisionDamageWaiver = collisionDamageWaiver;
 		this.brojSedistaZaDecu = brojSedistaZaDecu;
 		this.commonDataId=commonDataId;
@@ -200,14 +200,14 @@ public class Automobil {
 	}
 
 
-	public float getPlaniranaKilometraza() {
-		return planiranaKilometraza;
-	}
-
-
-	public void setPlaniranaKilometraza(float planiranaKilometraza) {
-		this.planiranaKilometraza = planiranaKilometraza;
-	}
+//	public float getPlaniranaKilometraza() {
+//		return planiranaKilometraza;
+//	}
+//
+//
+//	public void setPlaniranaKilometraza(float planiranaKilometraza) {
+//		this.planiranaKilometraza = planiranaKilometraza;
+//	}
 
 
 	public boolean isCollisionDamageWaiver() {

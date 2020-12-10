@@ -1,4 +1,4 @@
-package com.example.LoginReg;
+package com.example.LoginReg.controller;
 
 import java.util.Collection;
 

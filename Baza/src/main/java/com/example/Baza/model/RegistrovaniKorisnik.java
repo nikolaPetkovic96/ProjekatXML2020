@@ -84,10 +84,20 @@ public class RegistrovaniKorisnik
 //    protected List<Rezervacija> rezervacija;
 //    protected List<Oglas> oglas;
 
-    public Long getId() {
+	public RegistrovaniKorisnik(Long id, String ime, String prezime, String jmbg) {
+		super();
+		this.id = id;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.jmbg = jmbg;
+	}
+    public RegistrovaniKorisnik() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;

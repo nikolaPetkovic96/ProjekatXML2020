@@ -125,28 +125,16 @@ public class Rezervacija {
 //	  inverseJoinColumns = @JoinColumn(name = "oglas_id"))
 //    protected List<Oglas> oglasi;
     
-    @OneToMany(// u listu narudzbenica ubacuje sve narudzbenice gde je rez_id= id od ove rezervcacije
-            mappedBy = "rez"//,   
-            //cascade = CascadeType.ALL,
-            //orphanRemoval = true
-        )protected List<Narudzbenica> narudzbenice;
+//    @OneToMany(// u listu narudzbenica ubacuje sve narudzbenice gde je rez_id= id od ove rezervcacije
+//            mappedBy = "rez"//,   
+//            //cascade = CascadeType.ALL,
+//            //orphanRemoval = true
+//        )protected List<Narudzbenica> narudzbenice;
 
 	public Rezervacija() {
 		super();
 	}
 
-	public Rezervacija(Long id, double ukupnaCena, LocalDateTime odDatuma, LocalDateTime doDatuma, Boolean bundle,
-			String statusRezervacije, Long commonDataId, List<Narudzbenica> narudzbenice) {
-		super();
-		this.id = id;
-		this.ukupnaCena = ukupnaCena;
-		this.odDatuma = odDatuma;
-		this.doDatuma = doDatuma;
-		this.bundle = bundle;
-		this.statusRezervacije = statusRezervacije;
-		this.commonDataId = commonDataId;
-		this.narudzbenice=narudzbenice;
-	}
 	public Rezervacija(Long id, double ukupnaCena, LocalDateTime odDatuma, LocalDateTime doDatuma, Boolean bundle,
 			String statusRezervacije, Long commonDataId) {
 		super();
@@ -158,7 +146,7 @@ public class Rezervacija {
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -215,14 +203,6 @@ public class Rezervacija {
 		this.commonDataId = commonDataId;
 	}
 
-	public List<Narudzbenica> getNarudbenice() {
-		return narudzbenice;
-	}
-
-	public void setNarudbenice(List<Narudzbenica> narudzbenice) {
-		this.narudzbenice = narudzbenice;
-	}
-
 //	public List<Oglas> getOglasi() {
 //		return oglasi;
 //	}
@@ -230,7 +210,4 @@ public class Rezervacija {
 //	public void setOglasi(List<Oglas> oglasi) {
 //		this.oglasi = oglasi;
 //	}
-	
-	
-
 }
