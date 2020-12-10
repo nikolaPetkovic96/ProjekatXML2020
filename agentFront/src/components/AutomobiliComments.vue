@@ -10,6 +10,7 @@
                 <div class="comments" v-bind:key="car.id" v-for='car in cars'>
                     <div id='carInfo'>
                         <div class="card-header">
+                            <h4><b>Rezervisan od?:</b></h4>
                             <h4><b>Automobil:</b> {{car.markaAut}} {{car.modelAut}} (marka/model)</h4>
                             <h4><b>Klasa automobila:</b> {{car.klasaAut}}</h4>
                             <h4><b>Ocena:</b> {{car.ocena}}</h4>
@@ -24,7 +25,7 @@
                             <div id='star-rating'>
                                 <star-rating
                                     inactive-color="#35424a"
-                                    active-color="#e8491d"
+                                    active-color="gold"
                                     v-bind:read-only= "true"
                                     v-bind:star-size="25"
                                     v-bind:show-rating="false"

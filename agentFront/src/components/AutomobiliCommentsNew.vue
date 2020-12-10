@@ -17,7 +17,7 @@
             <div v-if='messages.errorStar' class="alert alert-danger" v-html="messages.errorStar"></div>
             <star-rating
                 inactive-color="#35424a"
-                active-color="#e8491d"
+                active-color="gold"
                 glow:2
                 glow-color="#e8491d"
                 v-model="review.star"></star-rating>
@@ -128,4 +128,6 @@ export default {
     height: 200px;
     padding:8px;
 }
+
+/* active-color="#e8491d" */
 </style>

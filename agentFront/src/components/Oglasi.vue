@@ -54,7 +54,16 @@ export default {
                     odDatuma:'25.5.2020',
                     doDatuma:'25.6.2020',
                     lokacija:'9. Marta bb Novi Sad',
+                    TAdresa:{
+                        mesto:'',
+                        ulica:'',
+                        broj:'',
+                        postanskiBroj:'',
+                        longitude:'',
+                        latitude:'',
+                    },
                     planiranaKilometraza:2000,
+                    username:'This host', //u DTOu za korisnika koji je kreirao oglas.
                     //automobil
                     markaAut:'BMW',
                     modelAut:'M5',
@@ -71,7 +80,16 @@ export default {
                     odDatuma:'18.6.2020',
                     doDatuma:'25.7.2020',
                     lokacija:'Ne znanog i znanog junaka bb Beograd',
+                    TAdresa:{
+                        mesto:'',
+                        ulica:'',
+                        broj:'',
+                        postanskiBroj:'',
+                        longitude:'',
+                        latitude:'',
+                    },
                     planiranaKilometraza:2500,
+                    username:'This host', //u DTOu za korisnika koji je kreirao oglas.
                     //automobil
                     markaAut:'Audi',
                     modelAut:'A6',
@@ -88,7 +106,16 @@ export default {
                     odDatuma:'25.5.2020',
                     doDatuma:'15.6.2020',
                     lokacija:'19. Juna bb Novi Sad',
+                    TAdresa:{
+                        mesto:'',
+                        ulica:'',
+                        broj:'',
+                        postanskiBroj:'',
+                        longitude:'',
+                        latitude:'',
+                    },
                     planiranaKilometraza:3000,
+                    username:'This host', //u DTOu za korisnika koji je kreirao oglas.
                     //automobil
                     markaAut:'Fiat',
                     modelAut:'500L',
