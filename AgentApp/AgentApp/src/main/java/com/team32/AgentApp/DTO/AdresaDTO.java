@@ -1,4 +1,4 @@
-package com.team32.AgentApp.controller;
+package com.team32.AgentApp.DTO;
 
 import com.team32.AgentApp.model.tentitet.Adresa;
 

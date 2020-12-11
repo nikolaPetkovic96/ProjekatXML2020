@@ -39,7 +39,7 @@ public class TipGorivaService {
 		TipGoriva updateTipGoriva = tipGorivaRepository.save(tipGoriva);
 		return updateTipGoriva;
 	}
-	public void deleteTTipGoriva(Long id) {
+	public void deleteTipGoriva(Long id) {
 		tipGorivaRepository.deleteById(id);
 	}
 	

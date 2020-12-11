@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.CenovnikDTO;
 import com.team32.AgentApp.model.entitet.Cenovnik;
+import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.service.CenovnikService;
+import com.team32.AgentApp.service.CommonDataService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,9 @@ public class CenovnikController {
 	
 	@Autowired
 	private CenovnikService cenovnikService;
+	
+	@Autowired
+	private CommonDataService comDataService;
 
 	@RequestMapping(method=RequestMethod.GET, value="/cenovnik", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CenovnikDTO>> getAllCenovnik(){
@@ -48,6 +54,13 @@ public class CenovnikController {
 
 		Cenovnik savedCenovnik = new Cenovnik();
 		
+		//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
+		CommonData commonData = new CommonData();
+		LocalDateTime now = LocalDateTime.now();
+		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
+		commonData.setDatumKreiranja(now);
+		commonData = comDataService.addCommonData(commonData);
+
 		savedCenovnik.setId(cenovnikDTO.getId());
 		savedCenovnik.setCenaCollisionDamageWaiver(cenovnikDTO.getCenaCollisionDamageWaiver());
 		savedCenovnik.setCenaPoDanu(cenovnikDTO.getCenaPoDanu());
@@ -55,7 +68,7 @@ public class CenovnikController {
 		savedCenovnik.setNazivCenovnika(cenovnikDTO.getNazivCenovnika());
 		savedCenovnik.setPopustZaPreko30Dana(cenovnikDTO.getPopustZaPreko30Dana());
 		
-		savedCenovnik.setCommonDataId(cenovnikDTO.getCommonDataId()); //kreirati novi objekat klase commonId;
+		savedCenovnik.setCommonDataId(commonData.getId());
 		
 		savedCenovnik = cenovnikService.addCenovnik(savedCenovnik);
 		return new ResponseEntity<>(new CenovnikDTO(savedCenovnik), HttpStatus.CREATED);
@@ -69,6 +82,13 @@ public class CenovnikController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		Long comDatId = updatedCenovnik.getCommonDataId();
+		
+		CommonData commonData = comDataService.findOne(comDatId);
+		LocalDateTime now = LocalDateTime.now();
+		commonData.setDatumIzmene(now);
+		commonData = comDataService.updateCommonData(comDatId, commonData);
+		
 		updatedCenovnik.setId(cenovnikDTO.getId());
 		updatedCenovnik.setCenaCollisionDamageWaiver(cenovnikDTO.getCenaCollisionDamageWaiver());
 		updatedCenovnik.setCenaPoDanu(cenovnikDTO.getCenaPoDanu());
@@ -76,8 +96,7 @@ public class CenovnikController {
 		updatedCenovnik.setNazivCenovnika(cenovnikDTO.getNazivCenovnika());
 		updatedCenovnik.setPopustZaPreko30Dana(cenovnikDTO.getPopustZaPreko30Dana());
 		
-		updatedCenovnik.setCommonDataId(cenovnikDTO.getCommonDataId()); //kreirati novi objekat klase commonId;
-		
+		updatedCenovnik.setCommonDataId(comDatId);
 		
 		updatedCenovnik = cenovnikService.updateCenovnik(updatedCenovnik.getId(), updatedCenovnik);
 		return new ResponseEntity<>(new CenovnikDTO(updatedCenovnik),HttpStatus.OK);
@@ -88,6 +107,7 @@ public class CenovnikController {
 		Cenovnik cenovnik = cenovnikService.findOne(id);
 		if(cenovnik != null) {
 			cenovnikService.deleteCenovnik(id);
+			comDataService.deleteCommonData(cenovnik.getCommonDataId());
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

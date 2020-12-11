@@ -79,10 +79,7 @@ public class Oglas {
 	private Long automobilId;
     
     @Column(name="plan_km")
-    private Long planiranaKilometraza;
-
-    @Column(name="zauzeti_termini")
-    private  String[] zauzetiTermini;
+    private float planiranaKilometraza;
     
     @Column(name="common_data_id")
 	private Long commonDataId;
@@ -92,7 +89,7 @@ public class Oglas {
 	}
     
     public Oglas(Long id, LocalDateTime  odDatuma, LocalDateTime  doDatuma, Long cenovnikId, Long automobilId,
-    		Long planiranaKilometraza, String[] zauzetiTermini, Long commonDataId) {
+    		float planiranaKilometraza, Long commonDataId) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma;
@@ -100,7 +97,6 @@ public class Oglas {
 		this.cenovnikId = cenovnikId;
 		this.automobilId = automobilId;
 		this.planiranaKilometraza =  planiranaKilometraza;
-		this.zauzetiTermini = zauzetiTermini;
 		this.commonDataId = commonDataId;
 	}
 
@@ -151,20 +147,12 @@ public class Oglas {
 		this.automobilId = automobilId;
 	}
 	
-	public Long getPlaniranaKilometraza() {
+	public float getPlaniranaKilometraza() {
 		return planiranaKilometraza;
 	}
 
-	public void setPlaniranaKilometraza(Long planiranaKilometraza) {
+	public void setPlaniranaKilometraza(float planiranaKilometraza) {
 		this.planiranaKilometraza = planiranaKilometraza;
-	}
-
-	public String[] getZauzetiTermini() {
-		return zauzetiTermini;
-	}
-
-	public void setZauzetiTermini(String[] zauzetiTermini) {
-		this.zauzetiTermini = zauzetiTermini;
 	}
 
 	public Long getCommonDataId() {

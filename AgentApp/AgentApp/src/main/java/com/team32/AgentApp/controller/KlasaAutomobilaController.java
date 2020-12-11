@@ -51,7 +51,7 @@ public class KlasaAutomobilaController {
 	}
 	//POST
 	@RequestMapping(method=RequestMethod.POST, value="/klasaAutomobila",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<KlasaAutomobilaDTO> addTKlasaAutomoibila(@RequestBody KlasaAutomobilaDTO dto)  throws Exception {
+	public ResponseEntity<KlasaAutomobilaDTO> addTKlasaAutomobila(@RequestBody KlasaAutomobilaDTO dto)  throws Exception {
 		KlasaAutomobila savedKlasAut = new KlasaAutomobila();
 		
 		//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
@@ -88,7 +88,6 @@ public class KlasaAutomobilaController {
 		updKlasAut.setId(dto.getId());
 		updKlasAut.setNazivKlase(dto.getNazivKlase());
 		updKlasAut.setCommonDataId(comDatId);
-		//PROVERITI COMMON DATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
 		
 		updKlasAut = klasaAutservice.updateKlasaAutomobila(updKlasAut.getId(), updKlasAut);
@@ -98,9 +97,10 @@ public class KlasaAutomobilaController {
 	//DELET	
 	@RequestMapping(value="/klasaAutomobila/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteKlasaAutomobila(@PathVariable Long id) {
-		KlasaAutomobila ka= klasaAutservice.findOne(id);
-		if (ka != null) {
+		KlasaAutomobila klasaAuta= klasaAutservice.findOne(id);
+		if (klasaAuta != null) {
 			klasaAutservice.deleteKlasaAutomobila(id);
+			comDataService.deleteCommonData(klasaAuta.getCommonDataId());
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} else {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);

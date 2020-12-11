@@ -18,9 +18,11 @@ public class MarkaAutomobilaDTO {
 	}
 
 	public MarkaAutomobilaDTO(MarkaAutomobila ma) {														
-		this.id=ma.getId();
-		this.nazivMarke=ma.getNazivMarke();
-		this.commonDataId= ma.getCommonDataId();	
+		this(
+			ma.getId(),
+			ma.getNazivMarke(),
+			ma.getCommonDataId()
+			);
 	}
 
 	public Long getId() {

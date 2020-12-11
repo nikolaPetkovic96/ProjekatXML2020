@@ -1,5 +1,6 @@
 package com.team32.AgentApp.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.AutomobilDTO;
 import com.team32.AgentApp.model.entitet.Automobil;
+import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.service.AutomobilService;
-
+import com.team32.AgentApp.service.CommonDataService;
 
 @RestController
 public class AutomobilController {
 	
 	@Autowired
 	private AutomobilService automobilService;	
+	
+	@Autowired
+	private CommonDataService comDataService;
 	
 	@RequestMapping(method=RequestMethod.GET, value="/automobil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AutomobilDTO>> getAllAutomobil(){
@@ -49,6 +54,13 @@ public class AutomobilController {
 	@RequestMapping(method=RequestMethod.POST, value="/automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AutomobilDTO> addAutomobil(@RequestBody AutomobilDTO automobilDTO) throws Exception{
 		Automobil savedAutomobil = new Automobil();
+		
+		//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
+		CommonData commonData = new CommonData();
+		LocalDateTime now = LocalDateTime.now();
+		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
+		commonData.setDatumKreiranja(now);
+		commonData = comDataService.addCommonData(commonData);
 	
 		savedAutomobil.setId(automobilDTO.getId());
 		savedAutomobil.setMarkaAutomobilaId(automobilDTO.getMarkaAutomobilaId());
@@ -61,7 +73,7 @@ public class AutomobilController {
 		savedAutomobil.setCollisionDamageWaiver(automobilDTO.isCollisionDamageWaiver());
 		savedAutomobil.setBrojSedistaZaDecu(automobilDTO.getBrojSedistaZaDecu());
 		
-		savedAutomobil.setCommonDataId(automobilDTO.getCommonDataId()); //kreirati novi objekat klase commonId;
+		savedAutomobil.setCommonDataId(commonData.getId());
 		
 		savedAutomobil = automobilService.addAutomobil(savedAutomobil);
 		return new ResponseEntity<>(new AutomobilDTO(savedAutomobil), HttpStatus.CREATED);
@@ -75,11 +87,17 @@ public class AutomobilController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		Long comDatId = updatedAutomobil.getCommonDataId();
+		
+		CommonData commonData = comDataService.findOne(comDatId);
+		LocalDateTime now = LocalDateTime.now();
+		commonData.setDatumIzmene(now);
+		commonData = comDataService.updateCommonData(comDatId, commonData);
+		
 		updatedAutomobil.setId(automobilDTO.getId());
 		updatedAutomobil.setBrojSedistaZaDecu(automobilDTO.getBrojSedistaZaDecu());
 		updatedAutomobil.setCollisionDamageWaiver(automobilDTO.isCollisionDamageWaiver());
 		updatedAutomobil.setPredjenaKilometraza(automobilDTO.getPredjenaKilometraza());
-		
 		
 		updatedAutomobil.setMarkaAutomobilaId(automobilDTO.getMarkaAutomobilaId());
 		updatedAutomobil.setModelAutomobilaId(automobilDTO.getModelAutomobilaId());
@@ -88,7 +106,7 @@ public class AutomobilController {
 		updatedAutomobil.setTipMenjacaId(automobilDTO.getTipMenjacaId());
 		updatedAutomobil.setUkupnaOcena(automobilDTO.getTipMenjacaId());
 		
-		updatedAutomobil.setCommonDataId(automobilDTO.getCommonDataId()); //izmeniti datum izmene u objekatu klase commonId;
+		updatedAutomobil.setCommonDataId(comDatId);
 	
 		updatedAutomobil = automobilService.updateAutomobil(updatedAutomobil.getId(), updatedAutomobil);
 		return new ResponseEntity<>(new AutomobilDTO(updatedAutomobil),HttpStatus.OK);
@@ -99,6 +117,7 @@ public class AutomobilController {
 		Automobil automobil = automobilService.findOne(id);
 		if(automobil != null) {
 			automobilService.deleteAutomobil(id);
+			comDataService.deleteCommonData(automobil.getCommonDataId());
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

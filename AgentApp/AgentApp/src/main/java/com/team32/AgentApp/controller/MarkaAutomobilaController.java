@@ -25,8 +25,9 @@ import com.team32.AgentApp.service.MarkaAutomobilaService;
 public class MarkaAutomobilaController {
 	@Autowired
 	private MarkaAutomobilaService markaAutoservice;
-	@Autowired 
-	private CommonDataService cmdServ;
+	
+	@Autowired
+	private CommonDataService comDataService;
 	
 
 	//GET ALL	
@@ -58,7 +59,7 @@ public class MarkaAutomobilaController {
 		LocalDateTime now = LocalDateTime.now();
 		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
 		commonData.setDatumKreiranja(now);
-		commonData = cmdServ.addCommonData(commonData);
+		commonData = comDataService.addCommonData(commonData);
 		
 		savedMarkaAut.setId(dto.getId());
 		savedMarkaAut.setNazivMarke(dto.getNazivMarke());
@@ -80,15 +81,14 @@ public class MarkaAutomobilaController {
 		updMarkaAuto.setNazivMarke(dto.getNazivMarke());
 		
 		Long comDatId = updMarkaAuto.getCommonDataId();
-		CommonData commonData = cmdServ.findOne(comDatId);
+		CommonData commonData = comDataService.findOne(comDatId);
 		LocalDateTime now = LocalDateTime.now();
 		commonData.setDatumIzmene(now);
-		commonData = cmdServ.updateCommonData(comDatId, commonData);
+		commonData = comDataService.updateCommonData(comDatId, commonData);
 		
 		updMarkaAuto.setId(dto.getId());
 		updMarkaAuto.setNazivMarke(dto.getNazivMarke());
 		updMarkaAuto.setCommonDataId(updMarkaAuto.getCommonDataId());
-		//PROVERITI COMMON DATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
 		updMarkaAuto = markaAutoservice.updateMarkaAutomobila(updMarkaAuto.getId(), updMarkaAuto);
 		return new ResponseEntity<>(new MarkaAutomobilaDTO(updMarkaAuto), HttpStatus.OK);	
@@ -97,9 +97,10 @@ public class MarkaAutomobilaController {
 	//DELET	
 	@RequestMapping(value="/markaAutomobila/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteMarkaAutomobila(@PathVariable Long id) {
-		MarkaAutomobila ttip= markaAutoservice.findOne(id);
-		if (ttip != null) {
-			markaAutoservice.deleteMarkaAutomobila(id);
+		MarkaAutomobila markaAuta= markaAutoservice.findOne(id);
+		if (markaAuta != null) {
+			markaAutoservice.deleteMarkaAutomobila(id);						//brisanje objekta marka automobila
+			comDataService.deleteCommonData(markaAuta.getCommonDataId());	//brisanje commonData objekata vezanog za marka autombila
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} else {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);

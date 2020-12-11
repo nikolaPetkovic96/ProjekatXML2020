@@ -41,6 +41,7 @@ public class Narudzbenica {
 			super();
 		}
 
+		
 		public Narudzbenica(Long id, Long agentId, Long userId, Long oglasId, Long rezervacijaId, LocalDateTime odDatuma,
 				LocalDateTime doDatuma, Long commonDataId) {
 			super();
