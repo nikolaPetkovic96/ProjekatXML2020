@@ -110,69 +110,70 @@ export default {
             automobilId:null,
             cenaId:null,
             TAdresa:{
-                mest:'',
-                ulica:'',
-                broj:'',
-                postanskiBroj:'',
-                longitude:'',
-                latitude:'',
+              mest:'',
+              ulica:'',
+              broj:'',
+              postanskiBroj:'',
+              longitude:'',
+              latitude:'',
             }
           },
 
           //Za prikaz podataka o automobilu napraviti ovakav DTO na beku
           automobil:[
-              {
-                  id:'1',
-                  markaAut:'BMW',
-                  modelAut:'M5',
-                  klasaAut:'SUV',
-                  tipMenjaca:'automatik',
-                  vrstaGoriva:'dizel',
-                  predjenaKilometraza:500,
-                  // planiranaKilometraza:250, ovo ide u oglase
-                  brojSedistaZaDecu:3,
-                  collisionDamageWaiver: true,
-                  ukupna_ocena:5, //ovo treba dodati u automobil
-              },
-              {
-                  id:'2',
-                  markaAut:'Mercedes',
-                  modelAut:'R8',
-                  klasaAut:'Old Tajmer',
-                  tipMenjaca:'manuelni',
-                  vrstaGoriva:'gorivo',
-                  predjenaKilometraza:800,
-                  // planiranaKilometraza:250, ovo ide u oglase
-                  brojSedistaZaDecu:3,
-                  collisionDamageWaiver: true,
-                  ukupna_ocena:4, //ovo treba dodati u automobil
-              },
-              {
-                  id:'3',
-                  markaAut:'Audi',
-                  modelAut:'A6',
-                  klasaAut:'Gradski auto',
-                  tipMenjaca:'manuelni',
-                  vrstaGoriva:'evro-dizel',
-                  predjenaKilometraza:650,
-                  // planiranaKilometraza:250, ovo ide u oglase
-                  brojSedistaZaDecu:3,
-                  collisionDamageWaiver: true,
-                  ukupna_ocena:5, //ovo treba dodati u automobil
-              }
+            {
+              id:'1',
+              markaAut:'BMW',
+              modelAut:'M5',
+              klasaAut:'SUV',
+              tipMenjaca:'automatik',
+              vrstaGoriva:'dizel',
+              ukupnaOcena:5, //ovo treba dodati u automobil
+              brojSedistaZaDecu:3,
+              predjenaKilometraza:500,
+              collisionDamageWaiver: true,
+              
+            },
+            {
+              id:'2',
+              markaAut:'Mercedes',
+              modelAut:'R8',
+              klasaAut:'Old Tajmer',
+              tipMenjaca:'manuelni',
+              vrstaGoriva:'gorivo',
+              ukupnaOcena:4, //ovo treba dodati u automobil
+              brojSedistaZaDecu:3,
+              predjenaKilometraza:800,
+              collisionDamageWaiver: true,
+              
+            },
+            {
+              id:'3',
+              markaAut:'Audi',
+              modelAut:'A6',
+              klasaAut:'Gradski auto',
+              tipMenjaca:'manuelni',
+              vrstaGoriva:'evro-dizel',
+              ukupnaOcena:5, //ovo treba dodati u automobil
+              brojSedistaZaDecu:3,
+              collisionDamageWaiver: true,
+              predjenaKilometraza:650,
+              
+            }
           ],
 
+          //nije iskoristeno
           odabran_auto:{
-              id:null,
-              markaAut:'',
-              modelAut:'',
-              klasaAut:'',
-              tipMenjaca:'',
-              vrstaGoriva:'',
-              predjenaKilometraza:null,
-              brojSedistaZaDecu:null,
-              collisionDamageWaiver:null,
-              ukupna_ocena:null, //ovo treba dodati u automobil
+            id:null,
+            markaAut:'',
+            modelAut:'',
+            klasaAut:'',
+            tipMenjaca:'',
+            vrstaGoriva:'',
+            predjenaKilometraza:null,
+            brojSedistaZaDecu:null,
+            collisionDamageWaiver:null,
+            ukupnaOcena:null, //ovo treba dodati u automobil
           },
 
           //lista svih cenovnika koji se getuju prilikom kreiranja stranice;
@@ -219,6 +220,7 @@ export default {
             },
           ],
 
+          //Za prikaz podataka o cenovniku
           odabran_cenovnik:{
               id:null,
               cenaPoDanu:null,
@@ -241,15 +243,15 @@ export default {
     methods:{
       addChoosenPrice:function(){
         for(let i = 0; i < this.cenovnici.length; i++){
-            console.log(this.cenovnici[i].nazivCenovnika);
-            if(this.odabran_cenovnik.nazivCenovnika === this.cenovnici[i].nazivCenovnika){
-                this.odabran_cenovnik.id = this.cenovnici[i].id;
-                this.odabran_cenovnik.cenaPoDanu = this.cenovnici[i].cenaPoDanu;
-                this.odabran_cenovnik.popustZaPreko30Dana = this.cenovnici[i].popustZaPreko30Dana;
-                this.odabran_cenovnik.cenaCollisionDamageWaiver = this.cenovnici[i].cenaCollisionDamageWaiver;
-                this.odabran_cenovnik.cenaPoKilometru = this.cenovnici[i].cenaPoKilometru;
-                this.calculatePriceAndDate();
-            }
+          console.log(this.cenovnici[i].nazivCenovnika);
+          if(this.odabran_cenovnik.nazivCenovnika === this.cenovnici[i].nazivCenovnika){
+              this.odabran_cenovnik.id = this.cenovnici[i].id;
+              this.odabran_cenovnik.cenaPoDanu = this.cenovnici[i].cenaPoDanu;
+              this.odabran_cenovnik.popustZaPreko30Dana = this.cenovnici[i].popustZaPreko30Dana;
+              this.odabran_cenovnik.cenaCollisionDamageWaiver = this.cenovnici[i].cenaCollisionDamageWaiver;
+              this.odabran_cenovnik.cenaPoKilometru = this.cenovnici[i].cenaPoKilometru;
+              this.calculatePriceAndDate();
+          }
         }
       },
     }

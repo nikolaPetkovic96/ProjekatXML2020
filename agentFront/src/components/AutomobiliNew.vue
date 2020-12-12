@@ -13,7 +13,7 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0">
                         <label>Marka automobila</label>
-                        <select>
+                        <select v-model='AutomobilNew.markaAut'>
                             <option disabled value="">Marka</option>
                                 <!-- <option v-for="type in types" v-on:click="checkApartment">{{type}}</option>  -->
                             <option v-bind:key="marka" v-for="marka in markaAut">{{marka}}</option> 
@@ -24,7 +24,7 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0">
                         <label>Model automobila</label>
-                        <select>
+                        <select v-model='AutomobilNew.modelAut'>
                             <option disabled value="">Model</option>
                             <option style="padding-bottom:5px;" v-bind:key="model" v-for="model in modelAut">{{model}}</option> 
                         </select>
@@ -34,7 +34,7 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0">
                         <label>Klasa automobila</label>
-                        <select>
+                        <select v-model='AutomobilNew.klasaAut'>
                             <option disabled value="">Klasa</option>
                             <option v-bind:key="klasa" v-for="klasa in klasaAut">{{klasa}}</option>
                         </select>
@@ -44,7 +44,7 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0">
                         <label>Tip menjaca</label>
-                        <select >
+                        <select v-model='AutomobilNew.tipMenjaca'>
                             <option disabled value="">Tip menjaca</option>
                             <option v-bind:key="menjac" v-for="menjac in tipMenjaca">{{menjac}}</option>
                         </select>
@@ -54,7 +54,7 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0">
                         <label>Tip goriva</label>
-                        <select>
+                        <select v-model='AutomobilNew.tipGoriva'>
                             <option disabled value="">Tip goriva</option>
                             <option v-bind:key="gorivo" v-for="gorivo in tipGoriva">{{gorivo}}</option> 
                         </select>
@@ -64,22 +64,30 @@
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0">
                         <label>Decija sedista</label>
-                        <select>
+                        <select v-model='AutomobilNew.brojSedistaZaDecu'>
                             <option disabled value="">Br. sed. za decu</option>
                             <option v-bind:key="bszd" v-for="bszd in brojSedZaDec">{{bszd}}</option>
                         </select>
                     </div>
                 </div>
 
-             <div class="col-xl-3 col-md-6 mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0">
                         <span>
                             <label>Coll Ddmg Waiver</label>
-                            <input type="radio"  required value="true"> True
-                            <input type="radio"  required value="false"> False
+                            <input type="radio" required value="true" AutomobilNew.collisionDamageWaiver> True
+                            <input type="radio" required value="false" AutomobilNew.collisionDamageWaiver> False
                         </span>
                     </div>
-            </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-0">
+                        <span>
+                            <label>Images</label>
+                            <input type="file"  required value="true" >
+                        </span>
+                    </div>
+                </div>
             <br>
             </div>
               
@@ -103,8 +111,17 @@ export default {
             tipMenjaca:['manuelni','automatksi','poluautomatski'],
             brojSedZaDec:null,
 
-            newCar:{
-                
+            AutomobilNew:{
+                markaAut:'',
+                modelAut:'',
+                klasaAut:'',
+                vrstaGoriva:'',
+                tipMenjaca:'',
+                ukupnaOcena:0,
+                brojSedistaZaDecu:null,
+                predjenaKilometraza:0,
+                collisionDamageWaiver:null,
+                images:[],
             }
         }
     },

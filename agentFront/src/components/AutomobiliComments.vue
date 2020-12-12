@@ -7,19 +7,19 @@
             </div>
 
             <div id='main' class='container'>
-                <div class="comments" v-bind:key="car.id" v-for='car in cars'>
+                <div class="comments" v-bind:key="automobil.id" v-for='automobil in automobili'>
                     <div id='carInfo'>
                         <div class="card-header">
-                            <h4><b>Rezervisan od?:</b></h4>
-                            <h4><b>Automobil:</b> {{car.markaAut}} {{car.modelAut}} (marka/model)</h4>
-                            <h4><b>Klasa automobila:</b> {{car.klasaAut}}</h4>
-                            <h4><b>Ocena:</b> {{car.ocena}}</h4>
+                            <h4><b>Rezervisan od:</b></h4>
+                            <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
+                            <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
+                            <h4><b>Ocena:</b> {{automobil.ocena}}</h4>
                         </div>
                     </div>
-                    <div v-show='isThereReviews(car)' class="card-body">
+                    <div v-show='isThereReviews(automobil)' class="card-body">
                             <h3>Nema ocene niti komentara za ovaj automobil...</h3>
                     </div>
-                    <div id='all-comments' v-bind:key="comment.id" v-for='comment in car.reviews'>
+                    <div id='all-comments' v-bind:key="comment.id" v-for='comment in automobil.reviews'>
                         <div class="single-comment">
                             <div id='username'>{{comment.username}} </div>
                             <div id='star-rating'>
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-success marg" v-on:click='addComment(car.id)'>Ostavi komentar</button>
+                    <button class="btn btn-success marg" v-on:click='addComment(automobil.id)'>Ostavi komentar</button>
                 </div> <!--comments-->
             </div>
         </div>
@@ -54,21 +54,24 @@ export default {
             comments: [],
             //trebaju da se getuju automobili sa svim komentarima vezanim za njih
             //potrebni su i podaci o vlasniku automobila
-            // cars:[],
-             cars: [
+            //automobili:[]
+
+            //Kod prikaza sa beka se spoje Komentar i Ocena u review i tako se salje AutomobiliReviewDTO
+            //iz jedne get metode u npr. KomentariController.
+            //Isti DTO kao u AutomobiliDetails.vue
+            automobili: [
                 {
                     id:'1',
                     markaAut:'BMW',
                     modelAut:'M5',
                     klasaAut:'SUV',
-                    ocena:5,
-                    cena:2500,
-                    kilometraza:500,
-                    vlasnik:{
-                        ime:'Nikola',
-                        prezime:'Nikic',
-                        username:"Nix333"
-                    },
+                    vrstaGoriva:'dizel',
+                    tipMenjaca:'manuelni',
+                    ukupnaOcena:5,
+                    brojSedistaZaDecu:1,
+                    predjenaKilometraza:5000,
+                    collisionDamageWaiver:true,
+                    images:[],
                     reviews:
                     [
                         {
@@ -84,20 +87,20 @@ export default {
                             star:5,
                         }
                     ]
+                    
                 },
                 {
                     id:'2',
                     markaAut:'Mercedes',
                     modelAut:'R8',
                     klasaAut:'Old Tajmer',
-                    ocena:3,
-                    cena:1200,
-                    kilometraza:800,
-                    vlasnik:{
-                        ime:'Mika',
-                        prezime:'Mikic',
-                        username:"MikiKralj321"
-                    },
+                    vrstaGoriva:'dizel',
+                    tipMenjaca:'manuelni',
+                    ukupnaOcena:3,
+                    brojSedistaZaDecu:2,
+                    predjenaKilometraza:800,
+                    collisionDamageWaiver:true,
+                    images:[],
                     reviews:[
                         {
                             id:'3',
@@ -119,24 +122,19 @@ export default {
                         }
                     ]
                 },
-                    {
+                {
                     id:'3',
                     markaAut:'Audi',
                     modelAut:'A6',
                     klasaAut:'Gradski auto',
-                    ocena:4,
-                    cena:1800,
-                    kilometraza:650,
-                    //ne treba mi kod agenta kada je agent vlasnik
-                    vlasnik:{
-                        ime:'Pera',
-                        prezime:'Peric',
-                        username:"PeraCar222"
-                    },
-                    reviews:
-                    [
-     
-                    ]
+                    vrstaGoriva:'dizel',
+                    tipMenjaca:'manuelni',
+                    ukupnaOcena:4,
+                    brojSedistaZaDecu:2,
+                    predjenaKilometraza:650,
+                    collisionDamageWaiver:false,
+                    images:[],
+                    reviews:[],
                 },
             ],
         }
@@ -162,10 +160,9 @@ export default {
                     this.getComments();
                 })
         },
-        isThereReviews:function(apartment){     
-            console.log('this.apartment.reviews.length: ' + apartment.reviews.length);   
-            if(apartment.reviews === undefined || apartment.reviews.length === 0){
-              // console.log('this.apartment.reviews.length = 0 ');
+        isThereReviews:function(automobil){     
+            console.log('this.apartment.reviews.length: ' + automobil.reviews.length);   
+            if(automobil.reviews === undefined || automobil.reviews.length === 0){
               return true;
             }
             else {

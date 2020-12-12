@@ -20,7 +20,7 @@
                                 <!-- <h1>{{this.car.images[0]}}</h1> -->
                                 <!-- Slide One - Set the background image for this slide in the line below  "{background-image:  'url(' + getImgUrl() + ')}"-->
                                 <div class="carousel-item active"
-                                    :style="{'background-image': 'url(' + this.car.images[0] + ')'}">
+                                    :style="{'background-image': 'url(' + this.automobil.images[0] + ')'}">
                                 </div>
                                 <!-- Slide Two - Set the background image for this slide in the line below -->
                                 <div class="carousel-item" v-bind:key="img" v-for="img in getOtherImgs"
@@ -48,46 +48,42 @@
                     <h4>Details</h4>
                 </div>
                 <h3 class="card-title colr">Automobil:
-                    <span class="colrbl" style="font-size: 25px;">{{car.markaAut}}</span>
-                </h3>
-
-                <h3 class="card-title colr">Model:
-                    <span class="colrbl" style="font-size: 25px;">{{car.modelAut}}</span>
+                    <span class="colrbl" style="font-size: 25px;">{{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</span>
                 </h3>
 
                 <h3 class="card-title colr">Klasa:
-                    <span class="colrbl" style="font-size: 25px;">{{car.klasaAut}}</span>
+                    <span class="colrbl" style="font-size: 25px;">{{automobil.klasaAut}}</span>
                 </h3>
 
-                <h3 class="card-title colr">Tip goriva:
-                    <span class="colrbl" style="font-size: 25px;">{{car.tipGoriva}}</span>
-                </h3>
+                <h4 class="card-title colr">Tip goriva:
+                    <span class="colrbl" style="font-size: 25px;">{{automobil.vrstaGoriva}}</span>
+                </h4>
 
-                <h3 class="card-title colr">Tip menjaca:
-                    <span class="colrbl" style="font-size: 25px;">{{car.tipMenjaca}}</span>
-                </h3>
+                <h4 class="card-title colr">Tip menjaca:
+                    <span class="colrbl" style="font-size: 25px;">{{automobil.tipMenjaca}}</span>
+                </h4>
 
-                <h3 class="card-title colr">Broj sedista za decu:
-                    <span class="colrbl" style="font-size: 25px;">{{car.brojDecMesta}}</span>
-                </h3>
+                <h4 class="card-title colr">Broj sedista za decu:
+                    <span class="colrbl" style="font-size: 25px;">{{automobil.brojSedistaZaDecu}}</span>
+                </h4>
 
-                <h3 class="card-title colr">Broj sedista za decu:
-                    <span class="colrbl" style="font-size: 25px;">{{car.kilometraza}}</span>
-                </h3>
+                <h4 class="card-title colr">Predjena kilometraza:
+                    <span class="colrbl" style="font-size: 25px;">{{automobil.predjenaKilometraza}} km</span>
+                </h4>
 
-                <h3 class="card-title colr">Colison DMG Waiver:
-                    <span class="colrbl" v-if='car.colDmgWaiv' style="font-size: 25px;">Sadrži</span>
-                    <span  class="colrbl" v-if='!car.colDmgWaiv' style="font-size: 25px;">Ne sadrži</span>
-                </h3>
+                <h4 class="card-title colr">Colison DMG Waiver:
+                    <span class="colrbl" v-if='automobil.collisionDamageWaiver' style="font-size: 25px;">Sadrži</span>
+                    <span  class="colrbl" v-if='!automobil.collisionDamageWaiver' style="font-size: 25px;">Ne sadrži</span>
+                </h4>
             </div>
             <div class="card card-outline-secondary my-4">
 				<div class="card-header">
 					<h4>Apartment Reviews</h4>
 				</div>
 
-				<div class="card-body" v-bind:key="review.id" v-for="review in car.reviews" v-show="review.visible" >
+				<div class="card-body" v-bind:key="review.id" v-for="review in automobil.reviews" v-show="review.visible" >
                     <div style="margin-bottom: 10px;" id='star-rating'>
-                        <star-rating inactive-color="#35424a" active-color="#e8491d" v-bind:read-only="true"
+                        <star-rating inactive-color="#35424a" active-color="gold" v-bind:read-only="true"
                             v-bind:star-size="20" v-bind:show-rating="false" v-bind:rating="review.star">
                         </star-rating>
                     </div>
@@ -109,21 +105,21 @@ export default {
     name: 'Car-details',
     data:function(){
         return {
-
             isOtherImgs: true,
             noReview: false,
 
-            car:{
+            //Isti DTO kao u AutomobiliComments.vue
+            automobil:{
                 id:'1',
                 markaAut:'BMW',
                 modelAut:'M5',
                 klasaAut:'SUV',
-                tipGoriva:'Dizel',
-                tipMenjaca:'Automatik',
-                ocena:5,
-                cena:2500,
-                kilometraza:500,
-                brojDecMesta:2,
+                vrstaGoriva:'dizel',
+                tipMenjaca:'manuelni',
+                ukupnaOcena:5,
+                brojSedistaZaDecu:1,
+                predjenaKilometraza:5000,
+                collisionDamageWaiver:true,
                 images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
                 // images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080'],
                 // images:[],
@@ -141,7 +137,7 @@ export default {
                         id:'2',
                         username:'happyUser1',
                         text:'Najbolji automobil ikada! Sve pohvale!',
-                        star:5,
+                        star:3,
                         visible:true,
                     },
                     {
@@ -158,25 +154,25 @@ export default {
     methods:{
         getFirstImg: function () {
 			//provera da li ima slika za dati stan
-			if (!this.car.images.length) {
+			if (!this.automobil.images.length) {
                 console.log('getFirstImg'); 
-                console.log('images.length : ' + this.car.images.length)
+                console.log('images.length : ' + this.automobil.images.length)
 				let img = ['@/assets/No_Image_Available.png'];
 				// ako nema smesti noimage sliku
-				this.car.images = img;
-				console.log(this.car.images[0])
+				this.automobil.images = img;
+				console.log(this.automobil.images[0])
             }
         },
         noComment: function () {
-			if (this.car.reviews === undefined || this.car.reviews.length === 0) {
+			if (this.automobil.reviews === undefined || this.automobil.reviews.length === 0) {
 				this.noReview = true;
 			}
-			else if (this.car.reviews !== undefined || this.car.reviews.length !== 0) {
+			else if (this.automobil.reviews !== undefined || this.automobil.reviews.length !== 0) {
 				let visible = false;
 				//ako ima komentara za dati stan, prolazimo kroz sve komentare 
 				//i proveravamo da li su odobreni ako ni jedan nije odobren opet prikazujemo poruku
-				for (let i = 0; i < this.car.reviews.length; i++) {
-					if (this.car.reviews[i].visible === false) {
+				for (let i = 0; i < this.automobil.reviews.length; i++) {
+					if (this.automobil.reviews[i].visible === false) {
 						continue;
 					}
 					else {
@@ -203,7 +199,7 @@ export default {
         getOtherImgs: function () {
             console.log("getOtherImgs: ");
             //Prva slika mora da se manuelno postavi, a ostale se dodaju preko v-for:
-            let imgs = this.car.images.slice(1);
+            let imgs = this.automobil.images.slice(1);
             //Ako ima samo jednu sliku onda se sklanjaju strelice < > za kretanje kroz slike. 
             if (imgs.length === 0) {
                 console.log("imgs.lenght je = 0 ");
@@ -255,7 +251,7 @@ export default {
     }
 
     #car-details header .carousel-item {
-    height: 65vh;
+    height: 125vh;
     min-height: 350px;
     background: no-repeat center center scroll;
     -webkit-background-size: cover;
@@ -266,6 +262,7 @@ export default {
 
     .colr{
         color:#35424a;
+        font-weight: bold;
     }
 
     .colrbl{

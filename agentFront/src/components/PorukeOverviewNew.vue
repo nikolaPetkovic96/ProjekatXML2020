@@ -12,7 +12,8 @@
                     <h4><b>Rezervisan od:{{rezervacija.username}}</b></h4>
                     <h4><b>Termin rezervacije:</b> {{rezervacija.odDatuma}} - {{rezervacija.doDatuma}}</h4>
                     <h4><b>Bundle:</b> {{rezervacija.bundle}}</h4>
-                  
+                    <button v-if='!toShowMessage' class="btn btn-lg btn-outline-dark marg" v-on:click='toShowMessage = !toShowMessage'>Prikazi poruke</button>
+                    <button v-if='toShowMessage' class="btn  btn-lg btn-outline-dark marg" v-on:click='toShowMessage = !toShowMessage'>Sakrij poruke</button>
                 </div>
             </div>
             <div v-show='isThereMessages(rezervacija)' class="card-body">
@@ -22,7 +23,7 @@
                 <div class="card-header">
                     <h4><b>Automobil:</b> {{oglas.automobil.markaAut}} {{oglas.automobil.modelAut}} (marka/model)</h4>
                     <h4><b>Klasa automobila:</b> {{oglas.automobil.klasaAut}}</h4>
-                    <button v-on:click='toShowMessage = !toShowMessage'>Vidi poruke</button>
+                   
                 </div>
                 
                 <div id='all-messages' v-show='toShowMessage' v-bind:key="poruka.id" v-for='poruka in filtriranePoruke(oglas.automobil)'>   
@@ -36,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                 <a href="#car-new-message"><button class="btn btn-lg btn-dark marg" v-on:click='newMessage = !newMessage'>Nova poruka</button></a>
+                 <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='newMessage = !newMessage'>Nova poruka</button></a>
             </div>
             
             
@@ -93,6 +94,7 @@ export default {
                 ukupnaCena:6500,
                 statusRezervacije:'RESERVED',
                 username:'Happy User 2', //u rezervDTOu za korisnika koji je rezervisao oglas.
+                bundle:true,
                 //Oglase vratiti kao array jer ih moze biti vise u bundleu
                 //iz svakog oglasa koji je vezan za rezervaciju izvlacimo automobil
                 //getAllAdsByReservId();

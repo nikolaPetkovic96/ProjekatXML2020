@@ -259,7 +259,7 @@ export default {
         }
 
         // this.review.userId = this.user.username;
-        this.review.carId = this.id
+        // this.review.carId = this.id
     },
     
 }

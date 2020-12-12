@@ -102,8 +102,8 @@ export default {
     name: 'Messages',
     data:function(){
         return {
-            //Ovde moze i samo deo sa rezervacijom bez 
-            //Iskoristiti ovo u rezervacijama!!!!!
+            //Ovde moze i samo deo sa rezervacijom bez ostalih objekata
+            //Isti DTO iskoristiti i u Poruke.vue
             rezervacije:[
                 {
                     id:1,
@@ -448,9 +448,6 @@ export default {
         }
     },
     methods:{
-        openMessage:function(id){
-            this.$router.push(`/messages/${id}/overview`);
-        },
         writeReport:function(id){
             this.$router.push(`/statistics/${id}/report`);
         },

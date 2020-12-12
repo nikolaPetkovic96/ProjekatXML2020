@@ -76,6 +76,7 @@ export default {
             isHost: false,
             isGuest: true,
 
+            //PITATI STEVU 
             //Prilikom rucnog dodavanja rezervacije kreira se odmah i oglas koji je rezervisan za taj termin,
             //DTO koji spaja atribute rezervacije i oglasa.
             rezervacijaOglasDTO:{
