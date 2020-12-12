@@ -71,6 +71,9 @@ public class Oglas {
     @Column(name = "do_datuma", nullable = false)
     protected LocalDateTime  doDatuma;
     
+    @Column(name = "adresa_id", nullable = false)
+    protected Long adresaId;
+    
     @XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
     @Column(name="cenovnik_id")
     protected Long cenovnikId;
@@ -88,12 +91,13 @@ public class Oglas {
 		super();
 	}
     
-    public Oglas(Long id, LocalDateTime  odDatuma, LocalDateTime  doDatuma, Long cenovnikId, Long automobilId,
+    public Oglas(Long id, LocalDateTime  odDatuma, LocalDateTime  doDatuma, Long adresaId, Long cenovnikId, Long automobilId,
     		float planiranaKilometraza, Long commonDataId) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma;
 		this.doDatuma = doDatuma;
+		this.adresaId = adresaId;
 		this.cenovnikId = cenovnikId;
 		this.automobilId = automobilId;
 		this.planiranaKilometraza =  planiranaKilometraza;
@@ -128,6 +132,14 @@ public class Oglas {
         this.doDatuma = value;
     }
 
+
+	public Long getAdresaId() {
+		return adresaId;
+	}
+
+	public void setAdresaId(Long adresaId) {
+		this.adresaId = adresaId;
+	}
 
 	public Long getCenovnikId() {
 		return cenovnikId;

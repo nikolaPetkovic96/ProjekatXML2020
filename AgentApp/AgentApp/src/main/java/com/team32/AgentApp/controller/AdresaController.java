@@ -71,7 +71,6 @@ public class AdresaController {
 			savedAdr.setMesto(dto.getMesto());
 			savedAdr.setPostanskiBroj(dto.getPostanskiBroj());
 			savedAdr.setUlica(dto.getUlica());
-			savedAdr.setOglasId(dto.getOglasId());
 			savedAdr.setCommonDataId(commonData.getId());
 			
 			savedAdr = adresaService.addAdresa(savedAdr);//cuva adresu u bazi i ponovo je dodeljuje samoj sebi
@@ -97,7 +96,6 @@ public class AdresaController {
 			updAdresa.setMesto(dto.getMesto());
 			updAdresa.setPostanskiBroj(dto.getPostanskiBroj());
 			updAdresa.setUlica(dto.getUlica());
-			updAdresa.setOglasId(dto.getOglasId());
 			updAdresa.setCommonDataId(commonData.getId());
 			
 			updAdresa = adresaService.updateAdresa(updAdresa.getId(), updAdresa);

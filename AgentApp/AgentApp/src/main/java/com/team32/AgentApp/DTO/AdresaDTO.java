@@ -8,19 +8,17 @@ public class AdresaDTO {
 	private int postanskiBroj;
 	private String ulica;
 	private int broj;
-    private Long oglasId;
     private Long commonDataId;
 	
 	public AdresaDTO() {}
 	
-	public AdresaDTO(Long id, String mesto, int postanskiBroj, String ulica, int broj, Long oglasId,  Long commonDataId) {
+	public AdresaDTO(Long id, String mesto, int postanskiBroj, String ulica, int broj, Long commonDataId) {
 		super();
 		this.id = id;
 		this.mesto = mesto;
 		this.postanskiBroj = postanskiBroj;
 		this.ulica = ulica;
 		this.broj = broj;
-		this.oglasId = oglasId;
 		this.commonDataId = commonDataId;
 	}
 	
@@ -31,8 +29,7 @@ public class AdresaDTO {
 		this.postanskiBroj = a.getPostanskiBroj();
 		this.ulica = a.getUlica();
 		this.broj = a.getBroj();
-		this.oglasId = a.getOglasId();
-		this.commonDataId= a.getCommonDataId();
+		this.commonDataId = a.getCommonDataId();
 	}
 
 	public Long getId() {
@@ -66,19 +63,11 @@ public class AdresaDTO {
 		this.broj = broj;
 	}
 
-	public Long getOglasId() {
-		return oglasId;
-	}
-
-	public void setOglasId(Long oglasId) {
-		this.oglasId = oglasId;
-	}
 	public Long getCommonDataId() {
 		return commonDataId;
 	}
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
-	
 
 }

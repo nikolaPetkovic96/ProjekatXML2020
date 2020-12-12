@@ -18,7 +18,6 @@ import com.team32.AgentApp.DTO.AdresaDTO;
 import com.team32.AgentApp.DTO.UserDTO;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.User;
-import com.team32.AgentApp.model.tentitet.Adresa;
 import com.team32.AgentApp.service.AdresaService;
 import com.team32.AgentApp.service.CommonDataService;
 import com.team32.AgentApp.service.UserService;

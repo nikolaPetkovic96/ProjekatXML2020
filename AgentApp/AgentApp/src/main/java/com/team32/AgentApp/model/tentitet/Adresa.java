@@ -5,7 +5,6 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.team32.AgentApp.model.tentitet;
 
 import javax.persistence.Column;
@@ -17,7 +16,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for TAdresa complex type.
@@ -97,24 +95,20 @@ public class Adresa {
     @XmlElement(name = "Broj")
     protected int broj;
 	
-	@Column(name = "oglas_id")
-    protected Long oglasId;
-	
-	@Column(name="common_data_id")
+	@Column(name="common_data_id", nullable = false)
 	private Long commonDataId;
 
     public Adresa() {
 		super();
 	}
 
-	public Adresa(Long id, String mesto, int postanskiBroj, String ulica, int broj, Long oglasId,Long commonDataId) {
+	public Adresa(Long id, String mesto, int postanskiBroj, String ulica, int broj, /*Long oglasId, Long userId,*/Long commonDataId) {
 		super();
 		this.id = id;
 		this.mesto = mesto;
 		this.postanskiBroj = postanskiBroj;
 		this.ulica = ulica;
 		this.broj = broj;
-		this.oglasId = oglasId;
 		this.commonDataId = commonDataId;
 	}
 
@@ -157,14 +151,6 @@ public class Adresa {
     public void setBroj(int value) {
         this.broj = value;
     }
-
-	public Long getOglasId() {
-		return oglasId;
-	}
-
-	public void setOglasId(Long oglasId) {
-		this.oglasId = oglasId;
-	}
 
 	public Long getCommonDataId() {
 		return commonDataId;

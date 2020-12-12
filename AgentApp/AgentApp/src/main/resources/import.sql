@@ -84,7 +84,7 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
 
---CommonData (Za Adresu)	43 - 45
+--CommonData (Za Adresu oglasa)	43 - 45
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
@@ -100,6 +100,11 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
 
 --CommonData (Za Usera)	52 - 54
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
+
+--CommonData  (Za Adresu usera)	55 - 57
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
@@ -149,14 +154,19 @@ INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_p
 INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_po_km, popust_30_dan, common_data_id) VALUES('Gradski cenovnik',1800, 2000, 800, 50, 42)
 
 --Oglas 
-INSERT INTO Oglas(od_datuma, do_datuma, plan_km, cenovnik_id, automobil_id, common_data_id) VALUES('2017-10-01 21:58:58','2018-10-02 18:57:58',25000, 1, 1, 28)
-INSERT INTO Oglas(od_datuma, do_datuma, plan_km, cenovnik_id, automobil_id, common_data_id) VALUES('2020-11-01 21:58:58','2020-12-02 18:57:58',3000,  2, 2, 29)
-INSERT INTO Oglas(od_datuma, do_datuma, plan_km, cenovnik_id, automobil_id, common_data_id) VALUES('2012-10-01 21:58:58','2012-11-02 18:57:58',12000, 3, 3, 30)
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id) VALUES('2017-10-01 21:58:58','2018-10-02 18:57:58',25000,1, 1, 1, 28)
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id) VALUES('2020-11-01 21:58:58','2020-12-02 18:57:58',3000, 2, 2, 2, 29)
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id) VALUES('2012-10-01 21:58:58','2012-11-02 18:57:58',12000,3, 3, 3, 30)
 
---Adresa
-INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, oglas_id, common_data_id) VALUES('Ruma', 22400,'Neznanog i znanog junaka', 35, 1, 43)
-INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, oglas_id, common_data_id) VALUES('Novi Sad',21000,'Deset Jugovica', 5, 2, 44)
-INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, oglas_id, common_data_id) VALUES('Beograd',11000,'9. Marta', 25, 3, 45)
+--Adresa za oglas 1-3
+INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, common_data_id) VALUES('Ruma', 22400,'Neznanog i znanog junaka', 35, 43)
+INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, common_data_id) VALUES('Novi Sad',21000,'Deset Jugovica', 5, 44)
+INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, common_data_id) VALUES('Beograd',11000,'9. Marta', 25, 45)
+
+--Adresa za usera 4-6
+INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, common_data_id) VALUES('Ruma', 22400,'Neznanog i znanog junaka', 35, 55)
+INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, common_data_id) VALUES('Novi Sad',21000,'Deset Jugovica', 5, 56)
+INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, common_data_id) VALUES('Beograd',11000,'9. Marta', 25, 57)
 
 --Narudzbenica
 INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2017-10-01 21:58:58','2018-10-02 18:57:58',1, 1, 1, 1, 46)
@@ -189,7 +199,7 @@ INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) V
 INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je treca poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 3, 3, 33)
 
 --Users
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('NoobMaster69' ,'password123', 'nmaster@gmail.com', 1, 'aktivan','Darko', 'Darkovic', '213123124','Muski',NULL, NULL, 52)
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username2' ,'password567', 'sardas@gmail.com', 2, 'aktivan','Tanja', 'Tanjic', '766745894','Zenski',NULL, NULL, 53)
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username23' ,'password890', 'sadasd@gmail.com', 3, 'aktivan', NULL, NULL, NULL, NULL, 'Firma 1', '7662313', 54)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('NoobMaster69' ,'password123', 'nmaster@gmail.com', 4, 'aktivan','Darko', 'Darkovic', '213123124','Muski',NULL, NULL, 52)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username2' ,'password567', 'sardas@gmail.com', 5, 'aktivan','Tanja', 'Tanjic', '766745894','Zenski',NULL, NULL, 53)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username23' ,'password890', 'sadasd@gmail.com', 6, 'aktivan', NULL, NULL, NULL, NULL, 'Firma 1', '7662313', 54)
 

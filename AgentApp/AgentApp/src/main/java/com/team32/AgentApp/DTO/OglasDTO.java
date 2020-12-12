@@ -11,20 +11,25 @@ public class OglasDTO {
 	private Long id;
 	private LocalDateTime odDatuma;
 	private LocalDateTime doDatuma;
-    protected Long cenovnikId;
-	private Long commonDataId;
-	private Long automobilId;
-	private Long agentId; 		 			//onoga ko je napravio oglas (samo u DTO)
-	private String username;				//onoga ko je napravio oglas (samo u DTO)
     private float planiranaKilometraza;
-//  private TerminDTO[] zauzetiTermini; 	//(samo u DTO)
-    private List<HashMap<String, LocalDateTime>> zauzetiTermini;		
+	private Long commonDataId;
+    private Long cenovnikId;				//Posle obrisati
+	private Long automobilId;				//Posle obrisati
+    private Long adresaId;					//Posle obrisati
+	private Long agentId; 					//onoga ko je napravio oglas (samo u DTO)
+	private String username;				//onoga ko je napravio oglas (samo u DTO)
+    private List<HashMap<String, LocalDateTime>> zauzetiTermini; //(samo u DTO)
+    private AdresaDTO adresa;				//(samo u DTO)
+    private AutomobilDTO automobil;			//(samo u DTO)
+    private CenovnikDTO cenovnik;			//(samo u DTO)
+    
 	
 	public OglasDTO() {
 		super();
 	}
 
-	public OglasDTO(Oglas o, String username, Long agentId, List<HashMap<String, LocalDateTime>> zauzetiTermini) {
+	public OglasDTO(Oglas o, String username, Long agentId, List<HashMap<String, LocalDateTime>> zauzetiTermini,
+			AdresaDTO adresa, AutomobilDTO automobil, CenovnikDTO cenovnik) {
 		super();
 		this.id = o.getId();
 		this.odDatuma = o.getOdDatuma();
@@ -36,22 +41,29 @@ public class OglasDTO {
 		this.agentId = agentId;
 		this.username = username;
 		this.zauzetiTermini = zauzetiTermini;
-		
+		this.adresa = adresa;
+		this.automobil = automobil;
+		this.cenovnik = cenovnik;
 	}
 
-	public OglasDTO(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long cenovnikId, Long automobilId,
-			Long planiranaKilometraza, Long commonDataId, String username, Long agentId, List<HashMap<String, LocalDateTime>> zauzetiTermini) {
+	public OglasDTO(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long cenovnikId, Long automobilId, Long adresaId,
+			Long planiranaKilometraza, Long commonDataId, String username, Long agentId, List<HashMap<String, LocalDateTime>> zauzetiTermini, 
+			AdresaDTO adresa, AutomobilDTO automobil, CenovnikDTO cenovnik) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma;
 		this.doDatuma = doDatuma;
 		this.cenovnikId = cenovnikId;
 		this.automobilId = automobilId;
+		this.adresaId = adresaId;
 		this.planiranaKilometraza = planiranaKilometraza;
 		this.commonDataId = commonDataId;
 		this.username = username;
-		this.agentId = agentId;
 		this.zauzetiTermini = zauzetiTermini;
+		this.commonDataId = commonDataId;
+		this.adresa = adresa;
+		this.automobil = automobil;
+		this.cenovnik = cenovnik;
 	}
 
 	public Long getId() {
@@ -94,6 +106,14 @@ public class OglasDTO {
 		this.automobilId = automobilId;
 	}
 
+	public Long getAdresaId() {
+		return adresaId;
+	}
+
+	public void setAdresaId(Long adresaId) {
+		this.adresaId = adresaId;
+	}
+
 	public float getPlaniranaKilometraza() {
 		return planiranaKilometraza;
 	}
@@ -133,6 +153,29 @@ public class OglasDTO {
 	public void setZauzetiTermini(List<HashMap<String, LocalDateTime>> zauzetiTermini) {
 		this.zauzetiTermini = zauzetiTermini;
 	}
-	
+
+	public AdresaDTO getAdresa() {
+		return adresa;
+	}
+
+	public void setAdresa(AdresaDTO adresa) {
+		this.adresa = adresa;
+	}
+
+	public AutomobilDTO getAutomobil() {
+		return automobil;
+	}
+
+	public void setAutomobil(AutomobilDTO automobil) {
+		this.automobil = automobil;
+	}
+
+	public CenovnikDTO getCenovnik() {
+		return cenovnik;
+	}
+
+	public void setCenovnik(CenovnikDTO cenovnik) {
+		this.cenovnik = cenovnik;
+	}
 	
 }
