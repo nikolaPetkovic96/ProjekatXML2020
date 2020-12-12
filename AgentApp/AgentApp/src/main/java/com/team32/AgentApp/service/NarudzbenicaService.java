@@ -44,4 +44,9 @@ public class NarudzbenicaService {
 	public void deleteNarudzbenica(Long id) {
 		narudzbenicaRepository.deleteById(id);
 	}
+
+	public List<Narudzbenica> getAllNarudzbeniceByOglasId(Long oglasId) {
+		
+		return narudzbenicaRepository.findAllByOglasId(oglasId);
+	}
 }

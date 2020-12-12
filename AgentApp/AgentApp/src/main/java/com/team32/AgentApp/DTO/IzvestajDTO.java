@@ -76,8 +76,5 @@ public class IzvestajDTO {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
-	
-	
-	
 
 }

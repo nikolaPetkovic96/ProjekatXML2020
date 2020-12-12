@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.team32.AgentApp.DTO.RezervacijaDTO;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Rezervacija;
+import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.service.CommonDataService;
 import com.team32.AgentApp.service.RezervacijaService;
+import com.team32.AgentApp.service.UserService;
 
 @RestController
 public class RezervacijaController {
@@ -26,7 +28,9 @@ public class RezervacijaController {
 	@Autowired
 	private RezervacijaService rezervacijaService;
 	@Autowired
-	private CommonDataService commonDataService;
+	private CommonDataService comDataService;
+	@Autowired
+	private UserService userService;
 	
 	//GET ALL
 	@RequestMapping(method=RequestMethod.GET, value="/rezervacija", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,12 +42,14 @@ public class RezervacijaController {
 		for(Rezervacija r : allRezervacija) {
 			
 			RezervacijaDTO rezervacijaDTO = new RezervacijaDTO();
-			CommonData comData = commonDataService.findOne(r.getCommonDataId());
+			CommonData comData = comDataService.findOne(r.getCommonDataId());
 			
 			if(comData == null) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			
+			User user = userService.findOne(comData.getUserid());
+			rezervacijaDTO.setUsername(user.getKorisnickoIme());
 			rezervacijaDTO.setId(r.getId());
 			rezervacijaDTO.setUkupnaCena(r.getUkupnaCena());
 			rezervacijaDTO.setBundle(r.getBundle());
@@ -65,9 +71,13 @@ public class RezervacijaController {
 		if(rezervacija == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	
+		
+		CommonData comData = comDataService.findOne(rezervacija.getCommonDataId());
+		User user = userService.findOne(comData.getUserid());
+		rezervacijaDTO.setUsername(user.getKorisnickoIme());
 		rezervacijaDTO.setId(rezervacija.getId());
 		rezervacijaDTO.setUkupnaCena(rezervacija.getUkupnaCena());
+
 		rezervacijaDTO.setBundle(rezervacija.getBundle());
 		rezervacijaDTO.setStatusRezervacije(rezervacija.getStatusRezervacije());
 		rezervacijaDTO.setCommonDataId(rezervacija.getCommonDataId());
@@ -84,7 +94,9 @@ public class RezervacijaController {
 		LocalDateTime now = LocalDateTime.now();
 		commonData.setDatumKreiranja(now);
 		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
-		commonData = commonDataService.addCommonData(commonData);
+		commonData = comDataService.addCommonData(commonData);
+		
+		User user = userService.findOne(commonData.getUserid());
 		
 		savedRezervacija.setId(rezervacijaDTO.getId());
 		savedRezervacija.setUkupnaCena(rezervacijaDTO.getUkupnaCena());
@@ -94,7 +106,7 @@ public class RezervacijaController {
 		
 		savedRezervacija = rezervacijaService.addRezervacija(savedRezervacija);
 
-		return new ResponseEntity<>(new RezervacijaDTO(savedRezervacija), HttpStatus.CREATED);
+		return new ResponseEntity<>(new RezervacijaDTO(savedRezervacija, user.getKorisnickoIme()), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/rezervacija", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -106,10 +118,12 @@ public class RezervacijaController {
 		}
 		Long comDatId = updatedRezervacija.getCommonDataId();
 		
-		CommonData commonData = commonDataService.findOne(comDatId);
+		CommonData commonData = comDataService.findOne(comDatId);
 		LocalDateTime now = LocalDateTime.now();
 		commonData.setDatumIzmene(now);
-		commonData = commonDataService.updateCommonData(comDatId, commonData);
+		commonData = comDataService.updateCommonData(comDatId, commonData);
+		
+		User user = userService.findOne(commonData.getUserid());
 		
 		updatedRezervacija.setId(rezervacijaDTO.getId());
 		updatedRezervacija.setUkupnaCena(rezervacijaDTO.getUkupnaCena());
@@ -118,14 +132,15 @@ public class RezervacijaController {
 		updatedRezervacija.setCommonDataId(comDatId);
 		
 		updatedRezervacija = rezervacijaService.updateRezervacija(updatedRezervacija.getId(), updatedRezervacija);
-		return new ResponseEntity<>(new RezervacijaDTO(updatedRezervacija),HttpStatus.OK);
+		return new ResponseEntity<>(new RezervacijaDTO(updatedRezervacija,user.getKorisnickoIme()),HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/Rezervacija/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/rezervacija/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteRezervacija(@PathVariable Long id){
 		Rezervacija rezervacija = rezervacijaService.findOne(id);
 		if(rezervacija != null) {
 			rezervacijaService.deleteRezervacija(id);
+			comDataService.deleteCommonData(rezervacija.getCommonDataId());
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -27,6 +27,7 @@ public class AdresaService {
 	public Adresa findOne(Long id) {
 		return adresaRepository.findById(id).orElse(null);
 	}
+	
 	public Adresa addAdresa(Adresa adresa) throws Exception{
 		if(adresa.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
@@ -37,7 +38,7 @@ public class AdresaService {
 	public Adresa updateAdresa(Long id, Adresa adresa) throws Exception{
 		Optional<Adresa> adresaToUpdate = adresaRepository.findById(id);
 		if(adresaToUpdate == null) {
-			throw new Exception("Trazeni entitet nije pronadjen."); 
+			throw new Exception("Trazeni entitet nije pronadjen.");
 		}
 		Adresa updateAdresa = adresaRepository.save(adresa);
 		return updateAdresa;

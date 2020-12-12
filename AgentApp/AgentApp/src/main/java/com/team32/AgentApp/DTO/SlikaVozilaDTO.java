@@ -2,15 +2,15 @@ package com.team32.AgentApp.DTO;
 
 import com.team32.AgentApp.model.tentitet.SlikaVozila;
 
-public class TSlikaVozilaDTO {
+public class SlikaVozilaDTO {
     private Long id;
     private byte[] slika;
     private Long automobilId;
     private Long commonDataId;
     
-	public TSlikaVozilaDTO() {}
+	public SlikaVozilaDTO() {}
     
-	public TSlikaVozilaDTO(Long id, byte[] slika, Long automobilId, Long commonDataId) {
+	public SlikaVozilaDTO(Long id, byte[] slika, Long automobilId, Long commonDataId) {
 		super();
 		this.id = id;
 		this.slika = slika;
@@ -18,8 +18,8 @@ public class TSlikaVozilaDTO {
 		this.commonDataId = commonDataId;
 	}
     
-	public TSlikaVozilaDTO(SlikaVozila s) {
-		this(s.getId(), s.getSlika(), s.getCommonDataId(), s.getAutomobilId());
+	public SlikaVozilaDTO(SlikaVozila s) {
+		this(s.getId(), s.getSlika(), s.getAutomobilId(), s.getCommonDataId());
 	}
 
 	public Long getId() {

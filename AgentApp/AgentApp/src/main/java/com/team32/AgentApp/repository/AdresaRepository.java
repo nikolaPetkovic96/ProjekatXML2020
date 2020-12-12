@@ -6,4 +6,6 @@ import com.team32.AgentApp.model.tentitet.Adresa;
 
 public interface AdresaRepository extends JpaRepository<Adresa, Long>{
 
+//	Optional<Adresa> findByUserId(Long userId);
+
 }
