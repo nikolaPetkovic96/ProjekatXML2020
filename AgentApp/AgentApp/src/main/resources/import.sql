@@ -2,12 +2,7 @@
 --INSERT INTO USERS(username, password,  enabled, last_password_reset_date) VALUES ('user2', 'bell', true, '2017-10-01 18:57:58.508-07')
 --INSERT INTO USERS(username, password,  enabled, last_password_reset_date) VALUES ('user3', 'bella', true, '2017-10-01 18:57:58.508-07')
 
---INSERT INTO AUTHORITY(name) VALUES('ROLE_USER')
---INSERT INTO AUTHORITY(name) VALUES('ROLE_ADMIN')
---INSERT INTO AUTHORITY(name) VALUES('ROLE_PACIJENT')
 
---INSERT INTO USER_AUTHORITY(user_id, authority_id) VALUES (1, 1)
---INSERT INTO USER_AUTHORITY(user_id, authority_id) VALUES (2, 2)
 
 
 -----------------------------------------------------------USER-----------------------------------------------------------------
@@ -199,7 +194,12 @@ INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) V
 INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je treca poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 3, 3, 33)
 
 --Users
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('NoobMaster69' ,'password123', 'nmaster@gmail.com', 4, 'aktivan','Darko', 'Darkovic', '213123124','Muski',NULL, NULL, 52)
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username2' ,'password567', 'sardas@gmail.com', 5, 'aktivan','Tanja', 'Tanjic', '766745894','Zenski',NULL, NULL, 53)
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username23' ,'password890', 'sadasd@gmail.com', 6, 'aktivan', NULL, NULL, NULL, NULL, 'Firma 1', '7662313', 54)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id, enabled) VALUES ('NoobMaster69' ,'password123', 'nmaster@gmail.com', 4, 'aktivan','Darko', 'Darkovic', '213123124','Muski',NULL, NULL, 52, true)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id, enabled) VALUES ('username2' ,'password567', 'sardas@gmail.com', 5, 'aktivan','Tanja', 'Tanjic', '766745894','Zenski',NULL, NULL, 53, true)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id, enabled) VALUES ('username23' ,'password890', 'sadasd@gmail.com', 6, 'aktivan', NULL, NULL, NULL, NULL, 'Firma 1', '7662313', 54, true)
 
+--Authority
+INSERT INTO AUTHORITY(name) VALUES('ROLE_AGENT')
+
+--User_Authority
+INSERT INTO USER_AUTHORITY(user_id, authority_id) VALUES (1, 1)

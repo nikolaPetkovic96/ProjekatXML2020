@@ -6,17 +6,32 @@
 
 package com.team32.AgentApp.model.entitet;
 
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * <p>Java class for TUser complex type.
@@ -57,8 +72,13 @@ import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @Table(name="Users")
-public class User /*implements UserDetails */ {
+public class User implements UserDetails {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -96,6 +116,9 @@ public class User /*implements UserDetails */ {
 	@Column(name = "jmbg",  nullable = true)
     @XmlElement(name = "JMBG", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
     protected String jmbg;
+	
+	@Column(name = "pol",  nullable = true)
+	protected String pol;
     
 	//za agenta firma
 	
@@ -110,14 +133,32 @@ public class User /*implements UserDetails */ {
     @Column(name="common_data_id", nullable = false)
     protected Long commonDataId;
     
-    protected String pol;
+    
+    //ZA SECURITY
+    
+	@Column(name = "enabled")
+	private boolean enabled;
+    
+	private String registrationCode;
+	
+	//U token utilsu se nalazi... iskoristiti samo ako se menja password
+//	@Column(name = "last_password_reset_date")
+	private Timestamp lastPasswordResetDate;
 
-	public User() {
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_authority",
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "authority_id"))
+	private List<Authority> authorities;
+	
+	    
+public User() {
 		super();
 	}
 
 	public User(Long id, String korisnickoIme, String lozinka, String email, String status, Long adresaId, String ime,
-			String prezime, String jmbg, String naziv, String poslovniMaticniBroj, String pol, Long commonDataId) {
+			String prezime, String jmbg, String naziv, String poslovniMaticniBroj, String pol, Long commonDataId, boolean enabled,
+			String registrationCode, List<Authority> authorities) {
 		super();
 		this.id = id;
 		this.korisnickoIme = korisnickoIme;
@@ -130,9 +171,32 @@ public class User /*implements UserDetails */ {
 		this.jmbg = jmbg;
 		this.naziv = naziv;
 		this.poslovniMaticniBroj = poslovniMaticniBroj;
-		this.commonDataId = commonDataId;
 		this.pol = pol;
+		this.commonDataId = commonDataId;
+		this.enabled = enabled;
+		this.registrationCode = registrationCode;
+		this.authorities = authorities;
+	
 	}
+
+//	public User(Long id, String korisnickoIme, String lozinka, String email, String status,/* boolean enabled,*/ Long adresaId, String ime,
+//			String prezime, String jmbg, String naziv, String poslovniMaticniBroj, String pol, Long commonDataId) {
+//		super();
+//		this.id = id;
+//		this.korisnickoIme = korisnickoIme;
+//		this.lozinka = lozinka;
+//		this.email = email;
+//		this.status = status;
+//		this.adresaId = adresaId;
+//		this.ime = ime;
+//		this.prezime = prezime;
+//		this.jmbg = jmbg;
+//		this.naziv = naziv;
+//		this.poslovniMaticniBroj = poslovniMaticniBroj;
+//		this.commonDataId = commonDataId;
+//		this.pol = pol;
+////		this.enabled = enabled;
+//	}
 
 	public Long getId() {
         return id;
@@ -245,6 +309,75 @@ public class User /*implements UserDetails */ {
 
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
+	}
+	
+	//DODATO ZA SECURITY
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return lozinka;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return korisnickoIme;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return enabled;
+	}
+	
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+  @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+  	//Mozemo ovde da zabranjujemo account useru 
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+	public String getRegistrationCode() {
+		return registrationCode;
+	}
+
+	public void setRegistrationCode(String registrationCode) {
+		this.registrationCode = registrationCode;
+	}
+
+	public Timestamp getLastPasswordResetDate() {
+		return lastPasswordResetDate;
+	}
+
+	public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
 	}
 
 }

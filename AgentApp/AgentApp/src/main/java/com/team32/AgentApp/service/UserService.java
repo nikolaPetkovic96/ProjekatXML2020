@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.team32.AgentApp.model.entitet.User;
@@ -48,5 +49,26 @@ public class UserService {
 		public void deleteUser(Long id) {
 			userRepository.deleteById(id);
 		}
+		
+	//ZA SECURITY
+		
+		public User findByUsername(String username) throws UsernameNotFoundException {
+			return userRepository.findByKorisnickoIme(username);
+		}
+		
+//		//Override nad save je uradjen kako bi se password enkriptovao
+//		public User save(UserRequest userRequest) {
+//			User u = new User();
+//			u.setUsername(userRequest.getUsername());
+//			u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+//			//u.setEmail(userRequest.getE);
+//			u.setEnabled(true);
+//			
+//			List<Authority> auth = authService.findByName("ROLE_USER");
+//			u.setAuthorities(auth);
+//			
+//			u = this.userRepository.save(u);
+//			return u;
+//		}
 
 }

@@ -7,8 +7,8 @@ import com.team32.AgentApp.model.entitet.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 	
-//	TUser findByUsername(String username);
-//
-//	TUser findByRegistrationCode(String registrationCode);
+	User findByKorisnickoIme(String username);
+
+	User findByRegistrationCode(String registrationCode);
 
 }
