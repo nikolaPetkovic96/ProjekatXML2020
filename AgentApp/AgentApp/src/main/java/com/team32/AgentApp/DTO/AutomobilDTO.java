@@ -5,54 +5,58 @@ import com.team32.AgentApp.model.entitet.Automobil;
 public class AutomobilDTO {
 
 	private Long id;
-	private Long markaAutomobilaId;
-	private Long modelAutomobilaId;
-	private Long klasaAutomobilaId;
-	private Long tipGorivaId;
-	private Long tipMenjacaId;
 	private float ukupnaOcena;
 	private float predjenaKilometraza;
 	private boolean collisionDamageWaiver;
 	private int brojSedistaZaDecu;
 	
+	private String markaAut;
+	private String modelAut;
+	private String klasaAut;
+	private String tipMenjaca;
+	private String tipGoriva;
 	private Long commonDataId;//ne treba samo za testiranje CRUD
 	
 	public AutomobilDTO() {
 		
 	}
-	
-	public AutomobilDTO(Long id, Long markaAutomobilaId, Long modelAutomobilaId,
-			Long klasaAutomobilaId, Long tipGorivaId, Long tipMenjacaId, float ukupnaOcena, float predjenaKilometraza,
-			float planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId) {
-		super();
-		this.id = id;
-		this.markaAutomobilaId = markaAutomobilaId;
-		this.modelAutomobilaId = modelAutomobilaId;
-		this.klasaAutomobilaId = klasaAutomobilaId;
-		this.tipGorivaId = tipGorivaId;
-		this.tipMenjacaId = tipMenjacaId;
-		this.ukupnaOcena = ukupnaOcena;
-		this.predjenaKilometraza = predjenaKilometraza;
-		this.collisionDamageWaiver = collisionDamageWaiver;
-		this.brojSedistaZaDecu = brojSedistaZaDecu;
-		
-		this.commonDataId = commonDataId;
-	}
 
-	public AutomobilDTO(Automobil a) {	
+	public AutomobilDTO(Automobil a, String markaAut , String modelAut,
+			 String klasaAut, String tipMenjaca, String tipGoriva) {	
 		this.id = a.getId();	
-		this.markaAutomobilaId = a.getMarkaAutomobilaId();
-		this.modelAutomobilaId = a.getModelAutomobilaId();
-		this.klasaAutomobilaId = a.getKlasaAutomobilaId();
-		this.tipGorivaId = a.getTipGorivaId();
-		this.tipMenjacaId = a.getTipMenjacaId();
 		this.ukupnaOcena = a.getUkupnaOcena();
 		this.predjenaKilometraza = a.getPredjenaKilometraza();
 		this.collisionDamageWaiver = a.isCollisionDamageWaiver();
 		this.brojSedistaZaDecu = a.getBrojSedistaZaDecu();
 		
 		this.commonDataId =  a.getCommonDataId();
+
+		this.markaAut = markaAut;
+		this.modelAut = modelAut;
+		this.klasaAut = klasaAut;
+		this.tipMenjaca = tipMenjaca;
+		this.tipGoriva = tipGoriva;
 	}
+	
+	public AutomobilDTO(Long id, float ukupnaOcena, float predjenaKilometraza, float planiranaKilometraza,
+			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId,
+			String markaAut , String modelAut, String klasaAut, String tipMenjaca, String tipGoriva) {
+		super();
+		this.id = id;
+		this.ukupnaOcena = ukupnaOcena;
+		this.predjenaKilometraza = predjenaKilometraza;
+		this.collisionDamageWaiver = collisionDamageWaiver;
+		this.brojSedistaZaDecu = brojSedistaZaDecu;
+		
+		this.commonDataId = commonDataId;
+		this.markaAut = markaAut;
+		this.modelAut = modelAut;
+		this.klasaAut = klasaAut;
+		this.tipMenjaca = tipMenjaca;
+		this.tipGoriva = tipGoriva;
+		
+	}
+
 	
 	public Long getId() {
 		return id;
@@ -60,46 +64,6 @@ public class AutomobilDTO {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getMarkaAutomobilaId() {
-		return markaAutomobilaId;
-	}
-
-	public void setMarkaAutomobilaId(Long markaAutomobilaId) {
-		this.markaAutomobilaId = markaAutomobilaId;
-	}
-
-	public Long getModelAutomobilaId() {
-		return modelAutomobilaId;
-	}
-
-	public void setModelAutomobilaId(Long modelAutomobilaId) {
-		this.modelAutomobilaId = modelAutomobilaId;
-	}
-
-	public Long getKlasaAutomobilaId() {
-		return klasaAutomobilaId;
-	}
-
-	public void setKlasaAutomobilaId(Long klasaAutomobilaId) {
-		this.klasaAutomobilaId = klasaAutomobilaId;
-	}
-
-	public Long getTipGorivaId() {
-		return tipGorivaId;
-	}
-
-	public void setTipGorivaId(Long tipGorivaId) {
-		this.tipGorivaId = tipGorivaId;
-	}
-
-	public Long getTipMenjacaId() {
-		return tipMenjacaId;
-	}
-
-	public void setTipMenjacaId(Long tipMenjacaId) {
-		this.tipMenjacaId = tipMenjacaId;
 	}
 
 	public float getPredjenaKilometraza() {
@@ -141,7 +105,55 @@ public class AutomobilDTO {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
-	
-	
-	
+
+
+	public String getMarkaAut() {
+		return markaAut;
+	}
+
+
+	public void setMarkaAut(String markaAut) {
+		this.markaAut = markaAut;
+	}
+
+
+	public String getModelAut() {
+		return modelAut;
+	}
+
+
+	public void setModelAut(String modelAut) {
+		this.modelAut = modelAut;
+	}
+
+
+	public String getKlasaAut() {
+		return klasaAut;
+	}
+
+
+	public void setKlasaAut(String klasaAut) {
+		this.klasaAut = klasaAut;
+	}
+
+
+	public String getTipMenjaca() {
+		return tipMenjaca;
+	}
+
+
+	public void setTipMenjaca(String tipMenjaca) {
+		this.tipMenjaca = tipMenjaca;
+	}
+
+
+	public String getTipGoriva() {
+		return tipGoriva;
+	}
+
+
+	public void setTipGoriva(String tipGoriva) {
+		this.tipGoriva = tipGoriva;
+	}
+
 }

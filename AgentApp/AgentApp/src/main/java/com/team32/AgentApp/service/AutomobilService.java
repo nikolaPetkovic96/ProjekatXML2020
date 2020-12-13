@@ -7,15 +7,30 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team32.AgentApp.DTO.AutomobilDTO;
 import com.team32.AgentApp.model.entitet.Automobil;
 import com.team32.AgentApp.repository.AutomobilRepository;
-
 
 @Service
 public class AutomobilService {
 
 	@Autowired
 	private AutomobilRepository automobilRepository;
+	
+	@Autowired
+	private ModelAutomobilaService modelService;
+	
+	@Autowired
+	private KlasaAutomobilaService klasaService;
+	
+	@Autowired
+	private MarkaAutomobilaService markaService;
+	
+	@Autowired
+	private TipGorivaService gorivoService;
+	
+	@Autowired
+	private TipMenjacaService menjacService;
 	
 	public List<Automobil> getAllAutomobil(){
 		List<Automobil> listaAutomobila = new ArrayList<>();
@@ -25,6 +40,22 @@ public class AutomobilService {
 	
 	public Automobil findOne(Long id) {
 		return automobilRepository.findById(id).orElseGet(null);
+	}
+	
+	//Pomocna metoda koja sluzi da vrati Automobil ciji su atiributi objekti.
+	public AutomobilDTO findOneWithDetails(Long id) {
+		
+		Automobil auto = automobilRepository.findById(id).orElseGet(null);
+
+		String marka = markaService.findOne(auto.getMarkaAutomobilaId()).getNazivMarke(); 
+		String model = modelService.findOne(auto.getModelAutomobilaId()).getNazivModela();
+		String klasa = klasaService.findOne(auto.getKlasaAutomobilaId()).getNazivKlase();
+		String menjac = menjacService.findOne(auto.getTipMenjacaId()).getNazivMenjaca();
+		String gorivo = gorivoService.findOne(auto.getTipGorivaId()).getNazivTipa();
+		
+		AutomobilDTO autoDTO = new AutomobilDTO(auto, marka, model, klasa, menjac, gorivo);
+		
+		return autoDTO;
 	}
 	
 	public Automobil addAutomobil(Automobil automobil) throws Exception {

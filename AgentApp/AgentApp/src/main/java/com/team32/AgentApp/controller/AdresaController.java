@@ -29,7 +29,7 @@ public class AdresaController {
 	
 	@Autowired
 	private CommonDataService comDataService;
-		
+	
 	//GET ALL
 	@RequestMapping(method=RequestMethod.GET, value="/adresa", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AdresaDTO>> getAllAdresa() {

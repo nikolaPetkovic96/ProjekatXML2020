@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,6 @@ import com.team32.AgentApp.DTO.AutomobilDTO;
 import com.team32.AgentApp.DTO.CenovnikDTO;
 import com.team32.AgentApp.DTO.OglasDTO;
 import com.team32.AgentApp.DTO.OglasNewDTO;
-import com.team32.AgentApp.model.entitet.Automobil;
 import com.team32.AgentApp.model.entitet.Cenovnik;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Narudzbenica;
@@ -55,7 +53,7 @@ public class OglasController {
 		@Autowired
 		private AutomobilService automobilService;
 		
-		//GET ALL	
+		//GET ALL
 		@RequestMapping(method=RequestMethod.GET, value="/oglas", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<List<OglasDTO>> getAllOglas() {
 		
@@ -81,8 +79,8 @@ public class OglasController {
 					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 				}
 				
-				Automobil automobil = automobilService.findOne(o.getAutomobilId());
-				if(automobil == null) {
+				AutomobilDTO automobilDTO = automobilService.findOneWithDetails(o.getAutomobilId());
+				if(automobilDTO == null) {
 					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 				}
 				
@@ -105,7 +103,7 @@ public class OglasController {
 				oglasDTO.setPlaniranaKilometraza(o.getPlaniranaKilometraza());
 				oglasDTO.setZauzetiTermini(getZauzetiTermini(narudzbService.getAllNarudzbeniceByOglasId(o.getId())));
 				oglasDTO.setAdresa(new AdresaDTO(adresa));
-				oglasDTO.setAutomobil(new AutomobilDTO(automobil));
+				oglasDTO.setAutomobil(automobilDTO);
 				oglasDTO.setCenovnik(new CenovnikDTO(cenovnik));
 				
 				oglasiDTO.add(oglasDTO);
@@ -139,8 +137,8 @@ public class OglasController {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			
-			Automobil automobil = automobilService.findOne(oglas.getAutomobilId());
-			if(automobil == null) {
+			AutomobilDTO automobilDTO = automobilService.findOneWithDetails(oglas.getAutomobilId());
+			if(automobilDTO == null) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			
@@ -150,9 +148,9 @@ public class OglasController {
 			}
 			
 			oglasDTO.setId(oglas.getId());
-//			oglasDTO.setCenovnikId(oglas.getCenovnikId());
-//			oglasDTO.setAutomobilId(oglas.getAutomobilId());
-//			oglasDTO.setAdresaId(oglas.getAdresaId());
+			oglasDTO.setCenovnikId(oglas.getCenovnikId());
+			oglasDTO.setAutomobilId(oglas.getAutomobilId());
+			oglasDTO.setAdresaId(oglas.getAdresaId());
 			oglasDTO.setCommonDataId(oglas.getCommonDataId());
 			oglasDTO.setOdDatuma(oglas.getOdDatuma());
 			oglasDTO.setDoDatuma(oglas.getDoDatuma());
@@ -162,7 +160,7 @@ public class OglasController {
 			oglasDTO.setUsername(user.getKorisnickoIme());
 			oglasDTO.setZauzetiTermini(getZauzetiTermini(narudzbService.getAllNarudzbeniceByOglasId(oglas.getId())));
 			oglasDTO.setAdresa(new AdresaDTO(adresa));
-			oglasDTO.setAutomobil(new AutomobilDTO(automobil));
+			oglasDTO.setAutomobil(automobilDTO);
 			oglasDTO.setCenovnik(new CenovnikDTO(cenovnik));
 
 			return new ResponseEntity<>(oglasDTO, HttpStatus.OK);

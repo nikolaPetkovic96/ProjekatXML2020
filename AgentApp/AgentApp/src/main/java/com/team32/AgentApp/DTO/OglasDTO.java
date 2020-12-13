@@ -12,7 +12,7 @@ public class OglasDTO {
 	private LocalDateTime odDatuma;
 	private LocalDateTime doDatuma;
     private float planiranaKilometraza;
-	private Long commonDataId;
+	private Long commonDataId;				//Posle obrisati
     private Long cenovnikId;				//Posle obrisati
 	private Long automobilId;				//Posle obrisati
     private Long adresaId;					//Posle obrisati
@@ -22,7 +22,6 @@ public class OglasDTO {
     private AdresaDTO adresa;				//(samo u DTO)
     private AutomobilDTO automobil;			//(samo u DTO)
     private CenovnikDTO cenovnik;			//(samo u DTO)
-    
 	
 	public OglasDTO() {
 		super();
