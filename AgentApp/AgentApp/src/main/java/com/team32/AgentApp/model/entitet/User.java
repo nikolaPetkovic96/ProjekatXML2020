@@ -135,11 +135,6 @@ public class User implements UserDetails {
     
     
     //ZA SECURITY
-    
-	@Column(name = "enabled")
-	private boolean enabled;
-    
-	private String registrationCode;
 	
 	//U token utilsu se nalazi... iskoristiti samo ako se menja password
 //	@Column(name = "last_password_reset_date")
@@ -151,14 +146,13 @@ public class User implements UserDetails {
 		inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "authority_id"))
 	private List<Authority> authorities;
 	
-	    
-public User() {
+	public User() {
 		super();
 	}
 
 	public User(Long id, String korisnickoIme, String lozinka, String email, String status, Long adresaId, String ime,
-			String prezime, String jmbg, String naziv, String poslovniMaticniBroj, String pol, Long commonDataId, boolean enabled,
-			String registrationCode, List<Authority> authorities) {
+			String prezime, String jmbg, String naziv, String poslovniMaticniBroj, String pol, Long commonDataId, 
+			List<Authority> authorities) {
 		super();
 		this.id = id;
 		this.korisnickoIme = korisnickoIme;
@@ -173,8 +167,6 @@ public User() {
 		this.poslovniMaticniBroj = poslovniMaticniBroj;
 		this.pol = pol;
 		this.commonDataId = commonDataId;
-		this.enabled = enabled;
-		this.registrationCode = registrationCode;
 		this.authorities = authorities;
 	
 	}
@@ -334,11 +326,8 @@ public User() {
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return enabled;
-	}
-	
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+		
+		return status.equals("aktivan");
 	}
 	
   @JsonIgnore
@@ -360,13 +349,6 @@ public User() {
         return true;
     }
 
-	public String getRegistrationCode() {
-		return registrationCode;
-	}
-
-	public void setRegistrationCode(String registrationCode) {
-		this.registrationCode = registrationCode;
-	}
 
 	public Timestamp getLastPasswordResetDate() {
 		return lastPasswordResetDate;

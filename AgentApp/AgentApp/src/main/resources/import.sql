@@ -194,9 +194,9 @@ INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) V
 INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je treca poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 3, 3, 33)
 
 --Users
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id, enabled) VALUES ('NoobMaster69' ,'password123', 'nmaster@gmail.com', 4, 'aktivan','Darko', 'Darkovic', '213123124','Muski',NULL, NULL, 52, true)
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id, enabled) VALUES ('username2' ,'password567', 'sardas@gmail.com', 5, 'aktivan','Tanja', 'Tanjic', '766745894','Zenski',NULL, NULL, 53, true)
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id, enabled) VALUES ('username23' ,'password890', 'sadasd@gmail.com', 6, 'aktivan', NULL, NULL, NULL, NULL, 'Firma 1', '7662313', 54, true)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('test', '$2a$10$786OZQwAuZ.Y8Nw6dm12SeyXW7r/M7sHb6aJZNHerDEjIGt4FlJlS', 'nmaster@gmail.com', 4, 'aktivan','Marko', 'Markovic', '213123124','Muski',NULL, NULL, 52)
+--INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username2' ,'password567', 'sardas@gmail.com', 5, 'aktivan','Tanja', 'Tanjic', '766745894','Zenski',NULL, NULL, 53)
+--INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username23' ,'password890', 'sadasd@gmail.com', 6, 'aktivan', NULL, NULL, NULL, NULL, 'Firma 1', '7662313', 54)
 
 --Authority
 INSERT INTO AUTHORITY(name) VALUES('ROLE_AGENT')
