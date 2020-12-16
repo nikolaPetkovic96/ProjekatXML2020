@@ -9,7 +9,7 @@
               <div class="card-header">
                   <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
                   <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
-                  <h4><b>Ocena:</b> {{automobil.klasaAut}}</h4>
+                  <h4><b>Ocena:</b> {{automobil.ukupnaOcena}}</h4>
               </div>
             </div>
             <label for="">Od datuma</label>
@@ -134,32 +134,32 @@ export default {
               collisionDamageWaiver: true,
               
             },
-            {
-              id:'2',
-              markaAut:'Mercedes',
-              modelAut:'R8',
-              klasaAut:'Old Tajmer',
-              tipMenjaca:'manuelni',
-              vrstaGoriva:'gorivo',
-              ukupnaOcena:4, //ovo treba dodati u automobil
-              brojSedistaZaDecu:3,
-              predjenaKilometraza:800,
-              collisionDamageWaiver: true,
+            // {
+            //   id:'2',
+            //   markaAut:'Mercedes',
+            //   modelAut:'R8',
+            //   klasaAut:'Old Tajmer',
+            //   tipMenjaca:'manuelni',
+            //   vrstaGoriva:'gorivo',
+            //   ukupnaOcena:4, //ovo treba dodati u automobil
+            //   brojSedistaZaDecu:3,
+            //   predjenaKilometraza:800,
+            //   collisionDamageWaiver: true,
               
-            },
-            {
-              id:'3',
-              markaAut:'Audi',
-              modelAut:'A6',
-              klasaAut:'Gradski auto',
-              tipMenjaca:'manuelni',
-              vrstaGoriva:'evro-dizel',
-              ukupnaOcena:5, //ovo treba dodati u automobil
-              brojSedistaZaDecu:3,
-              collisionDamageWaiver: true,
-              predjenaKilometraza:650,
+            // },
+            // {
+            //   id:'3',
+            //   markaAut:'Audi',
+            //   modelAut:'A6',
+            //   klasaAut:'Gradski auto',
+            //   tipMenjaca:'manuelni',
+            //   vrstaGoriva:'evro-dizel',
+            //   ukupnaOcena:5, //ovo treba dodati u automobil
+            //   brojSedistaZaDecu:3,
+            //   collisionDamageWaiver: true,
+            //   predjenaKilometraza:650,
               
-            }
+            // }
           ],
 
           //nije iskoristeno

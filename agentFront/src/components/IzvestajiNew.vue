@@ -11,7 +11,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                     
                         <th>Automobil</th>
                         <th>Planirana km</th>
                         <th>Cenovnik</th>
@@ -28,14 +27,20 @@
                     <td>{{oglas.cenovnik.cenaPoDanu}} din</td>
                     <td>{{oglas.cenovnik.cenaPoKilometru}} din</td>
                     <td>
-                        <button v-on:click='showDetails(oglas.id)' class="btn-outline-primary"> detalji </button>
+                        <a href="#new-report"><button v-on:click='createReport(oglas.automobil)' class="btn-outline-primary"> izvestaj </button></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <div id='new-report'>
-                <!-- <label>Rating: </label> -->
+            <div v-if='newReport' id='new-report'>
+                <div class="container" id='page-title'>
+                    <h1 style="margin-top:10px;color:#35424a;">Novi <span id='titleEffect'>Izvestaj</span></h1>
+                    <hr style='background:#35424a;height:1px;'>
+                </div>
+                <div class="card-header">
+                    <h4><b>Za automobil:</b> {{this.automobilReport.markaAut}} {{this.automobilReport.modelAut}} - {{this.automobilReport.klasaAut}} (marka/model/klasa)</h4>
+                </div>
                 <label>Predjena kilometraza:</label>
                 <input class='half-size' type="text" placeholder="Unesite predjenu kilometrazu...">
                 
@@ -69,8 +74,8 @@
                 <textarea v-model='review.text' placeholder="Unesi info..."></textarea>
                 <br>
 
-                <button class="btn btn-lg btn-success shadow" v-on:click='addReport'> Potvrdi </button>
-                <button class="btn btn-lg btn-danger shadow" v-on:click='cancelReport'> Odustani </button>
+                <button class="btn btn-lg btn-success shadow" v-on:click='addReport()'> Potvrdi </button>
+                <button class="btn btn-lg btn-danger shadow" v-on:click='cancelNewReport()'> Odustani </button>
             </div>
         </div>
     </div>
@@ -81,7 +86,12 @@ export default {
     name: 'ReportNew',
     data:function(){
         return {
-             rezervacija: {
+            newReport:false,
+            automobilReport:null,
+            izvestaj:{
+
+            },
+            rezervacija: {
                 id:1,
                 odDatuma:'18.6.2020',
                 doDatuma:'25.7.2020',
@@ -149,6 +159,13 @@ export default {
                             markaAut:'BMW',
                             modelAut:'R5',
                             klasaAut:'Gradski',
+                            vrstaGoriva:'dizel',
+                            tipMenjaca:'manuelni',
+                            ukupnaOcena:5,
+                            brojSedistaZaDecu:1,
+                            predjenaKilometraza:5000,
+                            collisionDamageWaiver:true,
+                            images:[],
                         },
                         //Oglas/Cenovnik
                         cenovnik:{ 
@@ -246,7 +263,25 @@ export default {
         }
     },
     methods:{
-        addComment: function () {
+        createReport(automobil){
+            //ako je vec otvoren prozor za kreiranje nove poruke samo neka se doda drugi id
+            if(this.newReport === true){
+                // predjenaKilometraza
+                // console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
+            }
+            //ako je zatvoren prozor klikom na dugme se prvo otvara prozor za kreiranje pa se dodaje i id auta.
+            else{
+                this.newReport = !this.newReport;
+                // this.novaPoruka.automobilId = automobil.id;
+                // console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
+            }
+
+            this.automobilReport = automobil;
+        },
+        cancelNewReport(){
+            this.newReport = !this.newReport;
+        },
+        addReport: function () {
             if (this.review.text == '' && this.review.star != null) {
                 this.messages.errorText = `<h4>Text of comment can't be empty!</h4>`;
                 setTimeout(() => this.messages.errorText = '', 3000);

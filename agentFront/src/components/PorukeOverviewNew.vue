@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                 <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='newMessage = !newMessage'>Nova poruka</button></a>
+                 <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(oglas.automobil)'>Nova poruka</button></a>
             </div>
             
             
@@ -50,14 +50,17 @@
                     <hr style='background:#35424a;height:1px;'>
                 </div>
                 <div class="container">
-                    <!-- <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
-                    <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div> -->
+                    <div class="card-header">
+                        <h4><b>Za automobil:</b> {{this.automobilPoruka.markaAut}} {{this.automobilPoruka.modelAut}} - {{this.automobilPoruka.klasaAut}} (marka/model/klasa)</h4>
+                    </div>
+                    <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
+                    <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
                     <div>
                         <label for="">Tekst poruke</label>
-                        <!-- <div v-if='messages.errorText' class="alert alert-danger" v-html="messages.errorText"></div> -->
+                        <div v-if='messages.errorText' class="alert alert-danger" v-html="messages.errorText"></div>
                         <textarea v-model='novaPoruka.tekstPoruke' placeholder="Unesite tekst..."></textarea>
-                        <button class="btn btn-success marg" v-on:click='addMessage(car.id)'>Potvrdi</button>
-                        <button class="btn btn-danger marg" v-on:click='closeNewMessage()'>Odustani</button>
+                        <button class="btn btn-success marg" v-on:click='addMessage()'>Potvrdi</button>
+                        <button class="btn btn-danger marg" v-on:click='closeCreateMessage()'>Odustani</button>
                         <hr style='background:lightgray;height:1px;'>
                     </div>
                     
@@ -77,13 +80,19 @@ export default {
             toShowMessage: false,
             newMessage: false,
             novaPoruka:{
-                tekstPoruke:'',
+                userId:null,
+                automobilId:null,
                 rezervacijaId:null,
-                automobilId:null, //Kako ako ih je vise u rezerv. tj. ako je rezerv bundle?
-                commonData:{
-                    userId:null,
-                    datumKreiranja:'',
-                }
+                tekstPoruke:'',
+                // commonData:{
+                //     userId:null,
+                //     datumKreiranja:'',
+                // }
+            },
+            messages: {
+                errorText: '',
+                errorResponse: '',
+                successResponse: '',
             },
             //Iskoristiti ovo u rezervacijama!!!!!
             rezervacija:
@@ -132,7 +141,6 @@ export default {
                             cenaPoKilometru:10
                         },
                     },
-                   
                     {
                         //Oglas
                         id:2,
@@ -235,11 +243,44 @@ export default {
                     }
                 ]
             },
+            //Za prikaz podataka o automobilu za koji se kreira poruka
+            automobilPoruka:null,
         }
     },
     methods:{
-        openMessage:function(id){
-            this.$router.push(`/carComments/${id}/newComment`);
+        addMessage:function(){
+            if (this.novaPoruka.tekstPoruke == '') {
+                this.messages.errorText = `<h4>Tekst poruke ne moze biti prazan!</h4>`;
+                setTimeout(() => this.messages.errorText = '', 3000);
+            }
+            else {
+                alert(`Nova poruka: 
+                automobilId: ${this.novaPoruka.automobilId},
+                userId: ${this.novaPoruka.userId},
+                tekstPoruke: ${this.novaPoruka.tekstPoruke},
+                rezervacijaId ${this.novaPoruka.rezervacijaId},`);
+            }
+        },
+        createMessage:function(automobil){
+            //ako je vec otvoren prozor za kreiranje nove poruke samo neka se doda drugi id
+            if(this.newMessage === true){
+                this.novaPoruka.automobilId = automobil.id;
+                console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
+            }
+            //ako je zatvoren prozor klikom na dugme se prvo otvara prozor za kreiranje pa se dodaje i id auta.
+            else{
+                this.newMessage = !this.newMessage;
+                this.novaPoruka.automobilId = automobil.id;
+                console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
+            }
+
+            this.automobilPoruka = automobil;
+        },
+        //metoda koja izlazi iz kreiranja nove poruke i brise id automobila;
+        closeCreateMessage:function(){
+            this.newMessage = !this.newMessage;
+            this.novaPoruka.automobilId = '';
+            console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
         },
         //Metoda koja proverava da li ima 
         isThereMessages:function(rezervacija){   
@@ -256,7 +297,7 @@ export default {
             let filtriranePoruke = [];
             for(let i = 0; i < this.rezervacija.poruke.length; i++){
                 if(this.rezervacija.poruke[i].automobilId == automobil.id){
-                    console.log('this.rezervacija.poruke[i].automobilId: ' + this.rezervacija.poruke[i].automobilId);
+                    // console.log('this.rezervacija.poruke[i].automobilId: ' + this.rezervacija.poruke[i].automobilId);
                     filtriranePoruke.push(this.rezervacija.poruke[i]);
                 }
             }
@@ -275,7 +316,6 @@ export default {
            else {
                 return false; 
            }
-           
         },
         isCustomerMessage:function(poruka){
            if(poruka.commonData.userId === 1){
@@ -285,6 +325,15 @@ export default {
                 return false; 
            }
         },
+    },
+    computed:{
+        id() {
+            return this.$route.params.id; //preuzimam id rezervacije na cijoj sam stranici za prikaz poruka
+        },
+    },
+    created(){
+        // 1. se getuje rezervacija ciji id je prosledjen u urlu;
+        this.novaPoruka.rezervacijaId = this.id;
     }
 }
 </script>

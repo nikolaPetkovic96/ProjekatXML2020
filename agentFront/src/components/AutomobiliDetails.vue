@@ -45,7 +45,7 @@
             
              <div class="card-body">
                 <div class="card-header">
-                    <h4>Details</h4>
+                    <h4>Karakteristike automobila</h4>
                 </div>
                 <h3 class="card-title colr">Automobil:
                     <span class="colrbl" style="font-size: 25px;">{{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</span>
@@ -78,7 +78,7 @@
             </div>
             <div class="card card-outline-secondary my-4">
 				<div class="card-header">
-					<h4>Apartment Reviews</h4>
+					<h4>Ocene i komentari</h4>
 				</div>
 
 				<div class="card-body" v-bind:key="review.id" v-for="review in automobil.reviews" v-show="review.visible" >

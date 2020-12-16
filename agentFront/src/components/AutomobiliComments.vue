@@ -13,7 +13,7 @@
                             <h4><b>Rezervisan od:</b></h4>
                             <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
                             <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
-                            <h4><b>Ocena:</b> {{automobil.ocena}}</h4>
+                            <h4><b>Ocena:</b> {{automobil.ukupnaOcena}}</h4>
                         </div>
                     </div>
                     <div v-show='isThereReviews(automobil)' class="card-body">

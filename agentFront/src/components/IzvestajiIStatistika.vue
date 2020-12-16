@@ -46,7 +46,7 @@
 	        <div id='criterium' class="row">
 					<div class="col-md-4 col-sm-6 mb-4">
                         <h4>Najvise komentara</h4>
-						<button><img src="../assets/messageSign.jpg" alt=""></button>
+						<button ><img src="../assets/messageSign.jpg" alt=""></button>
 					</div>
 
 					<div class="col-md-4 col-sm-6 mb-4">

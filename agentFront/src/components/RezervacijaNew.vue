@@ -76,7 +76,7 @@ export default {
             isHost: false,
             isGuest: true,
 
-            //PITATI STEVU 
+            //PITATI da li da ovako ostane DTO ili kao objetki i datume da li da ostanu kao sada ili pocetni i krajnji da se unose...
             //Prilikom rucnog dodavanja rezervacije kreira se odmah i oglas koji je rezervisan za taj termin,
             //DTO koji spaja atribute rezervacije i oglasa.
             rezervacijaOglasDTO:{
@@ -96,6 +96,20 @@ export default {
                 datumKreiranja:'',
                 userId:null,
             },
+
+            messages: {
+				errorType: '',
+				errorRooms: '',
+				errorBundle: '',
+				errorLocation: '',
+				errorAddress: '',
+				errorPrice: '',
+				errorCheckInOut: '',
+				errorDates: '',
+				errorAmenities: '',
+				errorResponse: '',
+				successResponse: '',
+			},
 
             odabran_br_dana: null, //za racunanje ukupne cene i doDatuma
             br_dana: null, //broj dana od 1-28

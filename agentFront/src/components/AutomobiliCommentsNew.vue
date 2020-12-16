@@ -10,18 +10,8 @@
             <!-- <label>Comment:</label>-->
             <label>Komentar:</label> 
             <div v-if='messages.errorText' class="alert alert-danger" v-html="messages.errorText"></div>
-            <textarea v-model='review.text' placeholder="Enter comment..."></textarea>
-            <br>
-            <!-- <label>Rating: </label> -->
-            <label>Ocena:</label> 
-            <div v-if='messages.errorStar' class="alert alert-danger" v-html="messages.errorStar"></div>
-            <star-rating
-                inactive-color="#35424a"
-                active-color="gold"
-                glow:2
-                glow-color="#e8491d"
-                v-model="review.star"></star-rating>
-            <br>
+            <textarea v-model='noviKomentar.tekstKomentara' placeholder="Unesite komentar..."></textarea>
+            <br>        
 
             <button class="btn btn-lg btn-success shadow" v-on:click='addComment'> Potvrdi </button>
         </div>
@@ -33,16 +23,14 @@ export default {
     name: 'AutomobiliCommentsNew ',
     data:function(){
         return {
-            review: {
-                usertId: '',
-                carId: '',
-                text: '',
-                star: null,
-                visible: false,
+            noviKomentar: {
+                userId: '', //za CommonData
+                automobilId: '',
+                tekstKomentara: '',
+                odobren: false,
             },
             messages: {
                 errorText: '',
-                errorStar: '',
                 errorResponse: '',
                 successResponse: '',
             }
@@ -50,27 +38,16 @@ export default {
     },
     methods:{
         addComment: function () {
-            if (this.review.text == '' && this.review.star != null) {
-                this.messages.errorText = `<h4>Text of comment can't be empty!</h4>`;
+            if (this.noviKomentar.tekstKomentara == '') {
+                this.messages.errorText = `<h4>Tekst komentara ne moze biti prazan!</h4>`;
                 setTimeout(() => this.messages.errorText = '', 3000);
-            }
-            else if (this.review.text != '' && this.review.star == null) {
-                this.messages.errorStar = `<h4>Rating can't be empty!</h4>`;
-                setTimeout(() => this.messages.errorStar = '', 3000);
-            }
-            else if (this.review.text == '' && this.review.star == null) {
-                this.messages.errorText = `<h4>Text of comment can't be empty!</h4>`;
-                this.messages.errorStar = `<h4>Rating can't be empty!</h4>`;
-                setTimeout(() => this.messages.errorText = '', 3000);
-                setTimeout(() => this.messages.errorStar = '', 3000);
-
             }
             else {
                 alert(`
-                carId: ${this.review.carId},
-                text: ${this.review.text},
-                star: ${this.review.star},
-                visible: ${this.review.visible},
+                automobilId: ${this.noviKomentar.automobilId},
+                username: ${this.noviKomentar.userId},
+                text: ${this.noviKomentar.tekstPoruke},
+                visible: ${this.noviKomentar.odobren},
                 `);
                 // axios
                 //     .post('rest/reviews/', this.review)
@@ -93,7 +70,6 @@ export default {
 
     computed: {
         id() {
-            // alert('Car id: ' + this.$route.params.id);
             return this.$route.params.id; //preuzimam id automobila za koga dodajem novi komentara
         }
     },
@@ -102,8 +78,8 @@ export default {
             this.$router.push('/login');
         }
 
-        // this.review.userId = this.user.username;
-        this.review.carId = this.id
+        //this.review.userId = this.user.username;
+        this.noviKomentar.automobilId = this.id
     },
     
 }

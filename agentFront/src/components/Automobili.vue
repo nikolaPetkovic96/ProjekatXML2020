@@ -8,70 +8,86 @@
         <div class='container ' id='search'>
             <nav class="navbar navbar-light bg-light justify-content-between">
                 <a class="navbar-brand">Search</a>
-                <form class="form-inline">                    
-                    <!-- <div style='display:inline;'> -->
-                        
+                <form class="form-inline">                                            
                         <div style="margin-right: 20px;" id='search_icon'>
                             <span style='display:inline; margin: 15px;'>
                                 <img v-on:click='isSearch = !isSearch' src='../assets/searchIcon1.png' style="display:inline;">
                             </span>
                         </div>
-
+                       
                         <div style='display:inline;' v-show='isSearch' id="advanced_search">
-                            <div id='second-row' class="row" style="margin-top:5px;">
-                                <span class="span_search">Cena</span>
-                                <input class="form-control mr-sm-2" type="text" placeholder="min cena" aria-label="Search" v-model="searchedCar.cenaMin">
-                                <span style="padding-right:6px;" class="span_search"> - </span>
-                                <input class="form-control mr-sm-2" type="text" placeholder="max cena" aria-label="Search" v-model="searchedCar.cenaMax">
+                           
                             
-                                
-                                <span class="span_search">Marka</span>
-                                <select style="padding:5px;" v-model="searchedCar.markaAut">
-                                    <option disabled value="">Marka automobila</option>
-                                    <option v-bind:key="marka" v-for="marka in markaAut">{{marka}}</option>
-                                </select>
-
-                                <span class="span_search">Model</span>
-                                <select style="padding:5px;" v-model="searchedCar.modelAut">
-                                    <option disabled value="">Model automobila</option>
-                                    <option v-bind:key="model" v-for="model in modelAut">{{model}}</option>
-                                </select>
+                            <div id='second-row' class="row"  style="margin-top:5px;">
+                                <span class="col-xl-2 col-md-6 mb-1">
+                                    <button style='margin-right:5px;' class='btn btn-outline-primary my-2 my-sm-0' v-on:click="resetFilter()">Reset all</button>
+                                </span>
+                                <span class="col-xl-6 col-md-6 mb-1">
+                                    <span class="span_search">Cena</span>
+                                    <input class="form-control mr-sm-2" type="text" placeholder="min cena" aria-label="Search" v-model="searchedCar.cenaMin">
+                                    <span style="padding-right:6px;" class="span_search"> - </span>
+                                    <input class="form-control mr-sm-2" type="text" placeholder="max cena" aria-label="Search" v-model="searchedCar.cenaMax">
+                                </span>
+                                <span class="col-xl-3 col-md-6 mb-1">
+                                    <span class="span_search">Marka</span>
+                                    <select style="padding:5px;" v-model="searchedCar.markaAut">
+                                        <option disabled value="">Marka automobila</option>
+                                        <option v-bind:key="marka" v-for="marka in markaAut">{{marka}}</option>
+                                    </select>
+                                </span>
 
                                 <div style='display:inline;' id='third_raw'>
-                                    <span class="span_search">Klasa</span>
-                                    <select style="padding:5px;" v-model="searchedCar.klasaAut">
-                                        <option disabled value="">Klasa automobila</option>
-                                        <option v-bind:key="klasa" v-for="klasa in klasaAut">{{klasa}}</option>
-                                    </select>
-                            
-                                    <span class="span_search">Tip menjaca</span>
-                                    <select style="padding:5px;" v-model="searchedCar.tipMenjaca">
-                                        <option disabled value="">Tip menajca</option>
-                                        <option v-bind:key="menjac" v-for="menjac in tipMenjaca">{{menjac}}</option>
-                                    </select>
+                                    <span class="col-xl-3 col-md-6 mb-3"> 
+                                        <span class="span_search">Model</span>
+                                        <select style="padding:5px;" v-model="searchedCar.modelAut">
+                                            <option disabled value="">Model automobila</option>
+                                            <option v-bind:key="model" v-for="model in modelAut">{{model}}</option>
+                                        </select>
+                                    </span>
+                                    <span class="col-xl-3 col-md-6 mb-3">   
+                                        <span class="span_search">Klasa</span>
+                                        <select style="padding:5px;" v-model="searchedCar.klasaAut">
+                                            <option disabled value="">Klasa automobila</option>
+                                            <option v-bind:key="klasa" v-for="klasa in klasaAut">{{klasa}}</option>
+                                        </select>
+                                    </span>
+                                    <span class="col-xl-3 col-md-6 mb-3">
+                                        <span class="span_search">Tip menjaca</span>
+                                        <select style="padding:5px;" v-model="searchedCar.tipMenjaca">
+                                            <option disabled value="">Tip menajca</option>
+                                            <option v-bind:key="menjac" v-for="menjac in tipMenjaca">{{menjac}}</option>
+                                        </select>
+                                    </span>
+                                    <span class="col-xl-3 col-md-6 mb-3">
+                                        <span class="span_search">Tip goriva</span>
+                                        <select style="padding:5px;" v-model="searchedCar.tipGoriva">
+                                            <option disabled value="">Tip goriva</option>
+                                            <option v-bind:key="gorivo" v-for="gorivo in tipGoriva">{{gorivo}}</option>
+                                        </select>
+                                    </span>
 
-                                    <span class="span_search">Tip goriva</span>
-                                    <select style="padding:5px;" v-model="searchedCar.tipGoriva">
-                                        <option disabled value="">Tip goriva</option>
-                                        <option v-bind:key="gorivo" v-for="gorivo in tipGoriva">{{gorivo}}</option>
-                                    </select>
-                                    
                                     <div id='fourth_raw'>
-                                        <span class="span_search">Decija sedista</span>
-                                        <select style="padding:5px;" v-model="searchedCar.brojSedZaDec">
-                                            <option disabled value="">Br. sed. za decu</option>
-                                            <option v-bind:key="bszd" v-for="bszd in brojSedZaDec">{{bszd}}</option>
-                                        </select>      
-
-                                        <span class="span_search">Predjena km</span>
-                                        <input class="form-control mr-sm-2" type="text" placeholder="Kilometraza" aria-label="Search" v-model="searchedCar.predjenaKilometraza">  
-                                        
-                                        <span>
-                                            <span class="span_search">Coll Ddmg Waiver</span>
-                                            <input type="radio" v-model="searchedCar.ColDmgWaiv" required value="true"> True
-                                            <input type="radio" v-model="searchedCar.ColDmgWaiv" required value="false"> False
+                                        <span class="col-xl-3 col-md-6 mb-2"> 
+                                            <span class="span_search">Decija sedista</span>
+                                            <select style="padding:5px;" v-model="searchedCar.brojSedZaDec">
+                                                <option disabled value="">Br. sed. za decu</option>
+                                                <option v-bind:key="bszd" v-for="bszd in brojSedZaDec">{{bszd}}</option>
+                                            </select> 
                                         </span>
-                                
+                                        <span class="col-xl-3 col-md-6 mb-2"> 
+                                            <span class="span_search">Predjena km</span>
+                                            <input class="form-control mr-sm-2" type="text" placeholder="Kilometraza" aria-label="Search" v-model="searchedCar.predjenaKilometraza">  
+                                        </span>
+                                        <span class="col-xl-3 col-md-6 mb-2"> 
+                                            <span>
+                                                <span class="span_search">Coll Ddmg Waiver</span>
+                                                <input type="radio" v-model="searchedCar.ColDmgWaiv" required value="true"> True
+                                                <input type="radio" v-model="searchedCar.ColDmgWaiv" required value="false"> False
+                                            </span>
+                                        </span>
+                                        <span class="col-xl-3 col-md-6 mb-2"> 
+                                            <button style="margin-left: 5px;" class="btn btn-outline-success my-2 my-sm-0" type="button" v-on:click.prevent='searchCar()'>Search</button>
+                                        </span>
                                     </div> <!--/fourth_row-->
                                 </div> <!--/third_row-->
                             </div><!--/second_row-->
@@ -213,7 +229,6 @@ export default {
         }
     },
     methods:{        
-
         showDetails:function(id){
             this.$router.push(`/cars/${id}/details`);
         },
@@ -249,9 +264,6 @@ export default {
         // metoda za koja salje parametre za pretragu automobila i vraca listu automobila kao rezultat
          searchCar() {
             console.log(`Trazite apartman:
-            lokacija: ${this.searchedCar.lokacija}
-            od: ${this.searchedCar.od}
-            do: ${this.searchedCar.do}
             cenaMin: ${this.searchedCar.cenaMin}
             cenaMax: ${this.searchedCar.cenaMax}
             markaAut: ${this.searchedCar.markaAut}
@@ -264,21 +276,6 @@ export default {
             `);
 
             // console.log(this.dates);
-            if (this.searchedCar.lokacija !== null) {
-                this.searchedQuery += 'lokacija=' + this.searchedCar.lokacija;
-            }
-            if (this.searchedCar.od != null) {
-                // let od_datuma = this.searchedCar.od.getTime();
-                let od_datuma = this.searchedCar.od;
-                this.searchedQuery += '&od=' + od_datuma;
-            }
-            if (this.searchedCar.do != null) {
-                // let do_datuma = this.searchedCar.do.getTime();
-                let do_datuma = this.searchedCar.do;
-                this.searchedQuery += '&do=' + do_datuma;
-            }
-
-
             if (this.searchedCar.cenaMin !== null) {
                 this.searchedQuery += '&cenaMin=' + this.searchedCar.cenaMin;
             }
@@ -397,4 +394,13 @@ export default {
   padding:10px;
 }
 
+form{
+    position: relative;
+}
+
+form #search_icon{
+    position: absolute;
+    right:15px;
+    top:-15px;
+}
 </style>
