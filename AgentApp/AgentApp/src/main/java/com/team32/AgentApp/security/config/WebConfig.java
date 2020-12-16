@@ -13,7 +13,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 	
 	
@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
 	   public ObjectMapper objectMapper() {
 	       final ObjectMapper objectMapper = new ObjectMapper();
 	       objectMapper.registerModule(new JavaTimeModule());
-	       objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+	       objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
 	       // support for Hibernate types
 	       objectMapper.registerModule(new Hibernate5Module());
 	       // Jackson Afterburner module to speed up ser/des
@@ -33,6 +33,6 @@ public class WebConfig implements WebMvcConfigurer {
 	// Za svrhe razvoja konfigurisemo dozvolu za CORS kako ne bismo morali @CrossOrigin anotaciju da koristimo nad svakim kontrolerom
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("http://localhost:8081").allowedMethods("PUT","DELETE","POST","GET","OPTIONS");
+        registry.addMapping("/**").allowedOrigins("http://localhost:8081").allowedMethods("PUT","DELETE","POST","GET");
     }
 }

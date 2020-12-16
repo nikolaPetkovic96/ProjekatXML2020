@@ -14,6 +14,7 @@ import com.team32.AgentApp.service.CommonDataService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -29,7 +30,8 @@ public class CenovnikController {
 	
 	@Autowired
 	private CommonDataService comDataService;
-
+	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/cenovnik", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CenovnikDTO>> getAllCenovnik(){
 		List<Cenovnik> allCenovnik = cenovnikService.getAllCenovnik();
@@ -39,7 +41,7 @@ public class CenovnikController {
 		}
 		return new ResponseEntity<>(cenovnikDTO, HttpStatus.OK);
  	}
-
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/cenovnik/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CenovnikDTO> getCenovnik(@PathVariable("id") Long id){
 		Cenovnik cenovnik = cenovnikService.findOne(id);
@@ -48,7 +50,7 @@ public class CenovnikController {
 		}
 		return new ResponseEntity<>(new CenovnikDTO(cenovnik), HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.POST, value="/cenovnik", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CenovnikDTO> addCenovnik(@RequestBody CenovnikDTO cenovnikDTO) throws Exception{
 
@@ -73,7 +75,7 @@ public class CenovnikController {
 		savedCenovnik = cenovnikService.addCenovnik(savedCenovnik);
 		return new ResponseEntity<>(new CenovnikDTO(savedCenovnik), HttpStatus.CREATED);
 	}
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.PUT, value="/cenovnik", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CenovnikDTO> updateAutomobil(@RequestBody CenovnikDTO cenovnikDTO) throws Exception{
 		
@@ -101,7 +103,7 @@ public class CenovnikController {
 		updatedCenovnik = cenovnikService.updateCenovnik(updatedCenovnik.getId(), updatedCenovnik);
 		return new ResponseEntity<>(new CenovnikDTO(updatedCenovnik),HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(value="/cenovnik/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteCenovnik(@PathVariable Long id){
 		Cenovnik cenovnik = cenovnikService.findOne(id);

@@ -74,13 +74,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
 				// svim korisnicima dopusti da pristupe putanjama /**, /h2-console/** i /api/foo
-				.authorizeRequests().antMatchers("/**").permitAll().antMatchers("/home").permitAll().antMatchers("/auth/login").permitAll().antMatchers("/cars").permitAll()  
+				.authorizeRequests().antMatchers("/**").permitAll().antMatchers("/home").permitAll().antMatchers("/auth/login").permitAll()  
 				
 				// svaki zahtev mora biti autorizovan !!! A to definisem kod same metode u kontroleru sa @PreAuthorize(pa rola);
 				.anyRequest().authenticated().and()
 				
 				//ovaj cors() je za webConfig klasu
-				.cors().and().headers().frameOptions().sameOrigin().and() //dodao kako bi H2-console bilo prikazano
+				.cors().and()
 
 				// presretni svaki zahtev filterom, rekli da pre basic autenifikacionog filtera prvo ovaj nas custom (za tokene) potera.
 				.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService),

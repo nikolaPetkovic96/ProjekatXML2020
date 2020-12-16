@@ -2,13 +2,15 @@ package com.team32.AgentApp.DTO;
 
 import com.team32.AgentApp.model.entitet.User;
 
-public class UserDTO {
+public class UserNewDTO {
 	
  	private Long id;
 	
     protected String korisnickoIme;
 	
     protected String lozinka;
+    
+    protected String lozinkaZaPotvrdu;
 
     protected String email;
 
@@ -36,11 +38,11 @@ public class UserDTO {
     
 	private AdresaDTO adresa;
 
-	public UserDTO() {
+	public UserNewDTO() {
 		super();
 	}
 
-	public UserDTO(Long id, String korisnickoIme, String lozinka, String email, String status, Long adresaId, String ime,
+	public UserNewDTO(Long id, String korisnickoIme, String lozinka,String lozinkaZaPotvrdu, String email, String status, Long adresaId, String ime,
 			String prezime, String jmbg, String naziv, String poslovniMaticniBroj, String pol, AdresaDTO adresa, Long commonDataId) {
 		super();
 		this.id = id;
@@ -57,11 +59,12 @@ public class UserDTO {
 		this.pol = pol;
 		this.commonDataId = commonDataId;
 		
+		this.lozinkaZaPotvrdu = lozinkaZaPotvrdu;
 		this.adresa = adresa;
 
 	}
 
-	public UserDTO(User u, AdresaDTO adresa) {
+	public UserNewDTO(User u, AdresaDTO adresa) {
 		super();
 		this.id = u.getId();
 		this.korisnickoIme = u.getKorisnickoIme();
@@ -192,7 +195,13 @@ public class UserDTO {
 	public void setAdresa(AdresaDTO adresa) {
 		this.adresa = adresa;
 	}
-	
-	
+
+	public String getLozinkaZaPotvrdu() {
+		return lozinkaZaPotvrdu;
+	}
+
+	public void setLozinkaZaPotvrdu(String lozinkaZaPotvrdu) {
+		this.lozinkaZaPotvrdu = lozinkaZaPotvrdu;
+	}
 
 }

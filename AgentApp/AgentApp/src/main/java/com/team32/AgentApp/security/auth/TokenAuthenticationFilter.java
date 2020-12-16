@@ -1,6 +1,7 @@
 package com.team32.AgentApp.security.auth;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.team32.AgentApp.model.entitet.Authority;
+import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.security.security.TokenUtils;
 
 //Filter koji ce presretati svaki zahtev klijenta ka serveru
@@ -41,7 +44,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 			if (username != null) {
 				// uzmi user-a na osnovu username-a
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-				
+				User user = (User) userDetails;
+				List<Authority> authorities = (List<Authority>) user.getAuthorities();
 				// proveri da li je prosledjeni token validan
 				if (tokenUtils.validateToken(authToken, userDetails)) {
 					// kreiraj autentifikaciju

@@ -2,9 +2,6 @@
 --INSERT INTO USERS(username, password,  enabled, last_password_reset_date) VALUES ('user2', 'bell', true, '2017-10-01 18:57:58.508-07')
 --INSERT INTO USERS(username, password,  enabled, last_password_reset_date) VALUES ('user3', 'bella', true, '2017-10-01 18:57:58.508-07')
 
-
-
-
 -----------------------------------------------------------USER-----------------------------------------------------------------
 
 --CommonData (Za KlasaAutomobila) 1 - 3

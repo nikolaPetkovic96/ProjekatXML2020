@@ -126,7 +126,7 @@ public class TokenUtils {
 		String username;
 		try {
 			final Claims claims = this.getAllClaimsFromToken(token);
-			username = claims.getSubject();
+			username = (String) claims.getSubject();
 		} catch (Exception e) {
 			username = null;
 		}
