@@ -1,5 +1,6 @@
 package com.team32.AgentApp.controller;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,24 +90,28 @@ public class KomentarController {
 	
 	//POST
 	@RequestMapping(method=RequestMethod.POST, value="/komentar",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<KomentarDTO> addKomentar(@RequestBody KomentarDTO komentarDTO)  throws Exception {
+	public ResponseEntity<KomentarDTO> addKomentar(Principal principal, @RequestBody KomentarDTO dto)  throws Exception {
 		
 		Komentar savedKomentar = new Komentar();
+		
+		//Preuzima se user iz sesije koji je trenutno ulogovan
+		String username = principal.getName();
+		User loggedAgent = userService.findByUsername(username);
 		
 		//Prilkom kreiranja novog komentara odmah se kreira i commonData koji pamti ko je kreirao i kada.
 		CommonData commonData = new CommonData();
 		LocalDateTime now = LocalDateTime.now();
 		commonData.setDatumKreiranja(now);
-		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
+		commonData.setUserId(loggedAgent.getId());
 		commonData = comDataService.addCommonData(commonData);
 		
 		User user = userService.findOne(commonData.getUserid());
 		
-		savedKomentar.setId(komentarDTO.getId());
-		savedKomentar.setTekstKomentara(komentarDTO.getTekstKomentara());
-		savedKomentar.setOdobren(komentarDTO.isOdobren());
-		savedKomentar.setAutomobilId(komentarDTO.getAutomobilId());
-		savedKomentar.setRezervacijaId(komentarDTO.getRezervacijaId());
+		savedKomentar.setId(dto.getId());
+		savedKomentar.setTekstKomentara(dto.getTekstKomentara());
+		savedKomentar.setOdobren(dto.isOdobren());
+		savedKomentar.setAutomobilId(dto.getAutomobilId());
+		savedKomentar.setRezervacijaId(dto.getRezervacijaId());
 		savedKomentar.setCommonDataId(commonData.getId());
 		
 		savedKomentar = komentarService.addKomentar(savedKomentar); 

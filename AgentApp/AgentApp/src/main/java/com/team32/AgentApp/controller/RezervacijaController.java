@@ -42,10 +42,10 @@ public class RezervacijaController {
 		
 		//Preuzima se user iz sesije koji je trenutno ulogovan
 		String username = principal.getName();
-		User loggedUser = userService.findByUsername(username);
+		User loggedAgent = userService.findByUsername(username);
 		
 //		List<Rezervacija> allRezervacija = rezervacijaService.getAllRezervacija();
-		List<Rezervacija> allRezervacija = rezervacijaService.getAllRezervacijaByIdAgenta(loggedUser.getId());
+		List<Rezervacija> allRezervacija = rezervacijaService.getAllRezervacijaByIdAgenta(loggedAgent.getId());
 		
 		List<RezervacijaDTO> rezervacijeDTO = new ArrayList<>();
 		for(Rezervacija r : allRezervacija) {

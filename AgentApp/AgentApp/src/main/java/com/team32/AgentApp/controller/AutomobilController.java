@@ -1,5 +1,6 @@
 package com.team32.AgentApp.controller;
 
+import java.security.Principal;
 //import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +15,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.AutomobilDTO;
+import com.team32.AgentApp.DTO.AutomobilReviewDTO;
+import com.team32.AgentApp.DTO.KomentarDTO;
+import com.team32.AgentApp.DTO.OcenaDTO;
+import com.team32.AgentApp.DTO.ReviewDTO;
 import com.team32.AgentApp.model.entitet.Automobil;
 import com.team32.AgentApp.model.entitet.CommonData;
+import com.team32.AgentApp.model.entitet.Komentar;
+import com.team32.AgentApp.model.entitet.Ocena;
+import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.service.AutomobilService;
 import com.team32.AgentApp.service.CommonDataService;
-import com.team32.AgentApp.service.KlasaAutomobilaService;
-import com.team32.AgentApp.service.MarkaAutomobilaService;
-import com.team32.AgentApp.service.ModelAutomobilaService;
-import com.team32.AgentApp.service.TipGorivaService;
-import com.team32.AgentApp.service.TipMenjacaService;
+import com.team32.AgentApp.service.KomentarService;
+import com.team32.AgentApp.service.OcenaService;
+import com.team32.AgentApp.service.UserService;
 
 @RestController
 public class AutomobilController {
@@ -34,21 +40,13 @@ public class AutomobilController {
 	private CommonDataService comDataService;
 	
 	@Autowired
-	private ModelAutomobilaService modelService;
+	private UserService userService;
 	
 	@Autowired
-	private KlasaAutomobilaService klasaService;
+	private KomentarService komentarService;
 	
 	@Autowired
-	private MarkaAutomobilaService markaService;
-	
-	@Autowired
-	private TipGorivaService gorivoService;
-	
-	@Autowired
-	private TipMenjacaService menjacService;
-	
-	
+	private OcenaService ocenaService;
 	
 	@RequestMapping(method=RequestMethod.GET, value="/automobil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AutomobilDTO>> getAllAutomobil(){
@@ -57,17 +55,36 @@ public class AutomobilController {
 		List<AutomobilDTO> automobilDTO = new ArrayList<>();
 		for(Automobil a : allAutomobil) {
 			
-			String marka = markaService.findOne(a.getMarkaAutomobilaId()).getNazivMarke(); 
-			String model = modelService.findOne(a.getModelAutomobilaId()).getNazivModela();
-			String klasa = klasaService.findOne(a.getKlasaAutomobilaId()).getNazivKlase();
-			String menjac = menjacService.findOne(a.getTipMenjacaId()).getNazivMenjaca();
-			String gorivo = gorivoService.findOne(a.getTipGorivaId()).getNazivTipa();
-			
-			automobilDTO.add(new AutomobilDTO(a, marka, model, klasa, menjac, gorivo));
+			automobilDTO.add(automobilService.findOneWithDetails(a.getId()));
 			
 		}
 		return new ResponseEntity<>(automobilDTO, HttpStatus.OK);
 	}
+	
+	//Ovo je za automobil details vise odradjeno...
+	@RequestMapping(method=RequestMethod.GET, value="/automobilReview", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AutomobilReviewDTO>> getAllAutomobilReviews(Principal principal){
+		
+		//Preuzima se user iz sesije koji je trenutno ulogovan
+		String username = principal.getName();
+		User loggedAgent = userService.findByUsername(username);
+		
+		List<Automobil> allAgentsAutomobil = automobilService.getAllAutomobilByAgent(loggedAgent.getId());
+		
+		List<AutomobilReviewDTO> automobilRewiewDTO = new ArrayList<>();
+		for(Automobil a : allAgentsAutomobil) {
+			//Popunjavamo automobil podacima iz modela
+			AutomobilDTO autoDTO = automobilService.findOneWithDetails(a.getId());
+			
+			//Kreiramo dobavljamo komentare i ocene vezane za njega
+			List<ReviewDTO> reviews = getAllReviewsByAutomobilId(a.getId(), username);
+			
+			automobilRewiewDTO.add(new AutomobilReviewDTO(autoDTO, reviews));
+			
+		}
+		return new ResponseEntity<>(automobilRewiewDTO, HttpStatus.OK);
+	}
+	
 	
 	@RequestMapping(method=RequestMethod.GET, value="/automobil/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AutomobilDTO> getAutomobil(@PathVariable("id") Long id){
@@ -77,13 +94,49 @@ public class AutomobilController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		String marka = markaService.findOne(automobil.getMarkaAutomobilaId()).getNazivMarke(); 
-		String model = modelService.findOne(automobil.getModelAutomobilaId()).getNazivModela();
-		String klasa = klasaService.findOne(automobil.getKlasaAutomobilaId()).getNazivKlase();
-		String menjac = menjacService.findOne(automobil.getTipMenjacaId()).getNazivMenjaca();
-		String gorivo = gorivoService.findOne(automobil.getTipGorivaId()).getNazivTipa();
+		return new ResponseEntity<>(automobilService.findOneWithDetails(automobil.getId()), HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/automobil/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteAutomobil(@PathVariable Long id){
+		Automobil automobil = automobilService.findOne(id);
+		if(automobil != null) {
+			automobilService.deleteAutomobil(id);
+			comDataService.deleteCommonData(automobil.getCommonDataId());
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	
+	public List<ReviewDTO> getAllReviewsByAutomobilId(Long autoId, String loggedUsername){
+		List<ReviewDTO> reviews = new ArrayList<>();
 		
-		return new ResponseEntity<>(new AutomobilDTO(automobil, marka, model, klasa, menjac, gorivo), HttpStatus.OK);
+		//Komentari i ocene se poklapaju po 2 kriterijuma po automobilu i po rezervaciji
+		//Vadimo sve komentare i rezervacije za jedan isti automobil;
+		List<Komentar> sviKomentAutomob = komentarService.getAllKomentarByAutomobilId(autoId);
+		List<Ocena> sveOceneAutomob = ocenaService.getAllOcenaByAutomobilId(autoId);
+		
+		//Prolazimo kroz rezulat i proveravamo koji od njih pripadaju istoj rezervaciji
+		for(Komentar k : sviKomentAutomob) {
+			//Provera da li je komentar ostavio sam agent (onda nema ocene)
+			CommonData comData = comDataService.findOne(k.getCommonDataId());
+			User u = userService.findOne(comData.getUserid());
+			
+			if(u.getKorisnickoIme().equals(loggedUsername)  && k.isOdobren() == true) {
+				reviews.add(new ReviewDTO(new KomentarDTO(k, u.getKorisnickoIme())));
+				continue;
+			}
+			for(Ocena o : sveOceneAutomob) {
+				if(k.getRezervacijaId() == o.getRezervacijaId() && k.isOdobren() == true) {
+					
+					reviews.add(new ReviewDTO(new OcenaDTO(o), new KomentarDTO(k, u.getKorisnickoIme())));
+				}
+			}
+		}
+		
+		return reviews;
 	}
 	
 //	
@@ -148,15 +201,4 @@ public class AutomobilController {
 //		return new ResponseEntity<>(new AutomobilDTO(updatedAutomobil),HttpStatus.OK);
 //	}
 //	
-	@RequestMapping(value="/automobil/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteAutomobil(@PathVariable Long id){
-		Automobil automobil = automobilService.findOne(id);
-		if(automobil != null) {
-			automobilService.deleteAutomobil(id);
-			comDataService.deleteCommonData(automobil.getCommonDataId());
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
 }

@@ -46,4 +46,11 @@ public class KomentarService {
 	public void deleteKomentar(Long id) {
 		komentarRepository.deleteById(id);
 	}
+
+	public List<Komentar> getAllKomentarByAutomobilId(Long autoId) {
+	
+		return  komentarRepository.findAllByAutomobilId(autoId);
+	}
+
+
 }

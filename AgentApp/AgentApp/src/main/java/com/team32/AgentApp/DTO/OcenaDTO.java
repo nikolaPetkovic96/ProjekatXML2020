@@ -16,6 +16,14 @@ public class OcenaDTO {
 		super();
 	}
 	
+	public OcenaDTO(Ocena o) {
+		this.id = o.getId();
+		this.vrednostOcene = o.getVrednostOcene();
+		this.automobilId = o.getAutomobilId();
+		this.rezervacijaId =  o.getRezervacijaId();
+		this.commonDataId = o.getCommonDataId();
+	}
+	
 	public OcenaDTO(Ocena o, String username) {
 		this.id = o.getId();
 		this.vrednostOcene = o.getVrednostOcene();

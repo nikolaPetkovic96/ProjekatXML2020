@@ -2,49 +2,36 @@ package com.team32.AgentApp.DTO;
 
 import com.team32.AgentApp.model.entitet.Komentar;
 
-public class KomentarDTO {
+public class KomentarNewDTO {
 	
 	private Long id;
 	private String tekstKomentara;
 	private boolean odobren;
-	private Long commonDataId;
 	private Long automobilId;
 	private Long rezervacijaId;
 
     private String username;
     
-    
-	public KomentarDTO() {
+	public KomentarNewDTO() {
 		
 	}
 	
-	public KomentarDTO(Komentar k) {
+	public KomentarNewDTO(Komentar k) {
 		this.id = k.getId();
 		this.tekstKomentara = k.getTekstKomentara();
 		this.odobren = k.isOdobren();
 		this.rezervacijaId = k.getRezervacijaId();
 		this.automobilId = k.getAutomobilId();
-		this.commonDataId = k.getCommonDataId();
+
 	}
 	
-	public KomentarDTO(Komentar k, String username) {
-		this.id = k.getId();
-		this.tekstKomentara = k.getTekstKomentara();
-		this.odobren = k.isOdobren();
-		this.rezervacijaId = k.getRezervacijaId();
-		this.automobilId = k.getAutomobilId();
-		this.commonDataId = k.getCommonDataId();
-		this.username = username;
-	}
-	
-	public KomentarDTO(Long id, String tekstKomentara, boolean odobren, Long commonDataId,Long rezervacijaId,Long automobilId, String username) {
+	public KomentarNewDTO(Long id, String tekstKomentara, boolean odobren, Long rezervacijaId,Long automobilId, String username) {
 		super();
 		this.id = id;
 		this.tekstKomentara = tekstKomentara;
 		this.odobren = odobren;
 		this.rezervacijaId = rezervacijaId;
 		this.automobilId = automobilId;
-		this.commonDataId = commonDataId;
 		this.username = username;
 	}
 
@@ -86,7 +73,6 @@ public class KomentarDTO {
 		this.odobren = odobren;
 	}
 	
-	
 	public Long getRezervacijaId() {
 		return rezervacijaId;
 	}
@@ -95,11 +81,5 @@ public class KomentarDTO {
 		this.rezervacijaId = rezervacijaId;
 	}
 
-	public Long getCommonDataId() {
-		return commonDataId;
-	}
-	public void setCommonDataId(Long commonDataId) {
-		this.commonDataId = commonDataId;
-	}
 	
 }

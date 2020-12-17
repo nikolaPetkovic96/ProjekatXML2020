@@ -32,6 +32,9 @@ public class AutomobilService {
 	@Autowired
 	private TipMenjacaService menjacService;
 	
+	@Autowired
+	private CommonDataService comDataService;
+	
 	public List<Automobil> getAllAutomobil(){
 		List<Automobil> listaAutomobila = new ArrayList<>();
 		automobilRepository.findAll().forEach(listaAutomobila::add);
@@ -44,9 +47,7 @@ public class AutomobilService {
 	
 	//Pomocna metoda koja sluzi da vrati Automobil ciji su atiributi objekti.
 	public AutomobilDTO findOneWithDetails(Long id) {
-		
 		Automobil auto = automobilRepository.findById(id).orElseGet(null);
-
 		String marka = markaService.findOne(auto.getMarkaAutomobilaId()).getNazivMarke(); 
 		String model = modelService.findOne(auto.getModelAutomobilaId()).getNazivModela();
 		String klasa = klasaService.findOne(auto.getKlasaAutomobilaId()).getNazivKlase();
@@ -54,7 +55,6 @@ public class AutomobilService {
 		String gorivo = gorivoService.findOne(auto.getTipGorivaId()).getNazivTipa();
 		
 		AutomobilDTO autoDTO = new AutomobilDTO(auto, marka, model, klasa, menjac, gorivo);
-		
 		return autoDTO;
 	}
 	
@@ -77,6 +77,22 @@ public class AutomobilService {
 	
 	public void deleteAutomobil(Long id) {
 		automobilRepository.deleteById(id);
+	}
+
+	public List<Automobil> getAllAutomobilByAgent(Long agentId) {
+		List<Automobil> automobili = new ArrayList<>();
+		
+		//Dobavim sve oglase iz baze
+		List<Automobil> sviAutomobili = automobilRepository.findAll();
+		
+		//Prolazim kroz autlomobile i proveravam da li je agentId = userId u commonData automobila
+		for(Automobil a : sviAutomobili){
+			if(comDataService.findOne(a.getCommonDataId()).getUserid() == agentId) {
+				automobili.add(a);
+			}
+		}
+		
+		return automobili;	
 	}
 	
 }

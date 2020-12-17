@@ -1,4 +1,5 @@
 package com.team32.AgentApp.controller;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import com.team32.AgentApp.model.entitet.Narudzbenica;
 import com.team32.AgentApp.model.entitet.Oglas;
 import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.model.tentitet.Adresa;
+import com.team32.AgentApp.security.exception.ResourceConflictException;
 import com.team32.AgentApp.service.AdresaService;
 import com.team32.AgentApp.service.AutomobilService;
 import com.team32.AgentApp.service.CenovnikService;
@@ -111,6 +113,73 @@ public class OglasController {
 			// convert komentar to DTOs
 			return new ResponseEntity<>(oglasiDTO, HttpStatus.OK);
 		}
+		
+		
+		//GET ALL
+		@RequestMapping(method=RequestMethod.GET, value="/oglas/agent", produces = MediaType.APPLICATION_JSON_VALUE)
+		public ResponseEntity<List<OglasDTO>> getAllAgentsOglas(Principal principal) {
+		
+			//Preuzima se user iz sesije koji je trenutno ulogovan
+			String username = principal.getName();
+			User loggedAgent = userService.findByUsername(username);
+			
+			
+			List<Oglas> allAgentsOglas = oglasService.getAllOglasByAgentId(loggedAgent.getId());
+			
+			List<OglasDTO> oglasiDTO = new ArrayList<>();
+			for (Oglas o : allAgentsOglas) {
+				
+				OglasDTO oglasDTO = new OglasDTO();
+				
+				CommonData comData = comDataService.findOne(o.getCommonDataId());
+				if(comData == null) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+				
+				User user = userService.findOne(comData.getUserid());
+				if(user == null) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+				
+				Cenovnik cenovnik = cenovnikService.findOne(o.getCenovnikId());
+				if(cenovnik == null) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+				
+				AutomobilDTO automobilDTO = automobilService.findOneWithDetails(o.getAutomobilId());
+				if(automobilDTO == null) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+				
+				Adresa adresa = adresaService.findOne(o.getAdresaId());
+				if(adresa == null) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+
+				oglasDTO.setId(o.getId());
+				oglasDTO.setCenovnikId(o.getCenovnikId());
+				oglasDTO.setAutomobilId(o.getAutomobilId());
+				oglasDTO.setAdresaId(o.getAdresaId());
+				oglasDTO.setCommonDataId(o.getCommonDataId());
+				oglasDTO.setOdDatuma(o.getOdDatuma());
+				oglasDTO.setDoDatuma(o.getDoDatuma());
+				
+				oglasDTO.setAgentId(comData.getUserid());
+				oglasDTO.setKorImeAgenta(user.getKorisnickoIme());
+
+				oglasDTO.setPlaniranaKilometraza(o.getPlaniranaKilometraza());
+				oglasDTO.setZauzetiTermini(getZauzetiTermini(narudzbService.getAllNarudzbeniceByOglasId(o.getId())));
+				oglasDTO.setAdresa(new AdresaDTO(adresa));
+				oglasDTO.setAutomobil(automobilDTO);
+				oglasDTO.setCenovnik(new CenovnikDTO(cenovnik));
+				
+				oglasiDTO.add(oglasDTO);
+			}
+			// convert komentar to DTOs
+			return new ResponseEntity<>(oglasiDTO, HttpStatus.OK);
+		}
+
+		
 		
 		//GET
 		@RequestMapping(method=RequestMethod.GET, value="/oglas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -226,21 +295,27 @@ public class OglasController {
 		//DELETE
 		@RequestMapping(value="/oglas/{id}", method=RequestMethod.DELETE)
 		public ResponseEntity<Void> deleteOglas(@PathVariable Long id) {
-			
 			Oglas oglas = oglasService.findOne(id);
 			if (oglas != null) {
-				Adresa adresa =  adresaService.findOne(oglas.getAdresaId());
 				
-				//obrise se adresa vezana za oglas
-				adresaService.deleteAdresa(adresa.getId());
-				//obrise se i commonData te adrese
-				comDataService.deleteCommonData(adresa.getCommonDataId());
+				List<HashMap<String, LocalDateTime>> imaZauzetihTermina = getZauzetiTermini(narudzbService.getAllNarudzbeniceByOglasId(oglas.getId()));
 				
-				//obrise se sam oglas
-				oglasService.deleteOglas(id);
-				//obrise se commonData tog oglasa
-				comDataService.deleteCommonData(oglas.getCommonDataId());
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				if(imaZauzetihTermina.size() == 0){
+					Adresa adresa =  adresaService.findOne(oglas.getAdresaId());
+					//obrise se adresa vezana za oglas
+					adresaService.deleteAdresa(adresa.getId());
+					//obrise se i commonData te adrese
+					comDataService.deleteCommonData(adresa.getCommonDataId());
+					
+					//obrise se sam oglas
+					oglasService.deleteOglas(id);
+					//obrise se commonData tog oglasa
+					comDataService.deleteCommonData(oglas.getCommonDataId());
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}else {
+					throw new ResourceConflictException(oglas.getId(), "There are reservations connected to this ad!");
+				}
+
 			} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			} 

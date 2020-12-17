@@ -46,5 +46,9 @@ public class OcenaService {
 	public void deleteOcena(Long id) {
 		ocenaRepository.deleteById(id);
 	}
+
+	public List<Ocena> getAllOcenaByAutomobilId(Long autoId) {
+		return ocenaRepository.findAllByAutomobilId(autoId);
+	}
 	
 }
