@@ -98,7 +98,7 @@ public class OglasController {
 				oglasDTO.setDoDatuma(o.getDoDatuma());
 				
 				oglasDTO.setAgentId(comData.getUserid());
-				oglasDTO.setUsername(user.getKorisnickoIme());
+				oglasDTO.setKorImeAgenta(user.getKorisnickoIme());
 
 				oglasDTO.setPlaniranaKilometraza(o.getPlaniranaKilometraza());
 				oglasDTO.setZauzetiTermini(getZauzetiTermini(narudzbService.getAllNarudzbeniceByOglasId(o.getId())));
@@ -157,7 +157,7 @@ public class OglasController {
 			oglasDTO.setPlaniranaKilometraza(oglas.getPlaniranaKilometraza());
 			
 			oglasDTO.setAgentId(comData.getUserid());
-			oglasDTO.setUsername(user.getKorisnickoIme());
+			oglasDTO.setKorImeAgenta(user.getKorisnickoIme());
 			oglasDTO.setZauzetiTermini(getZauzetiTermini(narudzbService.getAllNarudzbeniceByOglasId(oglas.getId())));
 			oglasDTO.setAdresa(new AdresaDTO(adresa));
 			oglasDTO.setAutomobil(automobilDTO);

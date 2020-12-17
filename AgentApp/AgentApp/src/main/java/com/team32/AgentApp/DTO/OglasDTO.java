@@ -17,7 +17,7 @@ public class OglasDTO {
 	private Long automobilId;				//Posle obrisati
     private Long adresaId;					//Posle obrisati
 	private Long agentId; 					//onoga ko je napravio oglas (samo u DTO)
-	private String username;				//onoga ko je napravio oglas (samo u DTO)
+	private String korImeAgenta;				//onoga ko je napravio oglas (samo u DTO)
     private List<HashMap<String, LocalDateTime>> zauzetiTermini; //(samo u DTO)
     private AdresaDTO adresa;				//(samo u DTO)
     private AutomobilDTO automobil;			//(samo u DTO)
@@ -27,7 +27,7 @@ public class OglasDTO {
 		super();
 	}
 
-	public OglasDTO(Oglas o, String username, Long agentId, List<HashMap<String, LocalDateTime>> zauzetiTermini,
+	public OglasDTO(Oglas o, String korImeAgenta, Long agentId, List<HashMap<String, LocalDateTime>> zauzetiTermini,
 			AdresaDTO adresa, AutomobilDTO automobil, CenovnikDTO cenovnik) {
 		super();
 		this.id = o.getId();
@@ -38,7 +38,7 @@ public class OglasDTO {
 		this.commonDataId = o.getCommonDataId();
 		this.planiranaKilometraza = o.getPlaniranaKilometraza();
 		this.agentId = agentId;
-		this.username = username;
+		this.korImeAgenta = korImeAgenta;
 		this.zauzetiTermini = zauzetiTermini;
 		this.adresa = adresa;
 		this.automobil = automobil;
@@ -46,7 +46,7 @@ public class OglasDTO {
 	}
 
 	public OglasDTO(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long cenovnikId, Long automobilId, Long adresaId,
-			Long planiranaKilometraza, Long commonDataId, String username, Long agentId, List<HashMap<String, LocalDateTime>> zauzetiTermini, 
+			Long planiranaKilometraza, Long commonDataId, String korImeAgenta, Long agentId, List<HashMap<String, LocalDateTime>> zauzetiTermini, 
 			AdresaDTO adresa, AutomobilDTO automobil, CenovnikDTO cenovnik) {
 		super();
 		this.id = id;
@@ -57,7 +57,7 @@ public class OglasDTO {
 		this.adresaId = adresaId;
 		this.planiranaKilometraza = planiranaKilometraza;
 		this.commonDataId = commonDataId;
-		this.username = username;
+		this.korImeAgenta = korImeAgenta;
 		this.zauzetiTermini = zauzetiTermini;
 		this.commonDataId = commonDataId;
 		this.adresa = adresa;
@@ -129,12 +129,13 @@ public class OglasDTO {
 		this.commonDataId = commonDataId;
 	}
 
-	public String getUsername() {
-		return username;
+
+	public String getKorImeAgenta() {
+		return korImeAgenta;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setKorImeAgenta(String korImeAgenta) {
+		this.korImeAgenta = korImeAgenta;
 	}
 
 	public Long getAgentId() {

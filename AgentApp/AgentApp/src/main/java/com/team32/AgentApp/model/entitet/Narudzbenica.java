@@ -15,12 +15,14 @@ public class Narudzbenica {
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
 	
+		//UserId iz commonData od Oglasa 
 		@Column(name = "agent_id", nullable = false)
 		private Long agentId;
 		
+		//UserId iz commonData od te Narudzbenice
 		@Column(name = "user_id", nullable = false)
 		private Long userId;
-		
+	
 		@Column(name = "oglas_id", nullable = false)
 		private Long oglasId;
 		
@@ -35,13 +37,11 @@ public class Narudzbenica {
 	    
 	    @Column(name="common_data_id", nullable = false)
 	    private Long commonDataId;
-	    
 
 		public Narudzbenica() {
 			super();
 		}
 
-		
 		public Narudzbenica(Long id, Long agentId, Long userId, Long oglasId, Long rezervacijaId, LocalDateTime odDatuma,
 				LocalDateTime doDatuma, Long commonDataId) {
 			super();
@@ -118,5 +118,4 @@ public class Narudzbenica {
 		public void setCommonDataId(Long commonDataId) {
 			this.commonDataId = commonDataId;
 		}
-	    
 }

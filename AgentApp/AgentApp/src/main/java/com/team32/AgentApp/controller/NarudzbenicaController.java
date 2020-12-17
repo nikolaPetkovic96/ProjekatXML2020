@@ -91,7 +91,6 @@ public class NarudzbenicaController {
 		commonData.setDatumIzmene(now);
 		commonData = comDataService.updateCommonData(comDatId, commonData);
 		
-		
 		updNarudzb.setId(dto.getId());
 		updNarudzb.setAgentId(dto.getAgentId());
 		updNarudzb.setOglasId(dto.getOglasId());
@@ -100,7 +99,6 @@ public class NarudzbenicaController {
 		updNarudzb.setOdDatuma(dto.getOdDatuma());
 		updNarudzb.setDoDatuma(dto.getDoDatuma());
 		updNarudzb.setCommonDataId(comDatId);		
-		
 		
 		updNarudzb = narudzbService.updateNarudzbenica(updNarudzb.getId(), updNarudzb);
 		return new ResponseEntity<>(new NarudzbenicaDTO(updNarudzb), HttpStatus.OK);	

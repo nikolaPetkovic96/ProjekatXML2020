@@ -1,6 +1,18 @@
---INSERT INTO USERS(username, password,  enabled, last_password_reset_date) VALUES ('user', 'tre',  true, '2017-10-01 21:58:58.508-07')
---INSERT INTO USERS(username, password,  enabled, last_password_reset_date) VALUES ('user2', 'bell', true, '2017-10-01 18:57:58.508-07')
---INSERT INTO USERS(username, password,  enabled, last_password_reset_date) VALUES ('user3', 'bella', true, '2017-10-01 18:57:58.508-07')
+--Users
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('test', '$2a$10$786OZQwAuZ.Y8Nw6dm12SeyXW7r/M7sHb6aJZNHerDEjIGt4FlJlS', 'nmaster@gmail.com', 4, 'aktivan','Marko', 'Markovic', '213123124','Muski',NULL, NULL, 52)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('firma' ,'$2a$10$ThUT1iTXIkCMfPpCfBfC4eEPl.0L.9yAhIiNNqGk7/6tDnInnyYMS', 'sadasd@gmail.com', 6, 'aktivan', NULL, NULL, NULL, NULL, 'Firma 1', '7662313', 54)
+
+--Authority
+INSERT INTO AUTHORITY(name) VALUES('ROLE_AGENT')
+
+--User_Authority
+INSERT INTO USER_AUTHORITY(user_id, authority_id) VALUES (1, 1)
+INSERT INTO USER_AUTHORITY(user_id, authority_id) VALUES (2, 1)
+
+-- Test users
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('User1', 'pass1', 'nmaster@gmail.com', 4, 'aktivan','Marko', 'Markovic', '213123124','Muski',NULL, NULL, 52)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('Userina222', 'pass2', 'nmaster@gmail.com', 4, 'aktivan','Marko', 'Markovic', '213123124','Zenski',NULL, NULL, 52)
+
 
 -----------------------------------------------------------USER-----------------------------------------------------------------
 
@@ -61,15 +73,15 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 
 
 --CommonData (Za Rezervacije) 34 - 36
-INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
-INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',3)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',4)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
 
 
 --CommonData (Za Automobil)	37 - 39
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
-INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
-INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',1)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',2)
 
 --CommonData (Za Cenovnik)	40 - 42
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
@@ -160,16 +172,17 @@ INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, common_data_id) VALUES('R
 INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, common_data_id) VALUES('Novi Sad',21000,'Deset Jugovica', 5, 56)
 INSERT INTO Adresa(mesto, postanski_broj, ulica, broj, common_data_id) VALUES('Beograd',11000,'9. Marta', 25, 57)
 
---Narudzbenica
+--Narudzbenica	user_id preuzet iz common data u trenutku u kojem se kreirala i rezerivacija , a agent_id je agent koji je kreirao oglas koji pripada narudzbenici  
 INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2017-10-01 21:58:58','2018-10-02 18:57:58',1, 1, 1, 1, 46)
 INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2017-10-01 21:58:58','2018-10-02 18:57:58',2, 2, 2, 2, 47)
 INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2020-10-01 21:58:58','2020-10-02 18:57:58',2, 2, 2, 2, 47)
-INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2017-10-01 21:58:58','2018-10-02 18:57:58',3, 3, 3, 3, 48)
+INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2017-10-01 21:58:58','2018-10-02 18:57:58',3, 3, 3, 1, 48)
 
 --Izvestaj
 INSERT INTO Izvestaj(predjena_km, tekst_izvestaja, narudzbenica_id, common_data_id) VALUES(2530,'Neki tekst izvestaja', 1, 49)
 INSERT INTO Izvestaj(predjena_km, tekst_izvestaja, narudzbenica_id, common_data_id) VALUES(8500,'Neki tekst izvestaja 2. Neki tekst izvestaja. Neki tekst izvestaja ', 2, 50)
 INSERT INTO Izvestaj(predjena_km, tekst_izvestaja, narudzbenica_id, common_data_id) VALUES(4510, 'Neki tekst izvestaja 2. Neki tekst izvestaja. Neki tekst izvestaja ', 3, 51)
+
 --Rezervacija
 INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(true, 'PENDING', 22000, 34)
 INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(false,'PENDING', 12000, 35)
@@ -189,14 +202,3 @@ INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VAL
 INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je prva poruka.  Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 31)
 INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je druga poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 2, 2, 32)
 INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je treca poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 3, 3, 33)
-
---Users
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('test', '$2a$10$786OZQwAuZ.Y8Nw6dm12SeyXW7r/M7sHb6aJZNHerDEjIGt4FlJlS', 'nmaster@gmail.com', 4, 'aktivan','Marko', 'Markovic', '213123124','Muski',NULL, NULL, 52)
---INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username2' ,'password567', 'sardas@gmail.com', 5, 'aktivan','Tanja', 'Tanjic', '766745894','Zenski',NULL, NULL, 53)
---INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('username23' ,'password890', 'sadasd@gmail.com', 6, 'aktivan', NULL, NULL, NULL, NULL, 'Firma 1', '7662313', 54)
-
---Authority
-INSERT INTO AUTHORITY(name) VALUES('ROLE_AGENT')
-
---User_Authority
-INSERT INTO USER_AUTHORITY(user_id, authority_id) VALUES (1, 1)

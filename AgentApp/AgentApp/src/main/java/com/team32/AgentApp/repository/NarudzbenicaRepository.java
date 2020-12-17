@@ -10,4 +10,6 @@ public interface NarudzbenicaRepository extends JpaRepository<Narudzbenica, Long
 
 	List<Narudzbenica> findAllByOglasId(Long oglasId);
 
+	List<Narudzbenica> findAllByAgentId(Long agentId);
+
 }

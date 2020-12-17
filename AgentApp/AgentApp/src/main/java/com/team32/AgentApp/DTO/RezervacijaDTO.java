@@ -8,31 +8,35 @@ public class RezervacijaDTO {
 	private double ukupnaCena;
 	private Boolean bundle;
 	private String statusRezervacije;
-	private Long commonDataId;
-	private String username; // dodato u DTO
+	private Long commonDataId; 			//Moze se i obrisati jer treba samo za new;
+	private String username; 			//Dodato u DTO
+	private Long agentId;
 	
 	public RezervacijaDTO() {
 		
 	}
 	//Dodat String username kako bi se u returnu
 	//POST I PUT zahteva vratila i vrednost username korisnika koji je kreirao/izmeno rezervaciju
-	public RezervacijaDTO(Rezervacija r,String username) {
+	public RezervacijaDTO(Rezervacija r, String username, Long agentId) {
 		this.id = r.getId();
 		this.ukupnaCena = r.getUkupnaCena();
 		this.bundle = r.getBundle();
 		this.statusRezervacije = r.getStatusRezervacije();
 		this.commonDataId = r.getCommonDataId();
 		this.username = username;
+		this.agentId = agentId;
 	}
 	
-	public RezervacijaDTO(Long id, double ukupnaCena, Boolean bundle, String statusRezervacije, Long commonDataId, String username) {
+	public RezervacijaDTO(Long id, double ukupnaCena, Boolean bundle, String statusRezervacije, Long commonDataId, String username,Long agentId) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
 		this.bundle = bundle;
 		this.statusRezervacije = statusRezervacije;
-		this.username = username;
+		
 		this.commonDataId = commonDataId;
+		this.username = username;
+		this.agentId = agentId;
 	}
 
 	public void setId(Long id) {
@@ -82,5 +86,13 @@ public class RezervacijaDTO {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
+	public Long getAgentId() {
+		return agentId;
+	}
+	public void setAgentId(Long agentId) {
+		this.agentId = agentId;
+	}
+	
+	
 
 }

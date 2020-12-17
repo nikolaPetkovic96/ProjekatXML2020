@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
 	   public ObjectMapper objectMapper() {
 	       final ObjectMapper objectMapper = new ObjectMapper();
 	       objectMapper.registerModule(new JavaTimeModule());
-	       objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
+	       objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 	       // support for Hibernate types
 	       objectMapper.registerModule(new Hibernate5Module());
 	       // Jackson Afterburner module to speed up ser/des

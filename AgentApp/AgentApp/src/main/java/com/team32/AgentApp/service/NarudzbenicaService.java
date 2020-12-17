@@ -25,6 +25,8 @@ public class NarudzbenicaService {
 	public Narudzbenica findOne(Long id) {
 		return narudzbenicaRepository.findById(id).orElse(null);
 	}
+	
+	
 	public Narudzbenica addNarudzbenica(Narudzbenica klasaAutomobila) throws Exception{
 		if(klasaAutomobila.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
@@ -32,6 +34,8 @@ public class NarudzbenicaService {
 		Narudzbenica savedNarudzbenica = narudzbenicaRepository.save(klasaAutomobila);
 		return savedNarudzbenica;
 	}
+	
+	
 	public Narudzbenica updateNarudzbenica(Long id, Narudzbenica narudzbenica) throws Exception{
 		Optional<Narudzbenica> narudzbenicaToUpdate = narudzbenicaRepository.findById(id);
 		if(narudzbenicaToUpdate == null) {
@@ -48,5 +52,10 @@ public class NarudzbenicaService {
 	public List<Narudzbenica> getAllNarudzbeniceByOglasId(Long oglasId) {
 		
 		return narudzbenicaRepository.findAllByOglasId(oglasId);
+	}
+
+	public List<Narudzbenica> getllNarudzbeniceByAgentId(Long agentId) {
+		
+		return narudzbenicaRepository.findAllByAgentId(agentId);
 	}
 }
