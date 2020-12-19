@@ -2,28 +2,33 @@ package com.team32.AgentApp.DTO;
 
 import com.team32.AgentApp.model.entitet.Poruka;
 
-public class PorukaDTO {
+public class PorukaNewDTO {
 
 	private Long id;
 	private String tekstPoruke;
 	private Long rezervacijaId;
-	private Long commonDataId;
 	private Long automobilId;
-    private String username;
-    private CommonDataDTO commonData;
-
-	public PorukaDTO() {
+	private Long commonDataId;
+ 
+	public PorukaNewDTO() {
 		
 	}
 	
-	public PorukaDTO(Poruka p, String username, CommonDataDTO commonData) {
+	public PorukaNewDTO(Poruka p) {
 		this.id = p.getId();
 		this.tekstPoruke = p.getTekstPoruke();
 		this.rezervacijaId = p.getRezervacijaId();
 		this.automobilId = p.getAutomobilId();
 		this.commonDataId = p.getCommonDataId();
-		this.username = username;
-		this.commonData = commonData;
+ 	}
+	
+	public PorukaNewDTO(Long id, String tekstPoruke, Long rezervacijaId, Long automobilId, Long commonDataId) {
+		super();
+		this.id = id;
+		this.tekstPoruke = tekstPoruke;
+		this.rezervacijaId = rezervacijaId;
+		this.automobilId = automobilId;
+		this.commonDataId = commonDataId;
 	}
 
 	public Long getId() {
@@ -57,14 +62,6 @@ public class PorukaDTO {
 	public void setAutomobilId(Long automobilId) {
 		this.automobilId = automobilId;
 	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	
 	public Long getCommonDataId() {
 		return commonDataId;
@@ -74,13 +71,4 @@ public class PorukaDTO {
 		this.commonDataId = commonDataId;
 	}
 
-	public CommonDataDTO getCommonData() {
-		return commonData;
-	}
-
-	public void setCommonData(CommonDataDTO commonData) {
-		this.commonData = commonData;
-	}
-	
-	
 }

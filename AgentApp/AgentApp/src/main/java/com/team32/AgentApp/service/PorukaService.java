@@ -17,6 +17,9 @@ public class PorukaService {
 	@Autowired
 	private  PorukaRepository  porukaRepository;
 	
+	@Autowired
+	private  CommonDataService comDataService;
+	
 	public List< Poruka> getAllPoruka(){
 		List< Poruka>  porukaKlinCentra = new ArrayList<>();
 			porukaRepository.findAll().forEach(porukaKlinCentra::add);
@@ -53,7 +56,13 @@ public class PorukaService {
 		
 		//Dodatne custom metode
 		public List<Poruka> findAllPorukeByRezervId(Long rezervId) {
+			List<Poruka> poruke = porukaRepository.findAllByRezervacijaId(rezervId);
 			
-			return porukaRepository.findAllByRezervacijaId(rezervId);
+			//Sortiranje poruka po datumu;
+			poruke.sort((p1,p2) -> comDataService.findOne(p1.getCommonDataId()).getDatumKreiranja()
+					.compareTo(comDataService.findOne(p2.getCommonDataId()).getDatumKreiranja()));
+			
+			
+			return poruke;
 		}
 }

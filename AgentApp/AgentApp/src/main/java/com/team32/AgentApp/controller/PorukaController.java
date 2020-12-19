@@ -1,5 +1,6 @@
 package com.team32.AgentApp.controller;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team32.AgentApp.DTO.CommonDataDTO;
 import com.team32.AgentApp.DTO.PorukaDTO;
+import com.team32.AgentApp.DTO.PorukaNewDTO;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Poruka;
 import com.team32.AgentApp.model.entitet.User;
@@ -83,41 +87,47 @@ public class PorukaController {
 		porukaDTO.setAutomobilId(poruka.getAutomobilId());
 		porukaDTO.setRezervacijaId(poruka.getRezervacijaId());
 		porukaDTO.setCommonDataId(poruka.getCommonDataId());
+		porukaDTO.setCommonData(new CommonDataDTO(comData));
 		porukaDTO.setTekstPoruke(poruka.getTekstPoruke());
 		
 		return new ResponseEntity<>(porukaDTO, HttpStatus.OK);
 	}
 
 	//POST
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.POST, value="/poruka",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PorukaDTO> addPoruka(@RequestBody PorukaDTO porukaDTO)  throws Exception {
+	public ResponseEntity<PorukaNewDTO> addPoruka(Principal principal, @RequestBody PorukaNewDTO dto)  throws Exception {
 		
 		Poruka savedPoruka = new Poruka();
+		
+		//Preuzima se user iz sesije koji je trenutno ulogovan
+		String username = principal.getName();
+		User loggedAgent = userService.findByUsername(username);
 		
 		//Prilkom kreiranja novog komentara odmah se kreira i commonData koji pamti ko je kreirao i kada.
 		CommonData commonData = new CommonData();
 		LocalDateTime now = LocalDateTime.now();
 		commonData.setDatumKreiranja(now);
-		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
+		commonData.setUserId(loggedAgent.getId());
 		commonData = comDataService.addCommonData(commonData);
 		
-		User user = userService.findOne(commonData.getUserid());
 		
-		savedPoruka.setId(porukaDTO.getId());
-		savedPoruka.setTekstPoruke(porukaDTO.getTekstPoruke());
-		savedPoruka.setAutomobilId(porukaDTO.getAutomobilId());
-		savedPoruka.setRezervacijaId(porukaDTO.getRezervacijaId());
+		savedPoruka.setId(dto.getId());
+		savedPoruka.setTekstPoruke(dto.getTekstPoruke());
+		savedPoruka.setAutomobilId(dto.getAutomobilId());
+		savedPoruka.setRezervacijaId(dto.getRezervacijaId());
 		savedPoruka.setCommonDataId(commonData.getId());
 		
 		savedPoruka = porukaService.addPoruka(savedPoruka);
 		
-		return new ResponseEntity<>(new PorukaDTO(savedPoruka, user.getKorisnickoIme(), commonData.getDatumKreiranja()), HttpStatus.CREATED);
+		return new ResponseEntity<>(new PorukaNewDTO(savedPoruka), HttpStatus.CREATED);
 	}
-		
+	
+//	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.PUT, value="/poruka", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PorukaDTO> updatePoruka(@RequestBody PorukaDTO porukaDTO) throws Exception{
+	public ResponseEntity<PorukaNewDTO> updatePoruka(@RequestBody PorukaNewDTO dto) throws Exception{
 		
-		Poruka updatedPoruka = porukaService.findOne(porukaDTO.getId());
+		Poruka updatedPoruka = porukaService.findOne(dto.getId());
 		if(updatedPoruka == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -129,10 +139,10 @@ public class PorukaController {
 		commonData.setDatumIzmene(now);
 		commonData = comDataService.updateCommonData(comDatId, commonData);
 		
-		User user = userService.findOne(commonData.getUserid());
+//		User user = userService.findOne(commonData.getUserid());
 		
-		updatedPoruka.setId(porukaDTO.getId());
-		updatedPoruka.setTekstPoruke(porukaDTO.getTekstPoruke());
+		updatedPoruka.setId(dto.getId());
+		updatedPoruka.setTekstPoruke(dto.getTekstPoruke());
 //		updatedPoruka.setAutomobilId(porukaDTO.getAutomobilId());
 //		updatedPoruka.setRezervacijaId(porukaDTO.getRezervacijaId());
 		updatedPoruka.setCommonDataId(commonData.getId());
@@ -140,7 +150,7 @@ public class PorukaController {
 		
 		updatedPoruka = porukaService.updatePoruka(updatedPoruka.getId(), updatedPoruka);
 		
-		return new ResponseEntity<>(new PorukaDTO(updatedPoruka,user.getKorisnickoIme(),commonData.getDatumKreiranja()),HttpStatus.OK);
+		return new ResponseEntity<>(new PorukaNewDTO(updatedPoruka),HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/poruka/{id}", method=RequestMethod.DELETE)

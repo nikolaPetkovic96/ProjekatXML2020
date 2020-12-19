@@ -68,9 +68,9 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',2)
 
 --CommonData (Za Poruku) 34 - 36
-INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
-INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',3)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',1)
 
 --CommonData (Za Rezervacije) 37 - 39
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',3)
@@ -121,6 +121,8 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 
 --CommonData  (Za Automobil 4) 64
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',2)
+--CommonData  (Za Poruku 4) 65
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-11-04 21:58:58','2020-07-04 18:57:58',1)
 
 --KlasaAutomobila 
 INSERT INTO Klasa_Automobila(naziv_klase, common_data_id) VALUES('SUV', 1)
@@ -212,8 +214,10 @@ INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VAL
 INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VALUES(5, 2, 2, 26)
 INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VALUES(2, 3, 3, 27)
 
-
 --Poruka
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je prva poruka.  Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 34)
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je druga poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 2, 2, 35)
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je treca poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 3, 3, 36)
+INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je prva poruka usera.  Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 34)
+INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je druga poruka usera. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 35)
+INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je Prva poruka moja. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 36)
+INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je druga poruka moja.  Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 65)
+--INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je druga poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 2, 2, 35)
+--INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je treca poruka. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 3, 3, 36)
