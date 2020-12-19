@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.team32.AgentApp.model.entitet.Narudzbenica;
 
 
-public class NarudzbenicaDTO {
+public class NarudzbenicaNewDTO {
 	
 	private Long id;
 
@@ -22,29 +22,26 @@ public class NarudzbenicaDTO {
     private LocalDateTime  doDatuma;
 
     private Long commonDataId;
-    
-    private OglasDTO oglas;
-    
 
-	public NarudzbenicaDTO() {
+	public NarudzbenicaNewDTO() {
 		super();
 	}
 	
-	public NarudzbenicaDTO(Narudzbenica n, OglasDTO oglas) {
-		this.id = n.getId();
-		this.agentId = n.getAgentId();
-		this.userId = n.getUserId();
-		this.oglasId = n.getOglasId();
-		this.rezervacijaId = n.getRezervacijaId();
-		this.odDatuma =  n.getOdDatuma();
-		this.doDatuma = n.getDoDatuma();
-		this.commonDataId = n.getCommonDataId();
-		
-		this.oglas = oglas;			
+	public NarudzbenicaNewDTO(Narudzbenica n) {
+		this(
+			n.getId(),
+			n.getAgentId(),
+			n.getUserId(),
+			n.getOglasId(),
+			n.getRezervacijaId(),
+			n.getOdDatuma(),
+			n.getDoDatuma(),
+			n.getCommonDataId()
+			);
 	}
 
-	public NarudzbenicaDTO(Long id, Long agentId, Long userId, Long oglasId, Long rezervacijaId, LocalDateTime odDatuma,
-			LocalDateTime doDatuma, Long commonDataId, OglasDTO oglas) {
+	public NarudzbenicaNewDTO(Long id, Long agentId, Long userId, Long oglasId, Long rezervacijaId, LocalDateTime odDatuma,
+			LocalDateTime doDatuma, Long commonDataId) {
 		super();
 		this.id = id;
 		this.agentId = agentId;
@@ -54,8 +51,6 @@ public class NarudzbenicaDTO {
 		this.odDatuma = odDatuma;
 		this.doDatuma = doDatuma;
 		this.commonDataId = commonDataId;
-		
-		this.oglas = oglas;
 	}
 
 	public Long getId() {
@@ -121,15 +116,5 @@ public class NarudzbenicaDTO {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
-
-	public OglasDTO getOglas() {
-		return oglas;
-	}
-
-	public void setOglas(OglasDTO oglas) {
-		this.oglas = oglas;
-	}
-	
-	
   
 }

@@ -111,7 +111,7 @@ public class PorukaController {
 		
 		savedPoruka = porukaService.addPoruka(savedPoruka);
 		
-		return new ResponseEntity<>(new PorukaDTO(savedPoruka, user.getKorisnickoIme()), HttpStatus.CREATED);
+		return new ResponseEntity<>(new PorukaDTO(savedPoruka, user.getKorisnickoIme(), commonData.getDatumKreiranja()), HttpStatus.CREATED);
 	}
 		
 	@RequestMapping(method=RequestMethod.PUT, value="/poruka", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -140,7 +140,7 @@ public class PorukaController {
 		
 		updatedPoruka = porukaService.updatePoruka(updatedPoruka.getId(), updatedPoruka);
 		
-		return new ResponseEntity<>(new PorukaDTO(updatedPoruka,user.getKorisnickoIme()),HttpStatus.OK);
+		return new ResponseEntity<>(new PorukaDTO(updatedPoruka,user.getKorisnickoIme(),commonData.getDatumKreiranja()),HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/poruka/{id}", method=RequestMethod.DELETE)

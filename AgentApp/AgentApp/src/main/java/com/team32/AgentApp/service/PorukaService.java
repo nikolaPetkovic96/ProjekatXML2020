@@ -49,4 +49,11 @@ public class PorukaService {
 		public void deletePoruka(Long id) {
 			porukaRepository.deleteById(id);
 		}
+
+		
+		//Dodatne custom metode
+		public List<Poruka> findAllPorukeByRezervId(Long rezervId) {
+			
+			return porukaRepository.findAllByRezervacijaId(rezervId);
+		}
 }

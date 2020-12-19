@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.NarudzbenicaDTO;
+import com.team32.AgentApp.DTO.NarudzbenicaNewDTO;
+
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Narudzbenica;
+
 import com.team32.AgentApp.service.CommonDataService;
 import com.team32.AgentApp.service.NarudzbenicaService;
-
 
 
 @RestController
@@ -27,32 +29,49 @@ public class NarudzbenicaController {
 	
 	@Autowired
 	private NarudzbenicaService narudzbService;
-	
 	@Autowired
 	private CommonDataService comDataService;
+
 	
 	//GET ALL
 	@RequestMapping(method=RequestMethod.GET, value="/narudzbenica", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<NarudzbenicaDTO>> getAllNarudzbenica() {
-		List<Narudzbenica> all = narudzbService.getAllNarudzbenica();
+		List<Narudzbenica> narudzbenice = narudzbService.getAllNarudzbenica();
+		List<NarudzbenicaDTO> narudzbeniceDTO = new ArrayList<>();
+		for(Narudzbenica nar : narudzbenice) {
+			
+			NarudzbenicaDTO narDTO = narudzbService.getNarudzbFullDetails(nar);
+			if(narDTO == null) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			
+			narudzbeniceDTO.add(narDTO);
+		}
 		
-		List<NarudzbenicaDTO> dto = new ArrayList<>();
-		for(Narudzbenica n : all )
-			dto.add(new NarudzbenicaDTO(n));
-		return new ResponseEntity<>(dto, HttpStatus.OK);
+		return new ResponseEntity<>(narudzbeniceDTO, HttpStatus.OK);
+	
 	}
 	
 	//GET
 	@RequestMapping(method=RequestMethod.GET, value="/narudzbenica/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<NarudzbenicaDTO> getNarudzbenica(@PathVariable("id") Long id){
+		
 		Narudzbenica nar = narudzbService.findOne(id);
-			if(nar ==null) 
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			return new ResponseEntity<>(new NarudzbenicaDTO(nar), HttpStatus.OK);
+		if(nar == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		NarudzbenicaDTO narDTO = narudzbService.getNarudzbFullDetails(nar);
+		if(narDTO == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(narDTO, HttpStatus.OK);
 	}
+	
 	//POST
 	@RequestMapping(method=RequestMethod.POST, value="/narudzbenica",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<NarudzbenicaDTO> addNarudzbenica(@RequestBody NarudzbenicaDTO dto)  throws Exception {
+	public ResponseEntity<NarudzbenicaNewDTO> addNarudzbenica(@RequestBody NarudzbenicaNewDTO dto)  throws Exception {
 		Narudzbenica savedNarudzb = new Narudzbenica();
 		
 		//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
@@ -72,12 +91,12 @@ public class NarudzbenicaController {
 		savedNarudzb.setCommonDataId(commonData.getId());
 		
 		savedNarudzb = narudzbService.addNarudzbenica(savedNarudzb);
-		return new ResponseEntity<>(new NarudzbenicaDTO(savedNarudzb), HttpStatus.CREATED);
+		return new ResponseEntity<>(new NarudzbenicaNewDTO(savedNarudzb), HttpStatus.CREATED);
 	}
 	
 	//PUT	
 	@RequestMapping(method=RequestMethod.PUT, value="/narudzbenica", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<NarudzbenicaDTO> updateNarudzbenica(@RequestBody NarudzbenicaDTO dto) throws Exception{
+	public ResponseEntity<NarudzbenicaNewDTO> updateNarudzbenica(@RequestBody NarudzbenicaNewDTO dto) throws Exception{
 		
 		Narudzbenica updNarudzb = (Narudzbenica) narudzbService.findOne(dto.getId());
 		if(updNarudzb ==null) {
@@ -101,7 +120,7 @@ public class NarudzbenicaController {
 		updNarudzb.setCommonDataId(comDatId);		
 		
 		updNarudzb = narudzbService.updateNarudzbenica(updNarudzb.getId(), updNarudzb);
-		return new ResponseEntity<>(new NarudzbenicaDTO(updNarudzb), HttpStatus.OK);	
+		return new ResponseEntity<>(new NarudzbenicaNewDTO(updNarudzb), HttpStatus.OK);	
 	}
 			
 	//DELET	
@@ -116,5 +135,5 @@ public class NarudzbenicaController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} 
 	}	
-
+	
 }

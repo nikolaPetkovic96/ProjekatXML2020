@@ -85,7 +85,6 @@ public class AutomobilController {
 		return new ResponseEntity<>(automobilRewiewDTO, HttpStatus.OK);
 	}
 	
-	
 	@RequestMapping(method=RequestMethod.GET, value="/automobil/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AutomobilDTO> getAutomobil(@PathVariable("id") Long id){
 		Automobil automobil = automobilService.findOne(id);
@@ -139,7 +138,7 @@ public class AutomobilController {
 		return reviews;
 	}
 	
-//	
+
 //	@RequestMapping(method=RequestMethod.POST, value="/automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public ResponseEntity<AutomobilDTO> addAutomobil(@RequestBody AutomobilDTO automobilDTO) throws Exception{
 //		Automobil savedAutomobil = new Automobil();
@@ -200,5 +199,5 @@ public class AutomobilController {
 //		updatedAutomobil = automobilService.updateAutomobil(updatedAutomobil.getId(), updatedAutomobil);
 //		return new ResponseEntity<>(new AutomobilDTO(updatedAutomobil),HttpStatus.OK);
 //	}
-//	
+
 }

@@ -7,7 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team32.AgentApp.DTO.NarudzbenicaDTO;
+import com.team32.AgentApp.DTO.OglasDTO;
 import com.team32.AgentApp.model.entitet.Narudzbenica;
+import com.team32.AgentApp.model.entitet.Oglas;
 import com.team32.AgentApp.repository.NarudzbenicaRepository;
 
 @Service
@@ -15,6 +18,9 @@ public class NarudzbenicaService {
 
 	@Autowired
 	private NarudzbenicaRepository narudzbenicaRepository;
+	
+	@Autowired
+	private OglasService oglasService;
 	
 	public List<Narudzbenica> getAllNarudzbenica(){
 		List<Narudzbenica> narudzbenice = new ArrayList<>();
@@ -58,4 +64,23 @@ public class NarudzbenicaService {
 		
 		return narudzbenicaRepository.findAllByAgentId(agentId);
 	}
+	
+	//POMOCNE METODE
+	public List<Narudzbenica> getAllNarudzbeniceByRezervId(Long rezervId) {
+		return narudzbenicaRepository.findAllByRezervacijaId(rezervId);
+	}
+	
+	//Pomocne metode koja vrati kompletan DTO za naruzbenicu
+	//Napravljena kako bi se iz razlicitih kontrolera moglo doci do NaruzbenicaDTO
+	public NarudzbenicaDTO getNarudzbFullDetails(Narudzbenica nar) {
+		Oglas oglas = oglasService.findOne(nar.getOglasId());
+		if(oglas == null) {
+			return null;
+		}
+		OglasDTO oglasDTO = oglasService.getOglasFullDetails(oglas);
+		
+		NarudzbenicaDTO narudzbDTO = new NarudzbenicaDTO(nar, oglasDTO);
+		return narudzbDTO;
+	}
+	
 }
