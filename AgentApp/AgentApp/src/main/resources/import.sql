@@ -124,6 +124,11 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 --CommonData  (Za Poruku 4) 65
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-11-04 21:58:58','2020-07-04 18:57:58',1)
 
+--CommonData  (Za 3 nove rezervacije ) 66 - 68
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-11-04 21:58:58','2020-07-04 18:57:58',4)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-11-04 21:58:58','2020-07-04 18:57:58',4)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-11-04 21:58:58','2020-07-04 18:57:58',5)
+
 --KlasaAutomobila 
 INSERT INTO Klasa_Automobila(naziv_klase, common_data_id) VALUES('SUV', 1)
 INSERT INTO Klasa_Automobila(naziv_klase, common_data_id) VALUES('Old tajmer', 2)
@@ -203,6 +208,46 @@ INSERT INTO Izvestaj(predjena_km, tekst_izvestaja, narudzbenica_id, common_data_
 INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(true, 'PENDING', 22000, 37)
 INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(false,'PENDING', 12000, 38)
 INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(true, 'PENDING', 8000, 39)
+
+
+--CommonData  (Za 3 nove rezervacije ) 66 - 68							datum kreiranja rezrvacije isti kao i narudzbenice
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-10 21:58:58', null, 4) -- Anna00
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-02 21:58:58', null, 4) -- Anna00
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-10 21:58:58', null, 5) -- PeraCar996
+
+-- 3 Nove rezervacije koje su u stanju paid, od kojih su 2 istekle uspesno a jedna jos traje
+INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(false,'PAID', 44000, 66) -- jos traje
+INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(false,'PAID', 55000, 67) -- istekao 
+INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(true, 'PAID', 66000, 68) -- istekao
+
+
+
+--CommonData  (Za 4 nove narudzb isti id kao kod rezerv sa kojom su povezani) 69 - 72
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-10 21:58:58', null, 4)  -- Anna00  Anna00 dve odvojene rezerv (4,5)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-02 21:58:58', null, 4)  -- Anna00
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-10 21:58:58', null, 5)  -- PeraCar996  Jedna rezrv ali je bundle (6)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-10 21:58:58', null, 5)  -- PeraCar996
+--Narudzbenice za rezervacije 4 nove jer je 3. rezerv budnle;
+INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2020-12-10 21:58:58','2020-12-22 18:57:58',1, 7, 4, 1, 69)-- jos traje  -- Anna00  Anna00 dve odvojene rezerv (4,5)
+INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2020-12-02 21:58:58','2020-12-08 18:57:58',2, 7, 5, 1, 70)-- istekao    -- Anna00  Anna00 dve odvojene rezerv (4,5)
+INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2020-12-10 21:58:58','2020-12-15 18:57:58',2, 8, 6, 1, 71)-- istekao    -- PeraCar996  Jedna rezrv ali je bundle (6)
+INSERT INTO Narudzbenica(od_datuma, do_datuma, user_id, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2020-12-10 21:58:58','2020-12-15 18:57:58',3, 9, 6, 1, 72)-- istekao    -- PeraCar996  Jedna rezrv ali je bundle (6)
+
+
+
+--CommonData  (Za 3 nova oglasa korisnik_id = idAgenta iz narudzbenice) 73 - 75
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-11-25 21:58:58', null, 1) --test
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-11-23 21:58:58', null, 1) --test
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-01 21:58:58', null, 1) --test
+
+ -- Oglas 7 - 9
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id) VALUES('2020-12-01 21:58:58','2020-12-31 18:57:58', 12000, 3, 3, 1, 73)
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id) VALUES('2020-12-01 21:58:58','2020-12-31 18:57:58', 16500, 4, 1, 2, 74)
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id) VALUES('2020-12-01 21:58:58','2020-12-31 18:57:58', 10000, 5, 2, 3, 75)
+
+
+
+
 
 --Komentar
 INSERT INTO Komentar(tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('Ekstra kola sve pohvale', true, 1, 1, 22)

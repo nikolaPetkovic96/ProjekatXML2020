@@ -83,4 +83,19 @@ public class NarudzbenicaService {
 		return narudzbDTO;
 	}
 	
+	/***
+	 * 
+	 * @param Lista narudzbenica (List<Narudzbenica>)
+	 * @return  Sortiranu listu narudzbenica spram datuma isteka narudzbenice (List<Narudzbenica>)
+	 *   
+	 */
+	//Pomocna metoda koja sortira narudzbenice spram datuma isteka
+	public List<Narudzbenica> getAllSortedNarudzbByRezervId(List<Narudzbenica> narudzbenice) {		
+		//Sortiranje poruka po datumu;
+		narudzbenice.sort((n1,n2) -> n1.getDoDatuma().compareTo(n2.getDoDatuma()));
+		
+		return narudzbenice;
+	}
+
+	
 }

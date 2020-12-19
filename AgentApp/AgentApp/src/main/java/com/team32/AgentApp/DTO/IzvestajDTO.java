@@ -1,4 +1,5 @@
 package com.team32.AgentApp.DTO;
+
 import com.team32.AgentApp.model.entitet.Izvestaj;
 
 public class IzvestajDTO {
@@ -6,34 +7,49 @@ public class IzvestajDTO {
 	private Long id;
 	
 	private float predjenaKilometraza;
-	
+
 	private String tekstIzvestaja;
 
 	private Long narudzbenicaId;
 
-	private Long commonDataId;
+	private Long automobilId;
+
+	private Long rezervacijaId;
 	
+	private Long prekoracenaKilometraza;
+   
+	private Long dodatniTroskovi;
+	
+	private Long commonDataId;
+
 	public IzvestajDTO() {
 		super();
 	}
 	
 	public IzvestajDTO(Izvestaj i) {
-		this(
-			i.getId(),
-			i.getPredjenaKilometraza(),
-			i.getTekstIzvestaja(),
-			i.getNarudzbenicaId(),
-			i.getCommonDataId()
-			);
+		super();
+		this.id = i.getId();
+		this.predjenaKilometraza = i.getPredjenaKilometraza();
+		this.tekstIzvestaja =  i.getTekstIzvestaja();
+		this.narudzbenicaId = i.getNarudzbenicaId();
+		this.automobilId = i.getAutomobilId();
+		this.rezervacijaId = i.getRezervacijaId();
+		this.prekoracenaKilometraza = i.getPrekoracenaKilometraza();
+		this.dodatniTroskovi = i.getDodatniTroskovi();
+		this.commonDataId = i.getCommonDataId();
 	}
 
-	public IzvestajDTO(Long id, float predjenaKilometraza, String tekstIzvestaja, Long narudzbenicaId,
-			Long commonDataId) {
+	public IzvestajDTO(Long id, float predjenaKilometraza, String tekstIzvestaja, Long narudzbenicaId, Long automobilId,
+			Long rezervacijaId, Long prekoracenaKilometraza, Long dodatniTroskovi, Long commonDataId) {
 		super();
 		this.id = id;
 		this.predjenaKilometraza = predjenaKilometraza;
 		this.tekstIzvestaja = tekstIzvestaja;
 		this.narudzbenicaId = narudzbenicaId;
+		this.automobilId = automobilId;
+		this.rezervacijaId = rezervacijaId;
+		this.prekoracenaKilometraza = prekoracenaKilometraza;
+		this.dodatniTroskovi = dodatniTroskovi;
 		this.commonDataId = commonDataId;
 	}
 
@@ -67,6 +83,38 @@ public class IzvestajDTO {
 
 	public void setNarudzbenicaId(Long narudzbenicaId) {
 		this.narudzbenicaId = narudzbenicaId;
+	}
+
+	public Long getAutomobilId() {
+		return automobilId;
+	}
+
+	public void setAutomobilId(Long automobilId) {
+		this.automobilId = automobilId;
+	}
+
+	public Long getRezervacijaId() {
+		return rezervacijaId;
+	}
+
+	public void setRezervacijaId(Long rezervacijaId) {
+		this.rezervacijaId = rezervacijaId;
+	}
+
+	public Long getPrekoracenaKilometraza() {
+		return prekoracenaKilometraza;
+	}
+
+	public void setPrekoracenaKilometraza(Long prekoracenaKilometraza) {
+		this.prekoracenaKilometraza = prekoracenaKilometraza;
+	}
+
+	public Long getDodatniTroskovi() {
+		return dodatniTroskovi;
+	}
+
+	public void setDodatniTroskovi(Long dodatniTroskovi) {
+		this.dodatniTroskovi = dodatniTroskovi;
 	}
 
 	public Long getCommonDataId() {

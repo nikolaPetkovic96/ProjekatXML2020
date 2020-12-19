@@ -52,6 +52,7 @@ public class NarudzbenicaController {
 	
 	}
 	
+	
 	//GET
 	@RequestMapping(method=RequestMethod.GET, value="/narudzbenica/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<NarudzbenicaDTO> getNarudzbenica(@PathVariable("id") Long id){

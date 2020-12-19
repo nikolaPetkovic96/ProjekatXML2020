@@ -1,5 +1,6 @@
 package com.team32.AgentApp.controller;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.team32.AgentApp.DTO.IzvestajDTO;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Izvestaj;
+import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.service.CommonDataService;
 import com.team32.AgentApp.service.IzvestajService;
+import com.team32.AgentApp.service.UserService;
 
 @RestController
 public class IzvestajController {
@@ -28,6 +31,9 @@ public class IzvestajController {
 	
 	@Autowired
 	private CommonDataService comDataService;
+	
+	@Autowired
+	private UserService userService;
 	
 	//GET ALL
 	@RequestMapping(method=RequestMethod.GET, value="/izvestaj", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,29 +54,38 @@ public class IzvestajController {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			return new ResponseEntity<>(new IzvestajDTO(izv), HttpStatus.OK);
 	}
+	
 	//POST
 	@RequestMapping(method=RequestMethod.POST, value="/izvestaj",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<IzvestajDTO> addIzvestaj(@RequestBody IzvestajDTO dto)  throws Exception {
+	public ResponseEntity<IzvestajDTO> addIzvestaj(Principal principal, @RequestBody IzvestajDTO dto)  throws Exception {
 		Izvestaj savedIzvestaj = new Izvestaj();
+		
+		//Preuzima se user, koji je trenutno ulogovan, iz sesije
+		String username = principal.getName();
+		User loggedAgent = userService.findByUsername(username);
 		
 		//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
 		CommonData commonData = new CommonData();
 		LocalDateTime now = LocalDateTime.now();
-		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
+		commonData.setUserId(loggedAgent.getId());
 		commonData.setDatumKreiranja(now);
 		commonData = comDataService.addCommonData(commonData);
 	
 		savedIzvestaj.setId(dto.getId());
 		savedIzvestaj.setNarudzbenicaId(dto.getNarudzbenicaId());
+		savedIzvestaj.setAutomobilId(dto.getAutomobilId());
 		savedIzvestaj.setPredjenaKilometraza(dto.getPredjenaKilometraza());
 		savedIzvestaj.setTekstIzvestaja(dto.getTekstIzvestaja());
+		savedIzvestaj.setRezervacijaId(dto.getRezervacijaId());
+		savedIzvestaj.setPrekoracenaKilometraza(dto.getPrekoracenaKilometraza());
+		savedIzvestaj.setDodatniTroskovi(dto.getDodatniTroskovi());
 		savedIzvestaj.setCommonDataId(commonData.getId());
 		
 		savedIzvestaj = izvestajService.addIzvestaj(savedIzvestaj);
 		return new ResponseEntity<>(new IzvestajDTO(savedIzvestaj), HttpStatus.CREATED);
 	}
 	
-	//PUT	
+	//PUT
 	@RequestMapping(method=RequestMethod.PUT, value="/izvestaj", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<IzvestajDTO> updateIzvestaj(@RequestBody IzvestajDTO dto) throws Exception{
 		

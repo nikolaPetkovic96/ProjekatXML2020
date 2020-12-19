@@ -48,7 +48,7 @@ public class RezervacijaController {
 	@Autowired
 	private NarudzbenicaService narudzbService;
 
-	//GET ALL Za prikaz samo osnovnih podataka iz rezervacija koje pripadaju ulogovanom
+	//GET ALL Za prikaz samo osnovnih podataka iz rezervacija koje pripadaju ulogovanom agentu
 	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/rezervacija", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RezervacijaDTO>> getAllRezervacija(Principal principal){
@@ -85,6 +85,64 @@ public class RezervacijaController {
 		return new ResponseEntity<>(rezervacijeDTO, HttpStatus.OK);
 	}
 	
+	
+	//GET ALL Za prikaz samo osnovnih podataka iz rezervacija koje pripadaju ulogovanom agentu
+	@PreAuthorize("hasRole('ROLE_AGENT')")
+	@RequestMapping(method=RequestMethod.GET, value="/rezervacija/expired", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<RezervacijaDTO>> getAllFinishedRezervacija(Principal principal){
+		
+		//Preuzima se user, koji je trenutno ulogovan, iz sesije
+		String username = principal.getName();
+		User loggedAgent = userService.findByUsername(username);
+		
+		LocalDateTime now = LocalDateTime.now();
+		
+		List<Rezervacija> allRezervacija = rezervacijaService.getAllRezervacijaByIdAgenta(loggedAgent.getId());
+		
+		//Filtiriramo i vracamo samo one rezervacije ciji je status PAID
+		allRezervacija = rezervacijaService.getAllPaidRezervacije(allRezervacija);
+		
+		List<RezervacijaDTO> rezervacijeDTO = new ArrayList<>();
+		for(Rezervacija r : allRezervacija) {
+			
+			//Pruzimamo sve narudzbenice koje su vezane za tu rezervaciju
+			List<Narudzbenica> narudzbenica = narudzbService.getAllNarudzbeniceByRezervId(r.getId());
+			
+			
+			//Soritramo ih po datumu zavrsetka u rastucem poretku
+			List<Narudzbenica> sortiraneNarudzb = narudzbService.getAllSortedNarudzbByRezervId(narudzbenica);
+			
+			
+			//Poredimo datum poslednjeg clan tako sortiranog niza (ima najkasniji datum zavrsetka) 
+			//sa danasnijim danom i ako je manji vratimo tu rezervaciju.  
+			Narudzbenica poslClan =  sortiraneNarudzb.get(sortiraneNarudzb.toArray().length-1);
+			
+			
+			if (now.isAfter(poslClan.getDoDatuma())){
+
+				RezervacijaDTO rezervacijaDTO = new RezervacijaDTO();
+				CommonData comData = comDataService.findOne(r.getCommonDataId());
+				
+				if(comData == null) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+				
+				//User koji je kreirao rezervaciju i preizet je iz commonData 
+				User user = userService.findOne(comData.getUserid());
+				rezervacijaDTO.setUsername(user.getKorisnickoIme());
+				rezervacijaDTO.setId(r.getId());
+				rezervacijaDTO.setUkupnaCena(r.getUkupnaCena());
+				rezervacijaDTO.setBundle(r.getBundle());
+				rezervacijaDTO.setStatusRezervacije(r.getStatusRezervacije());
+				rezervacijaDTO.setCommonDataId(r.getCommonDataId());
+				
+				rezervacijeDTO.add(rezervacijaDTO);
+			}
+			
+		}
+		return new ResponseEntity<>(rezervacijeDTO, HttpStatus.OK);
+	}	
+	
 	//GET
 	@RequestMapping(method=RequestMethod.GET, value="/rezervacija/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RezervacijaDTO> getRezervacija(@PathVariable("id") Long id){
@@ -113,7 +171,7 @@ public class RezervacijaController {
 	@RequestMapping(method=RequestMethod.GET, value="/rezervacija/{id}/details", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RezervacijaFullDTO> getRezervacijaDetails(@PathVariable("id") Long id){
 		RezervacijaFullDTO rezervacijaFullDTO = new RezervacijaFullDTO();
-		
+		System.out.println("Usao u detail");
 		Rezervacija rezervacija = rezervacijaService.findOne(id);
 		if(rezervacija == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

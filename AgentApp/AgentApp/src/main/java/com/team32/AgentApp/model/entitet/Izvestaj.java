@@ -22,6 +22,18 @@ public class Izvestaj {
 	@Column(name="narudzbenica_id", nullable = false)
 	private Long narudzbenicaId;
 	
+	@Column(name="automobil_id", nullable = false)
+	private Long automobilId;
+	
+	@Column(name="rezervacija_id", nullable = false)
+	private Long rezervacijaId;
+	
+	@Column(name="prekoracena_km", nullable = false)
+	private Long prekoracenaKilometraza;
+    
+    @Column(name="dodatni_troskovi", nullable = false)
+	private Long dodatniTroskovi;
+	
 	@Column(name="common_data_id", nullable = false)
 	private Long commonDataId;
 
@@ -29,12 +41,17 @@ public class Izvestaj {
 		super();
 	}
 
-	public Izvestaj(Long id, float predjenaKilometraza, String tekstIzvestaja, Long narudzbenicaId, Long commonDataId) {
+	public Izvestaj(Long id, float predjenaKilometraza, String tekstIzvestaja, Long narudzbenicaId, Long automobilId,
+			Long rezervacijaId, Long prekoracenaKilometraza, Long dodatniTroskovi, Long commonDataId) {
 		super();
 		this.id = id;
 		this.predjenaKilometraza = predjenaKilometraza;
 		this.tekstIzvestaja = tekstIzvestaja;
 		this.narudzbenicaId = narudzbenicaId;
+		this.automobilId = automobilId;
+		this.rezervacijaId = rezervacijaId;
+		this.prekoracenaKilometraza = prekoracenaKilometraza;
+		this.dodatniTroskovi = dodatniTroskovi;
 		this.commonDataId = commonDataId;
 	}
 
@@ -70,6 +87,38 @@ public class Izvestaj {
 		this.narudzbenicaId = narudzbenicaId;
 	}
 
+	public Long getAutomobilId() {
+		return automobilId;
+	}
+
+	public void setAutomobilId(Long automobilId) {
+		this.automobilId = automobilId;
+	}
+
+	public Long getRezervacijaId() {
+		return rezervacijaId;
+	}
+
+	public void setRezervacijaId(Long rezervacijaId) {
+		this.rezervacijaId = rezervacijaId;
+	}
+
+	public Long getPrekoracenaKilometraza() {
+		return prekoracenaKilometraza;
+	}
+
+	public void setPrekoracenaKilometraza(Long prekoracenaKilometraza) {
+		this.prekoracenaKilometraza = prekoracenaKilometraza;
+	}
+
+	public Long getDodatniTroskovi() {
+		return dodatniTroskovi;
+	}
+
+	public void setDodatniTroskovi(Long dodatniTroskovi) {
+		this.dodatniTroskovi = dodatniTroskovi;
+	}
+
 	public Long getCommonDataId() {
 		return commonDataId;
 	}
@@ -77,6 +126,11 @@ public class Izvestaj {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
+	
+	
+	
+	
 
+	
 	
 }

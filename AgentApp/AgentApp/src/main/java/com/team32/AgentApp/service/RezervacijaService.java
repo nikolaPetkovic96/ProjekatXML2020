@@ -67,4 +67,24 @@ public class RezervacijaService {
 		public void deleteRezervacija(Long id) {
 			rezervacijaRepository.deleteById(id);
 		}
+
+		//POMOCNE METODE
+		
+		/***
+		 * 
+		 * @param Listu rezervacija (List<Rezervacija>)
+		 * @return  Filtriranu listu rezervacija sa stausom PAID (List<Rezervacija>)
+		 *   
+		 */
+		public List<Rezervacija> getAllPaidRezervacije(List<Rezervacija> allRezervacija) {
+			List<Rezervacija> onlyPaidRezervacije = new ArrayList<>();
+			
+			for(Rezervacija r:allRezervacija) {
+				if(r.getStatusRezervacije().equals("PAID")) {
+					onlyPaidRezervacije.add(r);
+				}
+			}
+			
+			return onlyPaidRezervacije;
+		}
 }
