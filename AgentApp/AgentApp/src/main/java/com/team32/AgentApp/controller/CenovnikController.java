@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.team32.AgentApp.DTO.CenovnikDTO;
 import com.team32.AgentApp.model.entitet.Cenovnik;
 import com.team32.AgentApp.model.entitet.CommonData;
+import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.service.CenovnikService;
 import com.team32.AgentApp.service.CommonDataService;
+import com.team32.AgentApp.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +30,10 @@ public class CenovnikController {
 	
 	@Autowired
 	private CenovnikService cenovnikService;
-	
 	@Autowired
 	private CommonDataService comDataService;
+	@Autowired
+	private UserService userService;
 	
 	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/cenovnik", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,14 +56,18 @@ public class CenovnikController {
 	}
 	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.POST, value="/cenovnik", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CenovnikDTO> addCenovnik(@RequestBody CenovnikDTO cenovnikDTO) throws Exception{
+	public ResponseEntity<CenovnikDTO> addCenovnik(Principal principal, @RequestBody CenovnikDTO cenovnikDTO) throws Exception{
 
 		Cenovnik savedCenovnik = new Cenovnik();
+		
+		//Preuzima se user iz sesije koji je trenutno ulogovan
+		String username = principal.getName();
+		User loggedAgent = userService.findByUsername(username);
 		
 		//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
 		CommonData commonData = new CommonData();
 		LocalDateTime now = LocalDateTime.now();
-		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
+		commonData.setUserId(loggedAgent.getId()); //OVO IZMENITI DA BUDE DINAMICKI
 		commonData.setDatumKreiranja(now);
 		commonData = comDataService.addCommonData(commonData);
 

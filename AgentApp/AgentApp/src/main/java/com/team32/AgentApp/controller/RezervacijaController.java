@@ -44,7 +44,6 @@ public class RezervacijaController {
 	private UserService userService;
 	@Autowired
 	private PorukaService porukaService;
-	
 	@Autowired
 	private NarudzbenicaService narudzbService;
 

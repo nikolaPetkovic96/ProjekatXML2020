@@ -15,6 +15,7 @@ public class AutomobilNewDTO {
 	private boolean collisionDamageWaiver;
 	private int brojSedistaZaDecu;
 	
+	
 	private Long commonDataId;//ne treba samo za testiranje CRUD
 	
 	public AutomobilNewDTO() {

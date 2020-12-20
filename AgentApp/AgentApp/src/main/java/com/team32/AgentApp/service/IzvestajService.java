@@ -16,6 +16,8 @@ public class IzvestajService{
 	@Autowired
 	private IzvestajRepository izvestajRepository;
 	
+	
+	
 	public List<Izvestaj> getAllIzvestaj(){
 		List<Izvestaj> izvestaji = new ArrayList<>();
 		izvestajRepository.findAll().forEach(izvestaji::add);
@@ -28,6 +30,15 @@ public class IzvestajService{
 	public Izvestaj addIzvestaj(Izvestaj izvestaj) throws Exception{
 		if(izvestaj.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
+		}
+		
+		List<Izvestaj> izvestaji = getAllIzvestaj();
+		//Provera da li je vec unet izvestaj za dati automobil u datoj rezervaciji
+		for(Izvestaj i:izvestaji) {
+			if(i.getAutomobilId() == izvestaj.getAutomobilId() && 
+				i.getRezervacijaId() ==  izvestaj.getRezervacijaId()) {
+				throw new Exception("Report already exist!");
+			}
 		}
 		Izvestaj savedTKlasaAutomobila = izvestajRepository.save(izvestaj);
 		return savedTKlasaAutomobila;

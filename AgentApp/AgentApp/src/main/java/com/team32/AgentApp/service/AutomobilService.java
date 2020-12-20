@@ -1,6 +1,8 @@
 package com.team32.AgentApp.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team32.AgentApp.DTO.AutomobilDTO;
+import com.team32.AgentApp.DTO.AutomobilStatisticDTO;
 import com.team32.AgentApp.model.entitet.Automobil;
 import com.team32.AgentApp.repository.AutomobilRepository;
 
@@ -35,6 +38,9 @@ public class AutomobilService {
 	@Autowired
 	private CommonDataService comDataService;
 	
+	@Autowired
+	private KomentarService komentarService;
+	
 	public List<Automobil> getAllAutomobil(){
 		List<Automobil> listaAutomobila = new ArrayList<>();
 		automobilRepository.findAll().forEach(listaAutomobila::add);
@@ -43,19 +49,6 @@ public class AutomobilService {
 	
 	public Automobil findOne(Long id) {
 		return automobilRepository.findById(id).orElseGet(null);
-	}
-	
-	//Pomocna metoda koja sluzi da vrati Automobil ciji su atiributi objekti.
-	public AutomobilDTO findOneWithDetails(Long id) {
-		Automobil auto = automobilRepository.findById(id).orElseGet(null);
-		String marka = markaService.findOne(auto.getMarkaAutomobilaId()).getNazivMarke(); 
-		String model = modelService.findOne(auto.getModelAutomobilaId()).getNazivModela();
-		String klasa = klasaService.findOne(auto.getKlasaAutomobilaId()).getNazivKlase();
-		String menjac = menjacService.findOne(auto.getTipMenjacaId()).getNazivMenjaca();
-		String gorivo = gorivoService.findOne(auto.getTipGorivaId()).getNazivTipa();
-		
-		AutomobilDTO autoDTO = new AutomobilDTO(auto, marka, model, klasa, menjac, gorivo);
-		return autoDTO;
 	}
 	
 	public Automobil addAutomobil(Automobil automobil) throws Exception {
@@ -78,6 +71,8 @@ public class AutomobilService {
 	public void deleteAutomobil(Long id) {
 		automobilRepository.deleteById(id);
 	}
+	
+	//DODATNE METODE:
 
 	public List<Automobil> getAllAutomobilByAgent(Long agentId) {
 		List<Automobil> automobili = new ArrayList<>();
@@ -95,4 +90,103 @@ public class AutomobilService {
 		return automobili;	
 	}
 	
+	
+	/***
+	 * 
+	 * @param id automobila tipa Long 
+	 * @return AutomobilDTO popunjen osnovnim podacima kao i nazivom marke, modela, klase, menjaca i goriva.
+	 */
+	//Pomocna metoda koja sluzi da vrati Automobil ciji su atiributi objekti.
+	public AutomobilDTO findOneWithDetails(Long id) {
+		Automobil auto = automobilRepository.findById(id).orElseGet(null);
+		String marka = markaService.findOne(auto.getMarkaAutomobilaId()).getNazivMarke(); 
+		String model = modelService.findOne(auto.getModelAutomobilaId()).getNazivModela();
+		String klasa = klasaService.findOne(auto.getKlasaAutomobilaId()).getNazivKlase();
+		String menjac = menjacService.findOne(auto.getTipMenjacaId()).getNazivMenjaca();
+		String gorivo = gorivoService.findOne(auto.getTipGorivaId()).getNazivTipa();
+		
+		AutomobilDTO autoDTO = new AutomobilDTO(auto, marka, model, klasa, menjac, gorivo);
+		return autoDTO;
+	}
+	
+	/***
+	 * 
+	 * @param automobilId tipa Long
+	 * @return AutomobilStatisticDTO koji je vec popunje sa podacima iz AutomobilDTO i brojem komentara;
+	 */
+	public AutomobilStatisticDTO findOneWithStat(Long autoId) {
+		AutomobilDTO automobilDTO = findOneWithDetails(autoId);
+		int brojKomentara  = getNumberOfCommentsByAutoId(autoId);
+		
+		return new AutomobilStatisticDTO(automobilDTO, brojKomentara);
+	}
+	
+
+	/*
+	 * 
+	 * @param String category
+	 * @return Listu od 3 automobila sa najvecim brojem komentara;
+	 * Vec su u formatu AutomoblStatisticDTO 
+	 */
+	public List<AutomobilStatisticDTO> getBestAutomobilByComment(String category, List<Automobil> allAgentAut) {
+		List<AutomobilStatisticDTO> listaAutStatDTO = new ArrayList<>();
+		//Prebacujemo listu automobila u listu automobilStatisticDTO
+		//Kako bi smo mogli da ih sortiramo po vrednosti atributa brojKomentara;
+		for(Automobil a : allAgentAut) {
+			listaAutStatDTO.add(findOneWithStat(a.getId()));
+		}
+		Collections.sort(listaAutStatDTO, new Comparator<AutomobilStatisticDTO>() {
+			@Override
+			public int compare(AutomobilStatisticDTO a1, AutomobilStatisticDTO  a2) {
+				return Float.compare(a2.getBrojKomentara(), a1.getBrojKomentara());
+			}
+		});
+		return listaAutStatDTO;
+	}
+	
+	
+	/*
+	 * 
+	 * @param String category
+	 * @return Listu od 3 automobila sa najvecim brojem predjenih kilometara; 
+	 */
+	public List<Automobil> getBestAutomobilByKm(String category, List<Automobil> allAgentAut) {
+		//Treba da ih sortiramo po broju km
+		Collections.sort(allAgentAut, new Comparator<Automobil>() {
+			@Override
+			public int compare(Automobil a1, Automobil  a2) {
+				return Float.compare(a2.getPredjenaKilometraza(), a1.getPredjenaKilometraza());
+			}
+		});
+		return allAgentAut;
+	}
+	
+	
+	/*
+	 * 
+	 * @param String category
+	 * @return Listu od 3 automobila sa najvecom ocenom; 
+	 */
+	public List<Automobil> getBestAutomobilByRating(String category, List<Automobil> allAgentAut) {
+		//Treba da ih sortiramo po oceni
+		Collections.sort(allAgentAut, new Comparator<Automobil>() {
+			@Override
+			public int compare(Automobil a1, Automobil  a2) {
+				return Float.compare(a2.getUkupnaOcena(), a1.getUkupnaOcena());
+			}
+		});
+		return allAgentAut;
+	}
+	
+
+	/***
+	 * 
+	 * @param automobilId tipa Long
+	 * @return int broj komentara za taj automobil 
+	 */
+	public int getNumberOfCommentsByAutoId(Long automobilId) {
+		return komentarService.getAllKomentarByAutomobilId(automobilId).toArray().length;
+	}
+	
+
 }

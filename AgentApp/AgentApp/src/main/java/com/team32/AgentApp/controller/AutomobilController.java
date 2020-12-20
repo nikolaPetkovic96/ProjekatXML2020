@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.AutomobilDTO;
 import com.team32.AgentApp.DTO.AutomobilReviewDTO;
+import com.team32.AgentApp.DTO.AutomobilStatisticDTO;
 import com.team32.AgentApp.DTO.KomentarDTO;
 import com.team32.AgentApp.DTO.OcenaDTO;
 import com.team32.AgentApp.DTO.ReviewDTO;
@@ -59,6 +60,36 @@ public class AutomobilController {
 			
 		}
 		return new ResponseEntity<>(automobilDTO, HttpStatus.OK);
+	}
+	
+	//Vraca najbolja 3 automobila po nekom parametru 
+	@RequestMapping(method=RequestMethod.GET, value="/automobil/best/{category}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AutomobilStatisticDTO>> getAllBestAutomobil(Principal principal, @PathVariable("category") String category){
+		
+		String username = principal.getName();
+		User loggedAgent = userService.findByUsername(username);
+		
+		List<Automobil> allAutomobil = automobilService.getAllAutomobilByAgent(loggedAgent.getId());
+		List<AutomobilStatisticDTO> autoStatDTO = new ArrayList<>();
+		
+		if(category.equals("comment")) {
+			autoStatDTO = automobilService.getBestAutomobilByComment(category, allAutomobil );
+			return new ResponseEntity<>(autoStatDTO, HttpStatus.OK);
+		}
+		if(category.equals("km")) {
+			allAutomobil = automobilService.getBestAutomobilByKm(category, allAutomobil);
+		}
+		else if(category.equals("rating")) {
+			allAutomobil = automobilService.getBestAutomobilByRating(category, allAutomobil );
+		}
+		
+
+		for(Automobil a : allAutomobil) {
+			
+			autoStatDTO.add(automobilService.findOneWithStat(a.getId()));
+			
+		}
+		return new ResponseEntity<>(autoStatDTO, HttpStatus.OK);
 	}
 	
 	//Ovo je za automobil details vise odradjeno...

@@ -79,7 +79,7 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 
 --CommonData (Za Automobil)	40 - 42
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
-INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',1)
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',2)
 
 --CommonData (Za Cenovnik)	43 - 45
@@ -246,13 +246,19 @@ INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automob
 INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id) VALUES('2020-12-01 21:58:58','2020-12-31 18:57:58', 10000, 5, 2, 3, 75)
 
 
-
-
-
 --Komentar
 INSERT INTO Komentar(tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('Ekstra kola sve pohvale', true, 1, 1, 22)
 INSERT INTO Komentar(tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('Ekstra naj naj naj kola sve pohvale', true,2, 2, 23)
 INSERT INTO Komentar(tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('Nisu bas dobra kola, nema pohvale', true,3, 3, 24)
+
+--CommonData  (Za 2 nova komentara) 76 - 77
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-10 21:58:58', null, 4)  -- Anna00 
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-02 21:58:58', null, 5)  -- PeraCar996
+
+INSERT INTO Komentar(tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('Od Anna00 komentar neki firma agentu ocena 5! ', true, 3, 3, 76) --za porse 911
+INSERT INTO Komentar(tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('Od PeraCar996 Komentar neki firma agentu ocena 4', true,3, 3, 77) --za porse 911
+
+
 
 --Ocena
 INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VALUES(4, 1, 1, 25)
