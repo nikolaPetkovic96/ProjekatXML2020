@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.CommonDataDTO;
 import com.team32.AgentApp.DTO.NarudzbenicaDTO;
+import com.team32.AgentApp.DTO.NarudzbenicaNewDTO;
 import com.team32.AgentApp.DTO.PorukaDTO;
 import com.team32.AgentApp.DTO.RezervacijaDTO;
 import com.team32.AgentApp.DTO.RezervacijaFullDTO;
+import com.team32.AgentApp.DTO.RezervacijaNewDTO;
 import com.team32.AgentApp.DTO.RezervacijaStatusDTO;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Narudzbenica;
@@ -35,7 +37,6 @@ import com.team32.AgentApp.service.UserService;
 
 @RestController
 public class RezervacijaController {
-
 	@Autowired
 	private RezervacijaService rezervacijaService;
 	@Autowired
@@ -210,72 +211,60 @@ public class RezervacijaController {
 		return new ResponseEntity<>(rezervacijaFullDTO, HttpStatus.OK);
 	}
 	
+	//POST
+	@RequestMapping(method=RequestMethod.POST, value="/rezervacija", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<RezervacijaNewDTO> addRezervacija(Principal principal, @RequestBody RezervacijaNewDTO dto) throws Exception{
+		
+		Rezervacija savedRezervacija = new Rezervacija();		
+		
+		//Dobavljanje username iz zahteva
+		String username = principal.getName();
+		User loggedUser = userService.findByUsername(username);
+		
+		//Kreirao se commonData za rezervacuju (uglovani user je kreira)
+		CommonData commonData = setCommonData(loggedUser.getId());
+		
+		savedRezervacija.setId(dto.getId());
+		savedRezervacija.setUkupnaCena(dto.getUkupnaCena());
+		savedRezervacija.setBundle(dto.getBundle());
+		savedRezervacija.setStatusRezervacije(dto.getStatusRezervacije());
+		savedRezervacija.setCommonDataId(commonData.getId());
+		
+		//kreirala se rezervacija i sada njen id se koristi pri kreiranju narudzbenice
+		savedRezervacija = rezervacijaService.addRezervacija(savedRezervacija);
+		
+		//NARUDZBENICA
+		Narudzbenica narudzbenica = new Narudzbenica();
+		narudzbenica.setDoDatuma(dto.getNarudzbenica().getDoDatuma());
+		narudzbenica.setOdDatuma(dto.getNarudzbenica().getOdDatuma());
+		narudzbenica.setOglasId(dto.getNarudzbenica().getOglasId());
+		narudzbenica.setAgentId(dto.getNarudzbenica().getAgentId());
+		narudzbenica.setRezervacijaId(savedRezervacija.getId());
+		
+		//Kreirao se commonData za narudzbenicu (uglovani user je kreira)
+		CommonData commonDataNarudzb = setCommonData(loggedUser.getId());
+		narudzbenica.setCommonDataId(commonDataNarudzb.getId());
+		
+		narudzbenica = narudzbService.addNarudzbenica(narudzbenica);
+		
+		return new ResponseEntity<>(new RezervacijaNewDTO(savedRezervacija, new NarudzbenicaNewDTO(narudzbenica)), HttpStatus.CREATED);
+	}
 	
-//	@RequestMapping(method=RequestMethod.POST, value="/rezervacija", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<RezervacijaDTO> addRezervacija(Principal principal, @RequestBody RezervacijaDTO rezervacijaDTO) throws Exception{
-//		
-//		Rezervacija savedRezervacija = new Rezervacija();
-//		
-//		Long agentId;
-//		
-//		CommonData commonData = new CommonData();
-//		LocalDateTime now = LocalDateTime.now();
-//		commonData.setDatumKreiranja(now);
-//		
-//		//Dobavljanje username iz zahteva
-//		String username = principal.getName();
-//		User user = userService.findByUsername(username);
-//		commonData.setUserId(user.getId());
-//		
-//		commonData = comDataService.addCommonData(commonData);
-//		
-////	User user = userService.findOne(commonData.getUserid());
-//		
-//		savedRezervacija.setId(rezervacijaDTO.getId());
-//		savedRezervacija.setUkupnaCena(rezervacijaDTO.getUkupnaCena());
-//		savedRezervacija.setBundle(rezervacijaDTO.getBundle());
-//		savedRezervacija.setStatusRezervacije(rezervacijaDTO.getStatusRezervacije());
-//		savedRezervacija.setCommonDataId(commonData.getId());
-//		
-//		savedRezervacija = rezervacijaService.addRezervacija(savedRezervacija);
-//
-//		return new ResponseEntity<>(new RezervacijaDTO(savedRezervacija, user.getKorisnickoIme(), agentId), HttpStatus.CREATED);
-//	}
-	
-//	@RequestMapping(method=RequestMethod.PUT, value="/rezervacija", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<RezervacijaDTO> updateRezervacija(@RequestBody RezervacijaDTO rezervacijaDTO) throws Exception{
-//		
-//		Rezervacija updatedRezervacija = rezervacijaService.findOne(rezervacijaDTO.getId());
-//		if(updatedRezervacija == null) {
-//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//		}
-//		Long comDatId = updatedRezervacija.getCommonDataId();
-//		
-//		CommonData commonData = comDataService.findOne(comDatId);
-//		LocalDateTime now = LocalDateTime.now();
-//		commonData.setDatumIzmene(now);
-//		commonData = comDataService.updateCommonData(comDatId, commonData);
-//		
-//		User user = userService.findOne(commonData.getUserid());
-//		
-//		updatedRezervacija.setId(rezervacijaDTO.getId());
-//		updatedRezervacija.setUkupnaCena(rezervacijaDTO.getUkupnaCena());
-//		updatedRezervacija.setBundle(rezervacijaDTO.getBundle());
-//		updatedRezervacija.setStatusRezervacije(rezervacijaDTO.getStatusRezervacije());
-//		updatedRezervacija.setCommonDataId(comDatId);
-//		
-//		updatedRezervacija = rezervacijaService.updateRezervacija(updatedRezervacija.getId(), updatedRezervacija);
-//		return new ResponseEntity<>(new RezervacijaDTO(updatedRezervacija,user.getKorisnickoIme()),HttpStatus.OK);
-//	}
-	
+
+	//PUT
 	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.PUT, value="/rezervacija/status", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RezervacijaStatusDTO> updateRezervacija(@RequestBody RezervacijaStatusDTO dto) throws Exception{
+	public ResponseEntity<RezervacijaStatusDTO> updateStatusRezervacija(@RequestBody RezervacijaStatusDTO dto) throws Exception{
 		
 		Rezervacija updatedRezervacija = rezervacijaService.findOne(dto.getRezervacijaId());
 		if(updatedRezervacija == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
+		if(dto.getStatusRezervacije().equals("CANCELED")) {
+			
+		}
+		
 		
 		Long comDatId = updatedRezervacija.getCommonDataId();
 		
@@ -316,4 +305,40 @@ public class RezervacijaController {
 		return comData.getDatumKreiranja();
 	}
 	
+	//Pomocna metoda za kreiranje novog commonData
+	public CommonData setCommonData(Long userId) throws Exception {
+		CommonData commonData = new CommonData();
+		LocalDateTime now = LocalDateTime.now();
+		commonData.setDatumKreiranja(now);
+		commonData.setUserId(userId); 
+		commonData = comDataService.addCommonData(commonData);	
+		return commonData;
+	}
+	
+//REZERVACIJA NE MOZE DA SE MENJA MOZE DA SE MENJA SAMO NJEN STATUS
+//	@RequestMapping(method=RequestMethod.PUT, value="/rezervacija", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<RezervacijaDTO> updateRezervacija(@RequestBody RezervacijaDTO rezervacijaDTO) throws Exception{
+//		
+//		Rezervacija updatedRezervacija = rezervacijaService.findOne(rezervacijaDTO.getId());
+//		if(updatedRezervacija == null) {
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//		Long comDatId = updatedRezervacija.getCommonDataId();
+//		
+//		CommonData commonData = comDataService.findOne(comDatId);
+//		LocalDateTime now = LocalDateTime.now();
+//		commonData.setDatumIzmene(now);
+//		commonData = comDataService.updateCommonData(comDatId, commonData);
+//		
+//		User user = userService.findOne(commonData.getUserid());
+//		
+//		updatedRezervacija.setId(rezervacijaDTO.getId());
+//		updatedRezervacija.setUkupnaCena(rezervacijaDTO.getUkupnaCena());
+//		updatedRezervacija.setBundle(rezervacijaDTO.getBundle());
+//		updatedRezervacija.setStatusRezervacije(rezervacijaDTO.getStatusRezervacije());
+//		updatedRezervacija.setCommonDataId(comDatId);
+//		
+//		updatedRezervacija = rezervacijaService.updateRezervacija(updatedRezervacija.getId(), updatedRezervacija);
+//		return new ResponseEntity<>(new RezervacijaDTO(updatedRezervacija,user.getKorisnickoIme()),HttpStatus.OK);
+//	}
 }

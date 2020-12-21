@@ -11,7 +11,7 @@ public class NarudzbenicaNewDTO {
 
 	private Long agentId;
 	
-	private Long userId;
+//	private Long userId;
 	
 	private Long oglasId;
 	
@@ -31,7 +31,7 @@ public class NarudzbenicaNewDTO {
 		this(
 			n.getId(),
 			n.getAgentId(),
-			n.getUserId(),
+//			n.getUserId(),
 			n.getOglasId(),
 			n.getRezervacijaId(),
 			n.getOdDatuma(),
@@ -40,12 +40,12 @@ public class NarudzbenicaNewDTO {
 			);
 	}
 
-	public NarudzbenicaNewDTO(Long id, Long agentId, Long userId, Long oglasId, Long rezervacijaId, LocalDateTime odDatuma,
+	public NarudzbenicaNewDTO(Long id, Long agentId, /*Long userId,*/ Long oglasId, Long rezervacijaId, LocalDateTime odDatuma,
 			LocalDateTime doDatuma, Long commonDataId) {
 		super();
 		this.id = id;
 		this.agentId = agentId;
-		this.userId = userId;
+//		this.userId = userId;
 		this.oglasId = oglasId;
 		this.rezervacijaId = rezervacijaId;
 		this.odDatuma = odDatuma;
@@ -69,13 +69,13 @@ public class NarudzbenicaNewDTO {
 		this.agentId = agentId;
 	}
 
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+//	public Long getUserId() {
+//		return userId;
+//	}
+//
+//	public void setUserId(Long userId) {
+//		this.userId = userId;
+//	}
 
 	public Long getOglasId() {
 		return oglasId;

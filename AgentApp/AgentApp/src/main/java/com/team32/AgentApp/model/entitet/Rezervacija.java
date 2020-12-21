@@ -84,6 +84,9 @@ public class Rezervacija {
     @XmlElement(name = "Status_rezervacije", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true, defaultValue = "PENDING")
     protected String statusRezervacije;
     
+    @Column(name="napomena_rezerv")
+    private String napomenaRezervacije;
+    
     //Jedna rezervacija se odnosi samo na jednog korisnika(druga strana bidirekcije)
     @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
     @Column(name="commonDataId")
@@ -93,11 +96,12 @@ public class Rezervacija {
 		super();
 	}
 
-	public Rezervacija(Long id, double ukupnaCena, Boolean bundle, String statusRezervacije, Long commonDataId) {
+	public Rezervacija(Long id, double ukupnaCena, Boolean bundle, String napomenaRezervacije, String statusRezervacije, Long commonDataId) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
 		this.bundle = bundle;
+		this.napomenaRezervacije = napomenaRezervacije;
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
 	}
@@ -125,6 +129,14 @@ public class Rezervacija {
 
 	public void setBundle(Boolean bundle) {
 		this.bundle = bundle;
+	}
+	
+	public String getNapomenaRezervacije() {
+		return napomenaRezervacije;
+	}
+
+	public void setNapomenaRezervacije(String napomenaRezervacije) {
+		this.napomenaRezervacije = napomenaRezervacije;
 	}
 
 	public String getStatusRezervacije() {

@@ -1,11 +1,10 @@
 package com.team32.AgentApp.DTO;
 
-import java.time.Instant;
+
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TimeZone;
+
 
 import com.team32.AgentApp.model.entitet.Oglas;
 
@@ -41,10 +40,6 @@ public class OglasDTO {
 		this.planiranaKilometraza = o.getPlaniranaKilometraza();
 	}
 	
-//	Long test = savedOglas.getOdDatuma().atOffset(ZoneOffset.UTC).toInstant().toEpochMilli();
-//	System.out.println("Ponovo u milisec odDatuma: " + test);
-//	System.out.println("Ponovo iz milisec  u odDatuma: " + LocalDateTime.ofInstant(Instant.ofEpochMilli(test), TimeZone.getDefault().toZoneId()));
-
 	public OglasDTO(Oglas o, String korImeAgenta, Long agentId, List<HashMap<String, LocalDateTime>> zauzetiTermini,
 			AdresaDTO adresa, AutomobilDTO automobil, CenovnikDTO cenovnik) {
 		super();

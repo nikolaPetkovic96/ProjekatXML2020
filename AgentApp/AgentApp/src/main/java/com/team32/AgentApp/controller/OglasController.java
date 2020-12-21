@@ -2,7 +2,6 @@ package com.team32.AgentApp.controller;
 import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.AdresaDTO;
 import com.team32.AgentApp.DTO.OglasDTO;
+import com.team32.AgentApp.DTO.OglasDetailsDTO;
 import com.team32.AgentApp.DTO.OglasNewDTO;
 
 import com.team32.AgentApp.model.entitet.CommonData;
@@ -104,6 +104,18 @@ public class OglasController {
 			return new ResponseEntity<>(oglasDTO, HttpStatus.OK);
 		}
 		
+		//GET
+		@RequestMapping(method=RequestMethod.GET, value="/oglas/{id}/details", produces = MediaType.APPLICATION_JSON_VALUE)
+		public ResponseEntity<OglasDetailsDTO> getOglasDetail(@PathVariable("id") Long id){
+			
+			Oglas oglas = oglasService.findOne(id);
+			if(oglas == null) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			
+			return new ResponseEntity<>(oglasService.getOglasFullDetailsMilisec(oglas), HttpStatus.OK);
+		}
+		
 		//POST
 		@RequestMapping(method=RequestMethod.POST, value="/oglas",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<OglasDTO> addOglas(Principal principal, @RequestBody OglasNewDTO dto)  throws Exception {
@@ -120,6 +132,7 @@ public class OglasController {
 			Adresa adresa = setAdresa(dto, loggedAgent.getId());
 			//Izvrsi se cuvanje nove adrese i kreira na osnovu povratne vrednosti(nje same) DTO.
 			AdresaDTO adresaDTO = new AdresaDTO(adresaService.addAdresa(adresa));
+			
 			System.out.println("Od datuma dto: " + dto.getOdDatuma());
 			System.out.println("Od datuma: "  + LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getOdDatuma()), TimeZone.getDefault().toZoneId()));
 			System.out.println("Do datuma dto: " + dto.getDoDatuma());
@@ -128,8 +141,6 @@ public class OglasController {
 			savedOglas.setId(dto.getId());	
 			savedOglas.setOdDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getOdDatuma()), TimeZone.getDefault().toZoneId()));
 			savedOglas.setDoDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getDoDatuma()), TimeZone.getDefault().toZoneId()));
-			
-			
 			savedOglas.setAutomobilId(dto.getAutomobilId());
 			savedOglas.setCenovnikId(dto.getCenovnikId());
 			savedOglas.setPlaniranaKilometraza(dto.getPlaniranaKilometraza());
@@ -138,11 +149,11 @@ public class OglasController {
 			savedOglas.setCommonDataId(commonData.getId());
 
 			savedOglas = oglasService.addOglas(savedOglas);
-										
+			
+			//vraca OglasDTO samo zato da bi se proverilo da li su dobri datumi uneti u citljivom formatu
 			return new ResponseEntity<>(new OglasDTO(savedOglas), HttpStatus.CREATED);
 		}
 		
-
 		
 		//DELETE
 		@RequestMapping(value="/oglas/{id}", method=RequestMethod.DELETE)

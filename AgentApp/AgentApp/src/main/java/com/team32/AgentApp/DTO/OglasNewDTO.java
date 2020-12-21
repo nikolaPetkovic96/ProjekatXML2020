@@ -1,6 +1,7 @@
 package com.team32.AgentApp.DTO;
 
 import java.time.LocalDateTime;
+import java.util.TimeZone;
 
 import com.team32.AgentApp.model.entitet.Oglas;
 
@@ -11,7 +12,6 @@ public class OglasNewDTO {
 		private long doDatuma;
 		private Long cenovnikId;
 		private Long automobilId;
-//		private Long adresaId 				nema potrebe da ovde imamo adresa id kada kreiramo novu adresu 
 		private float planiranaKilometraza;
 		private Long commonDataId;
 		private AdresaDTO adresa;
@@ -23,8 +23,8 @@ public class OglasNewDTO {
 		public OglasNewDTO(Oglas o, AdresaDTO adresa) {
 			super();
 			this.id = o.getId();
-//			this.odDatuma = o.getOdDatuma();
-//			this.doDatuma = o.getDoDatuma();
+			this.odDatuma = o.getOdDatuma().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+			this.doDatuma = o.getDoDatuma().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();;
 			this.cenovnikId = o.getCenovnikId();
 			this.automobilId = o.getAutomobilId();
 			this.planiranaKilometraza = o.getPlaniranaKilometraza();
@@ -38,8 +38,8 @@ public class OglasNewDTO {
 				Long automobilId, float planiranaKilometraza, AdresaDTO adresa) {
 			super();
 			this.id = id;
-//			this.odDatuma = odDatuma;
-//			this.doDatuma = doDatuma;
+			this.odDatuma = odDatuma.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();;
+			this.doDatuma = doDatuma.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();;
 			this.cenovnikId = cenovnikId;
 			this.commonDataId = commonDataId;
 			this.automobilId = automobilId;

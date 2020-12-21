@@ -33,11 +33,11 @@ public class NarudzbenicaService {
 	}
 	
 	
-	public Narudzbenica addNarudzbenica(Narudzbenica klasaAutomobila) throws Exception{
-		if(klasaAutomobila.getId() != null) {
+	public Narudzbenica addNarudzbenica(Narudzbenica narudzbenica) throws Exception{
+		if(narudzbenica.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
-		Narudzbenica savedNarudzbenica = narudzbenicaRepository.save(klasaAutomobila);
+		Narudzbenica savedNarudzbenica = narudzbenicaRepository.save(narudzbenica);
 		return savedNarudzbenica;
 	}
 	

@@ -19,9 +19,9 @@ public class Narudzbenica {
 		@Column(name = "agent_id", nullable = false)
 		private Long agentId;
 		
-		//UserId iz commonData od te Narudzbenice
-		@Column(name = "user_id", nullable = false)
-		private Long userId;
+//		//UserId iz commonData od te Narudzbenice
+//		@Column(name = "user_id", nullable = false)
+//		private Long userId;
 	
 		@Column(name = "oglas_id", nullable = false)
 		private Long oglasId;
@@ -42,12 +42,12 @@ public class Narudzbenica {
 			super();
 		}
 
-		public Narudzbenica(Long id, Long agentId, Long userId, Long oglasId, Long rezervacijaId, LocalDateTime odDatuma,
+		public Narudzbenica(Long id, Long agentId/*, Long userId*/, Long oglasId, Long rezervacijaId, LocalDateTime odDatuma,
 				LocalDateTime doDatuma, Long commonDataId) {
 			super();
 			this.id = id;
 			this.agentId = agentId;
-			this.userId = userId;
+//			this.userId = userId;
 			this.oglasId = oglasId;
 			this.rezervacijaId = rezervacijaId;
 			this.odDatuma = odDatuma;
@@ -71,13 +71,13 @@ public class Narudzbenica {
 			this.agentId = agentId;
 		}
 
-		public Long getUserId() {
-			return userId;
-		}
-
-		public void setUserId(Long userId) {
-			this.userId = userId;
-		}
+//		public Long getUserId() {
+//			return userId;
+//		}
+//
+//		public void setUserId(Long userId) {
+//			this.userId = userId;
+//		}
 
 		public Long getOglasId() {
 			return oglasId;

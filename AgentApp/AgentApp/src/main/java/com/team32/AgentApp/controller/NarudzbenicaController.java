@@ -86,7 +86,7 @@ public class NarudzbenicaController {
 		savedNarudzb.setAgentId(dto.getAgentId()); 			//Preuzeto iz oglasa kako se lakse manipulisalo objektima...
 		savedNarudzb.setOglasId(dto.getOglasId());
 		savedNarudzb.setRezervacijaId(dto.getRezervacijaId());
-		savedNarudzb.setUserId(dto.getUserId()); 			//iz common Data videti da li i treba...
+//		savedNarudzb.setUserId(dto.getUserId()); 			//iz common Data videti da li i treba...
 		savedNarudzb.setOdDatuma(dto.getOdDatuma());
 		savedNarudzb.setDoDatuma(dto.getDoDatuma());
 		savedNarudzb.setCommonDataId(commonData.getId());
@@ -115,7 +115,7 @@ public class NarudzbenicaController {
 		updNarudzb.setAgentId(dto.getAgentId());
 		updNarudzb.setOglasId(dto.getOglasId());
 		updNarudzb.setRezervacijaId(dto.getRezervacijaId());
-		updNarudzb.setUserId(dto.getUserId()); 			//iz common Data videti da li i treba
+//		updNarudzb.setUserId(dto.getUserId()); 			//iz common Data videti da li i treba
 		updNarudzb.setOdDatuma(dto.getOdDatuma());
 		updNarudzb.setDoDatuma(dto.getDoDatuma());
 		updNarudzb.setCommonDataId(comDatId);		
