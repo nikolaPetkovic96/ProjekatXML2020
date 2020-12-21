@@ -50,11 +50,15 @@ public class AutomobilController {
 	private OcenaService ocenaService;
 	
 	@RequestMapping(method=RequestMethod.GET, value="/automobil", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AutomobilDTO>> getAllAutomobil(){
-		List<Automobil> allAutomobil = automobilService.getAllAutomobil();
+	public ResponseEntity<List<AutomobilDTO>> getAllAutomobil(Principal principal){
+		//Preuzima se user iz sesije koji je trenutno ulogovan
+		String username = principal.getName();
+		User loggedAgent = userService.findByUsername(username);
+		
+		List<Automobil> allAgentsAutomobil = automobilService.getAllAutomobilByAgent(loggedAgent.getId());
 		
 		List<AutomobilDTO> automobilDTO = new ArrayList<>();
-		for(Automobil a : allAutomobil) {
+		for(Automobil a : allAgentsAutomobil) {
 			
 			automobilDTO.add(automobilService.findOneWithDetails(a.getId()));
 			

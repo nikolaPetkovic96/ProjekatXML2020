@@ -1,9 +1,12 @@
 package com.team32.AgentApp.controller;
 import java.security.Principal;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,11 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.AdresaDTO;
-import com.team32.AgentApp.DTO.AutomobilDTO;
-import com.team32.AgentApp.DTO.CenovnikDTO;
 import com.team32.AgentApp.DTO.OglasDTO;
 import com.team32.AgentApp.DTO.OglasNewDTO;
-import com.team32.AgentApp.model.entitet.Cenovnik;
+
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Narudzbenica;
 import com.team32.AgentApp.model.entitet.Oglas;
@@ -29,8 +30,6 @@ import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.model.tentitet.Adresa;
 import com.team32.AgentApp.security.exception.ResourceConflictException;
 import com.team32.AgentApp.service.AdresaService;
-import com.team32.AgentApp.service.AutomobilService;
-import com.team32.AgentApp.service.CenovnikService;
 import com.team32.AgentApp.service.CommonDataService;
 import com.team32.AgentApp.service.NarudzbenicaService;
 import com.team32.AgentApp.service.OglasService;
@@ -107,20 +106,30 @@ public class OglasController {
 		
 		//POST
 		@RequestMapping(method=RequestMethod.POST, value="/oglas",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<OglasNewDTO> addOglas(@RequestBody OglasNewDTO dto)  throws Exception {
+		public ResponseEntity<OglasDTO> addOglas(Principal principal, @RequestBody OglasNewDTO dto)  throws Exception {
 			Oglas savedOglas = new Oglas();
 			
+			//Preuzima se user iz sesije koji je trenutno ulogovan
+			String username = principal.getName();
+			User loggedAgent = userService.findByUsername(username);
+			
 			//Prilkom kreiranja novog oglasa odmah se kreira i commonData koji pamti ko je kreirao oglas i kada.
-			CommonData commonData = setCommonData((long) 1);
+			CommonData commonData = setCommonData(loggedAgent.getId());
 			
 			//Prilkom kreiranja novog oglasa odmah se kreira i nova adresa vezana za taj oglas.
-			Adresa adresa = setAdresa(dto, (long) 1);
+			Adresa adresa = setAdresa(dto, loggedAgent.getId());
 			//Izvrsi se cuvanje nove adrese i kreira na osnovu povratne vrednosti(nje same) DTO.
 			AdresaDTO adresaDTO = new AdresaDTO(adresaService.addAdresa(adresa));
-	
+			System.out.println("Od datuma dto: " + dto.getOdDatuma());
+			System.out.println("Od datuma: "  + LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getOdDatuma()), TimeZone.getDefault().toZoneId()));
+			System.out.println("Do datuma dto: " + dto.getDoDatuma());
+			System.out.println("Do datuma: "  + LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getDoDatuma()), TimeZone.getDefault().toZoneId()));
+			
 			savedOglas.setId(dto.getId());	
-			savedOglas.setOdDatuma(dto.getOdDatuma());
-			savedOglas.setDoDatuma(dto.getDoDatuma());
+			savedOglas.setOdDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getOdDatuma()), TimeZone.getDefault().toZoneId()));
+			savedOglas.setDoDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getDoDatuma()), TimeZone.getDefault().toZoneId()));
+			
+			
 			savedOglas.setAutomobilId(dto.getAutomobilId());
 			savedOglas.setCenovnikId(dto.getCenovnikId());
 			savedOglas.setPlaniranaKilometraza(dto.getPlaniranaKilometraza());
@@ -130,37 +139,10 @@ public class OglasController {
 
 			savedOglas = oglasService.addOglas(savedOglas);
 										
-			return new ResponseEntity<>(new OglasNewDTO(savedOglas, adresaDTO), HttpStatus.CREATED);
+			return new ResponseEntity<>(new OglasDTO(savedOglas), HttpStatus.CREATED);
 		}
 		
-		//PUT
-		@RequestMapping(method=RequestMethod.PUT, value="/oglas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<OglasNewDTO> updateOglas(@RequestBody OglasNewDTO dto) throws Exception{
-			
-			Oglas updatedOglas = oglasService.findOne(dto.getId());
-			if(updatedOglas == null) {
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
-			
-			CommonData commonData = updateCommonData(updatedOglas.getCommonDataId());
-			
-			//Ukoliko se menja adresa oglasa.
-			Adresa adresa = updateAdresa(dto, updatedOglas.getAdresaId());
-			//Izvrsi se cuvanje izmenjene adrese i kreira na osnovu povratne vrednosti(nje same) DTO.
-			AdresaDTO updatedAdresaDTO = new AdresaDTO(adresaService.updateAdresa(adresa.getId(), adresa));
-			
-			updatedOglas.setId(dto.getId());	
-			updatedOglas.setOdDatuma(dto.getOdDatuma());
-			updatedOglas.setDoDatuma(dto.getDoDatuma());
-			updatedOglas.setAutomobilId(dto.getAutomobilId());
-			updatedOglas.setCenovnikId(dto.getCenovnikId());
-			updatedOglas.setPlaniranaKilometraza(dto.getPlaniranaKilometraza());
-			//Ne updejtuje se id automobila i id adrese
-			updatedOglas.setCommonDataId(commonData.getId());
-			updatedOglas = oglasService.updateOglas(updatedOglas.getId(), updatedOglas);
-			
-			return new ResponseEntity<>(new OglasNewDTO(updatedOglas, updatedAdresaDTO),HttpStatus.OK);
-		}
+
 		
 		//DELETE
 		@RequestMapping(value="/oglas/{id}", method=RequestMethod.DELETE)
@@ -257,4 +239,49 @@ public class OglasController {
 			
 			return zauzetiTermini;
 		}
+		
+		
+		
+		//Za vracanje iz LocalDateTime to milisec Iskoristiti kod oglasa za vracanje termina zauzetosti...
+//		Long test = savedOglas.getOdDatuma().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+//		Long test1 = savedOglas.getDoDatuma().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
+//		
+//		System.out.println("Ponovo u milisec odDatuma: " + test);
+//		System.out.println("Ponovo iz milisec  u odDatuma: " + LocalDateTime.ofInstant(Instant.ofEpochMilli(test), TimeZone.getDefault().toZoneId()));
+//
+//		System.out.println("Ponovo u milisec doDatuma: " + test1);
+//		System.out.println("Ponovo iz milisec  u doDatuma: " + LocalDateTime.ofInstant(Instant.ofEpochMilli(test1), TimeZone.getDefault().toZoneId()));
+		
+		
+		
+//		//PUT NE MOZE se menjati oglas, moze samo da se obrise i kreira novi... 
+//		@RequestMapping(method=RequestMethod.PUT, value="/oglas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//		public ResponseEntity<OglasNewDTO> updateOglas(@RequestBody OglasNewDTO dto) throws Exception{
+//			
+//			Oglas updatedOglas = oglasService.findOne(dto.getId());
+//			if(updatedOglas == null) {
+//				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//			}
+//			
+//			CommonData commonData = updateCommonData(updatedOglas.getCommonDataId());
+//			
+//			//Ukoliko se menja adresa oglasa.
+//			Adresa adresa = updateAdresa(dto, updatedOglas.getAdresaId());
+//			//Izvrsi se cuvanje izmenjene adrese i kreira na osnovu povratne vrednosti(nje same) DTO.
+//			AdresaDTO updatedAdresaDTO = new AdresaDTO(adresaService.updateAdresa(adresa.getId(), adresa));
+//			
+//			updatedOglas.setId(dto.getId());	
+//			updatedOglas.setOdDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getOdDatuma()), TimeZone.getDefault().toZoneId()));
+//			updatedOglas.setDoDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getDoDatuma()), TimeZone.getDefault().toZoneId()));
+//			updatedOglas.setAutomobilId(dto.getAutomobilId());
+//			updatedOglas.setCenovnikId(dto.getCenovnikId());
+//			updatedOglas.setPlaniranaKilometraza(dto.getPlaniranaKilometraza());
+//			//Ne updejtuje se id automobila i id adrese
+//			updatedOglas.setCommonDataId(commonData.getId());
+//			updatedOglas = oglasService.updateOglas(updatedOglas.getId(), updatedOglas);
+//			
+//			return new ResponseEntity<>(new OglasNewDTO(updatedOglas, updatedAdresaDTO),HttpStatus.OK);
+//		}
+		
+		
 }
