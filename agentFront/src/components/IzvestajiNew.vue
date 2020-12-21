@@ -5,8 +5,8 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
         <div class="container" id='main'>
-            <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
-            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
+            <!-- <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
+            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div> -->
 
             <table class="table">
                 <thead>
@@ -27,24 +27,26 @@
                     <td>{{oglas.cenovnik.cenaPoDanu}} din</td>
                     <td>{{oglas.cenovnik.cenaPoKilometru}} din</td>
                     <td>
-                        <a href="#new-report"><button v-on:click='createReport(oglas.automobil)' class="btn-outline-primary"> izvestaj </button></a>
+                        <a href="#new-report"><button v-on:click='showCreateReport(oglas)' class="btn-outline-primary"> izvestaj </button></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-            <div v-if='newReport' id='new-report'>
+            <div v-if='showNewReport' id='new-report'>
                 <div class="container" id='page-title'>
                     <h1 style="margin-top:10px;color:#35424a;">Novi <span id='titleEffect'>Izvestaj</span></h1>
                     <hr style='background:#35424a;height:1px;'>
                 </div>
                 <div class="card-header">
-                    <h4><b>Za automobil:</b> {{this.automobilReport.markaAut}} {{this.automobilReport.modelAut}} - {{this.automobilReport.klasaAut}} (marka/model/klasa)</h4>
+                    <h4><b>Za automobil:</b> {{newReportPom.automobilReport.markaAut}} {{newReportPom.automobilReport.modelAut}} - {{newReportPom.automobilReport.klasaAut}} (marka/model/klasa)</h4>
                 </div>
+                <div style="margin-top:20px" v-if='messages.errorKm' class="alert alert-danger"
+				v-html="messages.errorKm"></div>
                 <label>Predjena kilometraza:</label>
-                <input class='half-size' type="text" placeholder="Unesite predjenu kilometrazu...">
+                <input class='half-size' type="text" placeholder="Unesite predjenu kilometrazu..." v-model='izvestaj.predjenaKilometraza' v-on:input='calculateKilometeres()'>
                 
-                <label>Dodatni troskovi:</label>
+                <label v-if='showDodatniTrosk'>Dodatni troskovi:</label>
                 <table id='dodatni-troskovi' class='showPriceTable'>
                     <thead>
                         <tr>
@@ -56,22 +58,21 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>5000 km</td>
-                            <td>300 km</td>
-                            <td>250 din</td>
-                            <td>75000 din</td>   
+                            <td>{{newReportPom.planiranaKilometraza}} km</td>
+                            <td>{{newReportPom.prekoracenaKilometraza}} km</td>
+                            <td>{{newReportPom.cenaPoKilometru}} din</td>
+                            <td>{{newReportPom.dodatniTroskovi}} din</td>   
                         </tr>     
                     </tbody>            
                 </table>
 
                 <div id='bill-warning' class="alert alert-danger">
-                    <h5>Racun u iznosu od 75000 dinara ce biti poslat korisniku na naplatu.</h5>
+                    <h5>Racun u iznosu od {{newReportPom.dodatniTroskovi}} dinara ce biti poslat korisniku na naplatu.</h5>
                 </div>
                 
-                <!-- <label>Comment:</label>-->
                 <label>Dodatne informacije:</label> 
                 <div v-if='messages.errorText' class="alert alert-danger" v-html="messages.errorText"></div>
-                <textarea v-model='review.text' placeholder="Unesi info..."></textarea>
+                <textarea v-model='izvestaj.tekstIzvestaja' placeholder="Unesi info..."></textarea>
                 <br>
 
                 <button class="btn btn-lg btn-success shadow" v-on:click='addReport()'> Potvrdi </button>
@@ -86,11 +87,25 @@ export default {
     name: 'ReportNew',
     data:function(){
         return {
-            newReport:false,
-            automobilReport:null,
-            izvestaj:{
-
+            showNewReport:false,
+            showDodatniTrosk:false,
+            //pomocni objekat za smestanje podataka koji ce se prikazati kada se 
+            //odabere kreiranje novog izvestaja...
+            newReportPom:{
+                automobilReport:null,
+                cenaPoKilometru:null,
+                planiranaKilometraza:null,
+                prekoracenaKilometraza:0,
+                cenaPoKilometru:0, //mora se proveriti da li se uopste moze uneti prekoracenje tj da li postoji cena po km...
+                dodatniTroskovi:0,
             },
+
+            izvestaj:{
+                automobilId:null,
+                predjenaKilometraza:0,
+                tekstIzvestaja:'',
+            },
+
             rezervacija: {
                 id:1,
                 odDatuma:'18.6.2020',
@@ -124,6 +139,13 @@ export default {
                             markaAut:'Audi',
                             modelAut:'A6',
                             klasaAut:'Gradski',
+                            vrstaGoriva:'dizel',
+                            tipMenjaca:'manuelni',
+                            ukupnaOcena:5,
+                            brojSedistaZaDecu:1,
+                            predjenaKilometraza:5000,
+                            collisionDamageWaiver:true,
+                            images:[],
                         },
                         //Oglas/Cenovnik
                         cenovnik:{ 
@@ -135,7 +157,6 @@ export default {
                             cenaPoKilometru:10
                         },
                     },
-                
                     {
                         //Oglas
                         id:2,
@@ -161,9 +182,9 @@ export default {
                             klasaAut:'Gradski',
                             vrstaGoriva:'dizel',
                             tipMenjaca:'manuelni',
-                            ukupnaOcena:5,
-                            brojSedistaZaDecu:1,
-                            predjenaKilometraza:5000,
+                            ukupnaOcena:3,
+                            brojSedistaZaDecu:2,
+                            predjenaKilometraza:800,
                             collisionDamageWaiver:true,
                             images:[],
                         },
@@ -245,64 +266,87 @@ export default {
                     }
                 ]
             },
-
-
-            review: {
-                usertId: '',
-                carId: '',
-                text: '',
-                star: null,
-                visible: false,
-            },
             messages: {
+                errorKm: '',
                 errorText: '',
-                errorStar: '',
                 errorResponse: '',
                 successResponse: '',
             }
         }
     },
     methods:{
-        createReport(automobil){
-            //ako je vec otvoren prozor za kreiranje nove poruke samo neka se doda drugi id
-            if(this.newReport === true){
-                // predjenaKilometraza
-                // console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
+        showCreateReport(oglas){
+            //ako je vec otvoren prozor za kreiranje novog izvestaja samo neka se doda drugi id
+            if(this.showNewReport === true){
+                this.izvestaj.automobilId = oglas.automobil.id;
+                this.newReportPom.planiranaKilometraza = oglas.planiranaKilometraza;
+                this.newReportPom.cenaPoKilometru = oglas.cenovnik.cenaPoKilometru;
+                console.log('this.izvestaj.automobilId:' + this.izvestaj.automobilId);
+                console.log('this.izvestaj.planiranaKilometraza:' + this.izvestaj.planiranaKilometraza);
+                console.log('this.newReportPom.cenaPoKilometru:' + this.newReportPom.cenaPoKilometru);
             }
             //ako je zatvoren prozor klikom na dugme se prvo otvara prozor za kreiranje pa se dodaje i id auta.
             else{
-                this.newReport = !this.newReport;
-                // this.novaPoruka.automobilId = automobil.id;
-                // console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
+                this.showNewReport = !this.showNewReport;
+                this.izvestaj.automobilId = oglas.automobil.id;
+                this.newReportPom.planiranaKilometraza = oglas.planiranaKilometraza;
+                this.newReportPom.cenaPoKilometru = oglas.cenovnik.cenaPoKilometru;
+                console.log('this.izvestaj.automobilId:' + this.izvestaj.automobilId);
+                console.log('this.newReportPom.planiranaKilometraza:' + this.newReportPom.planiranaKilometraza);
+                console.log('this.newReportPom.cenaPoKilometru:' + this.newReportPom.cenaPoKilometru);
             }
 
-            this.automobilReport = automobil;
+            this.newReportPom.automobilReport = oglas.automobil;
         },
         cancelNewReport(){
-            this.newReport = !this.newReport;
-        },
-        addReport: function () {
-            if (this.review.text == '' && this.review.star != null) {
-                this.messages.errorText = `<h4>Text of comment can't be empty!</h4>`;
-                setTimeout(() => this.messages.errorText = '', 3000);
-            }
-            else if (this.review.text != '' && this.review.star == null) {
-                this.messages.errorStar = `<h4>Rating can't be empty!</h4>`;
-                setTimeout(() => this.messages.errorStar = '', 3000);
-            }
-            else if (this.review.text == '' && this.review.star == null) {
-                this.messages.errorText = `<h4>Text of comment can't be empty!</h4>`;
-                this.messages.errorStar = `<h4>Rating can't be empty!</h4>`;
-                setTimeout(() => this.messages.errorText = '', 3000);
-                setTimeout(() => this.messages.errorStar = '', 3000);
+            this.showNewReport = !this.showNewReport;
+            this.izvestaj.automobilId = null;
+            this.izvestaj.predjenaKilometraza = 0;
 
+            this.newReportPom.automobilReport = null;
+            this.newReportPom.cenaPoKilometru=null;
+            this.newReportPom.planiranaKilometraza=null;
+            this.newReportPom.prekoracenaKilometraza=0;
+            this.newReportPom.cenaPoKilometru=0; //mora se proveriti da li se uopste moze uneti prekoracenje tj da li postoji cena po km...
+            this.newReportPom.dodatniTroskovi=0;
+        },
+        calculateKilometeres:function(){
+            this.showDodatniTrosk = true;
+            
+            this.newReportPom.prekoracenaKilometraza = this.izvestaj.predjenaKilometraza - this.newReportPom.planiranaKilometraza; 
+            //ukoliko je predjena km veca od planirane km racuna se cena koja mora da se plati...
+            if(this.newReportPom.prekoracenaKilometraza > 0){
+                this.newReportPom.dodatniTroskovi = this.newReportPom.cenaPoKilometru * this.newReportPom.prekoracenaKilometraza;   
             }
+            else{
+                //ako nije predjena planirana km prekoracena km se stavlja na 0 i mnozi sa cenom kako bi troskovi bili = 0;
+                this.newReportPom.prekoracenaKilometraza = 0;
+                this.newReportPom.dodatniTroskovi = this.newReportPom.cenaPoKilometru * this.newReportPom.prekoracenaKilometraza;   
+            }
+            
+        },
+
+        addReport: function () {
+            if (this.isNumeric(this.izvestaj.predjenaKilometraza)) {
+				this.messages.errorKm = `<h4>Broj predjenih kilometara mora biti broj!</h4>`;
+				setTimeout(() => this.messages.errorKm = '', 3000);
+			}
+
+			else if (this.izvestaj.predjenaKilometraza == 0 || this.izvestaj.predjenaKilometraza == '') {
+				this.messages.errorKm = `<h4>Morate uneti broj predjenih kilometara!</h4>`;
+				setTimeout(() => this.messages.errorKm = '', 3000);
+            }
+            
+            // else if (this.izvestaj.tekstIzvestaja == '') {
+			// 	this.messages.errorText = `<h4>Polje broj predjenih kilometara ne sme biti prazno!</h4>`;
+			// 	setTimeout(() => this.messages.errorText = '', 3000);
+			// }
             else {
-                alert(`
-                carId: ${this.review.carId},
-                text: ${this.review.text},
-                star: ${this.review.star},
-                visible: ${this.review.visible},
+                alert(`Izvestaj:
+                automobilId: ${this.izvestaj.automobilId},
+                predjenaKm: ${this.izvestaj.predjenaKilometraza},
+                tekstIzv: ${this.izvestaj.tekstIzvestaja},
+                
                 `);
                 // axios
                 //     .post('rest/reviews/', this.review)
@@ -321,21 +365,20 @@ export default {
                 //     });
             }
         },
+
+        isNumeric(num) {
+			//isNaN(num) returns true if the variable does NOT contain a valid number
+			return isNaN(num);
+		}
     },
 
     computed: {
         id() {
-            // alert('Car id: ' + this.$route.params.id);
             return this.$route.params.id; //preuzimam id automobila za koga dodajem novi komentara
         }
     },
     created() {
-        if (!localStorage.getItem('jwt')){
-            this.$router.push('/login');
-        }
-
-        // this.review.userId = this.user.username;
-        this.review.carId = this.id
+        
     },
     
 }

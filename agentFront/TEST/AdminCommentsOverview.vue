@@ -1,123 +1,52 @@
-<template>
-    <div id="DataAndStatistic">
+<template>  
+    <div id='users-message-overview'>
         <div class="container" id='page-title'>
-            <h1 style="margin-top:10px;color:#35424a;">Lista zavrsenih <span id='titleEffect'>rezervacija</span></h1>
+            <h1 style="margin-top:10px;color:#35424a;">Lista <span id='titleEffect'>Komentara</span></h1>
             <hr style='background:#35424a;height:1px;'>
         </div>
-        <div id='main' class='container'>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Rezervisan od</th> <!--Korisnik koji ga rezervise-->
-                        <th>Od</th>
-                        <th>Do</th>
-                        <th>Cena</th>
-                        <th>Bundle</th>
-                        <th>Status</th>
-                        <th>Detaljnije</th>
-                        <th>Izvestaj</th>
-                    </tr>
-                </thead>
-                <tbody>                
-                <tr v-bind:key="rezervacija.id" v-for='rezervacija in rezervacije'>
-                    <td>{{rezervacija.username}}</td>
-                    <!-- <td>{{rezervacija.oglasi.automobil.markaAut}} {{rezervacija.oglasi.automobil.modelAut}} ({{rezervacija.oglasi.automobil.klasaAut}})</td> -->
-                    <td>{{rezervacija.odDatuma}}</td>
-                    <td>{{rezervacija.doDatuma}}</td>
-                    <td>{{rezervacija.ukupnaCena}}</td>
-                    <td>{{rezervacija.bundle}}</td>
-                    <td>{{rezervacija.statusRezervacije}}</td>
-                    <td>
-                        <button v-on:click='showDetails(rezervacija.id)' class="btn-outline-primary"> detalji </button>
-                    </td>
-                    <td>
-                        <button v-on:click='writeReport(rezervacija.id)' class="btn-outline-primary"> izvestaj </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="container" id='page-title'>
-            <h1 style="margin-top:10px;color:#35424a;">Statistika upotrebe <span id='titleEffect'>automobila</span></h1>
-            <hr style='background:#35424a;height:1px;'>
-        </div>
-        <div id='main' class='container'>
-              (Ne obracati paznju sto ne prikazuje trenutno navecu km i rejting)
-	        <div id='criterium' class="row">
-					<div class="col-md-4 col-sm-6 mb-4">
-                        <h4>Najvise komentara</h4>
-						<button v-on:click='getBestByComments()'><img src="../assets/messageSign.jpg" alt=""></button>
-					</div>
-
-					<div class="col-md-4 col-sm-6 mb-4">
-                        <h4>Najvise predjenih kilometara</h4>
-						<button v-on:click='getBestByKm()'><img src="../assets/kmSign2.jpg" alt=""></button>
-					</div>
-
-					<div class="col-md-4 col-sm-6 mb-4">
-						<h4>Najvisa ocena</h4>
-						<button v-on:click='getBestByRating()'><img src="../assets/ratingSign2.jpg" alt=""></button>
-					</div>
+        <!-- Objavljivanje ili odbijanje komentara korisnika. -->
+         <div id='main' class='container'>
+                <div class="comments" v-bind:key="automobil.id" v-for='automobil in automobili'>
+                    <div id='carInfo'>
+                        <div class="card-header">
+                            <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
+                            <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
+                            <h4><b>Ocena:</b> {{automobil.ukupnaOcena}}</h4>
+                        </div>
+                    </div>
+                    <div v-show='isThereReviews(automobil)' class="card-body">
+                            <h3>Nema ocene niti komentara za ovaj automobil...</h3>
+                    </div>
+                    <div id='all-comments' v-bind:key="comment.id" v-for='comment in automobil.reviews'>
+                        <div class="single-comment">
+                            <div id='username'>{{comment.username}} </div>
+                            <div id='star-rating'>
+                                <star-rating
+                                    inactive-color="#35424a"
+                                    active-color="gold"
+                                    v-bind:read-only= "true"
+                                    v-bind:star-size="25"
+                                    v-bind:show-rating="false"
+                                    v-bind:rating="comment.star">
+                                </star-rating>
+                            </div>
+                            <div id='comment'>
+                                {{comment.text}}  
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-success marg" v-on:click='addComment(automobil.id)'>Ostavi komentar</button>
+                </div> <!--comments-->
             </div>
-            <div id='places' v-if='showRank'>                    
-                <div id='first-place'>
-                    <img  src="../assets/firstIcon2.png" alt="">
-                    <div class="card-header">
-                        <h2 v-if='bestByKm'><b>Kilometraza:</b> {{automobili[1].predjenaKilometraza}}</h2>
-                        <h2 v-if='bestByKom'><b>Broj komentara:</b> {{automobili[1].broj_komentara}}</h2>
-                        <h2 v-if='bestByRat'><b>Ukupna_ocena:</b> {{automobili[1].ukupna_ocena}}</h2>
-                        <h4><b>Automobil:</b> {{automobili[1].markaAut}} {{automobili[1].modelAut}} (marka/model)</h4>
-                        <h4><b>Klasa automobila:</b> {{automobili[1].klasaAut}}</h4>
-                        <h5 v-if='bestByKom || bestByRat'><b>Kilometraza:</b> {{automobili[1].predjenaKilometraza}}</h5>
-                        <h5 v-if='bestByRat || bestByKm'><b>Broj komentara:</b> {{automobili[1].broj_komentara}}</h5>
-                        <h5 v-if='bestByKom || bestByKm '><b>Ukupna_ocena:</b> {{automobili[1].ukupna_ocena}}</h5>
-                    </div>
-                </div><!-- </first-place> -->
-                <br>
-                <div id='second-place'>
-                    <div class="card-header">
-                        <h4 v-if='bestByKm'><b>Kilometraza:</b> {{automobili[2].predjenaKilometraza}}</h4>
-                        <h4 v-if='bestByKom'><b>Broj komentara:</b> {{automobili[2].broj_komentara}}</h4>
-                        <h4 v-if='bestByRat'><b>Ukupna_ocena:</b> {{automobili[2].ukupna_ocena}}</h4>
-                        <h5><b>Automobil:</b> {{automobili[2].markaAut}} {{automobili[2].modelAut}} (marka/model)</h5>
-                        <h5><b>Klasa automobila:</b> {{automobili[2].klasaAut}}</h5>
-                        <h6 v-if='bestByKom || bestByRat'><b>Kilometraza:</b> {{automobili[2].predjenaKilometraza}}</h6>
-                        <h6 v-if='bestByRat || bestByKm'><b>Broj komentara:</b> {{automobili[2].broj_komentara}}</h6>
-                        <h6 v-if='bestByKom || bestByKm '><b>Ukupna_ocena:</b> {{automobili[2].ukupna_ocena}}</h6>
-                    </div>
-                </div><!-- </second-place> -->
-                <hr>
-                <div id='third-place'>
-                     <div class="card-header">
-                        <h4 v-if='bestByKm'><b>Kilometraza:</b> {{automobili[0].predjenaKilometraza}}</h4>
-                        <h4 v-if='bestByKom'><b>Broj komentara:</b> {{automobili[0].broj_komentara}}</h4>
-                        <h4 v-if='bestByRat'><b>Ukupna_ocena:</b> {{automobili[0].ukupna_ocena}}</h4>
-                        <h5><b>Automobil:</b> {{automobili[0].markaAut}} {{automobili[0].modelAut}} (marka/model)</h5>
-                        <h5><b>Klasa automobila:</b> {{automobili[0].klasaAut}}</h5>
-                        <h6 v-if='bestByKom || bestByRat'><b>Kilometraza:</b> {{automobili[0].predjenaKilometraza}}</h6>
-                        <h6 v-if='bestByRat || bestByKm'><b>Broj komentara:</b> {{automobili[0].broj_komentara}}</h6>
-                        <h6 v-if='bestByKom || bestByKm '><b>Ukupna_ocena:</b> {{automobili[0].ukupna_ocena}}</h6>
-                    </div>
-                </div><!-- </second-place> -->
-            </div>
-        </div>
-    </div>
+    </div> 
 </template>
-<!-- Isti get koji se radi i u Rezervacija.vue. Vrati sve rezervacije koje su napravljene
-za oglase koje je kreirao ulogovani agent i kojima je status="accepted" -->
 
 <script>
 export default {
-    name: 'Messages',
+    name:'Users-message-overview',
     data:function(){
-        return {
-            showRank:false,
-            bestByKm:false,
-            bestByKom:false,
-            bestByRat:false,
-            //Ovde moze i samo deo sa rezervacijom bez ostalih objekata
-            //Isti DTO iskoristiti i u Poruke.vue
+        return{
+            //lista rezervacija korisnika 
             rezervacije:[
                 {
                     id:1,
@@ -420,194 +349,92 @@ export default {
                 
             ],
 
-            //Za statistiku:
-            automobili:[
-                {       
-                    id:'1',
-                    markaAut:'BMW',
-                    modelAut:'M5',
-                    klasaAut:'SUV',
-                    tipGoriva:'Dizel',
-                    tipMenjaca:'Automatik',
-                    ukupna_ocena:5,
-                    predjenaKilometraza:500,
-                    brojDecMesta:2,
-                    broj_komentara:5, //za ovaj dto
-                },
-                {
-                    id:'2',
-                    markaAut:'Mercedes',
-                    modelAut:'R8',
-                    klasaAut:'Old Tajmer',
-                    tipGoriva:'Dizel',
-                    tipMenjaca:'Automatik',
-                    ukupna_ocena:3,
-                    predjenaKilometraza:800,
-                    brojDecMesta:3,
-                    broj_komentara:2,
-                },
-                {
-                    id:'3',
-                    markaAut:'Audi',
-                    modelAut:'A6',
-                    klasaAut:'Gradski auto',
-                    tipGoriva:'Dizel',
-                    tipMenjaca:'Automatik',
-                    ukupna_ocena:4,
-                    predjenaKilometraza:650,
-                    brojDecMesta:1,
-                    broj_komentara:10,
-                },
-            ]
         }
     },
     methods:{
-        getBestByComments:function(){
-            if(this.showRank===true){
-                //get 3 automobila sa najvise komentara
-            }
-            else{
-                this.showRank = !this.showRank;
-            }
-            this.bestByKom = true;
-            this.bestByKm = false;
-            this.bestByRat = false;
-        
-        },
-        getBestByKm:function(){
-            if(this.showRank===true){
-                //get 3 automobila sa najvise kilometara
-            }
-            else{
-                this.showRank = !this.showRank;
-            }
-            this.bestByKom = false;
-            this.bestByKm = true;
-            this.bestByRat = false;
-        },
-        getBestByRating:function(){
-            if(this.showRank===true){
-                //get 3 automobila sa najvisom ocenom
-            }
-            else{
-                this.showRank = !this.showRank;
-            }
-            this.bestByKom = false;
-            this.bestByKm = false;
-            this.bestByRat = true;
-        },
-        writeReport:function(id){
-            this.$router.push(`/statistics/${id}/report`);
-        },
-        showDetails(id){
-            this.$router.push(`/reservation/${id}/details`);
+        showComments:function(id){
+            this.$router.push(`/adminTest/${id}/comments`);;
         }
-
+    },
+    computed:{
+        id(){
+           return this.$route.params.id; //preuzimam id usera na cijoj sam stranici za prikaz komentara
+        }
+    },
+    created(){
+        //getujemo sve rezervacije koje je napravio user sa prezuetim id-jem.
     }
 }
 </script>
 
 <style scoped>
 
-#titleEffect{
+#titleEffect {
   color:gold;
   font-weight: bold;
 }
 
-#places{
-    position: relative;
-    margin-bottom:100px;
-}
-#first-place{
-    border:solid 1px #35424a;
-    padding:15px;
-}
-#first-place-img{
-    position: absolute;
-    left:15px;
-    width:15%;
-}
-#first-place-info{
-    position: absolute;
-    right:65px;
-    width:80%;
-    background-color: red;
-    height: fit-content;
-    
-}
-#DataAndStatistic label{
-    color:#35424a;
-    display: block;
-    margin: 20px 0 10px;
-    font-size: 20px;
-    font-weight: bold;
+#users-message-overvie #carInfo h3{
+  color:#35424a;
+  font-weight: bold;
+  font-size: 30px; 
+  padding: 30px 0 0 25px;
 }
 
-#DataAndStatistic textarea{
-    display: block;
-    width: 100%;
-    height: 200px;
-    padding:8px;
+#users-message-overvie .comments{
+  margin:auto;
+  width:70%;
 }
+
+#users-message-overvie .comments .single-comment{
+  background-color: #f4f4f4;
+  padding:20px;
+  margin:20px 0;
+  border: 1px solid #777;
+  border-radius: 10px;
+  color:#35424a;
+}
+
+#users-message-overvie .comments .single-comment #username{
+  font-weight: bold;
+  font-size:20px;
+  margin:5px 0 5px 5px;
+  border-bottom: 1px solid #777;
+}
+
+#users-message-overvie .comments .single-comment #star-rating{
+  padding:5px 0 5px 5px;
+}
+
+#users-message-overvie .comments .single-comment #comment{
+  /* font-weight: bold; */
+  font-size:15px;
+  margin:10px 0;
+  padding:10px;
+}
+
+
+#cusers-message-overvie .comments .single-comment #comment-visibility{
+  background-color: #f4f4f4;
+  padding:15px;
+}
+
+#users-message-overvie .comments .single-comment #check-visibility{
+  float: left;
+  width: 5%;
+}
+
+#users-message-overvie .comments .single-comment #visibility-message{
+  background-color: #f4f4f4;
+  color:#777;
+  float: right;
+  width: 90%;
+  text-align: center;
+}
+
+#users-message-overvie .marg{
+    margin-top:5px;
+    margin-bottom: 15px;
+} 
 
 </style>
-
-
-// Jednostavnija verzija rezervacijaTabelaDTO
-// rezervacije:[
-//                 {
-//                     id:1,
-//                     odDatuma:'18.6.2020',
-//                     doDatuma:'25.7.2020',
-//                     ukupnaCena:6500,
-//                     username:'Happy User 2', //u rezervDTOu za korisnika koji je rezervisao oglas.
-//                     statusRezervacije:'RESERVED',
-//                     isBundle:false,
-//                     //Oglas
-//                     TAdresa:{
-//                         mesto:'',
-//                         ulica:'',
-//                         broj:'',
-//                         postanskiBroj:'',
-//                         longitude:'',
-//                         latitude:'',
-//                     },
-//                     //Oglas/Automobil
-//                     markaAut:'Audi',
-//                     modelAut:'A6',
-//                     klasaAut:'Gradski',
-//                     planiranaKilometraza:2500,
-//                     //Oglas/Cenovnik    
-//                     nazivCenovnika:'Cenovnik2',
-//                     cenaPoKilometru:2750, //Ako je ima
-//                     cenaPoDanu:200,
-//                     //commonData ?
-//                 },
-//                 {
-//                     id:2,
-//                     odDatuma:'18.6.2020',
-//                     doDatuma:'25.7.2020',
-//                     ukupnaCena:6500,
-//                     username:'Happy User 2', //u rezervDTOu za korisnika koji je rezervisao oglas.
-//                     statusRezervacije:'RESERVED',
-//                     //Oglas
-//                     TAdresa:{
-//                         mesto:'',
-//                         ulica:'',
-//                         broj:'',
-//                         postanskiBroj:'',
-//                         longitude:'',
-//                         latitude:'',
-//                     },
-//                     //Oglas/Automobil
-//                     markaAut:'Audi',
-//                     modelAut:'A6',
-//                     klasaAut:'Gradski',
-//                     planiranaKilometraza:2500,
-//                     //Oglas/Cenovnik    
-//                     nazivCenovnika:'Cenovnik2',
-//                     cenaPoKilometru:2750, //Ako je ima
-//                     cenaPoDanu:200,
-//                     //commonData ?
-//                 },
-//             ]

@@ -10,7 +10,6 @@
                 <div class="comments" v-bind:key="automobil.id" v-for='automobil in automobili'>
                     <div id='carInfo'>
                         <div class="card-header">
-                            <h4><b>Rezervisan od:</b></h4>
                             <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
                             <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
                             <h4><b>Ocena:</b> {{automobil.ukupnaOcena}}</h4>

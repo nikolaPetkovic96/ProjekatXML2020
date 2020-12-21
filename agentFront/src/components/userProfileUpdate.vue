@@ -1,61 +1,82 @@
 <template>
-	<div id="profile-update">
+	<div id="agent-profile-update">
 		<div id='main'>
 			<div class="container" id='page-title'>
-				<h1 style="margin-top:10px;color:#35424a;">User Profile<span id='titleEffect'> Update</span></h1>
+				<h1 style="margin-top:10px;color:#35424a;">Izmena profila <span id='titleEffect'>Agenta</span></h1>
 				<hr style='background:#35424a;height:1px;'>
 			</div>
 			<div class="container">
-				<h4>Data change</h4>
+				<h4>Promena podataka</h4>
 				<hr>
-				<fieldset class="form-group">
-					<label>Username</label>
-					<input type="text" class="form-control" v-model="profile.username" disabled />
+				<fieldset class="form-group" v-if='isAgentType == "osoba"'>
+					<label>Korisnicko ime</label>
+					<input type="text" class="form-control" v-model="profile.korisnickoIme" disabled />
 				</fieldset>
 
 				<div v-if='messages.errorFirstName' id='testError' class="alert alert-danger" v-html="messages.errorFirstName"></div>
-				<fieldset class="form-group">
-					<label>First name</label>
-					<input type="text" class="form-control" v-model="profile.firstname" />
+				<fieldset class="form-group" v-if='isAgentType == "osoba"'>
+					<label>Ime</label>
+					<input type="text" class="form-control" v-model="profile.ime" />
 				</fieldset>
 
 				<div v-if='messages.errorLastName' class="alert alert-danger" v-html="messages.errorLastName"></div>
-				<fieldset class="form-group">
-					<label>Last name</label>
-					<input type="text" class="form-control" v-model="profile.lastname" />
+				<fieldset class="form-group" v-if='isAgentType == "osoba"'>
+					<label>Prezime</label>
+					<input type="text" class="form-control" v-model="profile.prezime" />
 				</fieldset>
 
-				<div class="form-label-group">
-					<label>Gender</label>
+				<div class="form-label-group" v-if='isAgentType == "osoba"'>
+					<label>Pol</label>
 					<br>
-					<input type="radio" v-model="profile.gender" required value="Male"> Male
-					<input type="radio" v-model="profile.gender" required value="Female"> Female
-					<input type="radio" v-model="profile.gender" required value="Other"> Other
+					<input type="radio" v-model="profile.pol" required value="Muski"> Muski
+					<input type="radio" v-model="profile.pol" required value="Zenski"> Zenski
+					<input type="radio" v-model="profile.pol" required value="Drugo"> Drugo
 					<br>
 					<br>
 				</div>
 
+                <div v-if='messages.errorNaziv' class="alert alert-danger" v-html="messages.errorNaziv"></div>
+				<fieldset class="form-group" v-if='isAgentType == "firma"'>
+					<label>Naziv firme</label>
+					<input type="text" class="form-control" v-model="profile.nazivFirme" />
+				</fieldset>
+            
+                <div v-if='messages.errorPoslovniMaticniBroj' class="alert alert-danger" v-html="messages.errorPoslovniMaticniBroj"></div>
+				<fieldset class="form-group" v-if='isAgentType == "firma"'>
+					<label>Poslovni maticni broj</label>
+					<input type="text" class="form-control" v-model="profile.poslovniMaticniBroj" />
+				</fieldset>
+
+                 <div style="margin-top:20px" v-if='messages.errorAdresa' class="alert alert-danger" v-html="messages.errorAdresa"></div>
+                    <label>Adresa</label>
+                    <div>
+                    <input class="one-forth" placeholder="Unesite grad..." v-model='profile.TAdresa.mesto'>
+                    <input class="one-forth" placeholder="Unesite ulicu..." v-model='profile.TAdresa.ulica'>
+                    <input class="one-forth" placeholder="Unesite broj..." v-model='profile.TAdresa.broj'>
+                    <input class="one-forth" placeholder="Unesite postanski broj..." v-model='profile.TAdresa.postanskiBroj'>
+                </div>
+
 				<hr>
-				<h4>Password change</h4>
+				<h4>Promena lozinke</h4>
 				<hr>
 				<div v-if='messages.errorNotEqualOldPassword' class="alert alert-danger" v-html="messages.errorNotEqualOldPassword"></div>
 				<div v-if='messages.errorOldPass' class="alert alert-danger" v-html="messages.errorOldPass"></div>
 				<fieldset class="form-group">
-					<label>Old password</label>
-					<input type="password" class="form-control" v-model="changedPassword.oldPassword" placeholder="Enter old password" />
+					<label>Stara lozinka</label>
+					<input type="password" class="form-control" v-model="changedPassword.oldPassword" placeholder="Unesite staru loznku..." />
 				</fieldset>
 
 				<div v-if='messages.errorNewPass' class="alert alert-danger" v-html="messages.errorNewPass"></div>
 				<fieldset class="form-group">
-					<label>New password</label>
-					<input type="password" class="form-control" v-model="changedPassword.newPassword" placeholder="Enter new password" />
+					<label>Nova lozinka</label>
+					<input type="password" class="form-control" v-model="changedPassword.newPassword" placeholder="Unesite novu loznku..." />
 				</fieldset>
 
 				<div v-if='messages.errorNotEqualNewPassword' class="alert alert-danger" v-html="messages.errorNotEqualNewPassword"></div>
 				<div v-if='messages.errorRepNewPass' class="alert alert-danger" v-html="messages.errorRepNewPass"></div>
 				<fieldset class="form-group">
-					<label>Repeat new password</label>
-					<input type="password" class="form-control" v-model="changedPassword.newPasswordRepeat" placeholder="Repeat your new password"  />
+					<label>Ponovite novu lozinku</label>
+					<input type="password" class="form-control" v-model="changedPassword.newPasswordRepeat" placeholder="Ponovite novu loznku..."  />
 				</fieldset>
 
 				<button type="button" class="btn btn-lg btn-success" v-on:click='updateProfile'> Save </button>
@@ -73,15 +94,49 @@ import axios from 'axios'
 export default {
     data(){
         return{
+            // profile: {
+            //     //Osoba
+            //     id:'1',
+            //     ime:'Agent',
+            //     prezime:'Agentic',
+            //     jmbg:'21321412412',
+            //     pol:'Muski',
+            //     //firma
+            //     nazivFirme:'',
+            //     poslovniMaticniBroj:'',
+            //     //user
+            //     korisnickoIme:'AgentX',
+            //     email:'agent996@gmai.com',
+            //     status:'aktivan',
+            //     TAdresa:{
+            //         mesto:'Beograd',
+            //         ulica:'Bulevar Bulevara',
+            //         broj:'bb',
+            //         postanskiBroj:'11000',
+            //     },
+            // },
+            // //kada je agent firma // otkomentarisati kod za test agent firma 
             profile: {
+                //Osoba
                 id:'1',
-                username: 'NoobMaster69',
-                password: 'Password123',
-                firstname: 'Noob',
-                lastname: 'Mastaa',
-                gender: 'Male',
-                role: 'Agent'
-			},
+                ime:'',
+                prezime:'',
+                jmbg:'',
+                pol:null,
+                //firma
+                nazivFirme:'AgentskaFirma',
+                poslovniMaticniBroj:'21321515',
+                //user
+                korisnickoIme:'AgentX',
+                email:'agent996@gmai.com',
+                status:'aktivan',
+                TAdresa:{
+                    mesto:'Beograd',
+                    ulica:'Bulevar Bulevara',
+                    broj:'bb',
+                    postanskiBroj:'11000',
+                },
+            },
 
 			changedPassword: {
                 oldPassword: '',
@@ -92,6 +147,7 @@ export default {
 			messages: {
                 errorFirstName: '',
                 errorLastName: '',
+                errorAdresa:'',
                 errorOldPass: '',
                 errorNewPass: '',
                 errorRepNewPass: '',
@@ -106,60 +162,77 @@ export default {
         updateProfile: function () {
             // First name i last name se u paru gledaju da li su popunjeni
             // Ako su oba prazna u isto vreme ce za oba izbaciti error
-            if (this.profile.firstname == '' && this.profile.lastname != '') {
-                this.messages.errorFirstName = `<h4>First name of user can't be empty!</h4>`;
-                setTimeout(() => this.messages.errorFirstName = '', 3000);
+            if (this.profile.ime == '' && this.profile.prezime != '') {
+                this.messages.errorFirstName = `<h4>Polje ime ne moze biti prazno!</h4>`;
+                setTimeout(() => this.messages.errorFirstName = '', 5000);
             }
-            else if (this.profile.firstname != '' && this.profile.lastname == '') {
-                this.messages.errorLastName = `<h4>Last name of user can't be empty!</h4>`;
-                setTimeout(() => this.messages.errorLastName = '', 3000);
+            else if (this.profile.ime != '' && this.profile.prezime == '') {
+                this.messages.errorLastName = `<h4>Polje prezime ne moze biti prazno!</h4>`;
+                setTimeout(() => this.messages.errorLastName = '', 5000);
             }
-            else if (this.profile.firstname == '' && this.profile.lastname == '') {
-                this.messages.errorFirstName = `<h4>First name of user can't be empty!</h4>`;
-                this.messages.errorLastName = `<h4>Last name of user can't be empty!</h4>`;
-                setTimeout(() => this.messages.errorFirstName = '', 3000);
-                setTimeout(() => this.messages.errorLastName = '', 3000);
+            else if (this.profile.ime == '' && this.profile.prezime == '') {
+                this.messages.errorFirstName = `<h4>Polje ime ne moze biti prazno!</h4>`;
+                this.messages.errorLastName = `<h4>Polje prezime ne moze biti prazno!</h4>`;
+                setTimeout(() => this.messages.errorFirstName = '', 5000);
+                setTimeout(() => this.messages.errorLastName = '', 5000);
 
+            }
+           //Adresa
+            else if (this.profile.TAdresa.mesto == '') {
+                this.messages.errorAdresa = `<h4> Polje mesto u adresi agenta ne moze biti prazno!</h4>`;
+                setTimeout(() => this.errorAdresa = '', 5000);
+            }
+            else if (this.profile.TAdresa.ulica == '') {
+                this.messages.errorAdresa = `<h4> Polje ulica u adresi agenta ne moze biti prazno!</h4>`;
+                setTimeout(() => this.errorAdresa = '', 5000);
+            }
+            else if (this.profile.TAdresa.broj == '') {
+                this.messages.errorAdresa = `<h4> Polje broj u adresi agenta ne moze biti prazno!</h4>`;
+                setTimeout(() => this.errorAdresa = '', 5000);
+            }
+            else if (this.profile.TAdresa.postanskiBroj == '') {
+                this.messages.errorAdresa = `<h4> Polje postanski broj u adresi agenta ne moze biti prazno!</h4>`;
+                setTimeout(() => this.errorAdresa = '', 5000);
             }
             //Password check
             //Ako je unet old password, a nije uneto jedno od polja newPassword ili newPassword reapeat unosi se error
             else if (this.changedPassword.oldPassword !== '' && this.changedPassword.newPassword !== '' && this.changedPassword.newPasswordRepeat === '') {
-                this.messages.errorRepNewPass = `<h4>You need to repeat your new password!</h4>`;
-                setTimeout(() => this.messages.errorRepNewPass = '', 3000);
+                this.messages.errorRepNewPass = `<h4>Morate ponoviti Vasu novu sifru!</h4>`;
+                setTimeout(() => this.messages.errorRepNewPass = '', 55000);
             }
 
             //Ako je unet old password, a nije uneto jedno od polja newPassword ili newPassword reapeat unosi se error
             else if (this.changedPassword.oldPassword !== '' && this.changedPassword.newPassword === '' && this.changedPassword.newPasswordRepeat !== '') {
-                this.messages.errorNewPass = `<h4>You need to enter your new password!</h4>`;
-                setTimeout(() => this.messages.errorNewPass = '', 3000);
+                this.messages.errorNewPass = `<h4>Morate uneti Vasu novu sifru!</h4>`;
+                setTimeout(() => this.messages.errorNewPass = '', 5000);
             }
 
             //Ako je unet old password, a nije uneto jedno od polja newPassword ili newPassword reapeat unosi se error
             else if (this.changedPassword.oldPassword !== '' && this.changedPassword.newPassword === '' && this.changedPassword.newPasswordRepeat === '') {
-                this.messages.errorNewPass = `<h4>You need to enter your new password!</h4>`;
-                this.messages.errorRepNewPass = `<h4>You need to repeat your new password!</h4>`;
-                setTimeout(() => this.messages.errorNewPass = '', 3000);
-                setTimeout(() => this.messages.errorRepNewPass = '', 3000);
+                this.messages.errorNewPass = `<h4>Morate uneti Vasu novu sifru!</h4>`;
+                this.messages.errorRepNewPass = `<h4>Morate ponoviti Vasu novu sifru!</h4>`;
+                setTimeout(() => this.messages.errorNewPass = '', 5000);
+                setTimeout(() => this.messages.errorRepNewPass = '', 5000);
             }
 
             //Ako nije unet old password, a jesu novi ispisuje se error
             else if (this.changedPassword.oldPassword === '' && this.changedPassword.newPassword !== '' && this.changedPassword.newPasswordRepeat !== '') {
-                this.messages.errorOldPass = `<h4>You need to enter your old password first!</h4>`;
-                setTimeout(() => this.messages.errorOldPass = '', 3000);
+                this.messages.errorOldPass = `<h4>Morate prvo uneti Vasu staru sifru!</h4>`;
+                setTimeout(() => this.messages.errorOldPass = '', 5000);
             }
 
             //Ako su uneta sva 3 passworda, nema errora za prazna polja, ali se proverava validnost samog unosa
             else if (this.changedPassword.oldPassword !== '' && this.changedPassword.newPassword !== '' && this.changedPassword.newPasswordRepeat !== '') {
                 //Provera da li je stara sifra dobro uneta
-                if (this.profile.password !== this.changedPassword.oldPassword) {
-                    this.messages.errorNotEqualOldPassword = `<h4>Your old password is incorrect! Please try again...</h4>`;
-                    setTimeout(() => this.messages.errorNotEqualOldPassword = '', 3000);
+                if (this.profile.lozinka !== this.changedPassword.oldPassword) {
+                    this.messages.errorNotEqualOldPassword = `<h4>Vasa stara sifra je netacna! Molimo Vas pokusajte ponovo...</h4>`;
+                    setTimeout(() => this.messages.errorNotEqualOldPassword = '', 5000);
                 }
                 else {
                     //Provera da li se nove sifre poklapaju
                     if (this.changedPassword.newPassword !== this.changedPassword.newPasswordRepeat) {
-                        this.messages.errorNotEqualNewPassword = `<h4>Your passwords don't match! Please try again...</h4>`;
-                        setTimeout(() => this.messages.errorNotEqualNewPassword = '', 3000);
+                        this.messages.errorNotEqualNewPassword = `<h4>Vase nove sifre se ne poklapaju! Molimo Vas pokusajte ponovo...</h4>`;
+                        setTimeout(() => this.messages.errorNotEqualNewPassword = '', 5000);
                     }
                     else {
                         //ako je stara sifra dobro uneta, a nove se poklapaju,
@@ -167,7 +240,7 @@ export default {
                         this.profile.password = this.changedPassword.newPassword;
 
                         axios.put(`rest/profile/${this.user.username}`, this.profile).then(Response => {
-                            this.messages.successResponse = `<h4>Your profile was edited successfully!</h4>`;
+                            this.messages.successResponse = `<h4>Vas profil je uspesno izmenjen!</h4>`;
                             setTimeout(() => this.messages.successResponse = '', 5000);
 
                             this.getUserProfile();
@@ -175,7 +248,7 @@ export default {
                         })
                             .catch(error => {
                                 if (error.response.status === 500 || error.response.status === 404) {
-                                    this.messages.errorResponse = `<h4>We had some server errors, please try again later!</h4>`;
+                                    this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
                                     setTimeout(() => this.messages.errorResponse = '', 5000);
                                 }
                             });
@@ -208,9 +281,16 @@ export default {
     computed:{
         id() {
             return this.$route.params.id; //preuzimam id usera na cijoj sam stranici za prikaz komentara
-            
-        }
-    }
+        },
+        isAgentType(){
+            if(this.profile.ime == '' && this.profile.prezime == '' && this.profile.jmbg == '' && this.profile.pol == null){
+                return 'firma';
+            }
+            else if(this.profile.nazivFirme == '' && this.profile.poslovniMaticniBroj == ''){
+                return 'osoba';
+            }
+        },
+    },
 }
 </script>
 
@@ -221,5 +301,18 @@ export default {
   font-weight: bold;
 }
 
+#agent-profile-update .one-forth{
+  width:24%;
+  padding:10px;
+  margin-bottom:15px
+}
+
+#agent-profile-update label{
+    color:#35424a;
+    display: block;
+    margin: 20px 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
 
 </style>

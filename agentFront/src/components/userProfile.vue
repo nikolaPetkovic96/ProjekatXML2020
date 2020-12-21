@@ -2,34 +2,51 @@
 <div id="user-profile">
     <div>
         <div class="container" id='page-title'>
-            <h1 style="margin-top:10px;color:#35424a;">User <span id='titleEffect'>Profile</span></h1>
+            <h1 style="margin-top:10px;color:#35424a;">Profil <span id='titleEffect'>Agenta</span></h1>
             <hr style='background:#35424a;height:1px;'>
         </div>
         <div class="container">
             <form>
                 <ul id="services" class="list-group">
-                    <li class="list-group-item">
+                <!-- Osoba -->
+                    <li class="list-group-item" v-if='isAgentType == "osoba"'>
                         <h5 class="header5">Korisnicko ime</h5>
-                        <h4>{{profile.username}}</h4>
+                        <h4>{{profile.korisnickoIme}}</h4>
                     </li>
-                    <li class="list-group-item">
-                        <h5 class="header5">Ime</h5>
-                        <h4>{{profile.firstname}}</h4>
-                    </li>
-
-                    <li class="list-group-item">
-                        <h5 class="header5">Prezime</h5>
-                        <h4>{{profile.lastname}}</h4>
+                    <li class="list-group-item" v-if='isAgentType == "osoba"'>
+                        <h5 class="header5">Ime i Prezime</h5>
+                        <h4>{{profile.ime}} {{profile.prezime}}</h4>
                     </li>
 
-                    <li class="list-group-item">
+                    <li class="list-group-item" v-if='isAgentType == "osoba"'>
                         <h5 class="header5">Pol</h5>
-                        <h4>{{profile.gender}}</h4>
+                        <h4>{{profile.pol}}</h4>
+                    </li>
+
+                    <li class="list-group-item" v-if='isAgentType == "osoba"'>
+                        <h5 class="header5">JMBG</h5>
+                        <h4>{{profile.jmbg}}</h4>
+                    </li>
+                 <!-- Osoba -->
+                    <li class="list-group-item" v-if='isAgentType == "firma"'>
+                        <h5 class="header5">Naziv firme</h5>
+                        <h4>{{profile.nazivFirme}}</h4>
+                    </li>
+
+                    <li class="list-group-item" v-if='isAgentType == "firma"'>
+                        <h5 class="header5">Poslovni Maticni Broj</h5>
+                        <h4>{{profile.poslovniMaticniBroj}}</h4>
                     </li>
 
                     <li class="list-group-item">
-                        <h5 class="header5">Uloga</h5>
-                        <h4>{{profile.role}}</h4>
+                        <h5 class="header5">Email</h5>
+                        <h4>{{profile.email}}</h4>
+                    </li>
+
+                    <li class="list-group-item">
+                        <h5 class="header5">Adresa</h5>
+                        <h4>{{profile.TAdresa.ulica}} {{profile.TAdresa.broj}} (ulica/broj)</h4>
+                        <h6>{{profile.TAdresa.postanskiBroj}} {{profile.TAdresa.mesto}} (post_br/grad)</h6>
                     </li>
                 </ul>
 
@@ -46,20 +63,65 @@ import axios from 'axios'
 export default {
     data(){
         return{
+        //kada je agent osoba //zakomentarisati kod za test agent firma
         profile: {
+                //Osoba
                 id:'1',
-                username: 'NoobMaster69',
-                password: 'Password123',
-                firstname: 'Noob',
-                lastname: 'Mastaa',
-                gender: 'M',
-                role: 'Agent'
-            },
+                ime:'Agent',
+                prezime:'Agentic',
+                jmbg:'21321412412',
+                pol:'Muski',
+                //firma
+                nazivFirme:'',
+                poslovniMaticniBroj:'',
+                //user
+                korisnickoIme:'AgentX',
+                email:'agent996@gmai.com',
+                status:'aktivan',
+                TAdresa:{
+                    mesto:'Beograd',
+                    ulica:'Bulevar Bulevara',
+                    broj:'bb',
+                    postanskiBroj:'11000',
+                },
+            }
+            // //kada je agent firma // otkomentarisati kod za test agent firma 
+            // profile: {
+            //     //Osoba
+            //     id:'1',
+            //     ime:'',
+            //     prezime:'',
+            //     jmbg:'',
+            //     pol:null,
+            //     //firma
+            //     nazivFirme:'AgentskaFirma',
+            //     poslovniMaticniBroj:'21321515',
+            //     //user
+            //     korisnickoIme:'AgentX',
+            //     email:'agent996@gmai.com',
+            //     status:'aktivan',
+            //     TAdresa:{
+            //         mesto:'Beograd',
+            //         ulica:'Bulevar Bulevara',
+            //         broj:'bb',
+            //         postanskiBroj:'11000',
+            //     },
+            // }
         }
     },
     methods:{
         updatePatient(id){
             this.$router.push(`/profile/${id}/update`);
+        }
+    },
+    computed:{
+        isAgentType(){
+            if(this.profile.ime == '' && this.profile.prezime == '' && this.profile.jmbg == '' && this.profile.pol == null){
+                return 'firma';
+            }
+            else if(this.profile.nazivFirme == '' && this.profile.poslovniMaticniBroj == ''){
+                return 'osoba';
+            }
         }
     },
     created(){

@@ -197,7 +197,7 @@ export default {
                     brojSedistaZaDecu:2,
                     predjenaKilometraza:800,
                     collisionDamageWaiver:true,
-                   images:[],
+                    images:[],
                 },
                 {
                     id:'3',

@@ -8,6 +8,14 @@
         <!-- Page Content -->
         <div class="container">
             <img src="../assets/showcase4.jpg" alt="">
+            <div style="margin-top:20px" v-if='messages.errorMarka' class="alert alert-danger" v-html="messages.errorMarka"></div>
+            <div style="margin-top:20px" v-if='messages.errorModel' class="alert alert-danger" v-html="messages.errorModel"></div>
+            <div style="margin-top:20px" v-if='messages.errorKlasa' class="alert alert-danger" v-html="messages.errorKlasa"></div>
+            <div style="margin-top:20px" v-if='messages.errorMenjac' class="alert alert-danger" v-html="messages.errorMenjac"></div>
+            <div style="margin-top:20px" v-if='messages.errorGorivo' class="alert alert-danger" v-html="messages.errorGorivo"></div>
+            <div style="margin-top:20px" v-if='messages.errorBrojSedZaDec' class="alert alert-danger" v-html="messages.errorBrojSedZaDec"></div>
+            <div style="margin-top:20px" v-if='messages.errorCDW' class="alert alert-danger" v-html="messages.errorCDW"></div>
+            <div style="margin-top:20px" v-if='messages.errorImg' class="alert alert-danger" v-html="messages.errorImg"></div>
             <div class="row">
                 <!-- Cars -->
                 <div class="col-xl-3 col-md-6 mb-4">
@@ -15,7 +23,6 @@
                         <label>Marka automobila</label>
                         <select v-model='AutomobilNew.markaAut'>
                             <option disabled value="">Marka</option>
-                                <!-- <option v-for="type in types" v-on:click="checkApartment">{{type}}</option>  -->
                             <option v-bind:key="marka" v-for="marka in markaAut">{{marka}}</option> 
                         </select>
                     </div>
@@ -50,13 +57,13 @@
                         </select>
                     </div>
                 </div> 
-
+                
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-0">
-                        <label>Tip goriva</label>
-                        <select v-model='AutomobilNew.tipGoriva'>
-                            <option disabled value="">Tip goriva</option>
-                            <option v-bind:key="gorivo" v-for="gorivo in tipGoriva">{{gorivo}}</option> 
+                        <label>Vrsta goriva</label>
+                        <select v-model='AutomobilNew.vrstaGoriva'>
+                            <option disabled value="">Vrsta goriva</option>
+                            <option v-bind:key="gorivo" v-for="gorivo in vrstaGoriva">{{gorivo}}</option> 
                         </select>
                     </div>
                 </div>
@@ -75,8 +82,8 @@
                     <div class="card border-0">
                         <span>
                             <label>Coll Ddmg Waiver</label>
-                            <input type="radio" required value="true" AutomobilNew.collisionDamageWaiver> True
-                            <input type="radio" required value="false" AutomobilNew.collisionDamageWaiver> False
+                            <input type="radio" required value="true" v-model='AutomobilNew.collisionDamageWaiver'> True
+                            <input type="radio" required value="false" v-model='AutomobilNew.collisionDamageWaiver'> False
                         </span>
                     </div>
                 </div>
@@ -90,7 +97,8 @@
                 </div>
             <br>
             </div>
-              
+            <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
+		    <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>  
             <button class="btn btn-success shadow" v-on:click='addCar()'>Save</button>
             <button class="btn btn-danger shadow" v-on:click='closeNew()'>Close</button>
            
@@ -107,16 +115,29 @@ export default {
             markaAut:['BMW','Audi','Mercedes','Tesla','Fiat'],
             modelAut:['M5','R8','A6','A8','Punto','500L'],
             klasaAut:['SUV','Old Tajmer','Gradski auto'],
-            tipGoriva:['benzin','dizel','plin','vodonik'], 
+            vrstaGoriva:['benzin','dizel','plin','vodonik'], 
             tipMenjaca:['manuelni','automatksi','poluautomatski'],
             brojSedZaDec:null,
 
+            messages: {
+				errorMarka: '',
+				errorModel: '',
+				errorKlasa: '',
+				errorGorivo: '',
+				errorMenjac: '',
+				errorBrojSedZaDec: '',
+				errorCDW: '',
+				errorImg: '',
+				errorResponse: '',
+				successResponse: '',
+			},
+
             AutomobilNew:{
-                markaAut:'',
-                modelAut:'',
-                klasaAut:'',
-                vrstaGoriva:'',
-                tipMenjaca:'',
+                markaAut:null,
+                modelAut:null,
+                klasaAut:null,
+                vrstaGoriva:null,
+                tipMenjaca:null,
                 ukupnaOcena:0,
                 brojSedistaZaDecu:null,
                 predjenaKilometraza:0,
@@ -126,6 +147,50 @@ export default {
         }
     },
     methods:{
+        addCar:function () {
+			if (this.AutomobilNew.markaAut == null) {
+				this.messages.errorMarka = `<h4>Polje marka automobila ne moze biti prazno!</h4>`;
+				setTimeout(() => this.messages.errorMarka = '', 3000);
+            }
+			else if (this.AutomobilNew.modelAut == null) {
+				this.messages.errorModel = `<h4>Polje model automobila ne moze biti prazno!</h4>`;
+				setTimeout(() => this.messages.errorModel = '', 3000);
+			}
+			else if (this.AutomobilNew.klasaAut == null) {
+				this.messages.errorKlasa= `<h4>Polje klasa automobila ne moze biti prazno!</h4>`;
+				setTimeout(() => this.messages.errorKlasa = '', 3000);
+			}
+			else if (this.AutomobilNew.tipMenjaca == null) {
+				this.messages.errorMenjac = `<h4>Polje tip menjaca ne moze biti prazno!</h4>`;
+				setTimeout(() => this.messages.errorMenjac = '', 3000);
+            }
+            else if (this.AutomobilNew.vrstaGoriva == null) {
+				this.messages.errorGorivo = `<h4>Polje vrsta goriva ne moze biti prazno!</h4>`;
+				setTimeout(() => this.messages.errorGorivo = '', 3000);
+			}
+			else if (this.AutomobilNew.brojSedistaZaDecu == null) {
+				this.messages.errorBrojSedZaDec = `<h4>Polje broj sedista za decu ne moze biti prazno!</h4>`;
+				setTimeout(() => this.messages.errorBrojSedZaDec = '', 3000);
+			}
+			else if (this.AutomobilNew.collisionDamageWaiver == null) {
+				this.messages.errorCDW = `<h4>Polje Collision Damage Waiver automobila ne moze biti prazno!</h4>`;
+				setTimeout(() => this.messages.errorCDW = '', 3000);
+            }
+            else if (this.AutomobilNew.images.length == 0) {
+				this.messages.errorImg = `<h4>Morate odabrati sliku/slike automobila!</h4>`;
+				setTimeout(() => this.messages.errorImg = '', 3000);
+            }
+			else {
+                console.log('Marka: ' + this.AutomobilNew.markaAut);
+                console.log('Model: ' + this.AutomobilNew.modelAut); 
+                console.log('Klasa: ' + this.AutomobilNew.klasaAut);
+                console.log('Menjac: ' + this.AutomobilNew.tipMenjaca);
+                console.log('Gorivo: ' + this.AutomobilNew.vrstaGoriva);
+                console.log('BrSed: ' + this.AutomobilNew.brojSedistaZaDecu);
+                console.log('BrCDW: ' + this.AutomobilNew.collisionDamageWaiver);
+            }
+        },
+
         closeNew:function(){
             this.$router.push('/cars');
         },

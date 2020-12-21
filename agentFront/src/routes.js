@@ -26,7 +26,8 @@ import AdsNew from './components/OglasiNew'
 import Messages from './components/Poruke'
 import MessagesOvervieNew from './components/PorukeOverviewNew'
 
-
+import Test from './components/admin/AdminProfile'
+import TestCom from './components/admin/AdminProfileUpdate'
 
 export default [
     {
@@ -159,5 +160,22 @@ export default [
         name:'IzvestajNew',
         component:ReportNew
     },
+
+   
+    {
+        path:'/adminTest/',
+        name:'Test',
+        component:Test
+    },
+    {
+        path:'/adminTest/profile/:id/update/',
+        name:'TestCom',
+        component:TestCom
+    },
+    // {
+    //     path:'/adminTest/comments/',
+    //     name:'TestCom',
+    //     component:TestCom
+    // },
     
 ]

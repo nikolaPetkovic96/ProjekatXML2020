@@ -116,7 +116,8 @@ export default {
                 predjenaKilometraza:5000,
                 collisionDamageWaiver:true,
                 images:[],
-            }
+            },
+
         }
     },
     methods:{
