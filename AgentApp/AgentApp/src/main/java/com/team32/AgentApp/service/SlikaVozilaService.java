@@ -42,4 +42,8 @@ public class SlikaVozilaService {
 	public void deleteSlikaVozila(Long id) {
 		slikaVozilaRepository.deleteById(id);
 	}
+	public SlikaVozila getSlikaVozilaByAutomobilId(Long automobilId) {
+		
+		return slikaVozilaRepository.findByAutomobilId(automobilId);
+	}
 }

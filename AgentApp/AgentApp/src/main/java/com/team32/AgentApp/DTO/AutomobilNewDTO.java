@@ -3,7 +3,6 @@ package com.team32.AgentApp.DTO;
 import com.team32.AgentApp.model.entitet.Automobil;
 
 public class AutomobilNewDTO {
-
 	private Long id;
 	private Long markaAutomobilaId;
 	private Long modelAutomobilaId;
@@ -15,8 +14,9 @@ public class AutomobilNewDTO {
 	private boolean collisionDamageWaiver;
 	private int brojSedistaZaDecu;
 	
+	private Long commonDataId;//ne treba, samo za testiranje CRUD
 	
-	private Long commonDataId;//ne treba samo za testiranje CRUD
+	private String[] slikeVozila;
 	
 	public AutomobilNewDTO() {
 		
@@ -24,7 +24,7 @@ public class AutomobilNewDTO {
 	
 	public AutomobilNewDTO(Long id, Long markaAutomobilaId, Long modelAutomobilaId,
 			Long klasaAutomobilaId, Long tipGorivaId, Long tipMenjacaId, float ukupnaOcena, float predjenaKilometraza,
-			float planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId) {
+			float planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId, String[] slikeVozila) {
 		super();
 		this.id = id;
 		this.markaAutomobilaId = markaAutomobilaId;
@@ -38,9 +38,11 @@ public class AutomobilNewDTO {
 		this.brojSedistaZaDecu = brojSedistaZaDecu;
 		
 		this.commonDataId = commonDataId;
+		
+		this.slikeVozila = slikeVozila;
 	}
 
-	public AutomobilNewDTO(Automobil a) {	
+	public AutomobilNewDTO(Automobil a, String[] slikeVozila) {	
 		this.id = a.getId();	
 		this.markaAutomobilaId = a.getMarkaAutomobilaId();
 		this.modelAutomobilaId = a.getModelAutomobilaId();
@@ -53,6 +55,8 @@ public class AutomobilNewDTO {
 		this.brojSedistaZaDecu = a.getBrojSedistaZaDecu();
 		
 		this.commonDataId =  a.getCommonDataId();
+		
+		this.slikeVozila = slikeVozila;
 	}
 	
 	public Long getId() {
@@ -142,7 +146,13 @@ public class AutomobilNewDTO {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
-	
-	
+
+	public String[] getSlikeVozila() {
+		return slikeVozila;
+	}
+
+	public void setSlikeVozila(String[] slikeVozila) {
+		this.slikeVozila = slikeVozila;
+	}
 	
 }

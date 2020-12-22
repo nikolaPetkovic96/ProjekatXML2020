@@ -5,4 +5,6 @@ import com.team32.AgentApp.model.tentitet.SlikaVozila;
 
 public interface SlikaVozilaRepository extends JpaRepository<SlikaVozila, Long> {
 
+	SlikaVozila findByAutomobilId(Long automobilId);
+
 }

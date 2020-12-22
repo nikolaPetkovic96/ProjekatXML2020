@@ -4,13 +4,13 @@ import com.team32.AgentApp.model.tentitet.SlikaVozila;
 
 public class SlikaVozilaDTO {
     private Long id;
-    private byte[] slika;
+    private String[] slika;
     private Long automobilId;
     private Long commonDataId;
     
 	public SlikaVozilaDTO() {}
     
-	public SlikaVozilaDTO(Long id, byte[] slika, Long automobilId, Long commonDataId) {
+	public SlikaVozilaDTO(Long id, String[] slika, Long automobilId, Long commonDataId) {
 		super();
 		this.id = id;
 		this.slika = slika;
@@ -30,11 +30,11 @@ public class SlikaVozilaDTO {
 		this.id = id;
 	}
 
-	public byte[] getSlika() {
+	public String[] getSlika() {
 		return slika;
 	}
 
-	public void setSlika(byte[] slika) {
+	public void setSlika(String[] slika) {
 		this.slika = slika;
 	}
 	

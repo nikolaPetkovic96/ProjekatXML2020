@@ -1,7 +1,7 @@
 package com.team32.AgentApp.controller;
 
 import java.security.Principal;
-//import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,25 +10,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.AutomobilDTO;
+import com.team32.AgentApp.DTO.AutomobilDetailsDTO;
+import com.team32.AgentApp.DTO.AutomobilImgDTO;
+import com.team32.AgentApp.DTO.AutomobilNewDTO;
 import com.team32.AgentApp.DTO.AutomobilReviewDTO;
 import com.team32.AgentApp.DTO.AutomobilStatisticDTO;
 import com.team32.AgentApp.DTO.KomentarDTO;
 import com.team32.AgentApp.DTO.OcenaDTO;
 import com.team32.AgentApp.DTO.ReviewDTO;
+import com.team32.AgentApp.DTO.SlikaVozilaDTO;
 import com.team32.AgentApp.model.entitet.Automobil;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Komentar;
 import com.team32.AgentApp.model.entitet.Ocena;
 import com.team32.AgentApp.model.entitet.User;
+import com.team32.AgentApp.model.tentitet.SlikaVozila;
 import com.team32.AgentApp.service.AutomobilService;
 import com.team32.AgentApp.service.CommonDataService;
 import com.team32.AgentApp.service.KomentarService;
 import com.team32.AgentApp.service.OcenaService;
+import com.team32.AgentApp.service.SlikaVozilaService;
 import com.team32.AgentApp.service.UserService;
 
 @RestController
@@ -48,6 +55,9 @@ public class AutomobilController {
 	
 	@Autowired
 	private OcenaService ocenaService;
+	
+	@Autowired
+	private SlikaVozilaService slikaVozService;
 	
 	@RequestMapping(method=RequestMethod.GET, value="/automobil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AutomobilDTO>> getAllAutomobil(Principal principal){
@@ -96,7 +106,32 @@ public class AutomobilController {
 		return new ResponseEntity<>(autoStatDTO, HttpStatus.OK);
 	}
 	
+	
 	//Ovo je za automobil details vise odradjeno...
+		@RequestMapping(method=RequestMethod.GET, value="/automobil/{id}/details", produces = MediaType.APPLICATION_JSON_VALUE)
+		public ResponseEntity<AutomobilDetailsDTO> getAutomobilDetails(Principal principal, @PathVariable("id") Long id){
+			
+			//Preuzima se user iz sesije koji je trenutno ulogovan
+			String username = principal.getName();
+			
+			AutomobilDTO autoDTO = automobilService.findOneWithDetails(id);
+			
+			List<ReviewDTO> reviews = new ArrayList<>();
+			//Kreiramo review = dobavljamo komentare i ocene vezane za njega
+			if(getAllReviewsByAutomobilId(id, username) != null) {
+				reviews = getAllReviewsByAutomobilId(id, username);
+			}
+			
+			//Dobavljamo slike koje su vezane za njega
+			SlikaVozilaDTO slike = new SlikaVozilaDTO();
+			if(getSlikeVozila(id) != null) {
+				slike = getSlikeVozila(id);
+			}	
+				
+			return new ResponseEntity<>(new AutomobilDetailsDTO(autoDTO, reviews, slike), HttpStatus.OK);
+		}
+	
+	
 	@RequestMapping(method=RequestMethod.GET, value="/automobilReview", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AutomobilReviewDTO>> getAllAutomobilReviews(Principal principal){
 		
@@ -111,8 +146,12 @@ public class AutomobilController {
 			//Popunjavamo automobil podacima iz modela
 			AutomobilDTO autoDTO = automobilService.findOneWithDetails(a.getId());
 			
-			//Kreiramo dobavljamo komentare i ocene vezane za njega
-			List<ReviewDTO> reviews = getAllReviewsByAutomobilId(a.getId(), username);
+			List<ReviewDTO> reviews = new ArrayList<>();
+			//Kreiramo review = dobavljamo komentare i ocene vezane za njega
+			if(getAllReviewsByAutomobilId(a.getId(), username) != null) {
+				reviews = getAllReviewsByAutomobilId(a.getId(), username);
+			}
+			
 			
 			automobilRewiewDTO.add(new AutomobilReviewDTO(autoDTO, reviews));
 			
@@ -173,35 +212,61 @@ public class AutomobilController {
 		return reviews;
 	}
 	
-
-//	@RequestMapping(method=RequestMethod.POST, value="/automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<AutomobilDTO> addAutomobil(@RequestBody AutomobilDTO automobilDTO) throws Exception{
-//		Automobil savedAutomobil = new Automobil();
-//		
-//		//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
-//		CommonData commonData = new CommonData();
-//		LocalDateTime now = LocalDateTime.now();
-//		commonData.setUserId((long) 1); //OVO IZMENITI DA BUDE DINAMICKI
-//		commonData.setDatumKreiranja(now);
-//		commonData = comDataService.addCommonData(commonData);
-//	
-//		savedAutomobil.setId(automobilDTO.getId());
-//		savedAutomobil.setMarkaAutomobilaId(automobilDTO.getMarkaAutomobilaId());
-//		savedAutomobil.setModelAutomobilaId(automobilDTO.getModelAutomobilaId());
-//		savedAutomobil.setKlasaAutomobilaId(automobilDTO.getKlasaAutomobilaId());
-//		savedAutomobil.setTipGorivaId(automobilDTO.getTipGorivaId());
-//		savedAutomobil.setTipMenjacaId(automobilDTO.getTipMenjacaId());
-//		savedAutomobil.setUkupnaOcena(automobilDTO.getTipMenjacaId());
-//		savedAutomobil.setPredjenaKilometraza(automobilDTO.getPredjenaKilometraza());
-//		savedAutomobil.setCollisionDamageWaiver(automobilDTO.isCollisionDamageWaiver());
-//		savedAutomobil.setBrojSedistaZaDecu(automobilDTO.getBrojSedistaZaDecu());
-//		
-//		savedAutomobil.setCommonDataId(commonData.getId());
-//		
-//		savedAutomobil = automobilService.addAutomobil(savedAutomobil);
-//		return new ResponseEntity<>(new AutomobilDTO(savedAutomobil), HttpStatus.CREATED);
-//	}
-//	
+	@RequestMapping(method=RequestMethod.POST, value="/automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AutomobilImgDTO> addAutomobil(Principal principal, @RequestBody AutomobilNewDTO dto) throws Exception{
+		Automobil savedAutomobil = new Automobil();
+		
+		System.out.println("Usao u add automobil!");
+		//Preuzima se user iz sesije koji je trenutno ulogovan
+		String username = principal.getName();
+		User loggedAgent = userService.findByUsername(username);
+		
+		//Prilkom kreiranja nove klase automobila odmah se kreira i commonData koji pamti ko je kreirao i kada.
+		CommonData commonData = setCommonData(loggedAgent.getId());
+	
+		savedAutomobil.setId(dto.getId());
+		savedAutomobil.setMarkaAutomobilaId(dto.getMarkaAutomobilaId());
+		savedAutomobil.setModelAutomobilaId(dto.getModelAutomobilaId());
+		savedAutomobil.setKlasaAutomobilaId(dto.getKlasaAutomobilaId());
+		savedAutomobil.setTipGorivaId(dto.getTipGorivaId());
+		savedAutomobil.setTipMenjacaId(dto.getTipMenjacaId());
+		savedAutomobil.setUkupnaOcena(dto.getTipMenjacaId());
+		savedAutomobil.setPredjenaKilometraza(dto.getPredjenaKilometraza());
+		savedAutomobil.setCollisionDamageWaiver(dto.isCollisionDamageWaiver());
+		savedAutomobil.setBrojSedistaZaDecu(dto.getBrojSedistaZaDecu());
+		savedAutomobil.setCommonDataId(commonData.getId());
+		
+		savedAutomobil = automobilService.addAutomobil(savedAutomobil);
+		
+		//SLIKE
+		CommonData commonDataImg = setCommonData(loggedAgent.getId());
+		SlikaVozila slikaVozila = new SlikaVozila();
+		slikaVozila.setSlika(dto.getSlikeVozila());
+		slikaVozila.setCommonDataId(commonDataImg.getId());
+		slikaVozila.setAutomobilId(savedAutomobil.getId());
+		
+		slikaVozila = slikaVozService.addSlikaVozila(slikaVozila);
+		
+		AutomobilDTO autoDto = automobilService.findOneWithDetails(savedAutomobil.getId());
+		return new ResponseEntity<>(new AutomobilImgDTO(autoDto, new SlikaVozilaDTO(slikaVozila)), HttpStatus.CREATED);
+	}
+	
+	
+	//Pomocna metoda za kreiranje novog commonData
+	public CommonData setCommonData(Long userId) throws Exception {
+		CommonData commonData = new CommonData();
+		LocalDateTime now = LocalDateTime.now();
+		commonData.setDatumKreiranja(now);
+		commonData.setUserId(userId); 
+		commonData = comDataService.addCommonData(commonData);	
+		return commonData;
+	}
+	
+	public SlikaVozilaDTO getSlikeVozila(Long automobilId) {
+		SlikaVozila s = slikaVozService.getSlikaVozilaByAutomobilId(automobilId);
+		return new SlikaVozilaDTO(s);
+	}
+	
 //	@RequestMapping(method=RequestMethod.PUT, value="/automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public ResponseEntity<AutomobilDTO> updateAutomobil(@RequestBody AutomobilDTO automobilDTO) throws Exception{
 //		

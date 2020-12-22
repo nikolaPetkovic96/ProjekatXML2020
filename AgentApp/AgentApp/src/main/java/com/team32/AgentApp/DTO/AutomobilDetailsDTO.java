@@ -3,7 +3,7 @@ package com.team32.AgentApp.DTO;
 import java.util.List;
 
 
-public class AutomobilReviewDTO {
+public class AutomobilDetailsDTO {
 	
 	private Long id;
 	private float ukupnaOcena;;
@@ -17,13 +17,15 @@ public class AutomobilReviewDTO {
 	private String tipMenjaca;
 	private String tipGoriva;
 	
+	
+	private SlikaVozilaDTO slikeVozila;
 	private List<ReviewDTO> reviews;
 	
-	public AutomobilReviewDTO() {
+	public AutomobilDetailsDTO() {
 		
 	}
 
-	public AutomobilReviewDTO(AutomobilDTO dto, List<ReviewDTO> reviews) {	
+	public AutomobilDetailsDTO(AutomobilDTO dto, List<ReviewDTO> reviews, SlikaVozilaDTO slikeVozila) {	
 		this.id = dto.getId();	
 		this.ukupnaOcena = dto.getUkupnaOcena();
 		this.predjenaKilometraza = dto.getPredjenaKilometraza();
@@ -36,12 +38,13 @@ public class AutomobilReviewDTO {
 		this.tipMenjaca = dto.getTipMenjaca();
 		this.tipGoriva = dto.getTipGoriva();
 		this.reviews = reviews;
-	
+		
+		this.slikeVozila = slikeVozila;
 	}
 	
-	public AutomobilReviewDTO(Long id, float ukupnaOcena, float predjenaKilometraza, float planiranaKilometraza,
+	public AutomobilDetailsDTO(Long id, float ukupnaOcena, float predjenaKilometraza, float planiranaKilometraza,
 			boolean collisionDamageWaiver, int brojSedistaZaDecu,
-			String markaAut , String modelAut, String klasaAut, String tipMenjaca, String tipGoriva, List<ReviewDTO> reviews) {
+			String markaAut , String modelAut, String klasaAut, String tipMenjaca, String tipGoriva, List<ReviewDTO> reviews, SlikaVozilaDTO slikeVozila) {
 		super();
 		this.id = id;
 		this.ukupnaOcena = ukupnaOcena;
@@ -56,7 +59,7 @@ public class AutomobilReviewDTO {
 		this.tipGoriva = tipGoriva;
 		this.reviews = reviews;
 		
-
+		this.slikeVozila = slikeVozila;
 	}
 	
 	public Long getId() {
@@ -146,5 +149,15 @@ public class AutomobilReviewDTO {
 	public void setReviews(List<ReviewDTO> reviews) {
 		this.reviews = reviews;
 	}
+
+	public SlikaVozilaDTO getSlikeVozila() {
+		return slikeVozila;
+	}
+
+	public void setSlikeVozila(SlikaVozilaDTO slikeVozila) {
+		this.slikeVozila = slikeVozila;
+	}
+	
+	
 
 }

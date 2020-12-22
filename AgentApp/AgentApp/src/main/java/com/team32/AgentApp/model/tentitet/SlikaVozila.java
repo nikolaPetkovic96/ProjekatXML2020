@@ -54,9 +54,9 @@ public class SlikaVozila {
 	
 	@Column(name = "slika", nullable = false)
     @XmlElement(required = true)
-    protected byte[] slika;
-    
 	
+    protected String[] slika;
+    
     @XmlElement(name = "Common_data", required = true)
     @Column(name = "common_data_id", nullable = false)
     protected Long commonDataId;
@@ -70,7 +70,7 @@ public class SlikaVozila {
 		super();
 	}
 
-	public SlikaVozila(Long id, byte[] slika, Long commonDataId, Long automobilId) {
+	public SlikaVozila(Long id, String[] slika, Long commonDataId, Long automobilId) {
 		super();
 		this.id = id;
 		this.slika = slika;
@@ -86,15 +86,14 @@ public class SlikaVozila {
         this.id = value;
     }
 
-    public byte[] getSlika() {
+    public String[] getSlika() {
         return slika;
     }
 
-    public void setSlika(byte[] value) {
-        this.slika = ((byte[]) value);
-    }
+	public void setSlika(String[] slika) {
+		this.slika = slika;
+	}
 
-    
 	public Long getCommonDataId() {
 		return commonDataId;
 	}
