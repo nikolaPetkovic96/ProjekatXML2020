@@ -37,6 +37,7 @@ public class AutomobilDetailsDTO {
 		this.klasaAut = dto.getKlasaAut();
 		this.tipMenjaca = dto.getTipMenjaca();
 		this.tipGoriva = dto.getTipGoriva();
+		
 		this.reviews = reviews;
 		
 		this.slikeVozila = slikeVozila;

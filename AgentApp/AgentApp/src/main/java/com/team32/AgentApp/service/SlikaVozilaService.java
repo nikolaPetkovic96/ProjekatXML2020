@@ -42,8 +42,11 @@ public class SlikaVozilaService {
 	public void deleteSlikaVozila(Long id) {
 		slikaVozilaRepository.deleteById(id);
 	}
-	public SlikaVozila getSlikaVozilaByAutomobilId(Long automobilId) {
-		
+	public SlikaVozila getSlikaVozilaByAutomobilId(Long automobilId) throws Exception {
+		if(slikaVozilaRepository.findByAutomobilId(automobilId) == null) {
+			throw new Exception("Slika vozila je null!");
+			
+		}
 		return slikaVozilaRepository.findByAutomobilId(automobilId);
 	}
 }

@@ -109,7 +109,7 @@ public class AutomobilController {
 	
 	//Ovo je za automobil details vise odradjeno...
 		@RequestMapping(method=RequestMethod.GET, value="/automobil/{id}/details", produces = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<AutomobilDetailsDTO> getAutomobilDetails(Principal principal, @PathVariable("id") Long id){
+		public ResponseEntity<AutomobilDetailsDTO> getAutomobilDetails(Principal principal, @PathVariable("id") Long id) throws Exception{
 			
 			//Preuzima se user iz sesije koji je trenutno ulogovan
 			String username = principal.getName();
@@ -123,10 +123,13 @@ public class AutomobilController {
 			}
 			
 			//Dobavljamo slike koje su vezane za njega
-			SlikaVozilaDTO slike = new SlikaVozilaDTO();
-			if(getSlikeVozila(id) != null) {
-				slike = getSlikeVozila(id);
-			}	
+			SlikaVozila s = slikaVozService.getSlikaVozilaByAutomobilId(id);
+			SlikaVozilaDTO slike = new SlikaVozilaDTO(s);
+//				
+//					
+//			if(getSlikeVozila(id) != null) {
+//				slike = getSlikeVozila(id);
+//			}	
 				
 			return new ResponseEntity<>(new AutomobilDetailsDTO(autoDTO, reviews, slike), HttpStatus.OK);
 		}
@@ -251,6 +254,43 @@ public class AutomobilController {
 		return new ResponseEntity<>(new AutomobilImgDTO(autoDto, new SlikaVozilaDTO(slikaVozila)), HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(method=RequestMethod.PUT, value="/automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AutomobilDTO> updateAutomobil(@RequestBody AutomobilNewDTO dto) throws Exception{
+		
+		Automobil updatedAutomobil = automobilService.findOne(dto.getId());
+		if(updatedAutomobil == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Long comDatId = updatedAutomobil.getCommonDataId();
+		
+		CommonData commonData = comDataService.findOne(comDatId);
+		LocalDateTime now = LocalDateTime.now();
+		commonData.setDatumIzmene(now);
+		commonData = comDataService.updateCommonData(comDatId, commonData);
+		
+		updatedAutomobil.setId(dto.getId());
+		updatedAutomobil.setBrojSedistaZaDecu(dto.getBrojSedistaZaDecu());
+		updatedAutomobil.setCollisionDamageWaiver(dto.isCollisionDamageWaiver());
+		updatedAutomobil.setPredjenaKilometraza(dto.getPredjenaKilometraza());
+		
+		updatedAutomobil.setMarkaAutomobilaId(dto.getMarkaAutomobilaId());
+		updatedAutomobil.setModelAutomobilaId(dto.getModelAutomobilaId());
+		updatedAutomobil.setKlasaAutomobilaId(dto.getKlasaAutomobilaId());
+		updatedAutomobil.setTipGorivaId(dto.getTipGorivaId());
+		updatedAutomobil.setTipMenjacaId(dto.getTipMenjacaId());
+		updatedAutomobil.setUkupnaOcena(dto.getTipMenjacaId());
+		
+		updatedAutomobil.setCommonDataId(comDatId);
+
+		updatedAutomobil = automobilService.updateAutomobil(updatedAutomobil.getId(), updatedAutomobil);
+		
+		AutomobilDTO auto = automobilService.findOneWithDetails(updatedAutomobil.getId());
+		
+		//svejedno je sta cemo vratiti kod update
+		return new ResponseEntity<>(auto,HttpStatus.OK);
+	}
+	
 	
 	//Pomocna metoda za kreiranje novog commonData
 	public CommonData setCommonData(Long userId) throws Exception {
@@ -262,42 +302,11 @@ public class AutomobilController {
 		return commonData;
 	}
 	
-	public SlikaVozilaDTO getSlikeVozila(Long automobilId) {
+	public SlikaVozilaDTO getSlikeVozila(Long automobilId) throws Exception {
 		SlikaVozila s = slikaVozService.getSlikaVozilaByAutomobilId(automobilId);
 		return new SlikaVozilaDTO(s);
 	}
 	
-//	@RequestMapping(method=RequestMethod.PUT, value="/automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<AutomobilDTO> updateAutomobil(@RequestBody AutomobilDTO automobilDTO) throws Exception{
-//		
-//		Automobil updatedAutomobil = automobilService.findOne(automobilDTO.getId());
-//		if(updatedAutomobil == null) {
-//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//		}
-//		
-//		Long comDatId = updatedAutomobil.getCommonDataId();
-//		
-//		CommonData commonData = comDataService.findOne(comDatId);
-//		LocalDateTime now = LocalDateTime.now();
-//		commonData.setDatumIzmene(now);
-//		commonData = comDataService.updateCommonData(comDatId, commonData);
-//		
-//		updatedAutomobil.setId(automobilDTO.getId());
-//		updatedAutomobil.setBrojSedistaZaDecu(automobilDTO.getBrojSedistaZaDecu());
-//		updatedAutomobil.setCollisionDamageWaiver(automobilDTO.isCollisionDamageWaiver());
-//		updatedAutomobil.setPredjenaKilometraza(automobilDTO.getPredjenaKilometraza());
-//		
-//		updatedAutomobil.setMarkaAutomobilaId(automobilDTO.getMarkaAutomobilaId());
-//		updatedAutomobil.setModelAutomobilaId(automobilDTO.getModelAutomobilaId());
-//		updatedAutomobil.setKlasaAutomobilaId(automobilDTO.getKlasaAutomobilaId());
-//		updatedAutomobil.setTipGorivaId(automobilDTO.getTipGorivaId());
-//		updatedAutomobil.setTipMenjacaId(automobilDTO.getTipMenjacaId());
-//		updatedAutomobil.setUkupnaOcena(automobilDTO.getTipMenjacaId());
-//		
-//		updatedAutomobil.setCommonDataId(comDatId);
-//	
-//		updatedAutomobil = automobilService.updateAutomobil(updatedAutomobil.getId(), updatedAutomobil);
-//		return new ResponseEntity<>(new AutomobilDTO(updatedAutomobil),HttpStatus.OK);
-//	}
+
 
 }

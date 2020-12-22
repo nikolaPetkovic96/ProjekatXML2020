@@ -158,10 +158,10 @@ INSERT INTO Tip_Goriva(naziv_tipa, common_data_id) VALUES('Benizn', 17)
 INSERT INTO Tip_Goriva(naziv_tipa, common_data_id) VALUES('Bezolovno', 18)
 
 --SlikaVozila
-INSERT INTO Slika_Vozila(slika, automobil_id, common_data_id) VALUES('{ }', 1, 19)
-INSERT INTO Slika_Vozila(slika, automobil_id, common_data_id) VALUES('{ }', 2, 20)
-INSERT INTO Slika_Vozila(slika, automobil_id, common_data_id) VALUES('{ } ',3, 21)
-INSERT INTO Slika_Vozila(slika, automobil_id, common_data_id) VALUES('{ }', 4, 69)
+INSERT INTO Slika_Vozila(slika, automobil_id, common_data_id) VALUES('W29iamVjdCBGaWxlXQ==', 1, 19)
+INSERT INTO Slika_Vozila(slika, automobil_id, common_data_id) VALUES('W29iamVjdCBGaWxlXQ==', 2, 20)
+INSERT INTO Slika_Vozila(slika, automobil_id, common_data_id) VALUES('W29iamVjdCBGaWxlXQ==', 3, 21)
+INSERT INTO Slika_Vozila(slika, automobil_id, common_data_id) VALUES('W29iamVjdCBGaWxlXQ==', 4, 69)
 
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-10 21:58:58', null, 1)
 

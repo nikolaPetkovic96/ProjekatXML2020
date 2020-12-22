@@ -125,6 +125,10 @@ public class OglasController {
 			String username = principal.getName();
 			User loggedAgent = userService.findByUsername(username);
 			
+			if(isIntervalSlobodan(loggedAgent.getId(), dto)==false) {
+				throw new Exception("Ad already exists!");
+			}
+			
 			//Prilkom kreiranja novog oglasa odmah se kreira i commonData koji pamti ko je kreirao oglas i kada.
 			CommonData commonData = setCommonData(loggedAgent.getId());
 			
@@ -138,7 +142,7 @@ public class OglasController {
 			System.out.println("Do datuma dto: " + dto.getDoDatuma());
 			System.out.println("Do datuma: "  + LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getDoDatuma()), TimeZone.getDefault().toZoneId()));
 			
-			savedOglas.setId(dto.getId());	
+			savedOglas.setId(dto.getId());
 			savedOglas.setOdDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getOdDatuma()), TimeZone.getDefault().toZoneId()));
 			savedOglas.setDoDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getDoDatuma()), TimeZone.getDefault().toZoneId()));
 			savedOglas.setAutomobilId(dto.getAutomobilId());
@@ -235,7 +239,11 @@ public class OglasController {
 			return adresa;
 		}
 		
-		
+		/****
+		 * 
+		 * @param Lista narudzbenica
+		 * @return Zauzete termine iz narudzbenica tog oglasa <HashMap<String, LocalDateTime>
+		 */
 		//Pomocna metoda koja sluzi za izvlacenje zauzetih termina iz narudzbenica tog oglasa.
 		public List<HashMap<String, LocalDateTime>> getZauzetiTermini(List<Narudzbenica> narudzbenice) {
 			List<HashMap<String, LocalDateTime>> zauzetiTermini = new  ArrayList<HashMap<String, LocalDateTime>>();
@@ -251,8 +259,38 @@ public class OglasController {
 			return zauzetiTermini;
 		}
 		
-		
-		
+		/****
+		 * 
+		 * @param agentId id agenta tipa long za preuzimanje samo njegovih oglasa
+		 * @param dto Novi oglas za ciji interval se proverava da li se preklapa sa drugim oglasima istog automobila 
+		 * @return Boolean true ako je interval za novi oglas slobodan, u suprotnom vrati false
+		 */
+		//Provera da li se novi oglas poklapa sa neki drugi vec kreiranim oglasom za interval i utomobil 
+		//(za razlicite automobile mogu postojati oglasi u istom terminu)... 
+		public boolean isIntervalSlobodan(Long agentId, OglasNewDTO dto){
+			List<Oglas> oglas = oglasService.getAllOglasByAgentId(agentId);
+			//Pocetak i kraj novog oglasa
+			LocalDateTime odDatuma = LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getOdDatuma()), TimeZone.getDefault().toZoneId());
+			LocalDateTime doDatuma = LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getDoDatuma()), TimeZone.getDefault().toZoneId());
+			//id automobila novo
+			Long automobilId = dto.getAutomobilId();
+			for(Oglas o:oglas) {
+				//Ovo pokriva kada su oba intervala novog u intervalu starog ili je pocetak ili kraj novog u intervalu starog...
+				//Pocetak novog je u intervalu postojeceg oglasa;
+				if(odDatuma.isAfter(o.getOdDatuma()) && odDatuma.isBefore(o.getDoDatuma()) &&  automobilId == o.getAutomobilId()) {
+					return false;
+				}
+				//Kraj novog je u intervalu postojeceg oglasa;
+				else if(doDatuma.isAfter(o.getOdDatuma()) && doDatuma.isBefore(o.getDoDatuma()) && automobilId == o.getAutomobilId()) {
+					return false;
+				}
+				//Stari interval je u intervalu novog oglasa; np|   sp|   |sk   |nk
+				else if(odDatuma.isBefore(o.getOdDatuma()) && doDatuma.isAfter(o.getDoDatuma()) &&  automobilId == o.getAutomobilId()) {
+					return false;
+				}
+			}
+			return true;
+		}
 		//Za vracanje iz LocalDateTime to milisec Iskoristiti kod oglasa za vracanje termina zauzetosti...
 //		Long test = savedOglas.getOdDatuma().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
 //		Long test1 = savedOglas.getDoDatuma().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
