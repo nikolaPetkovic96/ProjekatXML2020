@@ -17,13 +17,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class TokenUtils {
 
-	@Value("secure-xml")
+	@Value("xml-app")
 	private String APP_NAME;
 
 	@Value("secret")
 	public String SECRET;
 
-    @Value("300")
+    @Value("30000")
 	private int EXPIRES_IN;
 
 	@Value("Authorization")
@@ -36,10 +36,12 @@ public class TokenUtils {
 
 	// Functions for generating new JWT token
 
-	public String generateToken(String username) {
+	public String generateToken(String username,Long id,String role) {
 		return Jwts.builder()
 				.setIssuer(APP_NAME)
+				.setAudience(role)
 				.setSubject(username)
+				.setId(id.toString())
 				.setIssuedAt(new Date())
 				.setExpiration(generateExpirationDate())
 				.signWith(SIGNATURE_ALGORITHM, SECRET).compact();

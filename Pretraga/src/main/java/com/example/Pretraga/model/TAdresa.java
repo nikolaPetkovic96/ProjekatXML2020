@@ -75,8 +75,8 @@ import javax.xml.bind.annotation.XmlType;
     "mesto",
     "postanskiBroj",
     "ulica",
-    "broj"//,
-    //"kordinate"
+    "broj",
+    "kordinate"
 })
 public class TAdresa {
 	
@@ -100,13 +100,13 @@ public class TAdresa {
     @XmlElement(name = "Broj")
     protected int broj;
     
-//	@Column(name = "geo_duzina", nullable = false)
-//    @XmlAttribute(name = "longitude")
-//    protected float longitude;
-//    
-//	@Column(name = "geo_sirina", nullable = false)
-//    @XmlAttribute(name = "latitude")
-//    protected float latitude;
+	@Column(name = "geo_duzina", nullable = false)
+    @XmlAttribute(name = "longitude")
+    protected float longitude;
+    
+	@Column(name = "geo_sirina", nullable = false)
+    @XmlAttribute(name = "latitude")
+    protected float latitude;
 
 
 
@@ -122,8 +122,8 @@ public class TAdresa {
 		this.postanskiBroj = postanskiBroj;
 		this.ulica = ulica;
 		this.broj = broj;
-		//this.longitude = longitude;
-		//this.latitude = latitude;
+		this.longitude = longitude;
+		this.latitude = latitude;
 	}
 
 
@@ -177,21 +177,24 @@ public class TAdresa {
     }
 
 
-//	public Float getLongitude() {
-//        return longitude;
-//    }
-//
-//
-//    public void setLongitude(Float value) {
-//        this.longitude = value;
-//    }
-//
-//
-//    public float getLatitude() {
-//        return latitude;
-//    }
-//
-//    public void setLatitude(float value) {
-//        this.latitude = value;
-//    }
+	public Float getLongitude() {
+        return longitude;
+    }
+
+
+    public void setLongitude(Float value) {
+        this.longitude = value;
+    }
+
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float value) {
+        this.latitude = value;
+    }
+
+
+
 }

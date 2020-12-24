@@ -52,7 +52,7 @@ public class TTipMenjaca {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 	
-	@Column(name = "naziv_menjaca", nullable = false)
+	@Column(name = "naziv_menjaca", nullable = false, unique = true)
     @XmlElement(name = "naziv_menjaca", required = true)
     protected String nazivMenjaca;
     

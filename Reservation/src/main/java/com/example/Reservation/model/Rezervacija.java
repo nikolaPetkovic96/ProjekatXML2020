@@ -19,7 +19,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -118,25 +117,19 @@ public class Rezervacija {
 	//    protected List<Oglas> oglas;
 	//    protected List<Poruka> poruka;
     
-//    @ManyToMany
-//	@JoinTable(
-//	  name = "rezervacije_oglasi", 
-//	  joinColumns = @JoinColumn(name = "rezervacija_id"), 
-//	  inverseJoinColumns = @JoinColumn(name = "oglas_id"))
-//    protected List<Oglas> oglasi;
-    
-    @OneToMany(// u listu narudzbenica ubacuje sve narudzbenice gde je rez_id= id od ove rezervcacije
-            mappedBy = "rez_id"//,   
-            //cascade = CascadeType.ALL,
-            //orphanRemoval = true
-        )protected List<Narudzbenica> narudbenice;
+    @ManyToMany
+	@JoinTable(
+	  name = "rezervacije_oglasi", 
+	  joinColumns = @JoinColumn(name = "rezervacija_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "oglas_id"))
+    protected List<Oglas> oglasi;
 
 	public Rezervacija() {
 		super();
 	}
 
 	public Rezervacija(Long id, double ukupnaCena, LocalDateTime odDatuma, LocalDateTime doDatuma, Boolean bundle,
-			String statusRezervacije, Long commonDataId, List<Narudzbenica> narudzbenice) {
+			String statusRezervacije, Long commonDataId, List<Oglas> oglasi) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
@@ -145,7 +138,7 @@ public class Rezervacija {
 		this.bundle = bundle;
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
-		this.narudbenice=narudzbenice;
+		this.oglasi=oglasi;
 	}
 	public Rezervacija(Long id, double ukupnaCena, LocalDateTime odDatuma, LocalDateTime doDatuma, Boolean bundle,
 			String statusRezervacije, Long commonDataId) {
@@ -215,22 +208,12 @@ public class Rezervacija {
 		this.commonDataId = commonDataId;
 	}
 
-	public List<Narudzbenica> getNarudbenice() {
-		return narudbenice;
+	public List<Oglas> getOglasi() {
+		return oglasi;
 	}
 
-	public void setNarudbenice(List<Narudzbenica> narudzbenice) {
-		this.narudbenice = narudzbenice;
+	public void setOglasi(List<Oglas> oglasi) {
+		this.oglasi = oglasi;
 	}
-
-//	public List<Oglas> getOglasi() {
-//		return oglasi;
-//	}
-//
-//	public void setOglasi(List<Oglas> oglasi) {
-//		this.oglasi = oglasi;
-//	}
-	
-	
 
 }

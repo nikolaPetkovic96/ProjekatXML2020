@@ -67,15 +67,25 @@ public class UserController {
 		final Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
 						authenticationRequest.getPassword()));
-
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = tokenUtils.generateToken(user.getKorisnickoIme());
+		String jwt = tokenUtils.generateToken(user.getKorisnickoIme(),user.getId(),user.getAuthorities().get(0).getName());
 		int expiresIn = tokenUtils.getExpiredIn();
 		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> register(@RequestBody Map<String, String> data)
+			throws AuthenticationException, IOException {
+		//TODO srediti registraciju
+		TUser user = new TUser();
+		user.setKorisnickoIme(data.get("username"));
+		user.setLozinka(encoder.encode(data.get("password")));
+		userRepository.save(user);
+		return ResponseEntity.ok(null);
+	}
+	
+	@RequestMapping(value = "/register-admin", method = RequestMethod.POST)
+	public ResponseEntity<?> registerAdmin(@RequestBody Map<String, String> data)
 			throws AuthenticationException, IOException {
 		//TODO srediti registraciju
 		TUser user = new TUser();
@@ -113,11 +123,12 @@ public class UserController {
 			//TODO dodati stvarne role, ya sada se samo doda test
 			// proveri da li je prosledjeni token validan
 			if (tokenUtils.validateToken(authToken, userDetails)) {				
-				List<SimpleGrantedAuthority> ats=new LinkedList<>();
-				ats.add((new SimpleGrantedAuthority("ROLE_TEST")));
-				/*List<SimpleGrantedAuthority> ats = userDetails.getAuthorities().stream()
+				//List<SimpleGrantedAuthority> ats=new LinkedList<>();
+				
+				//ats.add((new SimpleGrantedAuthority("ROLE_TEST")));
+				List<SimpleGrantedAuthority> ats = userDetails.getAuthorities().stream()
 						.map(x -> new SimpleGrantedAuthority(((Authority) x).getName())).collect(Collectors.toList());
-				// kreiraj autentifikaciju*/
+				// kreiraj autentifikaciju
 				t = new RememberMeAuthenticationToken(userDetails.getUsername(),
 						userDetails, ats);
 			}

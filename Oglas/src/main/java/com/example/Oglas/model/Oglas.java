@@ -82,9 +82,6 @@ public class Oglas {
     @Column(name="automobil_id")
 	private Long automobilId;
     
-    @Column(name="planirana_km")
-    private Long planiranaKm;
-    
     
     //Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
 	//private Firma firma;

@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class OcenaController {
-	
 	@GetMapping(value = "/all")
 	//@PreAuthorize("hasRole('ROLE_ANONYMOUS')") <-ovo je rola koju ima neko ko nije ulogovan
 	//moze da se stavi i da vise rola ima pristup => ima na neku kako se kuca to
 	public String TestOcenController() {
-		return "uspesno nalazenje servisa Ocene";
+		return "Ovde moze svako da udje";
 	}
 
 	@GetMapping(value = "/test")

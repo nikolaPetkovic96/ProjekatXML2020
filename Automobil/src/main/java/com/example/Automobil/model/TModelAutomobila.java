@@ -51,7 +51,7 @@ public class TModelAutomobila {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 	
-	@Column(name = "naziv_modela", nullable = false)
+	@Column(name = "naziv_modela", nullable = false, unique = true)
     @XmlElement(name = "naziv_modela", required = true)
     protected String nazivModela;
 	

@@ -15,7 +15,6 @@ import com.example.Reservation.dto.RezervacijaDTO;
 import com.example.Reservation.model.CommonData;
 import com.example.Reservation.model.Rezervacija;
 import com.example.Reservation.repository.CommonDataRepository;
-import com.example.Reservation.repository.NarudzbenicaRepository;
 import com.example.Reservation.repository.OglasRepository;
 import com.example.Reservation.repository.RezervacijaRepository;
 import com.example.Reservation.repository.service.mapper.RezervacijaMapper;
@@ -30,8 +29,6 @@ public class RezervacijaService {
 	private RezervacijaMapper rezMappper;
 	@Autowired
 	private OglasRepository oglasRep;
-	@Autowired
-	private NarudzbenicaRepository narRep;
 	
 	public  RezervacijaDTO getRezervacija(Long rezervacija_id) {	
 		return rezMappper.toDTO(rezervacijaRepository.getOne(rezervacija_id));
@@ -45,7 +42,7 @@ public class RezervacijaService {
 	public List<RezervacijaDTO> getAllRezervacijeOglas(Long oglas_id){
 		List<RezervacijaDTO> allDTO=new ArrayList<>();
 		rezervacijaRepository.findAll().stream().forEach(r->allDTO.add(rezMappper.toDTO(r)));
-		//allDTO.removeIf(r-> !r.getOglasi_id().contains(oglas_id));
+		allDTO.removeIf(r-> !r.getOglasi_id().contains(oglas_id));
 		return allDTO;
 	}
 	
@@ -54,27 +51,27 @@ public class RezervacijaService {
 		List<RezervacijaDTO> rezervacije=new ArrayList<>();
 
 		Set<Long> vlasnici_id=Collections.emptySet();
-		for(Long id:rezDTO.getNarudzbenice_id()) {
-			vlasnici_id.add(commonDataRepository.findById(narRep.findById(id).get().getIzvestaj().getCommonDataId()).get().getUserid());
+		for(Long id:rezDTO.getOglasi_id()) {
+			vlasnici_id.add(commonDataRepository.findById(oglasRep.findById(id).get().getCommonDataId()).get().getUserid());
 		}
 		for(Long vlas_id : vlasnici_id) {
-			List<Long> narudzbenice_od_vlasnika=Collections.emptyList();
-			for(Long oglas_id : rezDTO.getNarudzbenice_id()) {
-				if(vlas_id==commonDataRepository.findById(narRep.findById(oglas_id).get().getIzvestaj().getCommonDataId()).get().getUserid())
-						narudzbenice_od_vlasnika.add(oglas_id);	//oglas pripada vlasniku, dodati ga u listu
+			List<Long> oglasi_od_vlasnika=Collections.emptyList();
+			for(Long oglas_id : rezDTO.getOglasi_id()) {
+				if(vlas_id==commonDataRepository.findById(oglasRep.findById(oglas_id).get().getCommonDataId()).get().getUserid())
+						oglasi_od_vlasnika.add(oglas_id);	//oglas pripada vlasniku, dodati ga u listu
 			}
 			RezervacijaDTO temp=rezDTO;	//temp uvek isti, samo ce se menjati lista oglasa zavisno od toga da li je bundle
 			if(rezDTO.getBundle()) {
-				temp.setNarudzbenice_id(narudzbenice_od_vlasnika);
+				temp.setOglasi_id(oglasi_od_vlasnika);
 				Rezervacija r=rezMappper.fromDTO(temp);
 				rezervacijaRepository.saveAndFlush(r);
 				rezervacije.add(rezMappper.toDTO(r));
 			}else {
-				for(Long narudzbenica_od_vlasnika : narudzbenice_od_vlasnika) {
+				for(Long oglas_od_vlasnika : oglasi_od_vlasnika) {
 					List<Long> pojedinacni_oglas=Collections.emptyList();
-					pojedinacni_oglas.add(narudzbenica_od_vlasnika);
-					temp.setNarudzbenice_id(pojedinacni_oglas);
-					temp.setNarudzbenice_id(narudzbenice_od_vlasnika);
+					pojedinacni_oglas.add(oglas_od_vlasnika);
+					temp.setOglasi_id(pojedinacni_oglas);
+					temp.setOglasi_id(oglasi_od_vlasnika);
 					Rezervacija r=rezMappper.fromDTO(temp);
 					rezervacijaRepository.saveAndFlush(r);
 					rezervacije.add(rezMappper.toDTO(r));

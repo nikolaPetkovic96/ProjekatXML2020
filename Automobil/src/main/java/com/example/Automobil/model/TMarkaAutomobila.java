@@ -60,7 +60,7 @@ public class TMarkaAutomobila {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 	
-	@Column(name = "naziv_marke", nullable = false)
+	@Column(name = "naziv_marke", nullable = false, unique = true)
     @XmlElement(name = "naziv_marke", required = true)
     protected String nazivMarke;
 	

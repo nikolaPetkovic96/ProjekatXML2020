@@ -89,10 +89,10 @@ public class Oglas {
 	//private RegistrovaniKorisnik reg_korisnik;
     @ManyToMany
     @JoinTable(
-    		  name = "narudzbenice_oglasi", 
+    		  name = "rezervacije_oglasi", 
     		  joinColumns = @JoinColumn(name = "oglas_id"), 
-    		  inverseJoinColumns = @JoinColumn(name = "narudzbenica_id"))
-	private List<Narudzbenica> narudzbenice;
+    		  inverseJoinColumns = @JoinColumn(name = "rezervacija_id"))
+	private List<Rezervacija> rezervacije;
 
     public Oglas() {
 		super();
@@ -106,7 +106,7 @@ public class Oglas {
 		this.cenovnikId = cenovnikId;
 		this.commonDataId = commonDataId;
 		this.automobilId = automobilId;
-		this.narudzbenice=new ArrayList<>();
+		this.rezervacije=new ArrayList<>();
 	}
 
 	public Long getId() {
@@ -167,12 +167,12 @@ public class Oglas {
 		this.automobilId = automobilId;
 	}
 
-	public List<Narudzbenica> getNarudzbenice() {
-		return narudzbenice;
+	public List<Rezervacija> getRezervacije() {
+		return rezervacije;
 	}
 
-	public void setNarurdzbenice(List<Narudzbenica> narudzbenice) {
-		this.narudzbenice = narudzbenice;
+	public void setRezervacije(List<Rezervacija> rezervacije) {
+		this.rezervacije = rezervacije;
 	}
 
 }

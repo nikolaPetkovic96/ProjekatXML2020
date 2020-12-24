@@ -18,9 +18,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for TTip_goriva complex type.
+ * <p>
+ * Java class for TTip_goriva complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="TTip_goriva">
@@ -39,28 +42,24 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TTip_goriva", propOrder = {
-    "id",
-    "nazivTipa",
-    "commonData"
-})
+@XmlType(name = "TTip_goriva", propOrder = { "id", "nazivTipa", "commonData" })
 
 @Entity
 public class TTipGoriva {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-    
-    @Column(name = "naziv_tipa", nullable = false)
-    @XmlElement(name = "naziv_tipa", required = true)
-    protected String nazivTipa;
-    
-    @XmlElement(name = "Common_data", required = true)
-    @Column(name = "common_data_id", nullable = false)
-    protected Long commonDataId;
+	protected Long id;
 
-    public TTipGoriva() {
+	@Column(name = "naziv_tipa", nullable = false, unique = true)
+	@XmlElement(name = "naziv_tipa", required = true)
+	protected String nazivTipa;
+
+	@XmlElement(name = "Common_data", required = true)
+	@Column(name = "common_data_id", nullable = false)
+	protected Long commonDataId;
+
+	public TTipGoriva() {
 		super();
 	}
 
@@ -72,20 +71,20 @@ public class TTipGoriva {
 	}
 
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long value) {
-        this.id = value;
-    }
+	public void setId(Long value) {
+		this.id = value;
+	}
 
-    public String getNazivTipa() {
-        return nazivTipa;
-    }
-    
-    public void setNazivTipa(String value) {
-        this.nazivTipa = value;
-    }
+	public String getNazivTipa() {
+		return nazivTipa;
+	}
+
+	public void setNazivTipa(String value) {
+		this.nazivTipa = value;
+	}
 
 	public Long getCommonDataId() {
 		return commonDataId;
