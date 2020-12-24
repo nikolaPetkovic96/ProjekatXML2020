@@ -222,4 +222,9 @@ public class OglasService {
 			return zauzetiTermini;
 		}
 
+		public List<Oglas> getAllOglasByAutomobilId(Long automobilId) {
+			
+			return oglasRepository.findAllByAutomobilId(automobilId);
+		}
+
 }
