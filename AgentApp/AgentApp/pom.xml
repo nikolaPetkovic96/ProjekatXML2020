@@ -66,7 +66,13 @@
 			<scope>test</scope> 
 		</dependency>
 		
-				<!-- Dodato za racunanje vremenske razlike -->
+		<!-- Dodato za slanje mejla -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		
+		<!-- Dodato za racunanje vremenske razlike -->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
