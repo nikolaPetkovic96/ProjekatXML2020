@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.example.LoginReg.config.auth.RestAuthenticationEntryPoint;
 import com.example.LoginReg.config.auth.TokenAuthenticationFilter;
-import com.example.LoginReg.controller.CustomUserDetailsService;
+import com.example.LoginReg.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
