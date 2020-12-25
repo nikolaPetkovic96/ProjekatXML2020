@@ -23,7 +23,7 @@ public class AutomobilDTO {
 	private int brojSedistaZaDecu;
 	private Long commonDataId;
 
-	private List<byte[]> slike;
+	private String[] slike;
 	private String MarkaNaziv;
 	private String modelNaziv;
 	private String klasaNaziv;
@@ -33,7 +33,7 @@ public class AutomobilDTO {
 
 	public AutomobilDTO(Long id, Long markaAutomobilaId, Long modelAutomobilaId, Long klasaAutomobilaId,
 			Long vrstaGorivaId, Long tipMenjacaId, float predjenaKilometraza, float planiranaKilometraza,
-			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId, List<byte[]> slike,
+			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId, String[] slike,
 			String markaNaziv, String modelNaziv, String klasaNaziv, Long string, String username) {
 		super();
 		this.id = id;
@@ -143,11 +143,11 @@ public class AutomobilDTO {
 		this.commonDataId = commonDataId;
 	}
 
-	public List<byte[]> getSlike() {
+	public String[] getSlike() {
 		return slike;
 	}
 
-	public void setSlike(List<byte[]> slike) {
+	public void setSlike(String[] slike) {
 		this.slike = slike;
 	}
 

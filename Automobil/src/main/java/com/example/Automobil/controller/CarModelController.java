@@ -1,6 +1,7 @@
 package com.example.Automobil.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -28,8 +29,8 @@ public class CarModelController {
 	private CarModelService carBrandService;
 
 	@GetMapping("")
-	public List<TModelAutomobila> getAll(@RequestParam("model") Long model) {
-		return carBrandService.getAll(model);
+	public List<TModelAutomobila> getAll(@RequestParam("model") Optional<Long> model) {
+		return carBrandService.getAll(model.orElse(null));
 	}
 
 	@PostMapping("")
