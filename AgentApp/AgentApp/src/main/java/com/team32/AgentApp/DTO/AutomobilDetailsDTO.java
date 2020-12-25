@@ -24,6 +24,7 @@ public class AutomobilDetailsDTO {
 	public AutomobilDetailsDTO() {
 		
 	}
+	
 
 	public AutomobilDetailsDTO(AutomobilDTO dto, List<ReviewDTO> reviews, SlikaVozilaDTO slikeVozila) {	
 		this.id = dto.getId();	

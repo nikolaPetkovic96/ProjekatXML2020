@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.team32.AgentApp.DTO.AdresaDTO;
 import com.team32.AgentApp.DTO.OglasDTO;
 import com.team32.AgentApp.DTO.OglasDetailsDTO;
+import com.team32.AgentApp.DTO.OglasDetailsImgDTO;
 import com.team32.AgentApp.DTO.OglasNewDTO;
 
 import com.team32.AgentApp.model.entitet.CommonData;
@@ -66,6 +67,30 @@ public class OglasController {
 			// convert komentar to DTOs
 			return new ResponseEntity<>(oglasiDTO, HttpStatus.OK);
 		}
+		
+		
+		//GET ALL
+		@RequestMapping(method=RequestMethod.GET, value="/oglas/img", produces = MediaType.APPLICATION_JSON_VALUE)
+		public ResponseEntity<List<OglasDetailsImgDTO>> getAllOglasWithImg(Principal principal) throws Exception {
+		
+
+			//Preuzima se user iz sesije koji je trenutno ulogovan
+			String username = principal.getName();
+			User loggedAgent = userService.findByUsername(username);
+			
+			List<Oglas> allAgentsOglas = oglasService.getAllOglasByAgentId(loggedAgent.getId());
+			
+			List<OglasDetailsImgDTO> oglasiDTO = new ArrayList<>();
+			for (Oglas o : allAgentsOglas) {
+				
+				OglasDetailsImgDTO oglasDTO = oglasService.getOglasFullDetailsImg(o);
+				
+				oglasiDTO.add(oglasDTO);
+			}
+			// convert komentar to DTOs
+			return new ResponseEntity<>(oglasiDTO, HttpStatus.OK);
+		}
+		
 		
 		//GET ALL
 		@RequestMapping(method=RequestMethod.GET, value="/oglas/agent", produces = MediaType.APPLICATION_JSON_VALUE)

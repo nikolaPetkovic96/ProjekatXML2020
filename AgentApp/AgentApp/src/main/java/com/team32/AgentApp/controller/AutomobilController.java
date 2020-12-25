@@ -31,7 +31,6 @@ import com.team32.AgentApp.model.entitet.Automobil;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Komentar;
 import com.team32.AgentApp.model.entitet.Ocena;
-import com.team32.AgentApp.model.entitet.Oglas;
 import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.model.tentitet.SlikaVozila;
 import com.team32.AgentApp.service.AutomobilService;
@@ -133,10 +132,6 @@ public class AutomobilController {
 		SlikaVozila s = slikaVozService.getSlikaVozilaByAutomobilId(id);
 		SlikaVozilaDTO slike = new SlikaVozilaDTO(s);
 
-		
-//			if(getSlikeVozila(id) != null) {
-//				slike = getSlikeVozila(id);
-//			}	
 			
 		return new ResponseEntity<>(new AutomobilDetailsDTO(autoDTO, reviews, slike), HttpStatus.OK);
 	}
@@ -298,7 +293,7 @@ public class AutomobilController {
 		savedAutomobil.setKlasaAutomobilaId(dto.getKlasaAutomobilaId());
 		savedAutomobil.setTipGorivaId(dto.getTipGorivaId());
 		savedAutomobil.setTipMenjacaId(dto.getTipMenjacaId());
-		savedAutomobil.setUkupnaOcena(dto.getTipMenjacaId());
+		savedAutomobil.setUkupnaOcena(dto.getUkupnaOcena());
 		savedAutomobil.setPredjenaKilometraza(dto.getPredjenaKilometraza());
 		savedAutomobil.setCollisionDamageWaiver(dto.isCollisionDamageWaiver());
 		savedAutomobil.setBrojSedistaZaDecu(dto.getBrojSedistaZaDecu());
@@ -344,7 +339,7 @@ public class AutomobilController {
 		updatedAutomobil.setKlasaAutomobilaId(dto.getKlasaAutomobilaId());
 		updatedAutomobil.setTipGorivaId(dto.getTipGorivaId());
 		updatedAutomobil.setTipMenjacaId(dto.getTipMenjacaId());
-		updatedAutomobil.setUkupnaOcena(dto.getTipMenjacaId());
+		updatedAutomobil.setUkupnaOcena(dto.getUkupnaOcena());
 		
 		updatedAutomobil.setCommonDataId(comDatId);
 
@@ -395,12 +390,6 @@ public class AutomobilController {
 		commonData = comDataService.addCommonData(commonData);	
 		return commonData;
 	}
-	
-	public SlikaVozilaDTO getSlikeVozila(Long automobilId) throws Exception {
-		SlikaVozila s = slikaVozService.getSlikaVozilaByAutomobilId(automobilId);
-		return new SlikaVozilaDTO(s);
-	}
-	
 
 
 }

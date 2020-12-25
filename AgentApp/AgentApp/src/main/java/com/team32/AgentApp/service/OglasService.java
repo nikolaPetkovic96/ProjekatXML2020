@@ -12,9 +12,13 @@ import org.springframework.stereotype.Service;
 
 import com.team32.AgentApp.DTO.AdresaDTO;
 import com.team32.AgentApp.DTO.AutomobilDTO;
+import com.team32.AgentApp.DTO.AutomobilDetailsDTO;
+import com.team32.AgentApp.DTO.AutomobilImgDTO;
 import com.team32.AgentApp.DTO.CenovnikDTO;
 import com.team32.AgentApp.DTO.OglasDTO;
 import com.team32.AgentApp.DTO.OglasDetailsDTO;
+import com.team32.AgentApp.DTO.OglasDetailsImgDTO;
+import com.team32.AgentApp.DTO.SlikaVozilaDTO;
 import com.team32.AgentApp.model.entitet.Cenovnik;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Narudzbenica;
@@ -92,7 +96,55 @@ public class OglasService {
 		return oglasi;
 	}
 	
-	//POMOCNE METODE
+	//POMOCNE METODE ovde su img
+		public OglasDetailsImgDTO getOglasFullDetailsImg(Oglas o) throws Exception {
+			OglasDetailsImgDTO oglasDTO = new OglasDetailsImgDTO();
+			
+			CommonData comData = comDataService.findOne(o.getCommonDataId());
+			if(comData == null) {
+				return null;
+			}
+			
+			User user = userService.findOne(comData.getUserid());
+			if(user == null) {
+				return null;
+			}
+			
+			Cenovnik cenovnik = cenovnikService.findOne(o.getCenovnikId());
+			if(cenovnik == null) {
+				return null;
+			}
+			
+			AutomobilDTO automobilDTO = automobilService.findOneWithDetails(o.getAutomobilId());
+			if(automobilDTO == null) {
+				return null;
+			}
+			
+			SlikaVozilaDTO slike = automobilService.getSlikeVozila(automobilDTO.getId());
+			AutomobilImgDTO automobilImgDto = new AutomobilImgDTO(automobilDTO, slike); 
+
+			Adresa adresa = adresaService.findOne(o.getAdresaId());
+			if(adresa == null) {
+				return null;
+			}
+
+			oglasDTO.setId(o.getId());
+			oglasDTO.setOdDatuma(o.getOdDatuma());
+			oglasDTO.setDoDatuma(o.getDoDatuma());
+			
+			oglasDTO.setAgentId(comData.getUserid());
+			oglasDTO.setKorImeAgenta(user.getKorisnickoIme());
+
+			oglasDTO.setPlaniranaKilometraza(o.getPlaniranaKilometraza());
+			oglasDTO.setAdresa(new AdresaDTO(adresa));
+			oglasDTO.setAutomobil(automobilImgDto);
+			oglasDTO.setCenovnik(new CenovnikDTO(cenovnik));
+			
+			return oglasDTO;
+		}
+	
+	
+	//POMOCNE METODE ovde su 
 	public OglasDTO getOglasFullDetails(Oglas o) {
 		OglasDTO oglasDTO = new OglasDTO();
 		

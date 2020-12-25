@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.team32.AgentApp.DTO.AutomobilDTO;
 import com.team32.AgentApp.DTO.AutomobilStatisticDTO;
+import com.team32.AgentApp.DTO.SlikaVozilaDTO;
 import com.team32.AgentApp.model.entitet.Automobil;
+import com.team32.AgentApp.model.tentitet.SlikaVozila;
 import com.team32.AgentApp.repository.AutomobilRepository;
 
 @Service
@@ -40,6 +42,9 @@ public class AutomobilService {
 	
 	@Autowired
 	private KomentarService komentarService;
+	
+	@Autowired
+	private SlikaVozilaService slikaVozService;
 	
 	public List<Automobil> getAllAutomobil(){
 		List<Automobil> listaAutomobila = new ArrayList<>();
@@ -73,7 +78,6 @@ public class AutomobilService {
 	}
 	
 	//DODATNE METODE:
-
 	public List<Automobil> getAllAutomobilByAgent(Long agentId) {
 		List<Automobil> automobili = new ArrayList<>();
 		
@@ -88,6 +92,11 @@ public class AutomobilService {
 		}
 		
 		return automobili;	
+	}
+	
+	public SlikaVozilaDTO getSlikeVozila(Long automobilId) throws Exception {
+		SlikaVozila s = slikaVozService.getSlikaVozilaByAutomobilId(automobilId);
+		return new SlikaVozilaDTO(s);
 	}
 	
 	
