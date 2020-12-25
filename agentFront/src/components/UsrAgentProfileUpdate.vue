@@ -35,19 +35,19 @@
 					<br>
 				</div>
 
-                <div v-if='messages.errorNaziv' class="alert alert-danger" v-html="messages.errorNaziv"></div>
+                <div v-if='messages.errorCompanyName' class="alert alert-danger" v-html="messages.errorCompanyName"></div>
 				<fieldset class="form-group" v-if='isAgentType == "firma"'>
 					<label>Naziv firme</label>
 					<input type="text" class="form-control" v-model="profile.nazivFirme" />
 				</fieldset>
             
-                <div v-if='messages.errorPoslovniMaticniBroj' class="alert alert-danger" v-html="messages.errorPoslovniMaticniBroj"></div>
+                <div v-if='messages.errorPIB' class="alert alert-danger" v-html="messages.errorPIB"></div>
 				<fieldset class="form-group" v-if='isAgentType == "firma"'>
 					<label>Poslovni maticni broj</label>
 					<input type="text" class="form-control" v-model="profile.poslovniMaticniBroj" />
 				</fieldset>
 
-                 <div style="margin-top:20px" v-if='messages.errorAdresa' class="alert alert-danger" v-html="messages.errorAdresa"></div>
+                 <div style="margin-top:20px" v-if='messages.errorAddress' class="alert alert-danger" v-html="messages.errorAddress"></div>
                     <label>Adresa</label>
                     <div>
                     <input class="one-forth" placeholder="Unesite grad..." v-model='profile.TAdresa.mesto'>
@@ -147,7 +147,10 @@ export default {
 			messages: {
                 errorFirstName: '',
                 errorLastName: '',
-                errorAdresa:'',
+                errorCompanyName:'',
+                errorPIB:'',
+                // errorEmail:'', ne menja email
+                errorAddress:'',
                 errorOldPass: '',
                 errorNewPass: '',
                 errorRepNewPass: '',
@@ -160,41 +163,56 @@ export default {
     },
     methods:{
         updateProfile: function () {
-            // First name i last name se u paru gledaju da li su popunjeni
-            // Ako su oba prazna u isto vreme ce za oba izbaciti error
-            if (this.profile.ime == '' && this.profile.prezime != '') {
+        //OSOBA
+            if  (this.isAgentType == "osoba" && this.profile.ime == '') {
                 this.messages.errorFirstName = `<h4>Polje ime ne moze biti prazno!</h4>`;
                 setTimeout(() => this.messages.errorFirstName = '', 5000);
             }
-            else if (this.profile.ime != '' && this.profile.prezime == '') {
+            else if (this.isAgentType == "osoba" && this.profile.prezime == '') {
                 this.messages.errorLastName = `<h4>Polje prezime ne moze biti prazno!</h4>`;
                 setTimeout(() => this.messages.errorLastName = '', 5000);
             }
-            else if (this.profile.ime == '' && this.profile.prezime == '') {
-                this.messages.errorFirstName = `<h4>Polje ime ne moze biti prazno!</h4>`;
-                this.messages.errorLastName = `<h4>Polje prezime ne moze biti prazno!</h4>`;
-                setTimeout(() => this.messages.errorFirstName = '', 5000);
-                setTimeout(() => this.messages.errorLastName = '', 5000);
-
+        //FIRMA
+            else if (this.isAgentType == "firma" && this.profile.nazivFirme == '') {
+                this.messages.errorCompanyName = `<h4>Polje naziv kompanije ne moze biti prazno!</h4>`;
+                setTimeout(() => this.messages.errorCompanyName = '', 5000);
             }
-           //Adresa
+            else if (this.isAgentType == "firma" && this.profile.poslovniMaticniBroj == '') {
+                this.messages.errorPIB = `<h4>Polje poslovni maticni broj kompanije ne moze biti prazno!</h4>`;
+                setTimeout(() => this.messages.errorPIB = '', 5000);
+            }
+            else if (this.isAgentType == "firma" && this.isNumeric(this.profile.poslovniMaticniBroj)) {
+                this.messages.errorCompanyName = `<h4>Poslovni maticni broj kompanije mora biti broj!</h4>`;
+                setTimeout(() => this.messages.errorCompanyName = '', 5000);
+            }
+        //ZA SVE
+        // //Email
+        //     else if (this.profile.email == '') {
+        //         this.messages.errorEmail = `<h4>Polje ime ne moze biti prazno!</h4>`;
+        //         setTimeout(() => this.messages.errorEmail = '', 5000);
+        //     }
+        //Adresa
             else if (this.profile.TAdresa.mesto == '') {
-                this.messages.errorAdresa = `<h4> Polje mesto u adresi agenta ne moze biti prazno!</h4>`;
-                setTimeout(() => this.errorAdresa = '', 5000);
+                this.messages.errorAddress = `<h4> Polje mesto u adresi agenta ne moze biti prazno!</h4>`;
+                setTimeout(() => this.errorAddress = '', 5000);
             }
             else if (this.profile.TAdresa.ulica == '') {
-                this.messages.errorAdresa = `<h4> Polje ulica u adresi agenta ne moze biti prazno!</h4>`;
-                setTimeout(() => this.errorAdresa = '', 5000);
+                this.messages.errorAddress = `<h4> Polje ulica u adresi agenta ne moze biti prazno!</h4>`;
+                setTimeout(() => this.errorAddress = '', 5000);
             }
             else if (this.profile.TAdresa.broj == '') {
-                this.messages.errorAdresa = `<h4> Polje broj u adresi agenta ne moze biti prazno!</h4>`;
-                setTimeout(() => this.errorAdresa = '', 5000);
+                this.messages.errorAddress = `<h4> Polje broj u adresi agenta ne moze biti prazno!</h4>`;
+                setTimeout(() => this.errorAddress = '', 5000);
             }
             else if (this.profile.TAdresa.postanskiBroj == '') {
-                this.messages.errorAdresa = `<h4> Polje postanski broj u adresi agenta ne moze biti prazno!</h4>`;
-                setTimeout(() => this.errorAdresa = '', 5000);
+                this.messages.errorAddress = `<h4> Polje postanski broj u adresi agenta ne moze biti prazno!</h4>`;
+                setTimeout(() => this.errorAddress = '', 5000);
             }
-            //Password check
+            else if (this.isNumeric(this.profile.TAdresa.postanskiBroj)) {
+                this.messages.errorAddress = `<h4> Postanski broj u adresi agenta mora biti broj!</h4>`;
+                setTimeout(() => this.errorAddress = '', 5000);
+            }
+        //Password check
             //Ako je unet old password, a nije uneto jedno od polja newPassword ili newPassword reapeat unosi se error
             else if (this.changedPassword.oldPassword !== '' && this.changedPassword.newPassword !== '' && this.changedPassword.newPasswordRepeat === '') {
                 this.messages.errorRepNewPass = `<h4>Morate ponoviti Vasu novu sifru!</h4>`;
@@ -246,17 +264,19 @@ export default {
                             this.getUserProfile();
 
                         })
-                            .catch(error => {
-                                if (error.response.status === 500 || error.response.status === 404) {
-                                    this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
-                                    setTimeout(() => this.messages.errorResponse = '', 5000);
-                                }
-                            });
+                        .catch(error => {
+                            if (error.response.status === 500 || error.response.status === 404) {
+                                this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                                setTimeout(() => this.messages.errorResponse = '', 5000);
+                            }
+                        });
 
                     }
                 }
             }
+        //Slanje
             else {
+                alert('Salje se agent na update!');
                 axios.put(`rest/profile/${this.user.username}`, this.profile).then(Response => {
                     this.messages.successResponse = `<h4>Your profile was edited successfully!</h4>`;
                     setTimeout(() => this.messages.successResponse = '', 5000);
@@ -273,9 +293,13 @@ export default {
             }
 		},
 		getUserProfile: function () {
-			axios.get(`profile/${this.user.username}`).then(Response => {
-				this.profile = Response.data;
-			})
+			// axios.get(`profile/${this.user.username}`).then(Response => {
+			// 	this.profile = Response.data;
+			// })
+        },
+        isNumeric(num) {
+            //isNaN(num) returns true if the variable does NOT contain a valid number
+            return isNaN(num);
         }
     },
     computed:{

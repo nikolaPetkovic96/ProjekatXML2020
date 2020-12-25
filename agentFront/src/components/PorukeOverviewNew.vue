@@ -10,7 +10,7 @@
             <div id='reservInfo'>
                 <div class="card-header">
                     <h4><b>Rezervisan od:{{rezervacija.username}}</b></h4>
-                    <h4><b>Termin rezervacije:</b> {{rezervacija.odDatuma}} - {{rezervacija.doDatuma}}</h4>
+                    <h4><b>Ukupna cena:{{rezervacija.ukupnaCena}}</b></h4>
                     <h4><b>Bundle:</b> {{rezervacija.bundle}}</h4>
                     <button v-if='!toShowMessage' class="btn btn-lg btn-outline-dark marg" v-on:click='toShowMessage = !toShowMessage'>Prikazi poruke</button>
                     <button v-if='toShowMessage' class="btn  btn-lg btn-outline-dark marg" v-on:click='toShowMessage = !toShowMessage'>Sakrij poruke</button>
@@ -19,14 +19,14 @@
             <div v-show='isThereMessages(rezervacija)' class="card-body">
                 <h3>Nema poruke za ovu rezervaciju...</h3>
             </div>
-            <div v-bind:key="oglas.id" v-for='oglas in rezervacija.oglasi'>
+            <div v-bind:key="narudzbenica.id" v-for='narudzbenica in rezervacija.narudzbenice'>
                 <div class="card-header">
-                    <h4><b>Automobil:</b> {{oglas.automobil.markaAut}} {{oglas.automobil.modelAut}} (marka/model)</h4>
-                    <h4><b>Klasa automobila:</b> {{oglas.automobil.klasaAut}}</h4>
-                   
+                    <h4><b>Automobil:</b> {{narudzbenica.oglas.automobil.markaAut}} {{narudzbenica.oglas.automobil.modelAut}} (marka/model)</h4>
+                    <h4><b>Klasa automobila:</b> {{narudzbenica.oglas.automobil.klasaAut}}</h4>
+                    <h4><b>Termin rezervacije:</b> {{narudzbenica.odDatuma}} - {{narudzbenica.doDatuma}}</h4>
                 </div>
                 
-                <div id='all-messages' v-show='toShowMessage' v-bind:key="poruka.id" v-for='poruka in filtriranePoruke(oglas.automobil)'>   
+                <div id='all-messages' v-show='toShowMessage' v-bind:key="poruka.id" v-for='poruka in filtriranePoruke(narudzbenica.oglas.automobil)'>   
                     <!--v-bind:class dinamcki dodeljuje klasu spram nekog uslova-->
                     <div class='shadow btn-lg' v-bind:class="{myMessage:isMyMessage(poruka), customerMessage:isCustomerMessage(poruka)}">
                         <div id='message-text'>
@@ -84,7 +84,7 @@ export default {
                 automobilId:null,
                 rezervacijaId:null,
                 tekstPoruke:'',
-                // commonData:{
+                // commonData:{ na beku?
                 //     userId:null,
                 //     datumKreiranja:'',
                 // }
@@ -95,87 +95,111 @@ export default {
                 successResponse: '',
             },
             //Iskoristiti ovo u rezervacijama!!!!!
-            rezervacija:
-            {
+            rezervacija:{
                 id:1,
-                odDatuma:'18.6.2020',
-                doDatuma:'25.7.2020',
                 ukupnaCena:6500,
                 statusRezervacije:'RESERVED',
                 username:'Happy User 2', //u rezervDTOu za korisnika koji je rezervisao oglas.
                 bundle:true,
-                //Oglase vratiti kao array jer ih moze biti vise u bundleu
+                //Narudzbenice vratiti kao array jer ih moze biti vise u bundleu
                 //iz svakog oglasa koji je vezan za rezervaciju izvlacimo automobil
                 //getAllAdsByReservId();
-                oglasi:[
+                narudzbenice:[
                     {
-                        //Oglas
                         id:1,
-                        odDatuma:'25.5.2020',
-                        doDatuma:'25.6.2020',
-                        lokacija:'9. Marta bb Novi Sad',
-                        TAdresa:{
-                            mesto:'',
-                            ulica:'',
-                            broj:'',
-                            postanskiBroj:'',
-                            longitude:'',
-                            latitude:'',
-                        },
-                        planiranaKilometraza:2000,
-                        //Oglas/Automobil
-                        automobil:{
-                            id:1,
-                            markaAut:'Audi',
-                            modelAut:'A6',
-                            klasaAut:'Gradski',
-                            // ...
-                        },
-                        //Oglas/Cenovnik
-                        cenovnik:{ 
-                            id:'1',
-                            cenaPoDanu:100,
-                            nazivCenovnika:'Cenovnik 1',
-                            popustZaPreko30Dana:'10%',
-                            cenaCollisionDamageWaiver:1000,
-                            cenaPoKilometru:10
-                        },
-                    },
-                    {
-                        //Oglas
-                        id:2,
                         odDatuma:'18.6.2020',
                         doDatuma:'25.7.2020',
-                        lokacija:'Ne znanog i znanog junaka bb Beograd',
-                        TAdresa:{
-                            mesto:'',
-                            ulica:'',
-                            broj:'',
-                            postanskiBroj:'',
-                            longitude:'',
-                            latitude:'',
-                        },
-                        planiranaKilometraza:2500,
-                       
-                        //Oglas/Automobil
-                        automobil:                
-                        {
-                            id:2,
-                            markaAut:'BMW',
-                            modelAut:'R5',
-                            klasaAut:'Gradski',
-                        },
-                        //Oglas/Cenovnik
-                        cenovnik:{ 
-                            id:'2',
-                            cenaPoDanu:200,
-                            nazivCenovnika:'Cenovnik 2',
-                            popustZaPreko30Dana:'20%',
-                            cenaCollisionDamageWaiver:null,
-                            cenaPoKilometru:20
+                        oglasId:1,
+                        userId:2,
+                        agentId:1, 
+                        oglas:{
+                            id:1,
+                            odDatuma:'25.5.2020',
+                            doDatuma:'25.6.2020',
+                            TAdresa:{
+                                mesto:'Novi Sad',
+                                ulica:'9. Marta',
+                                broj:'bb',
+                                postanskiBroj:'21000',
+                                longitude:'45',
+                                latitude:'54',
+                            },
+                            planiranaKilometraza:2000,
+                            agentId:1,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
+                            korisnickoIme:'This host',  //u DTOu za korisnika koji je kreirao oglas.
+                            //automobil
+                            automobil:{
+                                id:1,
+                                markaAut:'BMW',
+                                modelAut:'M5',
+                                klasaAut:'SUV',
+                                vrstaGoriva:'dizel',
+                                tipMenjaca:'manuelni',
+                                ukupnaOcena:5,
+                                brojSedistaZaDecu:1,
+                                predjenaKilometraza:5000,
+                                collisionDamageWaiver:true,
+                                images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
+                            },
+                            //cena    
+                            cenovnik:{
+                                id:'1',
+                                cenaPoDanu:100,
+                                nazivCenovnika:'Cenovnik 1',
+                                popustZaPreko30Dana:'10%',
+                                cenaCollisionDamageWaiver:1000,
+                                cenaPoKilometru:10
+                            },
                         },
                     },
-
+                
+                    {
+                        id:2,
+                        agentId:2,
+                        userId:5,
+                        oglasId:2,
+                        odDatuma:'25.6.2020',
+                        doDatuma:'10.7.2020',
+                        oglas:{
+                            id:2,
+                            odDatuma:'18.6.2020',
+                            doDatuma:'25.7.2020',
+                            TAdresa:{
+                                mesto:'Beograd',
+                                ulica:'Ne znanog i znanog junaka',
+                                broj:'bb',
+                                postanskiBroj:'11000',
+                                longitude:'21.23',
+                                latitude:'34.14',
+                            },
+                            planiranaKilometraza:2500,
+                            agentId:2,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
+                            korisnickoIme:'Other host', //u DTOu za korisnika koji je kreirao oglas.
+                            //Oglas/Automobil
+                            automobil:{
+                                id:2,
+                                markaAut:'Audi',
+                                modelAut:'A6',
+                                klasaAut:'Gradski',
+                                vrstaGoriva:'dizel',
+                                tipMenjaca:'manuelni',
+                                predjenaKilometraza:4500,
+                                ukupnaOcena:4.25,
+                                collisionDamageWaiver:true,
+                                brojSedistaZaDecu:1,
+                                images:['https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
+                            },
+                            //Oglas/Cenovnik
+                            cenovnik:{ 
+                                id:'2',
+                                cenaPoDanu:500,
+                                nazivCenovnika:'Cenovnik 2',
+                                popustZaPreko30Dana:'20%',
+                                cenaCollisionDamageWaiver:null,
+                                cenaPoKilometru:20
+                            },
+                        },
+                    },
                 ],
                 //getujemo poruke preko id rezervacije getAllMessagesByReservId();
                 poruke:[

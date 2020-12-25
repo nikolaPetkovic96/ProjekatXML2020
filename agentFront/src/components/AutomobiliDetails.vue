@@ -101,6 +101,8 @@
 </template>
 
 <script>
+import StarRating from 'vue-star-rating'
+
 export default {
     name: 'Car-details',
     data:function(){
@@ -191,6 +193,9 @@ export default {
 			}
 
 		}
+    },
+    components: {
+        'star-rating':StarRating
     },
     computed: {
         id() {

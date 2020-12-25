@@ -5,8 +5,8 @@ import LoginForm from '../src/forms/LoginForm'
 import RegForm from '../src/forms/RegForm'
 
 import Homepage from './components/Homepage'
-import UserProfile from './components/userProfile'
-import UserProfileUpdate from './components/userProfileUpdate'
+import UserProfile from './components/UsrAgentProfile'
+import UserProfileUpdate from './components/UsrAgentProfileUpdate'
 import Cenovnik from './components/Cenovnik'
 import CenovnikNew from './components/CenovnikNew'
 import CenovnikEdit from './components/CenovnikEdit'
@@ -21,13 +21,11 @@ import ReportNew from './components/IzvestajiNew'
 import Reservation from './components/Rezervacija'
 import ReservationNew from './components/RezervacijaNew'
 import ReservationDetails from './components/RezervacijaDetails'
+import ReservationAdsOverview from './components/RezervacijaOglasiOverview'
 import Ads from './components/Oglasi'
 import AdsNew from './components/OglasiNew'
 import Messages from './components/Poruke'
 import MessagesOvervieNew from './components/PorukeOverviewNew'
-
-import Test from './components/admin/AdminProfile'
-import TestCom from './components/admin/AdminProfileUpdate'
 
 export default [
     {
@@ -50,7 +48,6 @@ export default [
         name:'RegistrationForm',
         component:RegForm
     },
-
     {
         path:'/home',
         name:'Homepage',
@@ -97,15 +94,15 @@ export default [
         component:AutomobiliEdit
     },
     {
+        path:'/cars/:id/details',
+        name:'AutomobiliDetails',
+        component:AutomobiliDetails
+    },
+    {
         // path:'/cars/comments',
         path:'/carComments',
         name:'AutomobiliKomentar',
         component:AutomobiliComments
-    },
-    {
-        path:'/cars/:id/details',
-        name:'AutomobiliDetails',
-        component:AutomobiliDetails
     },
     { 
         path:'/carComments/:id/newComment',
@@ -127,6 +124,13 @@ export default [
         name:'RezervacijaDetails',
         component:ReservationDetails
     },
+    //pregled oglasa
+    {
+        path:'/reservation/ads_overview',
+        name:'RezervacijaOglasiOverview',
+        component:ReservationAdsOverview
+    },
+
     {
         path:'/ads/',
         name:'Oglasi',
@@ -137,9 +141,6 @@ export default [
         name:'AdsNew',
         component:AdsNew
     },
-
-// import Messages from './components/Poruke'
-// import MessagesNew from './components/PorukeNew'
     {
         path:'/messages',
         name:'Poruke',
@@ -160,22 +161,5 @@ export default [
         name:'IzvestajNew',
         component:ReportNew
     },
-
-   
-    {
-        path:'/adminTest/',
-        name:'Test',
-        component:Test
-    },
-    {
-        path:'/adminTest/profile/:id/update/',
-        name:'TestCom',
-        component:TestCom
-    },
-    // {
-    //     path:'/adminTest/comments/',
-    //     name:'TestCom',
-    //     component:TestCom
-    // },
     
 ]

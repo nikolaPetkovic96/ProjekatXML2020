@@ -7,97 +7,82 @@
         <div id='main' class='container'>
             <div id='carInfo'>
               <div class="card-header">
-                  <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
-                  <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
-                  <h4><b>Ocena:</b> {{automobil.ukupnaOcena}}</h4>
+                <h4><b class='effect-col'>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
+                <h4><b class='effect-col'>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
+                <h5><b class='effect-col'>Ocena:</b> {{automobil.ukupnaOcena}}</h5>
+                <h5><b class='effect-col'>Predjena kilometraža:</b> {{automobil.predjenaKilometraza}} km</h5>
               </div>
             </div>
-            <label for="">Od datuma</label>
-            <input type="date" v-model='noviOglas.odDatuma'>
-
-            <label for="">Do datuma</label>
-            <input type="date" v-model='noviOglas.doDatuma'>
-       
-            <!-- <div style="margin-top:20px" v-if='messages.errorDates' class="alert alert-danger" v-html="messages.errorDates"></div> -->
-            <!-- <label>Dates available</label>
+            <div style="margin-top:20px" v-if='messages.errorDates' class="alert alert-danger" v-html="messages.errorDates"></div>
             <div class="row">
               <div class="col">
+                <label for="">Od datuma</label>
                 <vuejsDatepicker placeholder="Select Checkin Date" v-model="dates.from" :highlighted="dates"
                   :disabled-dates="disabledDates">
                 </vuejsDatepicker>
               </div>
               <div class="col">
+                <label for="">Do datuma</label>
                 <vuejsDatepicker placeholder="Select Checkout Date" v-model="dates.to" :highlighted="dates"
                   :disabled-dates="disabledDates">
                 </vuejsDatepicker>
               </div>
-            </div> -->
-            <div id='cenovnik'>
-                <label>Cenovnik:</label>
-                <select style="padding:7px; margin-right: 10px" id='prices' v-model="odabran_cenovnik.nazivCenovnika">
-                    <option disabled value="">Cenovnici</option>
-                    <option v-on:click="addChoosenPrice()" v-bind:key="cenovnik.id" v-for='cenovnik in cenovnici'>{{cenovnik.nazivCenovnika}}</option>
-                </select>
-          
-                <table v-if='odabran_cenovnik.nazivCenovnika !== ""' id='showPriceTable'>
-                    <thead>
-                        <tr><b>Cenovnik sadrzi:</b></tr>
-                        <tr>
-                            <th>Naziv cenovnika</th>
-                            <th>Cena po danu</th>
-                            <th>Cena po kilometru</th>
-                            <th>CDW</th>
-                            <th>Popust preko 30 dana</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{odabran_cenovnik.nazivCenovnika}}</td>
-                            <td>{{odabran_cenovnik.cenaPoDanu}}</td>
-                            <td>{{odabran_cenovnik.cenaPoKilometru}}</td>
-                            <td>{{odabran_cenovnik.cenaCollisionDamageWaiver}}</td>
-                            <td>{{odabran_cenovnik.popustZaPreko30Dana}}</td>
-                        </tr>     
-                    </tbody>            
-                </table>
             </div>
-
-            <label for="">Planirana kilometraza</label>
-            <input class='half-size' type="text" placeholder="Unestie kilometrazu"
-            v-model='noviOglas.planiranaKilometraza'>
-
-            <!-- <div style="margin-top:20px" v-if='messages.errorLocation' class="alert alert-danger"
-              v-html="messages.errorLocation"></div> -->
-            <!-- <label>Lokacija</label> -->
-
-            <!-- Ako imamo lokaciju kao atribut -->
-            <!-- <label>Lokacija</label>
-            <input type="text" placeholder="ulica/broj/mesto" class='location' v-model='noviOglas.lokacija'> -->
- 
-            <!-- Ako imamo lokaciju kao klasu TAdresa-->
-            <label>Lokacija</label>
-            <input class='half-size' type="text" placeholder="Unestie geograf. sirinu..."
-              v-model='noviOglas.TAdresa.latitude'> -
-            <input class='half-size' type="text" placeholder="Unesite geograf. duzinu..."
-              v-model='noviOglas.TAdresa.longitude'>
-
-            <!-- <div style="margin-top:20px" v-if='messages.errorAddress' class="alert alert-danger"
-              v-html="messages.errorAddress"></div> -->
+            <div style="margin-top:20px" v-if='messages.errorPrice' class="alert alert-danger" v-html="messages.errorPrice"></div>
+            <div id='cenovnik'>
+              <label>Cenovnik:</label>
+              <select style="padding:7px; margin-right: 10px" id='prices' v-model="odabran_cenovnik.nazivCenovnika">
+                <option disabled value="">Cenovnici</option>
+                <option v-on:click="addChoosenPrice()" v-bind:key="cenovnik.id" v-for='cenovnik in cenovnici'>{{cenovnik.nazivCenovnika}}</option>
+              </select>
+        
+              <table v-if='odabran_cenovnik.nazivCenovnika !== ""' id='showPriceTable'>
+                  <thead>
+                    <tr><b>Cenovnik sadrzi:</b></tr>
+                    <tr>
+                      <th>Naziv cenovnika</th>
+                      <th>Cena po danu</th>
+                      <th>Cena po kilometru</th>
+                      <th>CDW</th>
+                      <th>Popust preko 30 dana</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{odabran_cenovnik.nazivCenovnika}}</td>
+                      <td>{{odabran_cenovnik.cenaPoDanu}}</td>
+                      <td>{{odabran_cenovnik.cenaPoKilometru}}</td>
+                      <td>{{odabran_cenovnik.cenaCollisionDamageWaiver}}</td>
+                      <td>{{odabran_cenovnik.popustZaPreko30Dana}}</td>
+                    </tr>     
+                  </tbody>            
+              </table>
+            </div>          
+          
+            <div style="margin-top:20px" v-if='messages.errorPlannedCm' class="alert alert-danger" v-html="messages.errorPlannedCm"></div>
+            <label for="">Planirana kilometraža</label>
+            <p><i>(Ukoliko dati oglas nema planiranu kilometražu unesite vrednost 0)</i></p>
+            <input class='half-size' type="text" placeholder="Unestie kilometrazu" v-model='noviOglas.planiranaKilometraza'>
+           
+            <div style="margin-top:20px" v-if='messages.errorAddress' class="alert alert-danger" v-html="messages.errorAddress"></div>
             <label>Adresa</label>
             <div>
-              <input class="one-forth" placeholder="Unesite grad..." v-model='noviOglas.TAdresa.mesto'>
+              <input class="one-forth" placeholder="Unesite mesto..." v-model='noviOglas.TAdresa.mesto'>
               <input class="one-forth" placeholder="Unesite ulicu..." v-model='noviOglas.TAdresa.ulica'>
               <input class="one-forth" placeholder="Unesite broj..." v-model='noviOglas.TAdresa.broj'>
               <input class="one-forth" placeholder="Unesite postanski broj..." v-model='noviOglas.TAdresa.postanskiBroj'>
 			      </div>
 
-            <button class='btn btn-success shadow'>Potvrdi</button>
+            <!-- <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
+            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div> -->
+            <button class='btn btn-success shadow' v-on:click='newAd()'>Potvrdi</button>
             <button class='btn btn-danger shadow' v-on:click='cancelNew()'>Odustani</button>
         </div>
   </div>
 </template>
 
 <script>
+import Datepicker from 'vuejs-datepicker'
 export default {
     name: 'Ads-new',
     data:function(){
@@ -106,74 +91,29 @@ export default {
             odDatuma:null,
             doDatuma:null,
             // lokacija:'',
-            planiranaKilometraza:null,
+            planiranaKilometraza:'',
             automobilId:null,
             cenaId:null,
             TAdresa:{
-              mest:'',
+              mesto:'',
               ulica:'',
               broj:'',
               postanskiBroj:'',
-              longitude:'',
-              latitude:'',
             }
           },
 
           //Za prikaz podataka o automobilu napraviti ovakav DTO na beku
-          automobil:[
-            {
-              id:'1',
-              markaAut:'BMW',
-              modelAut:'M5',
-              klasaAut:'SUV',
-              tipMenjaca:'automatik',
-              vrstaGoriva:'dizel',
-              ukupnaOcena:5, //ovo treba dodati u automobil
-              brojSedistaZaDecu:3,
-              predjenaKilometraza:500,
-              collisionDamageWaiver: true,
-              
-            },
-            // {
-            //   id:'2',
-            //   markaAut:'Mercedes',
-            //   modelAut:'R8',
-            //   klasaAut:'Old Tajmer',
-            //   tipMenjaca:'manuelni',
-            //   vrstaGoriva:'gorivo',
-            //   ukupnaOcena:4, //ovo treba dodati u automobil
-            //   brojSedistaZaDecu:3,
-            //   predjenaKilometraza:800,
-            //   collisionDamageWaiver: true,
-              
-            // },
-            // {
-            //   id:'3',
-            //   markaAut:'Audi',
-            //   modelAut:'A6',
-            //   klasaAut:'Gradski auto',
-            //   tipMenjaca:'manuelni',
-            //   vrstaGoriva:'evro-dizel',
-            //   ukupnaOcena:5, //ovo treba dodati u automobil
-            //   brojSedistaZaDecu:3,
-            //   collisionDamageWaiver: true,
-            //   predjenaKilometraza:650,
-              
-            // }
-          ],
-
-          //nije iskoristeno
-          odabran_auto:{
-            id:null,
-            markaAut:'',
-            modelAut:'',
-            klasaAut:'',
-            tipMenjaca:'',
-            vrstaGoriva:'',
-            predjenaKilometraza:null,
-            brojSedistaZaDecu:null,
-            collisionDamageWaiver:null,
-            ukupnaOcena:null, //ovo treba dodati u automobil
+          automobil:{
+            id:'1',
+            markaAut:'BMW',
+            modelAut:'M5',
+            klasaAut:'SUV',
+            tipMenjaca:'automatik',
+            vrstaGoriva:'dizel',
+            ukupnaOcena:5, //ovo treba dodati u automobil
+            brojSedistaZaDecu:3,
+            predjenaKilometraza:500,
+            collisionDamageWaiver: true,
           },
 
           //lista svih cenovnika koji se getuju prilikom kreiranja stranice;
@@ -222,13 +162,22 @@ export default {
 
           //Za prikaz podataka o cenovniku
           odabran_cenovnik:{
-              id:null,
-              cenaPoDanu:null,
-              nazivCenovnika:'',
-              popustZaPreko30Dana:null,
-              cenaCollisionDamageWaiver:null,
-              cenaPoKilometru:null
+            id:null,
+            cenaPoDanu:null,
+            nazivCenovnika:'',
+            popustZaPreko30Dana:null,
+            cenaCollisionDamageWaiver:null,
+            cenaPoKilometru:null
           },
+
+          messages: {
+            errorAddress: '',
+            errorPrice: '',
+            errorPlannedCm: '',
+            errorDates: '',
+            errorResponse: '',
+            successResponse: '',
+			    },
 
           dates: {
             from: null,
@@ -238,22 +187,110 @@ export default {
           disabledDates: {
             to: null
           },
+
         }
     },
     methods:{
+      newAd:function(){
+        if (this.dates.from == null) {
+          this.messages.errorDates = `<h4>Morate odabrati početni termin oglasa!</h4>`;
+          setTimeout(() => this.messages.errorDates = '', 5000);
+			  }
+        else if (this.dates.to == null) {
+          this.messages.errorDates = `<h4>Morate odabrati krajnji termin oglasa!</h4>`;
+          setTimeout(() => this.messages.errorDates = '', 5000);
+        }
+
+        else if (this.dates.from > this.dates.to) {
+          this.messages.errorDates = `<h4>Krajnji termin mora biti veći od početnog!</h4>`;
+          setTimeout(() => this.messages.errorDates = '', 5000);
+        }
+        else if (this.odabran_cenovnik.id == null) {
+          this.messages.errorPrice = `<h4>Morate odabrati cenovnik za oglas!</h4>`;
+          setTimeout(() => this.messages.errorPrice = '', 5000);
+        }
+        else if (this.noviOglas.planiranaKilometraza == '') {
+          this.messages.errorPlannedCm = `<h4>Morate uneti planiranu kilometražu! </h4>`;
+          setTimeout(() => this.messages.errorPlannedCm = '', 5000);
+        }
+        //Provera da li je planirana km broj
+        else if (this.isNumeric(this.noviOglas.planiranaKilometraza)) {
+          this.messages.errorPlannedCm = `<h4>Planirana kilometraža mora biti broj!</h4>`;
+          setTimeout(() => this.messages.errorPlannedCm = '', 5000);
+        }
+        //Apartment address
+        else if (this.noviOglas.TAdresa.mesto == '') {
+          this.messages.errorAddress = `<h4>Polje mesto adrese ne sme biti prazno!</h4>`;
+          setTimeout(() => this.messages.errorAddress = '', 5000);
+        }
+        else if (this.noviOglas.TAdresa.ulica == '') {
+          this.messages.errorAddress = `<h4>Polje ulica adrese ne sme biti prazno!</h4>`;
+          setTimeout(() => this.messages.errorAddress = '', 5000);
+        }
+        else if (this.noviOglas.TAdresa.broj == '') {
+          this.messages.errorAddress = `<h4>Polje broj adrese ne sme biti prazno!</h4>`;
+          setTimeout(() => this.messages.errorAddress = '', 5000);
+        }
+        else if (this.noviOglas.TAdresa.postanskiBroj == '') {
+          this.messages.errorAddress = `<h4>Polje poštanski broj adrese ne sme biti prazno!</h4>`;
+          setTimeout(() => this.messages.errorAddress = '', 5000);
+        }
+         else if (this.isNumeric(this.noviOglas.TAdresa.postanskiBroj)) {
+          this.messages.errorAddress = `<h4>Poštanski broj adrese mora biti broj!</h4>`;
+          setTimeout(() => this.messages.errorAddress = '', 5000);
+        }
+        else {
+          this.noviOglas.cenaId = this.odabran_cenovnik.id
+          // unselected dates will be disabled
+          this.noviOglas.odDatuma = this.dates.from.getTime();
+          this.noviOglas.doDatuma = this.dates.to.getTime();
+          //Obrisati
+          console.log(`Novi oglas:
+            odDatuma: ${this.noviOglas.odDatuma},
+            doDatuma: ${this.noviOglas.doDatuma},
+            cenaId: ${this.noviOglas.cenaId},
+            automobilId: ${this.noviOglas.automobilId},
+            planiranaKilometraza: ${this.noviOglas.planiranaKilometraza},
+            Adresa: ${this.noviOglas.TAdresa.mesto} ${this.noviOglas.TAdresa.ulica} ${this.noviOglas.TAdresa.broj} ${this.noviOglas.TAdresa.postanskiBroj},
+          `);
+        }
+      },
+
+      cancelNew:function(){
+        this.$router.push('/cars');
+      },
+
       addChoosenPrice:function(){
         for(let i = 0; i < this.cenovnici.length; i++){
-          console.log(this.cenovnici[i].nazivCenovnika);
           if(this.odabran_cenovnik.nazivCenovnika === this.cenovnici[i].nazivCenovnika){
-              this.odabran_cenovnik.id = this.cenovnici[i].id;
-              this.odabran_cenovnik.cenaPoDanu = this.cenovnici[i].cenaPoDanu;
-              this.odabran_cenovnik.popustZaPreko30Dana = this.cenovnici[i].popustZaPreko30Dana;
-              this.odabran_cenovnik.cenaCollisionDamageWaiver = this.cenovnici[i].cenaCollisionDamageWaiver;
-              this.odabran_cenovnik.cenaPoKilometru = this.cenovnici[i].cenaPoKilometru;
-              this.calculatePriceAndDate();
+            this.odabran_cenovnik.id = this.cenovnici[i].id;
+            this.odabran_cenovnik.cenaPoDanu = this.cenovnici[i].cenaPoDanu;
+            this.odabran_cenovnik.popustZaPreko30Dana = this.cenovnici[i].popustZaPreko30Dana;
+            this.odabran_cenovnik.cenaCollisionDamageWaiver = this.cenovnici[i].cenaCollisionDamageWaiver;
+            this.odabran_cenovnik.cenaPoKilometru = this.cenovnici[i].cenaPoKilometru;
           }
         }
       },
+      isNumeric(num) {
+        //isNaN(num) returns true if the variable does NOT contain a valid number
+        return isNaN(num);
+		  }
+    },
+    components: {
+		  vuejsDatepicker:Datepicker,
+    },
+    computed:{
+      id(){
+        return this.$route.params.id; //preuzimam id automobila za koji zelim da napravim rezervaciju.
+      }
+    },
+    mounted() {
+      //Preuzet id automobila iz urla se smesta u oglas.
+      this.noviOglas.automobilId = this.id;
+      //Da se podesi da su dostupni termini od danasnjeg datuma ka buducnosti...
+      let to = new Date();
+      to.setDate(to.getDate() - 1);
+      this.disabledDates.to = to;
     }
 }
 </script>
@@ -310,5 +347,16 @@ export default {
 
 #showPriceTable thead th{
     padding-right:15px;
+}
+
+.effect-col{
+  color:#35424a;
+}
+
+.radio-effect{
+  margin-top:15px;
+  margin-bottom:15px;
+  font-size: 20px;
+  color:#35424a;
 }
 </style>

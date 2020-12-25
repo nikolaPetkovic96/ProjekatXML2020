@@ -17,7 +17,6 @@
                        
                         <div style='display:inline;' v-show='isSearch' id="advanced_search">
                            
-                            
                             <div id='second-row' class="row"  style="margin-top:5px;">
                                 <span class="col-xl-2 col-md-6 mb-1">
                                     <button style='margin-right:5px;' class='btn btn-outline-primary my-2 my-sm-0' v-on:click="resetFilter()">Reset all</button>
@@ -113,7 +112,7 @@
                             <img v-if='currentSortDir == "desc"  && currentSort== "predjenaKilometraza"' src='../assets/down-arrow1.1.png'>
                         </th>
                         <th>Detalji</th>
-                        <th>Reservisi</th>
+                        <!-- <th>Reservisi</th> -->
                         <th>Oglas</th>
                         <th>Uredi</th>
                         <th>Ukloni</th>
@@ -127,7 +126,7 @@
                         <td>{{automobil.ukupnaOcena}}</td>
                         <td>{{automobil.predjenaKilometraza}}</td>
                         <td><button class=" btn-sm btn-outline-primary" v-on:click='showDetails(automobil.id)'> Detalji </button></td>
-                        <td><button class=" btn-sm btn-outline-primary" v-on:click='makeReseravation(automobil.id)'> Reservisi </button></td>
+                        <!-- <td><button class=" btn-sm btn-outline-primary" v-on:click='makeReseravation(automobil.id)'> Reservisi </button></td> -->
                         <td><button class=" btn-sm btn-outline-primary" v-on:click='makeAd(automobil.id)'> Oglas </button></td>
                         <td><button class="btn-sm btn-outline-primary" v-on:click='editCar(automobil.id)'> Uredi </button></td><!--Delete mozda moze i preko edita da na toj str. bude jedno dugme-->
                         <td> <button class="btn btn-sm btn-danger" v-on:click='deleteCar(automobil.id)'> Ukloni </button></td>
@@ -237,7 +236,7 @@ export default {
             this.$router.push(`/cars/${id}/edit`);
         },
 
-        
+        //obrisati
         makeReseravation:function(id){
             // alert(`Za automobil id ${id} ce biti napravljena rezervacija!`);
             this.$router.push(`/cars/${id}/reservation`);

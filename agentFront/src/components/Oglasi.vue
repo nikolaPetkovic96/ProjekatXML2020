@@ -53,7 +53,6 @@ export default {
                     id:1,
                     odDatuma:'25.5.2020',
                     doDatuma:'25.6.2020',
-                    lokacija:'9. Marta bb Novi Sad',
                     TAdresa:{
                         mesto:'Novi Sad',
                         ulica:'9. Marta',
@@ -76,7 +75,6 @@ export default {
                         brojSedistaZaDecu:1,
                         predjenaKilometraza:5000,
                         collisionDamageWaiver:true,
-                    
                     },
                     //cena    
                     cenovnik:{
@@ -93,14 +91,11 @@ export default {
                     id:2,
                     odDatuma:'18.6.2020',
                     doDatuma:'25.7.2020',
-                    lokacija:'Ne znanog i znanog junaka bb Beograd',
                     TAdresa:{
                         mesto:'Beograd',
                         ulica:'Ne znanog i znanog junaka',
                         broj:'bb',
                         postanskiBroj:'11000',
-                        longitude:'21.23',
-                        latitude:'34.14',
                     },
                     planiranaKilometraza:2500,
                     username:'This host', //u DTOu za korisnika koji je kreirao oglas.
@@ -132,14 +127,11 @@ export default {
                     id:3,
                     odDatuma:'25.5.2020',
                     doDatuma:'15.6.2020',
-                    lokacija:'19. Juna 45 Novi Sad',
                     TAdresa:{
                         mesto:'Novi Sad',
                         ulica:'19. Juna',
                         broj:'45',
                         postanskiBroj:'11000',
-                        longitude:'12',
-                        latitude:'21',
                     },
                     planiranaKilometraza:3000,
                     username:'This host', //u DTOu za korisnika koji je kreirao oglas.
@@ -170,7 +162,7 @@ export default {
     },
     methods:{
       deleteAds:function(id){
-          alert(`Oglas ${id} ce biti obrisan `);
+        alert(`Oglas ${id} ce biti obrisan `);
       }
     }
 }
@@ -178,31 +170,7 @@ export default {
 
 <style scoped>
     #titleEffect{
-    color:gold;
-    font-weight: bold;
+        color:gold;
+        font-weight: bold;
     }
 </style>
-
-/*
-oglasi:[
-    {
-        id:1,
-        odDatuma:'25.5.2020',
-        doDatuma:'25.6.2020',
-        automobil:{
-            id:'1',
-            markaAut:'BMW',
-            modelAut:'M5',
-            klasaAut:'SUV',
-            ocena:5,
-            cena:2500,
-        predjenaKilometraza:500,
-        },
-        cenovnik:{
-            id:1,
-            cenaPoDanu:1500,
-            nazivCenovnika:'Dnevni cenovnik',
-            cenaPoKilometru:2500, //Ako je ima
-        }
-    }
-]*/ 

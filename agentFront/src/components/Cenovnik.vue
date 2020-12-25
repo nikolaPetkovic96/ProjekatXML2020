@@ -43,9 +43,6 @@ export default {
                 role: ''
             },
 
-            isAdmin: false,
-            isHost: false,
-            isGuest: false,
             cenovnici:[
                {
                     id:'1',

@@ -9,7 +9,7 @@
             <div class="card-header">
                 <h4><b>Automobil:</b> {{odabraniOglas.automobil.markaAut}} {{odabraniOglas.automobil.modelAut}} (marka/model)</h4>
                 <h4><b>Klasa automobila:</b> {{odabraniOglas.automobil.klasaAut}}</h4>
-                <h5><b>Ocena: </b>{{odabraniOglas.automobil.ukupnaOcena}}</h5>
+                <h5><b>Interval u kojem je automobil dostupan:</b> {{odabraniOglas.odDatuma}} - {{odabraniOglas.doDatuma}} </h5>
             </div>
         </div>
 
@@ -93,17 +93,11 @@ export default {
                 //commonDataId: u oba
                 //NarudzbenicaId: u rezervaciju
             },
-            
-            terminOglasa:{
-                odDatuma:null,
-                doDatuma:null,
-            },
-            
             odabraniOglas:{
                 //oglas
                 id:1,
-                odDatuma:1607003400000, //3 dec
-                doDatuma:1609077000000, //27 dec
+                odDatuma:1604323680000, //2 nov
+                doDatuma:1604496240000, //30 nov
                 lokacija:'9. Marta bb Novi Sad',
                 TAdresa:{
                     mesto:'Novi Sad',
@@ -117,12 +111,12 @@ export default {
                 username:'This host', //u DTOu za korisnika koji je kreirao oglas.
                 zauzetiTermini:[
                     {
-                        from:1607004000000, //4 dec
-                        to: 1607263200000, // 6 dec
+                        from: 1604496540000, //4 nov
+                        to: 1604669340000, // 6 nov
                     },
                     {
-                        from: 1607609580000, //10 dec
-                        to: 1608041580000, // 15 dec
+                        from: 1605015000000, //10 nov
+                        to: 1605447000000, // 15 nov
                     }
                 ],
                 //automobil
@@ -191,11 +185,9 @@ export default {
         //Sluzi da se iz oglasa izvuce interval od kada do kada oglas vazi,
         //Kao i zauzeti podintervali, tako sto se uzima od do datum svih rezervacija(narudzbenica) vezanih za taj oglas.  
         setAd: function (data) {
-            this.odabraniOglas = data;
-            //Moraju da se obrnu datumi jer tako datapicker ogranicava intervale 
-            //Sve pre pocetnog datuma i sve nakon zavrsnog datuma 
-			this.disabledDates.to = new Date(this.odabraniOglas.odDatuma - 1000 * 60 * 60 * 24);
-            this.disabledDates.from = new Date(this.odabraniOglas.doDatuma);
+			this.odabraniOglas = data;
+			this.disabledDates.to = new Date(this.odabraniOglas.doDatuma - 1000 * 60 * 60 * 24);
+			this.disabledDates.from = new Date(this.odabraniOglas.odDatuma);
 
 			let today = new Date();
 			if (this.disabledDates.to < today) {
@@ -206,7 +198,7 @@ export default {
 			this.insertReservData();
 
 			if (this.odabraniOglas.zauzetiTermini != null) {
-				for (let i = 0; i < this.odabraniOglas.zauzetiTermini.length; i++) {
+				for (let i = 0; i < this.odabraniOglast.zauzetiTermini.length; i++) {
 					let available = {
 						from: new Date(this.odabraniOglas.zauzetiTermini[i].from),
 						to: new Date(this.odabraniOglas.zauzetiTermini[i].to + 1000 * 60 * 60 * 24)
@@ -216,32 +208,14 @@ export default {
 			}
 		},
 
+
         makeReservation(){
-            //Provera da li je odabrani interval usao u neki nedostupni/rezervisani podinterval
-            for (let i = 0; i < this.disabledDates.ranges.length; i++) {
-				if (this.dates.from <= this.disabledDates.ranges[i].from && this.dates.to > this.disabledDates.ranges[i].from) {
-					this.error = true;
-				}
-            }
-            //Provera da je unet pocetni interval
+           
             if(this.rezervacijaOglasDTO.odDatuma == null){
                 this.messages.errorDates = `<h4>Morate odabrati početni termin rezervacije!</h4>`;
                 setTimeout(() => this.messages.errorDates = '', 5000);
             }
-
-            //Provera da li je unet datum zbog potencijanlog baga je this.dated.from = new Date datum koji je van opsega
-			// if (this.dates.to == null) {
-			// 	this.messages.errorDates = `<h4>Reservation checkout date can't be empty!</h4>`;
-			// 	setTimeout(() => this.messages.errorDates = '', 10000);
-			// }
-
-            //Ako je datum unet provera da li izlazi van okvira oglasa.
-			else if (this.dates.to >= this.disabledDates.from || this.error) {
-				this.messages.errorDates = `<h4>Odabrani interval nije dostupan!</h4>`;
-				setTimeout(() => this.messages.errorDates = '', 10000);
-			}
             else{
-                this.rezervacijaOglasDTO.odDatuma = this.dates.from; //nije potrebno
                 this.rezervacijaOglasDTO.doDatuma = this.dates.to;
                 //OBRISATI POSLE
                 console.log(`Rezervacija koju saljem: 
@@ -286,8 +260,8 @@ export default {
 			this.dates.to = new Date(this.dates.from.getTime() + this.odabran_br_dana * 1000 * 60 * 60 * 24);
             this.error = false;
 
-            console.log('VREME NARUDZB OD: ' + this.dates.from.getTime());
-            console.log('VREME NARUDZB DO: ' + this.dates.to.getTime());
+            console.log('VREME OD: ' + this.dates.from.getTime());
+            console.log('VREME DO: ' + this.dates.to.getTime());
 
         },
 
@@ -299,7 +273,7 @@ export default {
 			// this.manuelnaRezervacija.userId = this.user.id iz cookia; ovo moze i na beku da se odradi 
 
 			// dodaje se u rezervaciju inicijalni broj dana koji je uvek bar 1
-            this.odabran_br_dana = 1;
+			this.odabran_br_dana = 1;
 
 			// dodaje se u rezervaciju cene rezervacije spram cene_po_danu * broj_dana kao i krajnji datum(odDatuma + br_dana);
 			this.calculatePriceAndDate();
@@ -316,7 +290,7 @@ export default {
 	created() {
         // za sada se ovde poziva, kasnije kada getujemo reklamu
         // ce se pozvati iz setAd metode u mounted fazi...
-        // this.insertReservData(); 
+        this.insertReservData(); 
     
         // Ako je prazan token znaci da user nije ulogovan pa se preusmerava na login stranicu.
 		// if (!localStorage.getItem('jwt'))
@@ -326,7 +300,7 @@ export default {
 	mounted() {
 		//dodaje se opseg dana za izbor trajanja iznajmljivanja
 		this.br_dana = this.range(1, 28);
-        this.setAd(this.odabraniOglas);
+
 		// axios
 		// 	.get('rest/ad/' + this.$route.params.id)
 		// 	.then(Response => (this.setAd(Response.data)));
