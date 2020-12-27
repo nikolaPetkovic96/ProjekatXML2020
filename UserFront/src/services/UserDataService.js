@@ -22,6 +22,14 @@ class UserDataService{
     searchCarsFiltered(filtered){
         return axios.post(`${API_URL}/searchCars`, filtered)
     }
+     //Oglasi.vue
+     getAllUsersOglas(){
+        return axios.get(`${API_URL}/oglas/user`)
+    }
+    //IZVESTAJ
+    addIzvestaj(izvestaj){
+        return axios.post(`${API_URL}/izvestajAgent/`, izvestaj);
+    }
 }
 
 export default new UserDataService();
