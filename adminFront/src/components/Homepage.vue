@@ -104,10 +104,24 @@ export default {
         }
     },
     methods:{
+        parseJwt:function(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
 
+            return JSON.parse(jsonPayload);
+        },
     },
     created(){
-     
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            let parsToken = this.parseJwt(localStorage.getItem('token'));
+            localStorage.setItem('parsToken', JSON.stringify(parsToken));
+            this.user.username = parsToken.sub;
+        }
     },
 }
 </script>

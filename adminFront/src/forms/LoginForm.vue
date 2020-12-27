@@ -27,7 +27,7 @@
                     </div>
 
                     <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" v-on:click='submition()'>
-                      <router-link to='/pocetnaStranica' class="nav-link colWh" exact>Sign in</router-link>
+                      Sign in
                     </button>
                     <div class="text-center">
                     
@@ -66,53 +66,36 @@ export default {
       }
     },
     methods: {
-      submition: function () {
+      submition:function() {
         console.log(this.username);
-
-        AdminDataService.agentLoginUser({
+        console.log(this.password);
+        AdminDataService.adminLoginUser({
           username:this.username,
           password:this.password,
-         }).then(response => {
-            if(response.status === 200 ){
-              this.token = response.data;
-              axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
-              localStorage.setItem('token', JSON.stringify(this.token))
-              this.proveriUlogu(this.token);
-
-              //Kad se uloguje bacim ivent (emitujem da je doslo do promene)
-              bus.$emit('loggedIn',true);
-              //korisnickoIme = this.username;
-            }           
-          }).catch(error => {
-            if(error.response.status === 500  && error.response.data.message==='User is disabled'){
-              this.errorMessage = `<h4>Niste potvrdili registraciju putem mejla!</h4>`;
-
-              setTimeout(()=>this.errorMessage='',3000);
-            }
-            else if(error.response.status === 500  && error.response.data.message==='Bad credentials'){
-              this.errorMessage = `<h4>Username ili password su pogresno uneti!</h4>`;
-              
-              setTimeout(()=>this.errorMessage='',3000);
-            }
-          });
-        },
-
-
-      proveriUlogu: function(token) {
-        if (token.role == "korisnik") {
-          this.$router.push('korisnik')
-        } else if (token.role  == "admin") {
-          this.$router.push('admin')
-        }else if (token.role == "agent"){
-          this.$router.push('agent')
-        }
-      }
+        }).then(response => {
+          if(response.status === 200 ){
+            console.log("Status 200");
+            this.token = response.data;
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
+            localStorage.setItem('token', JSON.stringify(this.token))
+            
+            //Kad se uloguje bacim ivent (emitujem da je doslo do promene)
+            bus.$emit('loggedIn',true);
+            this.$router.push('/home');
+          }           
+        }).catch(error => {
+          if(error.response.status === 500  && error.response.data.message==='Bad credentials'){
+            this.errorMessage = `<h4>Username ili password su pogresno uneti!</h4>`;
+            
+            setTimeout(()=>this.errorMessage='',3000);
+          }
+        });
+      },
     },
     computed:{
         
     },
     created(){
-     
       //preuzimam id klinike na cijoj sam profilnoj stranici:
       if(this.$route.query.token) {
         this.generatedCode = this.$route.query.token;
@@ -139,12 +122,6 @@ export default {
 .image {
   min-height: 100vh;
 }
-
-/* .bg-image {
-  background-image: url('../assets/login.jpg');
-  background-size: cover;
-  background-position: center;
-} */
 
 .login-heading {
   font-weight: 300;

@@ -5,7 +5,7 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
         <!-- ❏ Blokirati, aktivirati i uklanjati iz sistema obične korisnike.
-        ❏ Defisati permisije za svakog korisnika pojedinačno (npr. administrator može
+        ❏ Definisati permisije za svakog korisnika pojedinačno (npr. administrator može
         onemogućiti kreiranje rezervacija od strane nekog korisnika koji je mnogo puta
         otkazivao). -->
         <div class="container" id='main'>
@@ -15,6 +15,7 @@
                         <th>Username</th>
                         <th>Ime</th>
                         <th>Prezime</th>
+                        <th>Pol</th>
                         <th>Adresa</th>
                         <th>Status</th>
                         <th>Promeni status</th>
@@ -28,7 +29,7 @@
                         <td>{{korisnik.ime}}</td>
                         <td>{{korisnik.prezime}}</td>
                         <td>{{korisnik.pol}}</td>
-                        <td>{{korisnik.TAdresa.Mesto}} {{korisnik.TAdresa.ulica}} {{korisnik.TAdresa.broj}}</td>
+                        <td>{{korisnik.tadresa.mesto}} {{korisnik.tadresa.ulica}} {{korisnik.tadresa.broj}}</td>
                         <td>{{korisnik.status}}</td>
                         <td>
                             <a href="#edit-amenity"><button v-if='korisnik.status=="aktivan"'  class=" btn-sm btn-outline-primary" v-on:click='activateUser(korisnik.id)'> blokiraj </button></a>
@@ -96,6 +97,7 @@
 </template>
 
 <script>
+import adminDataService from '../services/AdminDataService'
 export default {
     name:'Korisnici',
     data:function(){
@@ -117,67 +119,18 @@ export default {
                 poruke:null,
                 rezervacija:null,
             },
-            korisnici:[
-                {
-                    id:1,
-                    korisnickoIme:'PeraMaXX',
-                    ime:'Pera',
-                    prezime:'Petrovic',
-                    status:'aktivan',
-                    pol:'Muski',
-                    TAdresa:{
-                        mesto:'Ruma',
-                        ulica:'8. Marta',
-                        broj:'25',
-                        postanskiBroj:'',
-                    },
-                },
-                {
-                    id:2,
-                    korisnickoIme:'ZareMaXX',
-                    ime:'Zarko',
-                    prezime:'Zarkovic',
-                    status:'aktivan',
-                    pol:'Muski',
-                    TAdresa:{
-                        mesto:'Novi Sad',
-                        ulica:'Glavni bulevar',
-                        broj:'bb',
-                        postanskiBroj:'',
-                    },
-                },
-                {
-                    id:3,
-                    korisnickoIme:'AnaCarica',
-                    ime:'Ana',
-                    prezime:'Anovic',
-                    status:'aktivan',
-                    pol:'Zenski',
-                    TAdresa:{
-                        mesto:'Beograd',
-                        ulica:'9. Maja',
-                        broj:'12',
-                        postanskiBroj:'',
-                    },
-                },
-                {
-                    id:4,
-                    korisnickoIme:'NeaktivnaCarica',
-                    ime:'Neaktivna',
-                    prezime:'Neaktivnovic',
-                    status:'blokiran',
-                    pol:'Zenski',
-                    TAdresa:{
-                        mesto:'Beograd',
-                        ulica:'9. Maja',
-                        broj:'12',
-                        postanskiBroj:'',
-                    },
-                },
-            ]
+            korisnici:[],
         }
     },
     methods:{
+        getAllUsers:function(){
+            console.log("Usao u getAllUsers!");
+            adminDataService.getAllUsers().then(response => {
+                console.log("response: " + response.data);
+                this.korisnici = response.data;
+                console.log(JSON.stringify(this.korisnici));
+            });
+        },
         activateUser:function(id){
             alert(`Status usera sa id:${id} ce biti postavljen na aktivan!`);
         },
@@ -208,11 +161,15 @@ export default {
         closePermission:function(){
             this.isChangePermision = false;
             //ovo preurediti prilikom povezivanja fronta i beka
-            //Mozd prilikom cancela samo da se refreshuje stranica, tako bi se vratile stare permisije...
+            //Mozda prilikom cancela samo da se refreshuje stranica, tako bi se vratile stare permisije...
             this.permisije.komentari = this.beckupPermisije.komentari;
             this.permisije.poruke = this.beckupPermisije.poruke;
             this.permisije.rezervacija = this.beckupPermisije.rezervacija;
         },
+    },
+    created(){
+        console.log('Created!');
+        this.getAllUsers();
     }
 }
 </script>

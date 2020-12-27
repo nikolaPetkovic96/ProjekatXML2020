@@ -34,8 +34,8 @@
 
                     <li class="list-group-item">
                         <h5 class="header5">Adresa</h5>
-                        <h4>{{profile.TAdresa.ulica}} {{profile.TAdresa.broj}} (ulica/broj)</h4>
-                        <h6>{{profile.TAdresa.postanskiBroj}} {{profile.TAdresa.mesto}} (post_br/grad)</h6>
+                        <h4>{{profile.tadresa.ulica}} {{profile.tadresa.broj}} (ulica/broj)</h4>
+                        <h6>{{profile.tadresa.postanskiBroj}} {{profile.tadresa.mesto}} (post_br/grad)</h6>
                     </li>
                 </ul>
 
@@ -48,36 +48,48 @@
 </div>
 </template>
 <script>
+import adminDataService from '../services/AdminDataService'
 import axios from 'axios'
 export default {
     name: 'Admin-profile',
     data(){
         return{
             profile: {
-                id:'1',
-                ime:'Admin',
-                prezime:'Adminovic',
-                jmbg:'21321412412',
-                pol:'Muski',
-                korisnickoIme:'AdminX',
-                email:'admin996@gmai.com',
-                status:'aktivan',
-                TAdresa:{
-                    mesto:'Beograd',
-                    ulica:'Bulevar Bulevara',
-                    broj:'bb',
-                    postanskiBroj:'11000',
-                },
+                // id:'1',
+                // ime:'Admin',
+                // prezime:'Adminovic',
+                // jmbg:'21321412412',
+                // pol:'Muski',
+                // korisnickoIme:'AdminX',
+                // email:'admin996@gmai.com',
+                // status:'aktivan',
+                // TAdresa:{
+                //     mesto:'Beograd',
+                //     ulica:'Bulevar Bulevara',
+                //     broj:'bb',
+                //     postanskiBroj:'11000',
+                // },
             }
         }
     },
     methods:{
+        getAdminProfileData:function(id){
+            console.log("id: " + id)
+            adminDataService.getAdmin(id).then(response => {
+                this.profile = response.data;
+            })
+        },
         updateAdmin(id){
             this.$router.push(`/profile/${id}/update`);
         }
     },
     created(){
-     
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            let parsToken = JSON.parse(localStorage.getItem('parsToken'));
+            this.getAdminProfileData(parsToken.jti);
+        }
     },
 }
 </script>

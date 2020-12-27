@@ -34,6 +34,7 @@
             </div>
 
         <!--TABELE-->
+            <div v-if='messages.errorResponseDel' class="alert alert-danger" v-html="messages.errorResponseDel"></div>
             <table class="table" v-if='isMarka'>
                 <thead>
                     <tr style='color:#35424a'><h2>Marka automobila </h2></tr>
@@ -46,7 +47,6 @@
                 <tbody>
                     <tr v-bind:key='marka.id' v-for='marka in markaAut'>
                         <td>{{marka.nazivMarke}}</td>
-                        
                         <td><a href="#edit-amenity"><button  class=" btn-sm btn-outline-primary" v-on:click='showEditMarka(marka)'> izmeni </button></a></td>
                         <td><button class="btn btn-sm btn-danger" v-on:click='deleteMarka(marka.id)'> ukloni </button>
                         </td>
@@ -67,7 +67,6 @@
                 <tbody>
                     <tr v-bind:key='model.id' v-for='model in modelAut'>
                         <td>{{model.nazivModela}}</td>
-                        
                         <td><a href="#edit-amenity"><button  class=" btn-sm btn-outline-primary" v-on:click='showEditModel(model)'> izmeni </button></a></td>
                         <td><button class="btn btn-sm btn-danger" v-on:click='deleteModel(model.id)'> ukloni </button>
                         </td>
@@ -87,7 +86,6 @@
                 <tbody>
                     <tr v-bind:key='klasa.id' v-for='klasa in klasaAut'>
                         <td>{{klasa.nazivKlase}}</td>
-                        
                         <td><a href="#edit-amenity"><button  class=" btn-sm btn-outline-primary" v-on:click='showEditKlasa(klasa)'> izmeni </button></a></td>
                     <td><button class="btn btn-sm btn-danger" v-on:click='deleteKlasa(klasa.id)'> ukloni </button>
                         </td>
@@ -185,10 +183,9 @@
                     </div>
                     <div>
                         <div v-if='messages.errorMarka' class="alert alert-danger" v-html="messages.errorMarka"></div>
-                        <label>Naziv modela koji zelite izmeniti:</label>
+                        <label>Naziv marke koji zelite izmeniti:</label>
                         <input style="width:100%; padding:10px; margin-bottom:25px" type="text"
                             v-model="updatedMarka.nazivMarke" placeholder="Unesite novi naziv marke...">
-
                     </div>
                     <button class="btn btn-success" v-on:click='sendUpdate(updatedMarka)'>Sačuvaj</button>
                     <button class="btn btn-danger" v-on:click='closeEditMarka()'>Zatvori</button>
@@ -203,12 +200,19 @@
                 </div>
                 <div class="container">
                     <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
-                    <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse">
-                    </div>
+                    <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
+                    
+                    <label>Marka automobila</label>
+                    <select>
+                    <option disabled value="">Marka</option>
+                    <option v-bind:key="marka.id" v-on:click="addChoosenMarkaForNewModel(marka.id)" v-for="marka in markaAut">
+                        {{ marka.nazivMarke }}
+                    </option>
+                    </select>
                     <div>
                         <div>
                             <div v-if='messages.errorModel' class="alert alert-danger" v-html="messages.errorModel"></div>
-                            <label >Naziv novog modela:</label>
+                            <label>Naziv novog modela:</label>
                             <input style="width:100%; padding:10px; margin-bottom:25px" type="text"
                                 placeholder="Unesite naziv modela..." v-model="newModel.nazivModela">                           
                             <button class="btn btn-success" v-on:click='sendNew(newModel)'>Sačuvaj</button>
@@ -376,6 +380,7 @@
 </template>
 
 <script>
+import adminDataService from '../services/AdminDataService'
 export default {
     name: 'Sifrarnik',
     data:function(){
@@ -411,107 +416,47 @@ export default {
 				errorCDW: '',
 				errorImg: '',
 				errorResponse: '',
-				successResponse: '',
+                successResponse: '',
+                errorResponseDel:''
             },
         //Objekti za tabelu
             markaAut:[
-                {
-                    id:1,
-                    nazivMarke:'BMW',
-                },
-                {
-                    id:2,
-                    nazivMarke:'Audi',
-                },
-                {
-                    id:3,
-                    nazivMarke:'Mercedes',
-                },
-                {
-                    id:4,
-                    nazivMarke:'Tesla',
-                },
-                {
-                    id:5,
-                    nazivMarke:'Fiat',
-                },
+                // {
+                //     id:1,
+                //     nazivMarke:'BMW',
+                // },
+                // {
+                //     id:3,
+                //     nazivMarke:'Mercedes',
+                // },
+                // {
+                //     id:4,
+                //     nazivMarke:'Tesla',
+                // },
+     
             ],
 
-            modelAut:[
-                {
-                    id:1,
-                    nazivModela:'M5',
-                },
-                {
-                    id:2,
-                    nazivModela:'R8',
-                },
-                {
-                    id:3,
-                    nazivModela:'A6',
-                },
-                {
-                    id:4,
-                    nazivModela:'A8',
-                },
-                {
-                    id:5,
-                    nazivModela:'Punto',
-                },
-                {
-                    id:6,
-                    nazivModela:'500L',
-                },
-            ],
+            modelAut:[],
              
             klasaAut:[
-                {
-                    id:1,
-                    nazivKlase:'SUV',
-                },
-                                {
-                    id:2,
-                    nazivKlase:'Old Tajmer',
-                },
-                                {
-                    id:3,
-                    nazivKlase:'Gradski auto',
-                },
-                                {
-                    id:4,
-                    nazivKlase:'Smart car',
-                },
+                //                 {
+                //     id:4,
+                //     nazivKlase:'Smart car',
+                // },
             ],
 
             tipGoriva:[
-                {
-                    id:1,
-                    nazivTipa:'benzin',
-                },
-                {
-                    id:2,
-                    nazivTipa:'dizel',
-                },
-                {
-                    id:3,
-                    nazivTipa:'plin',
-                },
-                {
-                    id:4,
-                    nazivTipa:'vodonik',
-                },
+                // {
+                //     id:3,
+                //     nazivTipa:'plin',
+                // },
+                // {
+                //     id:4,
+                //     nazivTipa:'vodonik',
+                // },
             ],
 
-            tipMenjaca:[
-                {
-                    id:1,
-                    nazivMenjaca:'manuelni',
-                },
-                {
-                    id:2,
-                    nazivMenjaca:'atomatik',
-                },
-            ],
+            tipMenjaca:[],
 
         //New objects   
             newMarka:{
@@ -520,6 +465,7 @@ export default {
 
             newModel:{
                 nazivModela:'',
+                markaAutomobilaId:'',
             },
 
             newKlasa:{
@@ -557,7 +503,43 @@ export default {
 
         }
     },
-    methods:{  
+    methods:{
+        getAllOptions: function () {
+            this.getAllMarka();
+            this.getAllModel();
+            this.getAllKlasa();
+            this.getAllTipMenjaca();
+            this.getAllTipGoriva();
+        },
+        getAllMarka(){
+            adminDataService.getAllMarkaAut().then((response) => {
+                this.markaAut = response.data;
+            });
+        },
+        getAllModel(){
+            adminDataService.getAllModelAut().then((response) => {
+                this.modelAut = response.data;  
+            });
+        },
+        getAllKlasa(){
+             adminDataService.getAllKlasaAut().then((response) => {
+                this.klasaAut = response.data;
+            });
+        },
+        getAllTipMenjaca(){
+            adminDataService.getAllTipMenjaca().then((response) => {
+                this.tipMenjaca = response.data;
+            });
+        },
+        getAllTipGoriva(){
+            adminDataService.getAllTipGoriva().then((response) => {
+                this.tipGoriva = response.data;
+            });
+        },
+
+        addChoosenMarkaForNewModel:function(id){
+            this.newModel.markaAutomobilaId = id;
+        },
     //Marka
         showNewMarka: function () {
             //Ako je otvoreno polje za edit zatvori se prvo
@@ -838,38 +820,132 @@ export default {
 
     //Other
         sendNew(newObject){
-            if(this.isModel===true){
-                alert('Salje se novi model: ' + newObject.nazivModela);
+            if(this.isMarka===true){
+                adminDataService.addMarkaAut(newObject).then(response =>{
+                    this.getAllMarka();
+                    this.messages.successResponse = `<h4>Uspešno ste dodali novu marku!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);    
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
-            else if(this.isMarka===true){
-                alert('Salje se nova marka: ' + newObject.nazivMarke);
+            else if(this.isModel===true){
+                adminDataService.addModelAut(newObject).then(response =>{
+                    this.getAllModel();
+                    this.messages.successResponse = `<h4>Uspešno ste dodali novi model!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    } 
+                });
+                
             }
             else if(this.isKlasa===true){
-                alert('Salje se nova klasa: ' + newObject.nazivKlase);
+                adminDataService.addKlasaAut(newObject).then(response =>{
+                    this.getAllKlasa();
+                    this.messages.successResponse = `<h4>Uspešno ste dodali novu klasu!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
+                
             }
             else if(this.isMenjac===true){
-                alert('Salje se novi menjac: ' + newObject.nazivMenjaca);
+                adminDataService.addTipMenjaca(newObject).then(response =>{
+                    this.getAllTipMenjaca();
+                    this.messages.successResponse = `<h4>Uspešno ste dodali novi tip menjaca!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
+                
             }
             else if(this.isGorivo===true){
-                alert('Salje se novo gorivo: ' + newObject.nazivTipa);
+                adminDataService.addTipGoriva(newObject).then(response =>{
+                    this.getAllTipGoriva();
+                    this.messages.successResponse = `<h4>Uspešno ste dodali novi tip goriva!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
+                
             }
         },
 
         sendUpdate(updatedObject){
-            if(this.isModel===true){
-                alert('Salje se update modela: ' + updatedObject.nazivModela);
+            if(this.isMarka===true){
+                adminDataService.updateMarkaAut(updatedObject).then(response =>{
+                    this.getAllMarka();
+                    this.messages.successResponse = `<h4>Uspešno ste izmenili marku!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);    
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
-            else if(this.isMarka===true){
-                alert('Salje se update marke: ' + updatedObject.nazivMarke);
+            else if(this.isModel===true){
+                adminDataService.updateModelAut(updatedObject).then(response =>{
+                    this.getAllModel();
+                    this.messages.successResponse = `<h4>Uspešno ste izmenili model!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);    
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
             else if(this.isKlasa===true){
-                alert('Salje se update klase: ' + updatedObject.nazivKlase);
+                adminDataService.updateKlasaAut(updatedObject).then(response =>{
+                    this.getAllKlasa();
+                    this.messages.successResponse = `<h4>Uspešno ste izmenili klasu!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);    
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
              else if(this.isMenjac===true){
-                alert('Salje se update menjaca: ' + updatedObject.nazivMenjaca);
+                adminDataService.updateTipMenjaca(updatedObject).then(response =>{
+                    this.getAllTipMenjaca();
+                    this.messages.successResponse = `<h4>Uspešno ste izmenili tip menjača!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);    
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
              else if(this.isGorivo===true){
-                alert('Salje se update goriva: ' + updatedObject.nazivTipa);
+                adminDataService.updateTipGoriva(updatedObject).then(response =>{
+                    this.getAllTipGoriva();
+                    this.messages.successResponse = `<h4>Uspešno ste izmenili tip goriva!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);    
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
         },
 
@@ -880,7 +956,6 @@ export default {
             this.isMenjac = false;
             this.isGorivo = false;
 
-            // alert('Getuje se Marka automobila!');
         },
         getModelTable:function(){
             this.isMarka = false;
@@ -888,8 +963,6 @@ export default {
             this.isKlasa = false;
             this.isMenjac = false;
             this.isGorivo = false;
-
-            // alert('Getuje se Model automobila!');
         },
         getKlaseTable:function(){
             this.isMarka = false;
@@ -897,8 +970,6 @@ export default {
             this.isKlasa = true;
             this.isMenjac = false;
             this.isGorivo = false;
-
-            // alert('Getuje se Klasa automobila!');
         },
         getMenjacTable:function(){
             this.isMarka = false;
@@ -906,8 +977,6 @@ export default {
             this.isKlasa = false;
             this.isMenjac = true;
             this.isGorivo = false;
-
-            // alert('Getuje se Menjac automobila!');
         },
         getGorivaTable:function(){
             this.isMarka = false;
@@ -915,25 +984,88 @@ export default {
             this.isKlasa = false;
             this.isMenjac = false;
             this.isGorivo = true;
-
-            // alert('Getuje se Gorivo automobila!');
         },
 
-        deleteModel:function(id){
-            alert(`Bice obrisan model ${id}!`);
-        },
+    //delete function
         deleteMarka:function(id){
-            alert(`Bice obrisana marka ${id}!`);
+            if(confirm("Da li ste sigurni da želite obrisati ovu marku? Biće obrisani i svi modeli vezni za nju!"))
+                adminDataService.deleteMarkaAut(id).then(response => {
+                    this.getAllMarka();
+                }).catch(error => {
+                    if(error.response.status === 500 && error.response.data.message === 'There are cars connected to this brand!'){
+                        this.messages.errorResponseDel= `<h4>Ne možete obrisati ovu marku jer postoji automobil za koji je vezana!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel='', 5000);
+                    }
+                    else if (error.response.status === 500 || error.response.status === 404) {
+                        this.messages.errorResponseDel = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel = '', 5000);
+                    }
+                });;
+        },
+        deleteModel:function(id){
+            if(confirm("Da li ste sigurni da želite obrisati ovaj model?"))
+                adminDataService.deleteModelAut(id).then(response => {
+                    this.getAllModel();
+                }).catch(error => {
+                    if(error.response.status === 500 && error.response.data.message === 'There are cars connected to this model!'){
+                        this.messages.errorResponseDel= `<h4>Ne možete obrisati ovaj model jer postoji automobil za koji je vezan!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel='', 5000);
+                    }
+                     else if (error.response.status === 500 || error.response.status === 404) {
+                        this.messages.errorResponseDel = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel = '', 5000);
+                    }
+                });;
         },
         deleteKlasa:function(id){
-            alert(`Bice obrisana klasa ${id}!`);
+            if(confirm("Da li ste sigurni da želite obrisati ovu klasu?"))
+                adminDataService.deleteKlasaAut(id).then(response => {
+                    this.getAllKlasa();
+                }).catch(error => {
+                    if(error.response.status === 500 && error.response.data.message === 'There are cars connected to this class!'){
+                        this.messages.errorResponseDel= `<h4>Ne možete obrisati ovu klasu jer postoji automobil za koji je vezana!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel='', 5000);
+                    }
+                    else if (error.response.status === 500 || error.response.status === 404) {
+                        this.messages.errorResponseDel = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel = '', 5000);
+                    }
+                });;
+            
         },
         deleteMenjac:function(id){
-            alert(`Bice obrisan menjac ${id}!`);
+            if(confirm("Da li ste sigurni da želite obrisati ovaj tip menjača?"))
+                adminDataService.deleteTipMenjaca(id).then(response => {
+                    this.getAllTipMenjaca();
+                }).catch(error => {
+                    if(error.response.status === 500 && error.response.data.message === 'There are cars connected to this transmission!'){
+                        this.messages.errorResponseDel= `<h4>Ne možete obrisati ovaj tip menjača jer postoji automobil za koji je vezan!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel='', 5000);
+                    }
+                    else if (error.response.status === 500 || error.response.status === 404) {
+                        this.messages.errorResponseDel = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel = '', 5000);
+                    }
+                });;
         },
         deleteGorivo:function(id){
-            alert(`Bice obrisano gorivo ${id}!`);
+            if(confirm("Da li ste sigurni da želite obrisati ovaj tip goriva?"))
+                adminDataService.deleteTipGoriva(id).then(response => {
+                    this.getAllTipGoriva();
+                }).catch(error => {
+                    if(error.response.status === 500 && error.response.data.message === 'There are cars connected to this fuel!'){
+                        this.messages.errorResponseDel= `<h4>Ne možete obrisati ovaj tip goriva jer postoji automobil za koji je vezan!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel='', 5000);
+                    }
+                    else if (error.response.status === 500 || error.response.status === 404) {
+                        this.messages.errorResponseDel = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponseDel = '', 5000);
+                    }
+                });
         },
+    },
+    created(){
+        this.getAllOptions();
     }  
 }
     

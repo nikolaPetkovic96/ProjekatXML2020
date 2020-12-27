@@ -8,8 +8,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+           <li v-if='loggedIn==false' class="nav-item active">
               <router-link to='/' class="nav-link" exact> Home
+                <span class="sr-only">(current)</span>
+              </router-link>
+            </li>
+             <li v-if='loggedIn==true' class="nav-item active">
+              <router-link to='/home' class="nav-link" exact> Home
                 <span class="sr-only">(current)</span>
               </router-link>
             </li>
@@ -37,8 +42,8 @@ export default {
 
   data:function(){
     return{
-      // loggedOut: false, //loginvan je treba da pise log out dugme
-       loggedIn: false,
+      // loggedOut: false, //loginovan je treba da pise log out dugme
+      loggedIn: false,
     }
   },
   methods:{
@@ -46,9 +51,10 @@ export default {
       if(confirm('Da li ste sigurni da se zelite izlogovati?')){
         if(localStorage.getItem('token')){
           localStorage.removeItem('token');
+          localStorage.removeItem('parsToken');
           axios.defaults.headers.common['Authorization'] = undefined;
   
-          this.loggedIn = false;  //logoutovan je treba da pise log in dugme
+          this.loggedIn = false;  //logout-ovan je treba da pise log in dugme
           this.$router.push('/');
         }
       }
@@ -56,11 +62,10 @@ export default {
   
   },
   created(){
-
-    //Prilikom created osluskujem da li je doslo do eventa login i ako jeste kazem da je loginova;
-     bus.$on('loggedIn',(data)=>{
-       this.loggedIn = data;
-     });
+    //Prilikom created osluskujem da li je doslo do eventa login i ako jeste kazem da je loginovan;
+    bus.$on('loggedIn',(data)=>{
+      this.loggedIn = data;
+    });
   }
 }
 </script>
