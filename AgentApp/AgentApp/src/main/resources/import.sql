@@ -99,4 +99,3 @@ INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_p
 
 -----------------------------------------------------------USER-----------------------------------------------------------------
 
-

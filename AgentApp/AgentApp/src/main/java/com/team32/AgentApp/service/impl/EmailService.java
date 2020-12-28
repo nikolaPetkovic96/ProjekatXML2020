@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.team32.AgentApp.model.entitet.Izvestaj;
 import com.team32.AgentApp.model.entitet.User;
 ///TODO premestiti u poseban servis? 
 
@@ -38,14 +39,22 @@ public class EmailService {
 		mail.setText(body);
 		javaMailSender.send(mail);
 	}
-
-	public void sendTestEmail() {
+	
+	@Async
+	public void sendBillEmail(User user, Izvestaj i) {
 		SimpleMailMessage mail = new SimpleMailMessage();
-		mail.setTo("jelena.boroja1@gmail.com");
+		mail.setTo(user.getEmail());
 		mail.setFrom(env.getProperty("spring.mail.username"));
-		mail.setSubject("Aktivacioni email");
+		mail.setSubject("Dodatni troškovi");
 		String body = null;
-		body = "Pozdrav ovo je poruka izgenerisana od strane Markove genijalne aplikacije!";
+		body = "Poštovani/na " + user.getIme() + " " + user.getPrezime()
+			+ "\nOvom priliko Vas obaveštavamo da ste prilikom Vaše poslednje rezervacije prešli " + i.getPredjenaKilometraza() + " km"  
+			+ "\n+i time prekoračili planiranu kilometražu za iznajmljeno vozilo za " + i.getPrekoracenaKilometraza() + " km"
+			+ "\nTime ste ostvarili dodatne troškove u vrednosti od " + i.getDodatniTroskovi()
+			+ "\nMolimo Vas da izmirite vaše dugovanje u najkraćem mogućem roku."
+			+ "\nDok to ne učinite nećete biti u mogućnosti da iznajmljujete ni jedno novo vozilo."
+			+ "\n"
+			+ "\n Srdačan pozdrav.";
 		mail.setText(body);
 		javaMailSender.send(mail);
 		

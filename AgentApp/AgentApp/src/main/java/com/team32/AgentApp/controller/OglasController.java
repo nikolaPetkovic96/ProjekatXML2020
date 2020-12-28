@@ -38,7 +38,6 @@ import com.team32.AgentApp.service.UserService;
 
 @RestController
 public class OglasController {
-
 		@Autowired
 		private OglasService oglasService;
 		@Autowired

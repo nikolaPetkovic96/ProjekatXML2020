@@ -26,7 +26,7 @@ public class AgentController {
 	@ResponseBody
 	@GetMapping(value="/dummy")
 	public String dummy() {
-		emailService.sendTestEmail();
+//		emailService.sendTestEmail();
 		return "<h1 style='color:gold'>Working!</h1>";
 	}
 }

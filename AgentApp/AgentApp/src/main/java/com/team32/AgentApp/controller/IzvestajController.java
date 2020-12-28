@@ -16,12 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.DTO.IzvestajDTO;
+import com.team32.AgentApp.model.entitet.Automobil;
 import com.team32.AgentApp.model.entitet.CommonData;
 import com.team32.AgentApp.model.entitet.Izvestaj;
+import com.team32.AgentApp.model.entitet.Rezervacija;
 import com.team32.AgentApp.model.entitet.User;
+import com.team32.AgentApp.service.AutomobilService;
 import com.team32.AgentApp.service.CommonDataService;
 import com.team32.AgentApp.service.IzvestajService;
+import com.team32.AgentApp.service.RezervacijaService;
 import com.team32.AgentApp.service.UserService;
+import com.team32.AgentApp.service.impl.EmailService;
 
 @RestController
 public class IzvestajController {
@@ -34,6 +39,15 @@ public class IzvestajController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AutomobilService automobilService;
+	
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private RezervacijaService rezervacijaService;
+	
 	
 	//GET ALL
 	@RequestMapping(method=RequestMethod.GET, value="/izvestaj", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -82,6 +96,19 @@ public class IzvestajController {
 		savedIzvestaj.setCommonDataId(commonData.getId());
 		
 		savedIzvestaj = izvestajService.addIzvestaj(savedIzvestaj);
+		
+		
+		Rezervacija rezerv = rezervacijaService.findOne(dto.getRezervacijaId());
+		CommonData comData = comDataService.findOne(rezerv.getCommonDataId());
+		User userWhoMadeReserv = userService.findOne(comData.getUserid());
+		if(savedIzvestaj.getPrekoracenaKilometraza() > 0) {
+			emailService.sendBillEmail(userWhoMadeReserv, savedIzvestaj);
+		}
+		
+		Automobil auto = automobilService.findOne(savedIzvestaj.getAutomobilId());
+		auto.setPredjenaKilometraza(auto.getPredjenaKilometraza() + savedIzvestaj.getPredjenaKilometraza());
+		automobilService.updateAutomobil(auto.getId(), auto);
+		
 		return new ResponseEntity<>(new IzvestajDTO(savedIzvestaj), HttpStatus.CREATED);
 	}
 	
