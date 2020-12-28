@@ -49,14 +49,13 @@ public class EmailService {
 		String body = null;
 		body = "Poštovani/na " + user.getIme() + " " + user.getPrezime()
 			+ "\nOvom priliko Vas obaveštavamo da ste prilikom Vaše poslednje rezervacije prešli " + i.getPredjenaKilometraza() + " km"  
-			+ "\n+i time prekoračili planiranu kilometražu za iznajmljeno vozilo za " + i.getPrekoracenaKilometraza() + " km"
-			+ "\nTime ste ostvarili dodatne troškove u vrednosti od " + i.getDodatniTroskovi()
+			+ "\ni time prekoračili planiranu kilometražu za iznajmljeno vozilo za " + i.getPrekoracenaKilometraza() + " km"
+			+ "\nTime ste ostvarili dodatne troškove u vrednosti od " + i.getDodatniTroskovi() + " dinara."
 			+ "\nMolimo Vas da izmirite vaše dugovanje u najkraćem mogućem roku."
 			+ "\nDok to ne učinite nećete biti u mogućnosti da iznajmljujete ni jedno novo vozilo."
 			+ "\n"
 			+ "\n Srdačan pozdrav.";
 		mail.setText(body);
 		javaMailSender.send(mail);
-		
 	}
 }

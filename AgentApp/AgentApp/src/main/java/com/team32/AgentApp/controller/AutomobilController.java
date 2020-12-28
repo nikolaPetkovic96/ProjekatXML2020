@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,6 +66,7 @@ public class AutomobilController {
 	@Autowired
 	private OglasService oglasService;
 	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/automobil", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AutomobilDTO>> getAllAutomobil(Principal principal){
 		//Preuzima se user iz sesije koji je trenutno ulogovan
@@ -82,6 +84,7 @@ public class AutomobilController {
 		return new ResponseEntity<>(automobilDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	//Vraca najbolja 3 automobila po nekom parametru 
 	@RequestMapping(method=RequestMethod.GET, value="/automobil/best/{category}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AutomobilStatisticDTO>> getAllBestAutomobil(Principal principal, @PathVariable("category") String category){
@@ -112,7 +115,7 @@ public class AutomobilController {
 		return new ResponseEntity<>(autoStatDTO, HttpStatus.OK);
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	//Ovo je za automobil details vise odradjeno...
 	@RequestMapping(method=RequestMethod.GET, value="/automobil/{id}/details", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AutomobilDetailsDTO> getAutomobilDetails(Principal principal, @PathVariable("id") Long id) throws Exception{
@@ -136,7 +139,7 @@ public class AutomobilController {
 		return new ResponseEntity<>(new AutomobilDetailsDTO(autoDTO, reviews, slike), HttpStatus.OK);
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/automobilReview", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AutomobilReviewDTO>> getAllAutomobilReviews(Principal principal){
 		
@@ -162,7 +165,7 @@ public class AutomobilController {
 		}
 		return new ResponseEntity<>(automobilRewiewDTO, HttpStatus.OK);
 	}
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AutomobilDTO>> searchApartments(Principal principal,
 			@RequestParam(value="markaAut", required=false) Long markaAutId,
@@ -245,7 +248,7 @@ public class AutomobilController {
     }
 	
 	
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/automobil/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AutomobilDTO> getAutomobil(@PathVariable("id") Long id){
 		Automobil automobil = automobilService.findOne(id);
@@ -256,7 +259,7 @@ public class AutomobilController {
 		
 		return new ResponseEntity<>(automobilService.findOneWithDetails(automobil.getId()), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(value="/automobil/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteAutomobil(@PathVariable Long id) throws Exception{
 		Automobil automobil = automobilService.findOne(id);
@@ -274,7 +277,7 @@ public class AutomobilController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.POST, value="/automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AutomobilImgDTO> addAutomobil(Principal principal, @RequestBody AutomobilNewDTO dto) throws Exception{
 		Automobil savedAutomobil = new Automobil();
@@ -313,7 +316,7 @@ public class AutomobilController {
 		AutomobilDTO autoDto = automobilService.findOneWithDetails(savedAutomobil.getId());
 		return new ResponseEntity<>(new AutomobilImgDTO(autoDto, new SlikaVozilaDTO(slikaVozila)), HttpStatus.CREATED);
 	}
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.PUT, value="/automobil", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AutomobilDTO> updateAutomobil(@RequestBody AutomobilNewDTO dto) throws Exception{
 		
@@ -351,7 +354,7 @@ public class AutomobilController {
 		return new ResponseEntity<>(auto,HttpStatus.OK);
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	public List<ReviewDTO> getAllReviewsByAutomobilId(Long autoId, String loggedUsername){
 		List<ReviewDTO> reviews = new ArrayList<>();
 		

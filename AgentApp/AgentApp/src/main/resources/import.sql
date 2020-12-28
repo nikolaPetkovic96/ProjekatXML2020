@@ -16,7 +16,7 @@ INSERT INTO USER_AUTHORITY(user_id, authority_id) VALUES (2, 1)
 
 -- Test users
 INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('Darkooo91', 'pass1', 'nmaster@gmail.com', 4, 'aktivan','Darko', 'Darkovic', '213123124','Muski',NULL, NULL, 24)
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('Anna00', 'pass2', 'nmaster@gmail.com', 4, 'aktivan','Ana', 'Anic', '213123124','Zenski',NULL, NULL, 24)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('Anna00', 'pass2', 'blage500@gmail.com', 4, 'aktivan','Ana', 'Anic', '213123124','Zenski',NULL, NULL, 24)
 INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id) VALUES ('PeraCar996', 'pass2', 'nmaster@gmail.com', 4, 'aktivan','Petar', 'Petrovic', '213123124','Zenski',NULL, NULL, 24)
 
 
@@ -97,5 +97,17 @@ INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_p
 INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_po_km, popust_30_dan, common_data_id) VALUES('Medjugradski cenovnik',3000, 3200, 1400, 20, 26)
 INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_po_km, popust_30_dan, common_data_id) VALUES('Gradski cenovnik',1800, 2000, 800, 50, 27)
 
------------------------------------------------------------USER-----------------------------------------------------------------
+-----------------------------------------------------------IZVESTAJ-----------------------------------------------------------------
+--Automobil 28
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',1)
+--Oglas 29
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-11-25 21:58:58', null, 1) --test
+--Narudbenica 30
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-10 21:58:58', null, 4)  -- Anna00 
+--Rezervacija 31
+INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-02 21:58:58', null, 4) -- Anna00
 
+INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_aut_id, marka_aut_id, model_aut_id, predj_kilom, ukupna_ocena, tip_menjaca_id, tip_goriva_id, common_data_id) VALUES (1, true, 1, 1, 1, 56000,  4.5, 3, 2, 28)
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id) VALUES('2020-12-01 21:58:58','2020-12-31 18:57:58', 12000, 3, 3, 1, 29)
+INSERT INTO Narudzbenica(od_datuma, do_datuma, oglas_id, rezervacija_id, agent_id, common_data_id) VALUES('2020-12-10 21:58:58','2020-12-22 18:57:58', 1, 1, 1, 30)-- jos traje  -- Anna00  Anna00 dve odvojene rezerv (4,5)
+INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(false,'PAID', 55000, 31) -- istekao 

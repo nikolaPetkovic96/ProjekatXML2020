@@ -28,6 +28,7 @@ public class RezervacijaService {
 			List<Rezervacija>  rezervacije = new ArrayList<>();
 			
 			List<Rezervacija> sveRezervacije = rezervacijaRepository.findAll();
+			//Da ne vadimo iz oglasa agentId gledamo u narudzbenici
 			List<Narudzbenica> agentNarudzb = narudzbenicaService.getllNarudzbeniceByAgentId(agentId);
 			
 			for( Narudzbenica n : agentNarudzb){

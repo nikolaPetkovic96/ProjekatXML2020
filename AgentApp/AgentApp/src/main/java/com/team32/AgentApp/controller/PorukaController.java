@@ -37,6 +37,7 @@ public class PorukaController {
 	private UserService userService;
 	
 	//GET ALL
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/poruka", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PorukaDTO>> getAllPoruka(){
 		
@@ -66,6 +67,7 @@ public class PorukaController {
 		return new ResponseEntity<>(porukeDTO, HttpStatus.OK);
 	}
 	//GET
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/poruka/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PorukaDTO> getPoruka(@PathVariable("id") Long id){
 		PorukaDTO porukaDTO = new PorukaDTO();
@@ -123,7 +125,7 @@ public class PorukaController {
 		return new ResponseEntity<>(new PorukaNewDTO(savedPoruka), HttpStatus.CREATED);
 	}
 	
-//	@PreAuthorize("hasRole('ROLE_AGENT')")
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.PUT, value="/poruka", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PorukaNewDTO> updatePoruka(@RequestBody PorukaNewDTO dto) throws Exception{
 		

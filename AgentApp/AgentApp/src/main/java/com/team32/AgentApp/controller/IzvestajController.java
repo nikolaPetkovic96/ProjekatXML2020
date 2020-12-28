@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,7 @@ public class IzvestajController {
 	
 	
 	//GET ALL
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/izvestaj", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<IzvestajDTO>> getAllNarudzbenica() {
 		List<Izvestaj> all = izvestajService.getAllIzvestaj();
@@ -61,6 +63,7 @@ public class IzvestajController {
 	}
 	
 	//GET
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/izvestaj/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<IzvestajDTO> getIzvestaj(@PathVariable("id") Long id){
 		Izvestaj izv = izvestajService.findOne(id);
@@ -70,6 +73,7 @@ public class IzvestajController {
 	}
 	
 	//POST
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.POST, value="/izvestaj",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<IzvestajDTO> addIzvestaj(Principal principal, @RequestBody IzvestajDTO dto)  throws Exception {
 		Izvestaj savedIzvestaj = new Izvestaj();
@@ -103,6 +107,7 @@ public class IzvestajController {
 		User userWhoMadeReserv = userService.findOne(comData.getUserid());
 		if(savedIzvestaj.getPrekoracenaKilometraza() > 0) {
 			emailService.sendBillEmail(userWhoMadeReserv, savedIzvestaj);
+			// TODO Zabraniti korisniku da moze praviti nove rezervacije...
 		}
 		
 		Automobil auto = automobilService.findOne(savedIzvestaj.getAutomobilId());

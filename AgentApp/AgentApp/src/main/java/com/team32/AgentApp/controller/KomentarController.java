@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,7 @@ public class KomentarController {
 	private UserService userService;
 	
 	//GET ALL
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/komentar", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<KomentarDTO>> getAllKomentar() {
 	
@@ -66,6 +68,7 @@ public class KomentarController {
 	}
 	
 	//GET
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/komentar/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<KomentarDTO> getKomentar(@PathVariable("id") Long id){
 		KomentarDTO komentarDTO = new KomentarDTO();
@@ -89,6 +92,7 @@ public class KomentarController {
 	}
 	
 	//POST
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.POST, value="/komentar",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<KomentarDTO> addKomentar(Principal principal, @RequestBody KomentarDTO dto)  throws Exception {
 		

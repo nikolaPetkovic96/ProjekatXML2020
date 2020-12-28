@@ -144,6 +144,7 @@ public class RezervacijaController {
 	}	
 	
 	//GET
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/rezervacija/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RezervacijaDTO> getRezervacija(@PathVariable("id") Long id){
 		RezervacijaDTO rezervacijaDTO = new RezervacijaDTO();
@@ -212,6 +213,7 @@ public class RezervacijaController {
 	}
 	
 	//POST
+	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.POST, value="/rezervacija", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RezervacijaNewDTO> addRezervacija(Principal principal, @RequestBody RezervacijaNewDTO dto) throws Exception{
 		

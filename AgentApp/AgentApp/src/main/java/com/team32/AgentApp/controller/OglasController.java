@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +52,7 @@ public class OglasController {
 		private AdresaService adresaService;
 		
 		//GET ALL
+		@PreAuthorize("hasRole('ROLE_AGENT')")
 		@RequestMapping(method=RequestMethod.GET, value="/oglas", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<List<OglasDTO>> getAllOglas() {
 		
@@ -69,6 +71,7 @@ public class OglasController {
 		
 		
 		//GET ALL
+		@PreAuthorize("hasRole('ROLE_AGENT')")
 		@RequestMapping(method=RequestMethod.GET, value="/oglas/img", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<List<OglasDetailsImgDTO>> getAllOglasWithImg(Principal principal) throws Exception {
 		
@@ -92,6 +95,7 @@ public class OglasController {
 		
 		
 		//GET ALL
+		@PreAuthorize("hasRole('ROLE_AGENT')")
 		@RequestMapping(method=RequestMethod.GET, value="/oglas/agent", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<List<OglasDTO>> getAllAgentsOglas(Principal principal) {
 		
@@ -114,6 +118,7 @@ public class OglasController {
 		}
 
 		//GET
+		@PreAuthorize("hasRole('ROLE_AGENT')")
 		@RequestMapping(method=RequestMethod.GET, value="/oglas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<OglasDTO> getOglas(@PathVariable("id") Long id){
 			OglasDTO oglasDTO = new OglasDTO();
@@ -129,6 +134,7 @@ public class OglasController {
 		}
 		
 		//GET
+		@PreAuthorize("hasRole('ROLE_AGENT')")
 		@RequestMapping(method=RequestMethod.GET, value="/oglas/{id}/details", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<OglasDetailsDTO> getOglasDetail(@PathVariable("id") Long id){
 			
@@ -141,6 +147,7 @@ public class OglasController {
 		}
 		
 		//POST
+		@PreAuthorize("hasRole('ROLE_AGENT')")
 		@RequestMapping(method=RequestMethod.POST, value="/oglas",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<OglasDTO> addOglas(Principal principal, @RequestBody OglasNewDTO dto)  throws Exception {
 			Oglas savedOglas = new Oglas();
@@ -184,6 +191,7 @@ public class OglasController {
 		
 		
 		//DELETE
+		@PreAuthorize("hasRole('ROLE_AGENT')")
 		@RequestMapping(value="/oglas/{id}", method=RequestMethod.DELETE)
 		public ResponseEntity<Void> deleteOglas(@PathVariable Long id) {
 			Oglas oglas = oglasService.findOne(id);
