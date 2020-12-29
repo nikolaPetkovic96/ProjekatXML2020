@@ -14,16 +14,19 @@
                         <th>Cena po kilometru</th>
                         <th>CDW</th>
                         <th>Popust preko 30 dana</th>
+                        <th>Izmeni</th>
+                        <th>Obriši</th>
                     </tr>
                 </thead>
                 <tbody>                
                 <tr v-bind:key="cenovnik.id" v-for='cenovnik in cenovnici'>
                     <td>{{cenovnik.nazivCenovnika}}</td>
-                    <td>{{cenovnik.cenaPoDanu}}</td>
-                    <td>{{cenovnik.cenaPoKilometru}}</td>
-                    <td>{{cenovnik.cenaCollisionDamageWaiver}}</td>
-                    <td>{{cenovnik.popustZaPreko30Dana}}</td>
-                    <td><button v-on:click='openEdit(cenovnik.id)'  class="btn-primary"> edit </button></td>
+                    <td>{{cenovnik.cenaPoDanu}} din</td>
+                    <td>{{cenovnik.cenaPoKilometru}} din</td>
+                    <td>{{cenovnik.cenaCollisionDamageWaiver}} din</td>
+                    <td>{{cenovnik.popustZaPreko30Dana}} %</td>
+                    <td><button v-on:click='openEdit(cenovnik.id)'  class="btn-sm btn-outline-primary"> Izmeni </button></td>
+                    <td><button v-on:click='deletePrice(cenovnik.id)'  class="btn btn-sm btn-danger"> Ukloni </button></td>
                 </tr>
                 </tbody>
             </table>
@@ -33,8 +36,9 @@
 </template>
 
 <script>
-
+import agentDataService from '../services/AgentDataService'
 export default {
+ 
   name: 'Cenonvik',
    data(){
         return{
@@ -43,60 +47,25 @@ export default {
                 role: ''
             },
 
-            cenovnici:[
-               {
-                    id:'1',
-                    cenaPoDanu:100,
-                    nazivCenovnika:'Cenovnik 1',
-                    popustZaPreko30Dana:'10%',
-                    cenaCollisionDamageWaiver:1000,
-                    cenaPoKilometru:10
-                },
-                {
-                    id:'2',
-                    cenaPoDanu:200,
-                    nazivCenovnika:'Cenovnik 2',
-                    popustZaPreko30Dana:'20%',
-                    cenaCollisionDamageWaiver:null,
-                    cenaPoKilometru:20
-                },
-                {
-                    id:'3',
-                    cenaPoDanu:300,
-                    nazivCenovnika:'Cenovnik 3',
-                    popustZaPreko30Dana:null,
-                    cenaCollisionDamageWaiver:3000,
-                    cenaPoKilometru:30
-                },
-                {
-                    id:'4',
-                    cenaPoDanu:400,
-                    nazivCenovnika:'Cenovnik 4',
-                    popustZaPreko30Dana:'20%',
-                    cenaCollisionDamageWaiver:null,
-                    cenaPoKilometru:40
-                },
-                {
-                    id:'5',
-                    cenaPoDanu:500,
-                    nazivCenovnika:'Cenovnik 5',
-                    popustZaPreko30Dana:null,
-                    cenaCollisionDamageWaiver:5000,
-                    cenaPoKilometru:50
-                },
-            ],
+            cenovnici:[],
 
         }
    },
    methods: {
-        showAllAmenities:function(){
-            axios
-            .get('rest/cenovnici/')
+        showAllPrices:function(){
+            agentDataService.getAllCenovnik()
             .then(response => {
-                this.cenovnici=response.data;
+                this.cenovnici = response.data;
             })
         },
-        
+        deletePrice(id){
+            if (confirm('Da li ste sigurni da želite obrisati ovaj cenovnik?')) {
+               agentDataService.deleteCenovnik(id)
+                .then(response => {
+                    this. showAllPrices();
+                })
+            }
+        },
         openNew:function(){
             this.$router.push('/price/new');
         },
@@ -104,6 +73,9 @@ export default {
             this.$router.push(`/price/${id}/edit`);
         }
     },
+    created(){
+        this.showAllPrices();
+    }
 }
 </script>
 

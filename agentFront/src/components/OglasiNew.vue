@@ -67,10 +67,10 @@
             <div style="margin-top:20px" v-if='messages.errorAddress' class="alert alert-danger" v-html="messages.errorAddress"></div>
             <label>Adresa</label>
             <div>
-              <input class="one-forth" placeholder="Unesite mesto..." v-model='noviOglas.TAdresa.mesto'>
-              <input class="one-forth" placeholder="Unesite ulicu..." v-model='noviOglas.TAdresa.ulica'>
-              <input class="one-forth" placeholder="Unesite broj..." v-model='noviOglas.TAdresa.broj'>
-              <input class="one-forth" placeholder="Unesite postanski broj..." v-model='noviOglas.TAdresa.postanskiBroj'>
+              <input class="one-forth" placeholder="Unesite mesto..." v-model='noviOglas.adresa.mesto'>
+              <input class="one-forth" placeholder="Unesite ulicu..." v-model='noviOglas.adresa.ulica'>
+              <input class="one-forth" placeholder="Unesite broj..." v-model='noviOglas.adresa.broj'>
+              <input class="one-forth" placeholder="Unesite postanski broj..." v-model='noviOglas.adresa.postanskiBroj'>
 			      </div>
 
             <!-- <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
@@ -90,11 +90,10 @@ export default {
           noviOglas:{
             odDatuma:null,
             doDatuma:null,
-            // lokacija:'',
             planiranaKilometraza:'',
             automobilId:null,
-            cenaId:null,
-            TAdresa:{
+            cenovnikId:null,
+            adresa:{
               mesto:'',
               ulica:'',
               broj:'',
@@ -240,7 +239,7 @@ export default {
           setTimeout(() => this.messages.errorAddress = '', 5000);
         }
         else {
-          this.noviOglas.cenaId = this.odabran_cenovnik.id
+          this.noviOglas.cenovnikId = this.odabran_cenovnik.id
           // unselected dates will be disabled
           this.noviOglas.odDatuma = this.dates.from.getTime();
           this.noviOglas.doDatuma = this.dates.to.getTime();
@@ -248,7 +247,7 @@ export default {
           console.log(`Novi oglas:
             odDatuma: ${this.noviOglas.odDatuma},
             doDatuma: ${this.noviOglas.doDatuma},
-            cenaId: ${this.noviOglas.cenaId},
+            cenovnikId: ${this.noviOglas.cenovnikId},
             automobilId: ${this.noviOglas.automobilId},
             planiranaKilometraza: ${this.noviOglas.planiranaKilometraza},
             Adresa: ${this.noviOglas.TAdresa.mesto} ${this.noviOglas.TAdresa.ulica} ${this.noviOglas.TAdresa.broj} ${this.noviOglas.TAdresa.postanskiBroj},

@@ -5,8 +5,7 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
         <div class="container">
-            <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
-            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
+          
             <div>
                 <div v-if='messages.errorNaziv' class="alert alert-danger" v-html="messages.errorNaziv"></div>       
                 <label class='label'>Naziv cenovnika :</label>
@@ -25,25 +24,27 @@
                 <input style="width:100%; padding:10px; margin-bottom:25px" type="text" placeholder="Unesite CDW..." v-model="noviCenovnik.cenaCollisionDamageWaiver">
 
                 <div v-if='messages.errorCena30Dana' class="alert alert-danger" v-html="messages.errorCena30Dana"></div>       
-                <label class='label'>Popust za preko 30 dana :</label>
+                <label class='label'>Popust za preko 30 dana (u %):</label>
                 <input style="width:100%; padding:10px; margin-bottom:25px" type="text" placeholder="Unesite popust..." v-model="noviCenovnik.popustZaPreko30Dana">
                 
-                <button class="btn btn-success" v-on:click='addPrice()'>Save</button>
-                <button class="btn btn-danger" v-on:click='closeNew()'>Close</button>
+                <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
+                <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
+                <button class="btn btn-success" v-on:click='addPrice()'>Potvrdi</button>
+                <button class="btn btn-danger" v-on:click='closeNew()'>Odustani</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import agentDataService from '../services/AgentDataService'
 export default {
     name: 'cenovnik-new',
     data(){
         return{
             noviCenovnik:{
-                id:'',
-                cenaPoDanu:'',
                 nazivCenovnika:'',
+                cenaPoDanu: '',
                 popustZaPreko30Dana:'',
                 cenaCollisionDamageWaiver:'',
                 cenaPoKilometru:''
@@ -69,48 +70,71 @@ export default {
                 this.messages.errorCenaPoDanu =  `<h4>Cena po danu ne sme biti prazno polje!</h4>`;
                 setTimeout(()=>this.messages.errorCenaPoDanu = '' ,3000);
             }
+            else if (this.isNumeric(this.noviCenovnik.cenaPoDanu)) {
+                this.messages.errorCenaPoDanu = `<h4>Cena po danu mora biti broj!</h4>`;
+                setTimeout(() => this.messages.errorCenaPoDanu = '', 5000);
+            }
             else if(this.noviCenovnik.cenaPoKilometru == ''){
                 this.messages.errorCenaPoKilometru =  `<h4>Cena po kilometru ne sme biti prazno polje!</h4>`;
-                setTimeout(()=>this.messages.errorCenaPoKilometru = '' ,3000);
+                setTimeout(()=>this.messages.errorCenaPoKilometru = '' ,5000);
+            }
+            else if(this.isNumeric(this.noviCenovnik.cenaPoKilometru)){
+                this.messages.errorCenaPoKilometru =  `<h4>Cena po kilometru mora biti broj!</h4>`;
+                setTimeout(()=>this.messages.errorCenaPoKilometru = '' , 5000);
+            }
+
+            else if(this.isNumeric(this.noviCenovnik.cenaCollisionDamageWaiver)){
+                this.messages.errorCenaCDW =  `<h4>CDW mora biti broj!</h4>`;
+                setTimeout(()=>this.messages.errorCenaCDW = '' , 5000);
+            }
+
+            else if(this.isNumeric(this.noviCenovnik.popustZaPreko30Dana)){
+                this.messages.errorCena30Dana =  `<h4>Popust mora biti broj!</h4>`;
+                setTimeout(()=>this.messages.errorCena30Dana = '' , 5000); 
+            }
+
+            else if(this.noviCenovnik.popustZaPreko30Dana < 0 || this.noviCenovnik.popustZaPreko30Dana > 100 ){
+                this.messages.errorCena30Dana =  `<h4>Popust mora biti broj u intervalu od 0 do 100!</h4>`;
+                setTimeout(()=>this.messages.errorCena30Dana = '' , 5000); 
             }
             
-            else if(this.noviCenovnik.nazivCenovnika== '' && this.noviCenovnik.cenaPoDanu == '' &&  this.noviCenovnik.CenaPoKilometru == ''){
+            else if(this.noviCenovnik.nazivCenovnika == '' && this.noviCenovnik.cenaPoDanu == '' &&  this.noviCenovnik.CenaPoKilometru == ''){
                 this.messages.errorNaziv =  `<h4>Naziv cenovnika ne sme biti prazno polje!</h4>`;
                 this.messages.errorCenaPoDanu =  `<h4>Cena po danu ne sme biti prazno polje!</h4>`;
                 this.messages.errorCenaPoKilometru =  `<h4>Cena po kilometru ne sme biti prazno polje!</h4>`;
-                setTimeout(()=> this.messages.errorNaziv = '', 3000);
-                setTimeout(()=> this.messages.errorCenaPoDanu = '', 3000); 
-                setTimeout(()=> this.messages.errorCenaPoKilometru = '', 3000); 
+                setTimeout(()=> this.messages.errorNaziv = '', 5000);
+                setTimeout(()=> this.messages.errorCenaPoDanu = '', 5000); 
+                setTimeout(()=> this.messages.errorCenaPoKilometru = '', 5000); 
             }
             else{
-                alert(`
-                    ${this.noviCenovnik.nazivCenovnika}
-                    ${this.noviCenovnik.cenaPoDanu}
-                    ${this.noviCenovnik.cenaPoKilometru}
-                    ${this.noviCenovnik.popustZaPreko30Dana}
-                    ${this.noviCenovnik.cenaCollisionDamageWaiver}
-                `);
-                // cenovnici.add(this.noviCenovnik);
-                // axios
-                // .post('rest/amenities/', this.newAmenity)
-                // .then(response => {
-                //     this.messages.successResponse = `<h4>Amenity was added successfuly!</h4>`;
-                //     this.newAmenity.name='';
-                //     this.newAmenity.type='';
-                //     this.showAllAmenities();
-                //     setTimeout(() => this.messages.successResponse='', 5000);
+               agentDataService.addCenovnik(this.noviCenovnik).then(Response => {
+                    this.messages.successResponse = `<h4>Novi cenovnik je uspešno dodat!</h4>`;
+                    this.resetFields();
+                    setTimeout(() => this.messages.successResponse='', 5000);
 
-                // })
-                // .catch(error => {
-                //     if(error.response.status === 500 || error.response.status === 404){
-                //         this.messages.errorResponse= `<h4>We had some server errors, please try again later!</h4>`;
-                //         setTimeout(() => this.messages.errorResponse='', 5000);
-                //     }
-                // });
+                })
+                .catch(error => {
+                    if(error.response.status === 500 || error.response.status === 404){
+                        this.messages.errorResponse= `<h4>We had some server errors, please try again later!</h4>`;
+                        setTimeout(() => this.messages.errorResponse='', 5000);
+                    }
+                });
             }
         },
         closeNew:function(){
             this.$router.push('/price');
+        },
+        isNumeric(num) {
+            //isNaN(num) returns true if the variable does NOT contain a valid number
+            return isNaN(num);
+        },
+        resetFields(){
+            this.noviCenovnik.id = '';
+            this.noviCenovnik.nazivCenovnika= '';
+            this.noviCenovnik.cenaPoDanu = '';
+            this.noviCenovnik.cenaPoKilometru = '';
+            this.noviCenovnik.popustZaPreko30Dana = '';
+            this.noviCenovnik.cenaCollisionDamageWaiver = '';
         }
     },
     created(){
@@ -133,7 +157,3 @@ export default {
 }
 
 </style>
-
-               
-
- 

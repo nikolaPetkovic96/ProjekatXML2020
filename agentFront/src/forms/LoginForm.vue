@@ -5,7 +5,6 @@
     <div class="row no-gutter">
         <div id='bgImage' class="d-none d-md-flex col-md-4 col-lg-6 ">
          <img src='src/assets/login1.1.png'>
-         
         </div>
         <div class="col-md-8 col-lg-6">
         <div class="login d-flex align-items-center py-5">
@@ -27,12 +26,8 @@
                     </div>
 
                     <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" v-on:click='submition()'>
-                      <router-link to='/pocetnaStranica' class="nav-link" exact>Sign in</router-link>
+                        Sign in
                     </button>
-                    <div class="text-center">
-                    
-                    <router-link to='/registration' class="small" exact> Not Registrated? </router-link>
-                    </div>
                 </form>
                 </div>
             </div>
@@ -49,7 +44,6 @@
 
 import {bus} from '../main'
 import axios from "axios";
-import AgentDataService from '../services/AgentDataService';
 export default {
     name: 'Login',
     data () {
@@ -68,58 +62,39 @@ export default {
     methods: {
       submition: function () {
         console.log(this.username);
-
-        AgentDataService.agentLoginUser({
+        console.log(this.password);
+        axios.post(`http://localhost:8080/auth/login`, {
           username:this.username,
           password:this.password,
          }).then(response => {
             if(response.status === 200 ){
+              console.log("Status 200");
               this.token = response.data;
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
               localStorage.setItem('token', JSON.stringify(this.token))
-              this.proveriUlogu(this.token);
-
-              //Kad se uloguje bacim ivent (emitujem da je doslo do promene)
-              bus.$emit('loggedIn',true);
-              //korisnickoIme = this.username;
+              
+              this.$router.push('/home');
+              
             }           
           }).catch(error => {
-            if(error.response.status === 500  && error.response.data.message==='User is disabled'){
-              this.errorMessage = `<h4>Niste potvrdili registraciju putem mejla!</h4>`;
-
-              setTimeout(()=>this.errorMessage='',3000);
-            }
-            else if(error.response.status === 500  && error.response.data.message==='Bad credentials'){
+            if(error.response.status === 500  && error.response.data.message==='Bad credentials'){
               this.errorMessage = `<h4>Username ili password su pogresno uneti!</h4>`;
               
               setTimeout(()=>this.errorMessage='',3000);
             }
+            //else if(error.response.status === 500  && error.response.data.message==='User is disabled'){
+            //   this.errorMessage = `<h4>Zabranjen je pristup vasem nalogu!</h4>`;
+
+            //   setTimeout(()=>this.errorMessage='',3000);
+            // }
           });
         },
-
-
-      proveriUlogu: function(token) {
-        if (token.role == "korisnik") {
-          this.$router.push('korisnik')
-        } else if (token.role  == "admin") {
-          this.$router.push('admin')
-        }else if (token.role == "agent"){
-          this.$router.push('agent')
-        }
-      }
     },
     computed:{
         
     },
     created(){
      
-      //preuzimam id klinike na cijoj sam profilnoj stranici:
-      if(this.$route.query.token) {
-        this.generatedCode = this.$route.query.token;
-        PacijentDataService.verifyPacijenta({
-          registrationCode : this.generatedCode,
-        });
-      }
     }
   }
 </script>

@@ -92,7 +92,7 @@ export default{
                     },
                     planiranaKilometraza:2000,
                     agentId:1,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'This host',  //u DTOu za korisnika koji je kreirao oglas.
+                    korisnickoImeAgenta:'This host',  //u DTOu za korisnika koji je kreirao oglas.
                     //automobil
                     automobil:{
                         id:'1',

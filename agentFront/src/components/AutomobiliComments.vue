@@ -21,7 +21,7 @@
                     <div id='all-comments' v-bind:key="comment.id" v-for='comment in automobil.reviews'>
                         <div class="single-comment">
                             <div id='username'>{{comment.username}} </div>
-                            <div id='star-rating'>
+                            <div id='star-rating' v-if='comment.star > 0'>
                                 <star-rating
                                     inactive-color="#35424a"
                                     active-color="gold"
@@ -44,125 +44,27 @@
 </template>
 
 <script>
+import agentDataService from '../services/AgentDataService'
 import StarRating from 'vue-star-rating'
 export default {
-    name: 'carComments',
+    name: 'AutomobiliKomentar',
     data:function(){
         return {
-
-            //overview u modelu
-            comments: [],
-            //trebaju da se getuju automobili sa svim komentarima vezanim za njih
-            //potrebni su i podaci o vlasniku automobila
-            //automobili:[]
 
             //Kod prikaza sa beka se spoje Komentar i Ocena u review i tako se salje AutomobiliReviewDTO
             //iz jedne get metode u npr. KomentariController.
             //Isti DTO kao u AutomobiliDetails.vue
             //Kod agenta komentari se vezuju za automobil... Kod usera za rezervaciju, a preko nje i za automobil...
-            automobili: [
-                {
-                    id:'1',
-                    markaAut:'BMW',
-                    modelAut:'M5',
-                    klasaAut:'SUV',
-                    vrstaGoriva:'dizel',
-                    tipMenjaca:'manuelni',
-                    ukupnaOcena:5,
-                    brojSedistaZaDecu:1,
-                    predjenaKilometraza:5000,
-                    collisionDamageWaiver:true,
-                    images:[],
-                    reviews:
-                    [
-                        {
-                            id:'1',
-                            username:'VeryHappyUser002',
-                            text:'Najbolji automobil ikada! Sve pohvaleeeee! Vrh je bas',
-                            star:5,
-                        },
-                        {
-                            id:'2',
-                            username:'happyUser1',
-                            text:'Najbolji automobil ikada! Sve pohvale!',
-                            star:5,
-                        }
-                    ]
-                    
-                },
-                {
-                    id:'2',
-                    markaAut:'Mercedes',
-                    modelAut:'R8',
-                    klasaAut:'Old Tajmer',
-                    vrstaGoriva:'dizel',
-                    tipMenjaca:'manuelni',
-                    ukupnaOcena:3,
-                    brojSedistaZaDecu:2,
-                    predjenaKilometraza:800,
-                    collisionDamageWaiver:true,
-                    images:[],
-                    reviews:[
-                        {
-                            id:'3',
-                            username:'NotSoHappyUser2',
-                            text:'Nije netki automobil! Sda dnl, lndakd ondasjb jdba ndisa!',
-                            star:2,
-                        },
-                        {
-                            id:'4',
-                            username:'NotSoHappyUser3',
-                            text:'Nije netki automobil! Moglo je to mnogo bolje! Nisam bas odusevljen uslugom',
-                            star:4,
-                        },
-                        {
-                            id:'5',
-                            username:'VeryHappyUser4',
-                            text:'Sve naj naj! Dsadas dsadsd das, dasjdiod ndi assndi.',
-                            star:5,
-                        }
-                    ]
-                },
-                {
-                    id:'3',
-                    markaAut:'Audi',
-                    modelAut:'A6',
-                    klasaAut:'Gradski auto',
-                    vrstaGoriva:'dizel',
-                    tipMenjaca:'manuelni',
-                    ukupnaOcena:4,
-                    brojSedistaZaDecu:2,
-                    predjenaKilometraza:650,
-                    collisionDamageWaiver:false,
-                    images:[],
-                    reviews:[],
-                },
-            ],
+            automobili: [],
         }
     },
   methods: {
-        setRating: function (rating) {
-            this.rating = rating;
-        },
         getComments: function () {
-            // dobavljanje svih komentara preko apartmana za prikaz adminu ili hostu
-            axios
-                .get('rest/apartment/all')
-                .then(response => {
-                    this.apartments = response.data;
-                })
-        },
-        checkComment: function (updatedComment) {
-
-            updatedComment.visible = !updatedComment.visible;
-            axios
-                .put(`rest/reviews/${updatedComment.id}`, updatedComment)
-                .then(response => {
-                    this.getComments();
-                })
+            agentDataService.getAllAutomobiliReview().then(response => {
+                this.automobili = response.data;
+            })
         },
         isThereReviews:function(automobil){     
-            console.log('this.apartment.reviews.length: ' + automobil.reviews.length);   
             if(automobil.reviews === undefined || automobil.reviews.length === 0){
               return true;
             }
@@ -171,13 +73,16 @@ export default {
             }
         },
         addComment(id){
-            this.$router.push(`/carComments/${id}/newComment`);
+            this.$router.push(`/cars/comments/${id}/new`);
         }
 
     },
     components: {
         'star-rating':StarRating
     },
+    created(){
+        this.getComments();
+    }
 }
 </script>
 
@@ -222,10 +127,9 @@ export default {
 }
 
 #car-comments .comments .single-comment #comment{
-  /* font-weight: bold; */
-  font-size:15px;
-  margin:10px 0;
-  padding:10px;
+  font-size: 18px;
+  margin: 10px 0;
+  padding: 10px;
 }
 
 

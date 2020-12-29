@@ -115,7 +115,7 @@
                         <!-- <th>Reservisi</th> -->
                         <th>Oglas</th>
                         <th>Uredi</th>
-                        <th>Ukloni</th>
+                        <th>Ukloni</th>*
                     </tr>
                 </thead>
                 <tbody>
@@ -128,7 +128,7 @@
                         <td><button class=" btn-sm btn-outline-primary" v-on:click='showDetails(automobil.id)'> Detalji </button></td>
                         <!-- <td><button class=" btn-sm btn-outline-primary" v-on:click='makeReseravation(automobil.id)'> Reservisi </button></td> -->
                         <td><button class=" btn-sm btn-outline-primary" v-on:click='makeAd(automobil.id)'> Oglas </button></td>
-                        <td><button class="btn-sm btn-outline-primary" v-on:click='editCar(automobil.id)'> Uredi </button></td><!--Delete mozda moze i preko edita da na toj str. bude jedno dugme-->
+                        <td><button class="btn-sm btn-outline-primary" v-on:click='editCar(automobil.id)'> Izmeni </button></td><!--Delete mozda moze i preko edita da na toj str. bude jedno dugme-->
                         <td> <button class="btn btn-sm btn-danger" v-on:click='deleteCar(automobil.id)'> Ukloni </button></td>
                     </tr>
                 </tbody>
@@ -137,7 +137,7 @@
             <div id='options'>
                 <router-link to="/cars/new"> <button class=' btn btn-lg classButton shadow'>+ Dodaj vozilo</button>
                 </router-link>
-                <router-link to="/carComments"> <button class='btn classButton shadow'>Komentari</button>
+                <router-link to="/cars/comments"> <button class='btn classButton shadow'>Komentari</button>
                 </router-link>
                 <router-link to="/reservations"> <button class='btn classButton shadow'>Rezervacije</button>
                 </router-link>
@@ -177,7 +177,7 @@ export default {
                     markaAut:'BMW',
                     modelAut:'M5',
                     klasaAut:'SUV',
-                    vrstaGoriva:'dizel',
+                    tipGoriva:'dizel',
                     tipMenjaca:'manuelni',
                     ukupnaOcena:5,
                     brojSedistaZaDecu:1,
@@ -190,7 +190,7 @@ export default {
                     markaAut:'Mercedes',
                     modelAut:'R8',
                     klasaAut:'Old Tajmer',
-                    vrstaGoriva:'dizel',
+                    tipGoriva:'dizel',
                     tipMenjaca:'manuelni',
                     ukupnaOcena:3,
                     brojSedistaZaDecu:2,
@@ -203,7 +203,7 @@ export default {
                     markaAut:'Audi',
                     modelAut:'A6',
                     klasaAut:'Gradski auto',
-                    vrstaGoriva:'dizel',
+                    tipGoriva:'dizel',
                     tipMenjaca:'manuelni',
                     ukupnaOcena:4,
                     brojSedistaZaDecu:2,

@@ -22,30 +22,30 @@
                         <h6><b>Vrsta goriva:</b> {{narudzbenica.oglas.automobil.vrstaGoriva}}</h6>
                         <h6><b>Tip menjaca:</b> {{narudzbenica.oglas.automobil.tipMenjaca}}</h6>
                         <table id='showPriceTable'>
-                    <thead>
-                        <tr>
-                            <th>Naziv cenovnika</th>
-                            <th>Cena po danu</th>
-                            <th>Cena po kilometru</th>
-                            <th>CDW</th>
-                            <th>Popust preko 30 dana</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{narudzbenica.oglas.cenovnik.nazivCenovnika}}</td>
-                            <td>{{narudzbenica.oglas.cenovnik.cenaPoDanu}}</td>
-                            <td>{{narudzbenica.oglas.cenovnik.cenaPoKilometru}}</td>
-                            <td>{{narudzbenica.oglas.cenovnik.cenaCollisionDamageWaiver}}</td>
-                            <td>{{narudzbenica.oglas.cenovnik.popustZaPreko30Dana}}</td>
-                        </tr>     
-                    </tbody>            
-                </table>
-            </div>
+                            <thead>
+                                <tr>
+                                    <th>Naziv cenovnika</th>
+                                    <th>Cena po danu</th>
+                                    <th>Cena po kilometru</th>
+                                    <th>CDW</th>
+                                    <th>Popust preko 30 dana</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{narudzbenica.oglas.cenovnik.nazivCenovnika}}</td>
+                                    <td>{{narudzbenica.oglas.cenovnik.cenaPoDanu}}</td>
+                                    <td>{{narudzbenica.oglas.cenovnik.cenaPoKilometru}}</td>
+                                    <td>{{narudzbenica.oglas.cenovnik.cenaCollisionDamageWaiver}}</td>
+                                    <td>{{narudzbenica.oglas.cenovnik.popustZaPreko30Dana}}</td>
+                                </tr>     
+                            </tbody>            
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </template>
 
 <script>

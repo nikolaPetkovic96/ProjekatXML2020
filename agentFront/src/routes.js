@@ -100,13 +100,13 @@ export default [
     },
     {
         // path:'/cars/comments',
-        path:'/carComments',
+        path:'/cars/comments',
         name:'AutomobiliKomentar',
         component:AutomobiliComments
     },
     { 
-        path:'/carComments/:id/newComment',
-        name:'NoviKomentar',
+        path:'/cars/comments/:id/new',
+        name:'carNewComment',
         component:AutomobiliCommentsNew
     },
     {

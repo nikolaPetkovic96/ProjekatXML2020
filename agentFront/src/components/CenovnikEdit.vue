@@ -5,48 +5,48 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
         <div class="container">
-            <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
-            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
 
             <div v-if='messages.errorNaziv' class="alert alert-danger" v-html="messages.errorNaziv"></div>       
             <label class='label'>Novi naziv cenovnika :</label>
-            <input style="width:100%; padding:10px; margin-bottom:25px" type="text" placeholder="Unestite naziv..." v-model="updatedCenovnik.nazivCenovnika">
+            <input class='full-size' type="text" placeholder="Unestite naziv..." v-model="updatedCenovnik.nazivCenovnika">
     
             <div v-if='messages.errorCenaPoDanu' class="alert alert-danger" v-html="messages.errorCenaPoDanu"></div>       
             <label class='label'>Nova cena po danu :</label>
-            <input style="width:100%; padding:10px; margin-bottom:25px" type="text" placeholder="Unesite dnevnu cenu..." v-model="updatedCenovnik.cenaPoDanu">
+            <input class='full-size' type="text" placeholder="Unesite dnevnu cenu..." v-model="updatedCenovnik.cenaPoDanu">
 
             <div v-if='messages.errorCenaPoKilometru' class="alert alert-danger" v-html="messages.errorCenaPoKilometru"></div>       
             <label class='label'>Nova cena po kilometru :</label>
-            <input style="width:100%; padding:10px; margin-bottom:25px" type="text" placeholder="Unesite kilometarsku cenu..." v-model="updatedCenovnik.cenaPoKilometru">
+            <input class='full-size' type="text" placeholder="Unesite kilometarsku cenu..." v-model="updatedCenovnik.cenaPoKilometru">
         
-            <!-- <div v-if='messages.errorCenaCDW' class="alert alert-danger" v-html="messages.errorCenaCDW"></div>        -->
+            <div v-if='messages.errorCenaCDW' class="alert alert-danger" v-html="messages.errorCenaCDW"></div>       
             <label class='label'>Nova cena za Collision Damage Waiver :</label>
-            <input style="width:100%; padding:10px; margin-bottom:25px" type="text" placeholder="Unesite CDW..." v-model="updatedCenovnik.cenaCollisionDamageWaiver">
+            <input class='full-size' type="text" placeholder="Unesite CDW..." v-model="updatedCenovnik.cenaCollisionDamageWaiver">
             
-            <!-- <div v-if='messages.errorCena30Dana' class="alert alert-danger" v-html="messages.errorCena30Dana"></div>        -->
-            <label class='label'>Novi popust za preko 30 dana :</label>
-            <input style="width:100%; padding:10px; margin-bottom:25px" type="text" placeholder="Unesite popust..." v-model="updatedCenovnik.popustZaPreko30Dana">
+            <div v-if='messages.errorCena30Dana' class="alert alert-danger" v-html="messages.errorCena30Dana"></div>       
+            <label class='label'>Novi popust za preko 30 dana (u %):</label>
+            <input class='full-size' type="text" placeholder="Unesite popust..." v-model="updatedCenovnik.popustZaPreko30Dana">
               
-            
-            <button class="btn btn-success" v-on:click='editPrice()'>Save</button>
-            <button class="btn btn-danger" v-on:click='closeEdit()'>Close</button>
+            <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
+            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
+            <button class="btn btn-success" v-on:click='editPrice()'>Potvrdi</button>
+            <button class="btn btn-danger" v-on:click='closeEdit()'>Odustani</button>
         </div>
     </div>
 </template>
 
 <script>
+import agentDataService from '../services/AgentDataService'
 export default {
     name: 'cenovnik-edit',
     data(){
         return{
             updatedCenovnik:{
-                id:'1',
-                cenaPoDanu:100,
-                nazivCenovnika:'Cenovnik 1',
-                popustZaPreko30Dana:'10%',
-                cenaCollisionDamageWaiver:1000,
-                cenaPoKilometru:10
+                id:'',
+                nazivCenovnika:'',
+                cenaPoDanu: '',
+                popustZaPreko30Dana:'',
+                cenaCollisionDamageWaiver:'',
+                cenaPoKilometru:''
             },
             messages:{
                 errorNaziv:'',
@@ -61,6 +61,7 @@ export default {
     },
     methods:{
         editPrice:function(){
+            console.log('Edit price!');
             if(this.updatedCenovnik.nazivCenovnika == ''){
                 this.messages.errorNaziv =  `<h4>Naziv cenovnika ne sme biti prazno polje!</h4>`;
                 setTimeout(()=>this.messages.errorNaziv='',3000);
@@ -69,12 +70,35 @@ export default {
                 this.messages.errorCenaPoDanu =  `<h4>Cena po danu ne sme biti prazno polje!</h4>`;
                 setTimeout(()=>this.messages.errorCenaPoDanu = '' ,3000);
             }
+            else if (this.isNumeric(this.updatedCenovnik.cenaPoDanu)) {
+                this.messages.errorCenaPoDanu = `<h4>Cena po danu mora biti broj!</h4>`;
+                setTimeout(() => this.messages.errorCenaPoDanu = '', 5000);
+            }
             else if(this.updatedCenovnik.cenaPoKilometru == ''){
                 this.messages.errorCenaPoKilometru =  `<h4>Cena po kilometru ne sme biti prazno polje!</h4>`;
                 setTimeout(()=>this.messages.errorCenaPoKilometru = '' ,3000);
             }
+            else if(this.isNumeric(this.updatedCenovnik.cenaPoKilometru)){
+                this.messages.errorCenaPoKilometru =  `<h4>Cena po kilometru mora biti broj!</h4>`;
+                setTimeout(()=>this.messages.errorCenaPoKilometru = '' , 3000);
+            }
             
-            else if(this.updatedCenovnik.nazivCenovnika== '' && this.updatedCenovnik.cenaPoDanu == '' &&  this.updatedCenovnik.CenaPoKilometru == ''){
+            else if(this.isNumeric(this.updatedCenovnik.cenaCollisionDamageWaiver)){
+                this.messages.errorCenaCDW =  `<h4>CDW mora biti broj!</h4>`;
+                setTimeout(()=>this.messages.errorCenaCDW = '' , 3000);
+            }
+
+            else if(this.isNumeric(this.updatedCenovnik.popustZaPreko30Dana)){
+                this.messages.errorCena30Dana =  `<h4>Popust mora biti broj!</h4>`;
+                setTimeout(()=>this.messages.errorCena30Dana = '' , 3000); 
+            }
+
+            else if(this.updatedCenovnik.popustZaPreko30Dana < 0 || this.updatedCenovnik.popustZaPreko30Dana > 100 ){
+                this.messages.errorCena30Dana =  `<h4>Popust mora biti broj u intervalu od 0 do 100!</h4>`;
+                setTimeout(()=>this.messages.errorCena30Dana = '' , 5000); 
+            }
+            
+            else if(this.updatedCenovnik.nazivCenovnika == '' && this.updatedCenovnik.cenaPoDanu == '' &&  this.updatedCenovnik.CenaPoKilometru == ''){
                 this.messages.errorNaziv =  `<h4>Naziv cenovnika ne sme biti prazno polje!</h4>`;
                 this.messages.errorCenaPoDanu =  `<h4>Cena po danu ne sme biti prazno polje!</h4>`;
                 this.messages.errorCenaPoKilometru =  `<h4>Cena po kilometru ne sme biti prazno polje!</h4>`;
@@ -83,38 +107,43 @@ export default {
                 setTimeout(()=> this.messages.errorCenaPoKilometru='', 3000); 
             }
             else{
-                alert(`
-                    ${this.updatedCenovnik.nazivCenovnika}
-                    ${this.updatedCenovnik.cenaPoDanu}
-                    ${this.updatedCenovnik.cenaPoKilometru}
-                    ${this.updatedCenovnik.popustZaPreko30Dana}
-                    ${this.updatedCenovnik.cenaCollisionDamageWaiver}
-                `);
-                // axios
-                // .put(`rest/amenities/${this.updatedAmenity.id}`, this.updatedAmenity)
-                // .then(response => {
-                //     this.messages.successResponse = `<h4>Amenity was updated successfuly!</h4>`;
-                //     this.updatedAmenity.name='';
-                //     this.showAllAmenities();
-                //     setTimeout(() => this.messages.successResponse='', 5000);
+                agentDataService.updateCenovnik(this.updatedCenovnik).then(Response => {
+                    this.messages.successResponse = `<h4>Uspešno ste izmenili cenovnik!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 3000);
 
-                // })
-                // .catch(error => {
-                //     if(error.response.status === 500 || error.response.status === 404){
-                //         this.messages.errorResponse= `<h4>We had some server errors, please try again later!</h4>`;
-                //         setTimeout(() => this.messages.errorResponse='', 5000);
-                //     }
-                // });
+                    // this.getUserProfile();
+                    this.updatedCenovnik = Response.data;
+                })
+                .catch(error => {
+                    if(error.response.status === 500 || error.response.status === 404){
+                        this.messages.errorResponse= `<h4>Imamo nekih problema na serveru, molimo vas pokušajte kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse='', 5000);
+                    }
+                });
             }
         },
         closeEdit:function(){
             this.$router.push('/price');
-        }
+        },
+
+        getPrice:function(){
+            agentDataService.getCenovnik(this.id)
+            .then(response => {
+                this.updatedCenovnik = response.data;
+            })
+        },
+        isNumeric(num) {
+            //isNaN(num) returns true if the variable does NOT contain a valid number
+            return isNaN(num);
+        },
     },
     computed:{
         id() {
             return this.$route.params.id; //preuzimam id usera na cijoj sam stranici za prikaz komentara
         }
+    },
+    created(){
+        this.getPrice();
     }
 }
 
@@ -138,6 +167,12 @@ export default {
         margin: 10px 0 10px;
         font-size: 20px;
         font-weight: bold;
+    }
+    .full-size{
+        width:100%;
+        padding:10px;
+        margin-bottom:25px;
+        font-size:18px;
     }
 
 </style>

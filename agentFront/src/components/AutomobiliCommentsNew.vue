@@ -5,26 +5,24 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
         <div class="container" id='main'>
-            <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
-            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
-            <!-- <label>Comment:</label>-->
-            <label>Komentar:</label> 
+            <label>Komentar:</label>
             <div v-if='messages.errorText' class="alert alert-danger" v-html="messages.errorText"></div>
             <textarea v-model='noviKomentar.tekstKomentara' placeholder="Unesite komentar..."></textarea>
             <br>        
-
+            <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
+            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
             <button class="btn btn-lg btn-success shadow" v-on:click='addComment'> Potvrdi </button>
         </div>
     </div>
 </template>
 
 <script>
+import agentDataService from '../services/AgentDataService'
 export default {
-    name: 'AutomobiliCommentsNew ',
+    name: 'carNewComment',
     data:function(){
         return {
             noviKomentar: {
-                userId: '', //za CommonData
                 automobilId: '',
                 tekstKomentara: '',
                 odobren: false,
@@ -43,27 +41,25 @@ export default {
                 setTimeout(() => this.messages.errorText = '', 3000);
             }
             else {
-                alert(`
+            console.log(`Komentar:
                 automobilId: ${this.noviKomentar.automobilId},
-                username: ${this.noviKomentar.userId},
-                text: ${this.noviKomentar.tekstPoruke},
-                visible: ${this.noviKomentar.odobren},
-                `);
-                // axios
-                //     .post('rest/reviews/', this.review)
-                //     .then(response => {
-                //         this.messages.successResponse = `<h4>Your review was sent successfully! Thank you for your feedback!</h4>`;
-                //         this.review.text = '';
-                //         this.review.star = null;
-                //         setTimeout(() => this.messages.successResponse = '', 5000);
+                tekstKomentara: ${this.noviKomentar.tekstKomentara},
+                odobren: ${this.noviKomentar.odobren},
+            `);
 
-                //     })
-                //     .catch(error => {
-                //         if (error.response.status === 500 || error.response.status === 404) {
-                //             this.messages.errorResponse = `<h4>We had some server errors, please try again later!</h4>`;
-                //             setTimeout(() => this.messages.errorResponse = '', 5000);
-                //         }
-                //     });
+                agentDataService.addKomentar(this.noviKomentar)
+                    .then(response => {
+                        this.messages.successResponse = `<h4>Vaša poruka je uspešno poslata!</h4>`;
+                        this.noviKomentar.tekstKomentara = '';
+                        setTimeout(() => this.messages.successResponse = '', 5000);
+
+                    })
+                    .catch(error => {
+                        if (error.response.status === 500 || error.response.status === 404) {
+                            this.messages.errorResponse = `<h4>Žao nam je imali smo nekoh problema na serveru, molimo Vas pokušajte kasnije!</h4>`;
+                            setTimeout(() => this.messages.errorResponse = '', 5000);
+                        }
+                    });
             }
         },
     },
@@ -74,12 +70,11 @@ export default {
         }
     },
     created() {
-        if (!localStorage.getItem('jwt')){
-            this.$router.push('/login');
-        }
-
-        //this.review.userId = this.user.username;
-        this.noviKomentar.automobilId = this.id
+        // const token = JSON.parse(localStorage.getItem('token'));
+        // if (!token.accessToken){
+        //     this.$router.push('/login');
+        // }
+        this.noviKomentar.automobilId = this.id;
     },
     
 }

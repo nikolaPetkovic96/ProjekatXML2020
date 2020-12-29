@@ -75,7 +75,8 @@ export default {
                 role: ''
             },
 
-            //Prilikom rucnog dodavanja rezervacije kreira se odmah i narudzbenica za taj termin koja se poveze sa rezervacijom,
+            //Prilikom rucnog dodavanja rezervacije kreira se odmah i narudzbenica za taj termin
+            //koja se poveze sa rezervacijom,
             //DTO koji spaja atribute rezervacije i narudzbenice.
             rezervacijaOglasDTO:{
             //Rezervacija
@@ -89,9 +90,6 @@ export default {
                 doDatuma: null,
                 agentId:null, // ili samo username pa na beku id da dodelimo...
                 //userId:null //Ili Ime i prezime onoga za koga se rezervise da li treba???
-            //Na beku se dodaje:
-                //commonDataId: u oba
-                //NarudzbenicaId: u rezervaciju
             },
             
             terminOglasa:{
@@ -104,16 +102,14 @@ export default {
                 id:1,
                 odDatuma:1607003400000, //3 dec
                 doDatuma:1609077000000, //27 dec
-                lokacija:'9. Marta bb Novi Sad',
                 TAdresa:{
                     mesto:'Novi Sad',
                     ulica:'9. Marta',
                     broj:'bb',
                     postanskiBroj:'21000',
-                    longitude:'45',
-                    latitude:'54',
                 },
                 planiranaKilometraza:2000,
+                agentId:1,
                 username:'This host', //u DTOu za korisnika koji je kreirao oglas.
                 zauzetiTermini:[
                     {
@@ -125,7 +121,7 @@ export default {
                         to: 1608041580000, // 15 dec
                     }
                 ],
-                //automobil
+                //automobil u okviru oglasa
                 automobil:{
                     id:'1',
                     markaAut:'BMW',
@@ -138,7 +134,7 @@ export default {
                     predjenaKilometraza:5000,
                     collisionDamageWaiver:true,
                 },
-                //cena    
+                //cenovnik u okviru oglasa    
                 cenovnik:{
                     id:'1',
                     cenaPoDanu:100,
@@ -268,7 +264,7 @@ export default {
 		//Metoda za automatsko racunanje krajnjeg datuma spram broja nocenja i cene rezervacija spram cene apartmana * broj nocenja
 		calculatePriceAndDate: function () {
             this.rezervacijaOglasDTO.ukupnaCena = this.odabran_br_dana * this.odabraniOglas.cenovnik.cenaPoDanu;
-            if(this.odabran_br_dana > 20){
+            if(this.odabran_br_dana > 30){
                
                 if(this.odabraniOglas.cenovnik.popustZaPreko30Dana != null){
                     this.popust =  this.rezervacijaOglasDTO.ukupnaCena * (this.odabraniOglas.cenovnik.popustZaPreko30Dana/100);
@@ -325,7 +321,7 @@ export default {
 	},
 	mounted() {
 		//dodaje se opseg dana za izbor trajanja iznajmljivanja
-		this.br_dana = this.range(1, 28);
+		this.br_dana = this.range(1, 45);
         this.setAd(this.odabraniOglas);
 		// axios
 		// 	.get('rest/ad/' + this.$route.params.id)

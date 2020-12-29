@@ -30,7 +30,7 @@
                  <!-- Osoba -->
                     <li class="list-group-item" v-if='isAgentType == "firma"'>
                         <h5 class="header5">Naziv firme</h5>
-                        <h4>{{profile.nazivFirme}}</h4>
+                        <h4>{{profile.naziv}}</h4>
                     </li>
 
                     <li class="list-group-item" v-if='isAgentType == "firma"'>
@@ -45,13 +45,13 @@
 
                     <li class="list-group-item">
                         <h5 class="header5">Adresa</h5>
-                        <h4>{{profile.TAdresa.ulica}} {{profile.TAdresa.broj}} (ulica/broj)</h4>
-                        <h6>{{profile.TAdresa.postanskiBroj}} {{profile.TAdresa.mesto}} (post_br/grad)</h6>
+                        <h4>{{profile.adresa.ulica}} {{profile.adresa.broj}} (ulica/broj)</h4>
+                        <h6>{{profile.adresa.postanskiBroj}} {{profile.adresa.mesto}} (post_br/grad)</h6>
                     </li>
                 </ul>
 
                 <div id='buttonUpdate'>
-                    <button type='button' class="btn btn-lg btn-success marg" v-on:click='updatePatient(profile.id)'> Update</button> 
+                    <button type='button' class="btn btn-lg btn-success marg" v-on:click='updateAgent(profile.id)'> Update</button> 
                 </div>
             </form>
         </div>
@@ -59,74 +59,64 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
+import agentDataService from '../services/AgentDataService'
 export default {
     data(){
         return{
         //kada je agent osoba //zakomentarisati kod za test agent firma
-        profile: {
+         profile: {
                 //Osoba
-                id:'1',
-                ime:'Agent',
-                prezime:'Agentic',
-                jmbg:'21321412412',
-                pol:'Muski',
+                id:'',
+                ime:'',
+                prezime:'',
+                jmbg:'',
+                pol:'',
                 //firma
-                nazivFirme:'',
+                naziv:'',
                 poslovniMaticniBroj:'',
                 //user
-                korisnickoIme:'AgentX',
-                email:'agent996@gmai.com',
-                status:'aktivan',
-                TAdresa:{
-                    mesto:'Beograd',
-                    ulica:'Bulevar Bulevara',
-                    broj:'bb',
-                    postanskiBroj:'11000',
+                korisnickoIme:'',
+                email:'',
+                status:'',
+                adresa:{
+                    mesto:'',
+                    ulica:'',
+                    broj:'',
+                    postanskiBroj:'',
                 },
             }
-            // //kada je agent firma // otkomentarisati kod za test agent firma 
-            // profile: {
-            //     //Osoba
-            //     id:'1',
-            //     ime:'',
-            //     prezime:'',
-            //     jmbg:'',
-            //     pol:null,
-            //     //firma
-            //     nazivFirme:'AgentskaFirma',
-            //     poslovniMaticniBroj:'21321515',
-            //     //user
-            //     korisnickoIme:'AgentX',
-            //     email:'agent996@gmai.com',
-            //     status:'aktivan',
-            //     TAdresa:{
-            //         mesto:'Beograd',
-            //         ulica:'Bulevar Bulevara',
-            //         broj:'bb',
-            //         postanskiBroj:'11000',
-            //     },
-            // }
         }
     },
     methods:{
-        updatePatient(id){
+        getAgentProfileData(id){
+            agentDataService.getAgent(id).then(response => {
+                this.profile = response.data;
+            })
+        },
+        updateAgent(id){ 
             this.$router.push(`/profile/${id}/update`);
-        }
+        },
+        
     },
     computed:{
         isAgentType(){
-            if(this.profile.ime == '' && this.profile.prezime == '' && this.profile.jmbg == '' && this.profile.pol == null){
+            if(this.profile.ime == null && this.profile.prezime == null && this.profile.jmbg == null && this.profile.pol == null){
                 return 'firma';
             }
-            else if(this.profile.nazivFirme == '' && this.profile.poslovniMaticniBroj == ''){
+            else if(this.profile.nazivFirme == null && this.profile.poslovniMaticniBroj == null){
                 return 'osoba';
             }
-        }
+        },
+        id() {
+            return this.$route.params.id; //preuzimam id usera na cijoj sam stranici za prikaz profila
+        },
     },
+
     created(){
-     
+        let parsToken = JSON.parse(localStorage.getItem('parsToken'));
+        this.getAgentProfileData(parsToken.id);
     },
+
 }
 </script>
 

@@ -64,7 +64,7 @@
                 </div>
             </div>
 
-             <!-- Statistics -->
+            <!-- Statistics -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
                     <router-link style='text-decoration: none;color:#35424a;' to="/statistics" class="nav-link" exact>
@@ -111,16 +111,26 @@ import axios from 'axios'
 export default {
     data(){
         return{
-         user:{
-             username:'Agent'
-         }
+            user:{
+                username:''
+            }
         }
     },
     methods:{
+        parseJwt:function(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
 
+            return JSON.parse(jsonPayload);
+        },
     },
     created(){
-     
+        let parsToken = this.parseJwt(localStorage.getItem('token'));
+        localStorage.setItem('parsToken', JSON.stringify(parsToken));
+        this.user.username = parsToken.username;
     },
 }
 </script>
