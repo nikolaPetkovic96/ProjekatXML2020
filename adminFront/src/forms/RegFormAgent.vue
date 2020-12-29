@@ -46,7 +46,7 @@
 
 <script>
 
-import AdminDataService from '../services/AdminDataService'
+import adminDataService from '../services/AdminDataService'
 export default {
   name: 'Registration',
 	data() {
@@ -66,10 +66,13 @@ export default {
   methods: {
     submition:function() {
       if(this.form.password ===  this.confPassword){
-        AdminDataService.confirmRegistrationAgent(this.form)
+        console.log('form: ' + JSON.stringify(this.form));
+        adminDataService.confirmRegistrationAgent(this.form)
         .then(response =>{
-          this.message = `<h4>Hvala <b>${response.data.ime}</b> sto ste se registrovali!</h4>`;
+          this.message = `<h4>Hvala <b>${response.data.ime} ${response.data.prezime}</b> sto ste se registrovali! Možete se ulogovati 
+          na vašu agentsku aplikaciju sa prethodno unetim kredencijalima</h4>`;
           this.submitted = true;
+          //Preusmeriti ga na stranicu za login agenta:
         }).catch(error => {
           if(error.response.status === 500  && error.response.data.message==='Username already exists you mappet!'){
             this.messageConfirmPassword = `<h5>Vec postoji korisnik sa unetim <b>korisnickim imenom<b> ! Molimo Vas pokusajte uneti druge vrednosti !</h5>`;

@@ -9,7 +9,7 @@
             . Adresa
             . Poslovni maticni broj -->
         <div class='container'>
-            <div class="form-label-group">
+            <div class="form-group">
                 <label>Tip agenta</label>
                 <br>
                 <input type="radio" v-model="agentType" required value="osoba" v-on:click='agentTypeChange'> Osoba
@@ -51,13 +51,13 @@
             </div>
 
             <div style="margin-top:20px" v-if='messages.errorEmail' class="alert alert-danger" v-html="messages.errorEmail"></div>
-            <div class="form-label-group half-size">  
+            <div class="form-group half-size">  
                 <label>Email</label>
                 <input type="email" placeholder="Unesite email..." class="form-control" v-model="noviAgent.email"/>
             </div>
 
             <div style="margin-top:20px" v-if='messages.errorPol' class="alert alert-danger" v-html="messages.errorPol"></div>
-            <div class="form-label-group" v-if='agentType == "osoba"'>
+            <div class="form-group" v-if='agentType == "osoba"'>
                 <label>Pol</label>
                 <br>
                 <input type="radio" v-model="noviAgent.pol" required value="muski"> Muski
@@ -68,10 +68,10 @@
             <div style="margin-top:20px" v-if='messages.errorAdresa' class="alert alert-danger" v-html="messages.errorAdresa"></div>
             <label>Adresa</label>
             <div>
-              <input class="one-forth" placeholder="Unesite grad..." v-model='noviAgent.TAdresa.mesto'>
-              <input class="one-forth" placeholder="Unesite ulicu..." v-model='noviAgent.TAdresa.ulica'>
-              <input class="one-forth" placeholder="Unesite broj..." v-model='noviAgent.TAdresa.broj'>
-              <input class="one-forth" placeholder="Unesite postanski broj..." v-model='noviAgent.TAdresa.postanskiBroj'>
+              <input class="one-forth" placeholder="Unesite grad..." v-model='noviAgent.tadresa.mesto'>
+              <input class="one-forth" placeholder="Unesite ulicu..." v-model='noviAgent.tadresa.ulica'>
+              <input class="one-forth" placeholder="Unesite broj..." v-model='noviAgent.tadresa.broj'>
+              <input class="one-forth" placeholder="Unesite postanski broj..." v-model='noviAgent.tadresa.postanskiBroj'>
             </div>
 
             <div v-if='messages.error' id='testError' class="alert alert-danger half-size" v-html="messages.error"></div>
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import adminDataService from '../services/AdminDataService'
 export default {
     name:'Agent-registration',
     data:function(){
@@ -100,7 +101,7 @@ export default {
                 korisnickoIme:'',
                 email:'',
                 status:'neaktivan',
-                TAdresa:{
+                tadresa:{
                     mesto:'',
                     ulica:'',
                     broj:'',
@@ -138,10 +139,10 @@ export default {
             this.noviAgent.korisnickoIme = '';
             this.noviAgent.email = '';
             this.noviAgent.status = 'neaktivan';
-            this.noviAgent.TAdresa.mesto = '';
-            this.noviAgent.TAdresa.ulica = '';
-            this.noviAgent.TAdresa.broj = '';
-            this.noviAgent.TAdresa.postanskiBroj = '';
+            this.noviAgent.tadresa.mesto = '';
+            this.noviAgent.tadresa.ulica = '';
+            this.noviAgent.tadresa.broj = '';
+            this.noviAgent.tadresa.postanskiBroj = '';
         },
         showComments:function(id){
             this.$router.push(`/adminTest/${id}/comments`);
@@ -204,37 +205,37 @@ export default {
                 setTimeout(() => this.errorEmail = '', 5000);
             }
             //Adresa
-            else if (this.noviAgent.TAdresa.mesto == '') {
+            else if (this.noviAgent.tadresa.mesto == '') {
                 this.messages.errorAdresa = `<h4> Polje mesto u adresi agenta ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
-            else if (this.noviAgent.TAdresa.ulica == '') {
+            else if (this.noviAgent.tadresa.ulica == '') {
                 this.messages.errorAdresa = `<h4> Polje ulica u adresi agenta ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
-            else if (this.noviAgent.TAdresa.broj == '') {
+            else if (this.noviAgent.tadresa.broj == '') {
                 this.messages.errorAdresa = `<h4> Polje broj u adresi agenta ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
-            else if (this.noviAgent.TAdresa.postanskiBroj == '') {
+            else if (this.noviAgent.tadresa.postanskiBroj == '') {
                 this.messages.errorAdresa = `<h4> Polje postanski broj u adresi agenta ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
-            else if(this.isNumeric(this.noviAgent.TAdresa.postanskiBroj)){
+            else if(this.isNumeric(this.noviAgent.tadresa.postanskiBroj)){
                 this.messages.errorJMBG = `<h4>Vrednost poštanskog broj mora biti broj!</h4>`;
                 setTimeout(() => this.messages.errorJMBG = '', 5000);
             }
             else {
-                // console.log('this.agentType: ' + this.agentType);
-                console.log('this.noviAgent.ime: ' + this.noviAgent.ime);
-                console.log('this.noviAgent.prezime: ' + this.noviAgent.prezime);
-                console.log('this.noviAgent.pol: ' + this.noviAgent.pol);
-                console.log('this.noviAgent.jmbg: ' + this.noviAgent.jmbg);
-                console.log('this.noviAgent.naziv: ' + this.noviAgent.nazivFirme);
-                console.log('this.noviAgent.poslovniMaticniBroj: ' + this.noviAgent.poslovniMaticniBroj);
-                console.log('this.noviAgent.emailt: ' + this.noviAgent.email);
-                console.log('this.noviAgent.TAdresa.ulica: ' + this.noviAgent.TAdresa.ulica);
-                console.log('this.noviAgent: ' + this.noviAgent.korisnickoIme);
+                console.log('Agent: ' + JSON.stringify(this.noviAgent));
+                adminDataService.addAgent(this.noviAgent).then(response => {
+                    alert("Uspešno ste dodali novog agenta!")
+                    this.$router.push("/home");   
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });    
           
             }
         },

@@ -8,37 +8,51 @@ const CAR_API_URL = `${API_URL}/automobil-service`; //npr: http://localhost:2020
 //3. Glavni deo: napravi klasu koja ima sve funkciju za pozivanje get/set/put/delet metode kojoj se prosledjuje 
 //gore definisana putanja
 
+if(JSON.parse(localStorage.getItem('token')) != null){
+    const token = JSON.parse(localStorage.getItem('token'));
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token.accessToken;
+}
+
 class AdminDataService{
 
-    confirmRegistrationAdmin(admin){
-        return axios.post(`${LOGINREG_API_URL}/register-admin`, admin);
-    }
-    confirmRegistrationAgent(agent){
-        return axios.post(`${LOGINREG_API_URL}/register-agent`, agent);
-    }
-    adminLoginUser(form){
-        return axios.post(`${LOGINREG_API_URL}/login`, form);
-    }
-
     //USERI
+
+    //AdminUserAuthorities.vue
     getAllUsers(){
         const request = "?type=user";
         // const request = "";
         return axios.get(`${LOGINREG_API_URL}/${request}`);
     }
+    //AdminRegAdmin.vue
+    addAdmin(admin){
+        return axios.post(`${LOGINREG_API_URL}/register-admin`, admin);
+    }
+    //AdminAgent.vue
+    addAgent(agent){
+        return axios.post(`${LOGINREG_API_URL}/register-agent`, agent);
+    }
+    //RegFomrAdmin.vue
+    confirmRegistrationAdmin(admin){
+        return axios.post(`${LOGINREG_API_URL}/activate`, admin);
+    }
+    //RegFomrAgent.vue
+    confirmRegistrationAgent(agent){
+        return axios.post(`${LOGINREG_API_URL}/activate`, agent);
+    }
+    //LoginForm.vue
+    adminLoginUser(form){
+        return axios.post(`${LOGINREG_API_URL}/login`, form);
+    }
 
     // PROFIL
+    // AdminProfile.vue
     getAdmin(id){
         console.log('getAdmin: ' + id);
-        return axios.get(`${LOGINREG_API_URL}/${id}`);
+        return axios.get(`${LOGINREG_API_URL}/profile`);
     }
-
-    //AdminProfile.vue i UsrAgentProfileUpdate.vue
-    getAdmin(userId){
-        return axios.get(`${API_URL}/user/${userId}`);
-    }
-    updateAdminprofile(){
-        return axios.put(`${API_URL}/user`, profile);
+    //AdminProfile.vue i AdminProfileUpdate.vue
+    updateAdminProfile(profile){
+        return axios.put(`${LOGINREG_API_URL}/profile/update`, profile);
     }
 
 

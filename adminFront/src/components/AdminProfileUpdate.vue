@@ -25,7 +25,7 @@
 					<input type="text" class="form-control" v-model="profile.prezime" />
 				</fieldset>
 
-				<div class="form-label-group">
+				<div class="form-group">
 					<label>Pol</label>
 					<br>
 					<input type="radio" v-model="profile.pol" required value="Muski"> Muski
@@ -38,10 +38,10 @@
                  <div style="margin-top:20px" v-if='messages.errorAdresa' class="alert alert-danger" v-html="messages.errorAdresa"></div>
                     <label>Adresa</label>
                     <div>
-                    <input class="one-forth" placeholder="Unesite grad..." v-model='profile.TAdresa.mesto'>
-                    <input class="one-forth" placeholder="Unesite ulicu..." v-model='profile.TAdresa.ulica'>
-                    <input class="one-forth" placeholder="Unesite broj..." v-model='profile.TAdresa.broj'>
-                    <input class="one-forth" placeholder="Unesite postanski broj..." v-model='profile.TAdresa.postanskiBroj'>
+                    <input class="one-forth" placeholder="Unesite grad..." v-model='profile.tadresa.mesto'>
+                    <input class="one-forth" placeholder="Unesite ulicu..." v-model='profile.tadresa.ulica'>
+                    <input class="one-forth" placeholder="Unesite broj..." v-model='profile.tadresa.broj'>
+                    <input class="one-forth" placeholder="Unesite postanski broj..." v-model='profile.tadresa.postanskiBroj'>
                 </div>
 
 				<hr>
@@ -67,7 +67,7 @@
 					<input type="password" class="form-control" v-model="changedPassword.newPasswordRepeat" placeholder="Ponovite novu loznku..."  />
 				</fieldset>
 
-				<button type="button" class="btn btn-lg btn-success" v-on:click='updateProfile'> Save </button>
+				<button type="button" class="btn btn-lg btn-success" v-on:click='updateProfile'> Potvrdi </button>
 				<hr>
 				<div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
 				<div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
@@ -79,26 +79,21 @@
 
 <script>
 import axios from 'axios'
-
+import adminDataService from '../services/AdminDataService'
 export default {
     data(){
         return{
             profile: {
-                id:'1',
-                ime:'Admin',
-                prezime:'Adminovic',
-                jmbg:'21321412412',
-                pol:'Muski',
-                korisnickoIme:'AdminX',
-                email:'admin996@gmai.com',
-                lozinka:'test',
-                status:'aktivan',
-                TAdresa:{
-                    mesto:'Beograd',
-                    ulica:'Bulevar Bulevara',
-                    broj:'bb',
-                    postanskiBroj:'11000',
-                },
+            	id:null,
+                korisnickoIme:null,
+                lozinka:null,
+                email:null,
+                status:null,
+                pol:null,
+                prezime:null,
+                ime:null,
+                jmbg:null,
+                staraLozinka:null,
             },
 
 			changedPassword: {
@@ -122,6 +117,12 @@ export default {
         }
     },
     methods:{
+        getAdminProfileData:function(){
+            adminDataService.getAdmin().then(response => {
+                this.profile = response.data;
+                console.log("admin: " + JSON.stringify(this.profile));
+            })
+        },
         updateProfile: function () {
             // First name i last name se u paru gledaju da li su popunjeni
             // Ako su oba prazna u isto vreme ce za oba izbaciti error
@@ -141,24 +142,24 @@ export default {
 
             }
            //Adresa
-            else if (this.profile.TAdresa.mesto == '') {
+            else if (this.profile.tadresa.mesto == '') {
                 this.messages.errorAdresa = `<h4> Polje mesto u adresi agenta ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
-            else if (this.profile.TAdresa.ulica == '') {
+            else if (this.profile.tadresa.ulica == '') {
                 this.messages.errorAdresa = `<h4> Polje ulica u adresi agenta ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
-            else if (this.profile.TAdresa.broj == '') {
+            else if (this.profile.tadresa.broj == '') {
                 this.messages.errorAdresa = `<h4> Polje broj u adresi agenta ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
-            else if (this.profile.TAdresa.postanskiBroj == '') {
+            else if (this.profile.tadresa.postanskiBroj == '') {
                 this.messages.errorAdresa = `<h4> Polje postanski broj u adresi agenta ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
             //Password check
-            //Ako je unet old password, a nije uneto jedno od polja newPassword ili newPassword reapeat unosi se error
+           //Ako je unet old password, a nije uneto jedno od polja newPassword ili newPassword reapeat unosi se error
             else if (this.changedPassword.oldPassword !== '' && this.changedPassword.newPassword !== '' && this.changedPassword.newPasswordRepeat === '') {
                 this.messages.errorRepNewPass = `<h4>Morate ponoviti Vasu novu sifru!</h4>`;
                 setTimeout(() => this.messages.errorRepNewPass = '', 55000);
@@ -186,53 +187,58 @@ export default {
 
             //Ako su uneta sva 3 passworda, nema errora za prazna polja, ali se proverava validnost samog unosa
             else if (this.changedPassword.oldPassword !== '' && this.changedPassword.newPassword !== '' && this.changedPassword.newPasswordRepeat !== '') {
-                //Provera da li je stara sifra dobro uneta
-                if (this.profile.lozinka !== this.changedPassword.oldPassword) {
-                    this.messages.errorNotEqualOldPassword = `<h4>Vasa stara sifra je netacna! Molimo Vas pokusajte ponovo...</h4>`;
-                    setTimeout(() => this.messages.errorNotEqualOldPassword = '', 5000);
+                //Provera da li se nove sifre poklapaju
+                if (this.changedPassword.newPassword !== this.changedPassword.newPasswordRepeat) {
+                    this.messages.errorNotEqualNewPassword = `<h4>Vase nove sifre se ne poklapaju! Molimo Vas pokusajte ponovo...</h4>`;
+                    setTimeout(() => this.messages.errorNotEqualNewPassword = '', 3000);
                 }
                 else {
-                    //Provera da li se nove sifre poklapaju
-                    if (this.changedPassword.newPassword !== this.changedPassword.newPasswordRepeat) {
-                        this.messages.errorNotEqualNewPassword = `<h4>Vase nove sifre se ne poklapaju! Molimo Vas pokusajte ponovo...</h4>`;
-                        setTimeout(() => this.messages.errorNotEqualNewPassword = '', 5000);
-                    }
-                    else {
-                        //ako je stara sifra dobro uneta, a nove se poklapaju,
-                        //stara sifra se menja novom.
-                        this.profile.password = this.changedPassword.newPassword;
+                    //ako je stara sifra dobro uneta, a nove se poklapaju,
+                    //stara sifra se menja novom.
+                    this.profile.staraLozinka = this.changedPassword.oldPassword;
+                    this.profile.lozinka = this.changedPassword.newPassword;
+                    console.log("Admin: " + JSON.stringify(this.profile));
+                    adminDataService.updateAdminProfile(this.profile).then(Response => {
+                        this.messages.successResponse = `<h4>Vas profil je uspesno izmenjen!</h4>`;
+                        setTimeout(() => this.messages.successResponse = '', 3000);
 
-                        axios.put(`rest/profile/${this.user.username}`, this.profile).then(Response => {
-                            this.messages.successResponse = `<h4>Vas profil je uspesno izmenjen!</h4>`;
-                            setTimeout(() => this.messages.successResponse = '', 5000);
+                        // this.getUserProfile();
+                        this.profile = Response.data;
 
-                            this.getUserProfile();
-
-                        })
-                            .catch(error => {
-                                if (error.response.status === 500 || error.response.status === 404) {
-                                    this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
-                                    setTimeout(() => this.messages.errorResponse = '', 5000);
-                                }
-                            });
-
-                    }
-                }
-            }
-            else {
-                axios.put(`rest/profile/${this.user.username}`, this.profile).then(Response => {
-                    this.messages.successResponse = `<h4>Your profile was edited successfully!</h4>`;
-                    setTimeout(() => this.messages.successResponse = '', 5000);
-
-                    this.getUserProfile();
-
-                })
+                    })
                     .catch(error => {
-                        if (error.response.status === 500 || error.response.status === 404) {
-                            this.messages.errorResponse = `<h4>We had some server errors, please try again later!</h4>`;
+                        // && error.response.data.message === "Wrong password!"
+                        if(error.response.status === 500  ){
+                            this.messages.errorResponse = `<h4>Vaša stara sifra je netačna! Molimo Vas pokušajte ponovo...</h4>`;
+            
+                            setTimeout(()=>this.messages.errorResponse='', 5000);
+                        }
+                        else if (error.response.status === 500 || error.response.status === 404) {
+                            this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokušajte ponovo kasnije!</h4>`;
                             setTimeout(() => this.messages.errorResponse = '', 5000);
                         }
+                
                     });
+
+                }
+                
+            }
+           //Slanje
+            else {
+                adminDataService.updateAdminProfile(this.profile).then(Response => {
+                    this.messages.successResponse = `<h4>Vas profil je uspesno izmenjen!</h4>`;
+                    setTimeout(() => this.messages.successResponse = '', 5000);
+
+                    // this.getUserProfile();
+                    this.profile = Response.data;
+
+                })
+                .catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru, molimo Vas pokušajte kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
 		},
 		getUserProfile: function () {
@@ -245,6 +251,14 @@ export default {
         id() {
             return this.$route.params.id; //preuzimam id usera na cijoj sam stranici za prikaz komentara
         },
+    },    
+    created(){
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            let parsToken = JSON.parse(localStorage.getItem('parsToken'));
+            this.getAdminProfileData();
+        }
     },
 
    

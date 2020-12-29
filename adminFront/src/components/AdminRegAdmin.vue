@@ -11,7 +11,6 @@
                 <div class="form-group half-size">
                     <label>Ime admina</label>
                     <input type="text" placeholder="Unesite ime..." class="form-control" v-model="noviAdmin.ime"/>
-                    
                 </div>
 
                 <div v-if='messages.errorPrezime' class="alert alert-danger" v-html="messages.errorPrezime"></div>
@@ -28,13 +27,13 @@
             </div>
 
             <div style="margin-top:20px" v-if='messages.errorEmail' class="alert alert-danger" v-html="messages.errorEmail"></div>
-            <div class="form-label-group half-size">  
+            <div class="form-group half-size">  
                 <label>Email admina</label>
                 <input type="email" placeholder="Unesite email..." class="form-control" v-model="noviAdmin.email"/>
             </div>
 
             <div style="margin-top:20px" v-if='messages.errorPol' class="alert alert-danger" v-html="messages.errorPol"></div>
-            <div class="form-label-group">
+            <div class="form-group">
                 <label>Pol admina</label>
                 <br>
                 <input type="radio" v-model="noviAdmin.pol" required value="muski"> Muski
@@ -45,10 +44,10 @@
             <div style="margin-top:20px" v-if='messages.errorAdresa' class="alert alert-danger" v-html="messages.errorAdresa"></div>
             <label>Adresa admina</label>
             <div>
-              <input class="one-forth" placeholder="Unesite grad..." v-model='noviAdmin.TAdresa.mesto'>
-              <input class="one-forth" placeholder="Unesite ulicu..." v-model='noviAdmin.TAdresa.ulica'>
-              <input class="one-forth" placeholder="Unesite broj..." v-model='noviAdmin.TAdresa.broj'>
-              <input class="one-forth" placeholder="Unesite postanski broj..." v-model='noviAdmin.TAdresa.postanskiBroj'>
+              <input class="one-forth" placeholder="Unesite grad..." v-model='noviAdmin.tadresa.mesto'>
+              <input class="one-forth" placeholder="Unesite ulicu..." v-model='noviAdmin.tadresa.ulica'>
+              <input class="one-forth" placeholder="Unesite broj..." v-model='noviAdmin.tadresa.broj'>
+              <input class="one-forth" placeholder="Unesite postanski broj..." v-model='noviAdmin.tadresa.postanskiBroj'>
             </div>
 
              <div v-if='messages.error' id='testError' class="alert alert-danger half-size" v-html="messages.error"></div>
@@ -59,8 +58,8 @@
 </template>
 
 <script>
+import adminDataService from '../services/AdminDataService'
 export default {
-    
     name:'Admin-registration',
     data:function(){
         return{
@@ -74,7 +73,7 @@ export default {
                 korisnickoIme:'',
                 email:'',
                 status:'neaktivan',
-                TAdresa:{
+                tadresa:{
                     mesto:'',
                     ulica:'',
                     broj:'',
@@ -136,37 +135,40 @@ export default {
                 setTimeout(() => this.messages.errorPol = '', 5000);
             }
             //Adresa
-            else if (this.noviAdmin.TAdresa.mesto == '') {
+            else if (this.noviAdmin.tadresa.mesto == '') {
                 this.messages.errorAdresa = `<h4> Polje mesto u adresi admina ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
                 
             }
-            else if (this.noviAdmin.TAdresa.ulica == '') {
+            else if (this.noviAdmin.tadresa.ulica == '') {
                 this.messages.errorAdresa = `<h4> Polje ulica u adresi admina ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
      
             }
-            else if (this.noviAdmin.TAdresa.broj == '') {
+            else if (this.noviAdmin.tadresa.broj == '') {
                 this.messages.errorAdresa = `<h4> Polje broj u adresi admina ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
                
             }
-            else if (this.noviAdmin.TAdresa.postanskiBroj == '') {
+            else if (this.noviAdmin.tadresa.postanskiBroj == '') {
                 this.messages.errorAdresa = `<h4> Polje poštanski broj u adresi admina ne moze biti prazno!</h4>`;
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
-            else if(this.isNumeric(this.noviAdmin.TAdresa.postanskiBroj)){
+            else if(this.isNumeric(this.noviAdmin.tadresa.postanskiBroj)){
                 this.messages.errorJMBG = `<h4>Vrednost poštanskog broj mora biti broj!</h4>`;
                 setTimeout(() => this.messages.errorJMBG = '', 5000);
             }
             else {
-                console.log('this.noviAdmin.ime: ' + this.noviAgent.ime);
-                console.log('this.noviAdmin.prezime: ' + this.noviAgent.prezime);
-                console.log('this.noviAdmin.pol: ' + this.noviAgent.pol);
-                console.log('this.noviAdmin.jmbg: ' + this.noviAgent.jmbg);
-                console.log('this.noviAdmin.email: ' + this.noviAgent.email);
-                console.log('this.noviAdmin.TAdresa.ulica: ' + this.noviAgent.TAdresa.ulica);
-                // console.log('this.noviAgent: ' + this.noviAgent.korisnickoIme);
+                console.log('Admin: ' + JSON.stringify(this.noviAdmin));
+                adminDataService.addAdmin(this.noviAdmin).then(response => {
+                    alert("Uspešno ste dodali novog administratora!")
+                    this.$router.push("/home");   
+                }).catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });    
             }
         },
 

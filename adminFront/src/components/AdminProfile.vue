@@ -54,29 +54,14 @@ export default {
     name: 'Admin-profile',
     data(){
         return{
-            profile: {
-                // id:'1',
-                // ime:'Admin',
-                // prezime:'Adminovic',
-                // jmbg:'21321412412',
-                // pol:'Muski',
-                // korisnickoIme:'AdminX',
-                // email:'admin996@gmai.com',
-                // status:'aktivan',
-                // TAdresa:{
-                //     mesto:'Beograd',
-                //     ulica:'Bulevar Bulevara',
-                //     broj:'bb',
-                //     postanskiBroj:'11000',
-                // },
-            }
+            profile: {}
         }
     },
     methods:{
-        getAdminProfileData:function(id){
-            console.log("id: " + id)
-            adminDataService.getAdmin(id).then(response => {
+        getAdminProfileData:function(){
+            adminDataService.getAdmin().then(response => {
                 this.profile = response.data;
+                console.log("admin: " + JSON.stringify(this.profile));
             })
         },
         updateAdmin(id){
@@ -88,7 +73,7 @@ export default {
             this.$router.push(`/login`);
         }else{
             let parsToken = JSON.parse(localStorage.getItem('parsToken'));
-            this.getAdminProfileData(parsToken.jti);
+            this.getAdminProfileData();
         }
     },
 }

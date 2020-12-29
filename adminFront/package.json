@@ -1,8 +1,8 @@
 {
-  "name": "agent-front",
+  "name": "admin-front",
   "description": "A Vue.js project",
   "version": "1.0.0",
-  "author": "JeanMarieLePen <mozartkaraokeversion@gmail.com>",
+  "author": "BlageX <blage500@gmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {

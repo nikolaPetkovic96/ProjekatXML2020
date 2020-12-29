@@ -84,7 +84,7 @@ export default {
             this.$router.push('/home');
           }           
         }).catch(error => {
-          if(error.response.status === 500  && error.response.data.message==='Bad credentials'){
+          if(error.response.status === 401  && error.response.data ==='Bad credentials!'){
             this.errorMessage = `<h4>Username ili password su pogresno uneti!</h4>`;
             
             setTimeout(()=>this.errorMessage='',3000);

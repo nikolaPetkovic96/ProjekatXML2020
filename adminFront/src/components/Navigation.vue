@@ -43,7 +43,7 @@ export default {
   data:function(){
     return{
       // loggedOut: false, //loginovan je treba da pise log out dugme
-      loggedIn: false,
+      loggedIn: localStorage.getItem('token') ? true : false,
     }
   },
   methods:{
