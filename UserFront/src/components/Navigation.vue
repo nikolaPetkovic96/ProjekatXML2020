@@ -74,7 +74,7 @@ export default {
   color:#fff;
   padding-top:30px;
   min-height: 70px;
-  border-bottom:gold 3px solid;
+  border-bottom:#FF8C00 3px solid;
 } 
 /* Ostaviti za sada ako ne obrisati */
 ul{
@@ -96,7 +96,7 @@ a{
 
 #btnLogin{
   height:38px;
-  background-color:gold;
+  background-color:#FF8C00;
   color:#fff;
   border:none;
   padding: 0 20px;
@@ -110,7 +110,7 @@ a{
 
 #btnLogout{
   height:38px;
-  background-color:gold;
+  background-color:#FF8C00;
   color:#fff;
   border:none;
   padding: 0 20px;
@@ -124,7 +124,7 @@ a{
 
 #titleEffect{
   /* color:#9400D3;FFD300 */
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 

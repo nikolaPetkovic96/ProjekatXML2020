@@ -128,7 +128,7 @@ export default {
 
 <style scoped>
 #titleEffect{
-    color:gold;
+    color:#FF8C00;
     font-weight: bold;
 }
 .car-info{
@@ -179,7 +179,7 @@ export default {
     padding:10px;
     margin-bottom:15px;
     margin-top:35px;
-    background-color:gold;
+    background-color:#FF8C00;
     color:#fff;
     font-weight: bold;
     border-bottom:2px solid #35424a;;
@@ -197,7 +197,7 @@ export default {
   color:#fff;
   font-size: 16px;
   font-weight: bold;
-  border-bottom:2px solid gold;
+  border-bottom:2px solid #FF8C00;
 }
 
 

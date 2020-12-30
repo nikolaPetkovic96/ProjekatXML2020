@@ -83,7 +83,7 @@
 
 				<div class="card-body" v-bind:key="review.id" v-for="review in automobil.reviews" v-show="review.visible" >
                     <div style="margin-bottom: 10px;" id='star-rating'>
-                        <star-rating inactive-color="#35424a" active-color="gold" v-bind:read-only="true"
+                        <star-rating inactive-color="#35424a" active-color="#FF8C00" v-bind:read-only="true"
                             v-bind:star-size="20" v-bind:show-rating="false" v-bind:rating="review.star">
                         </star-rating>
                     </div>
@@ -251,7 +251,7 @@ export default {
 <style scoped>
 
     #titleEffect{
-        color:gold;
+        color:#FF8C00;
         font-weight: bold;
     }
 

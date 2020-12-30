@@ -82,7 +82,7 @@ export default {
 <style scoped>
 
 #titleEffect{
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 

@@ -72,7 +72,7 @@ body{
 
 .button_1{
     height:38px;
-    background-color:gold;
+    background-color:#FF8C00;
     color:#fff;
     border:none;
     padding: 0 20px;
@@ -96,7 +96,7 @@ body{
     color:#fff;
     padding-top:30px;
     min-height: 70px;
-    border-bottom:gold 3px solid;
+    border-bottom:#FF8C00 3px solid;
 }
 
 #main-header #branding{

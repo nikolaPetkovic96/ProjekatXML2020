@@ -60,9 +60,9 @@
                 <div id='first-place' v-if='automobili[0].predjenaKilometraza !== -1'>
                     <div class="card-header">
                         <img  src="../assets/firstIcon2.png" alt="">
-                        <h2 style='color:gold' v-if='bestByKm'><b>Kilometraža:</b> {{automobili[0].predjenaKilometraza}} km</h2>
-                        <h2 style='color:gold' v-if='bestByKom'><b>Broj komentara:</b> {{automobili[0].brojKomentara}}</h2>
-                        <h2 style='color:gold' v-if='bestByRat'><b>Ukupna ocena:</b> {{automobili[0].ukupnaOcena}}</h2>
+                        <h2 style='color:#FF8C00' v-if='bestByKm'><b>Kilometraža:</b> {{automobili[0].predjenaKilometraza}} km</h2>
+                        <h2 style='color:#FF8C00' v-if='bestByKom'><b>Broj komentara:</b> {{automobili[0].brojKomentara}}</h2>
+                        <h2 style='color:#FF8C00' v-if='bestByRat'><b>Ukupna ocena:</b> {{automobili[0].ukupnaOcena}}</h2>
                         <h4><b>Automobil:</b> {{automobili[0].markaAut}} {{automobili[0].modelAut}} (marka/model)</h4>
                         <h4><b>Klasa automobila:</b> {{automobili[0].klasaAut}}</h4>
                         <h5 v-if='bestByKom || bestByRat'><b>Kilometraža:</b> {{automobili[0].predjenaKilometraza}}</h5>
@@ -74,7 +74,7 @@
                 <div id='second-place-warn' class='alert alert-warning' v-if='automobili[1].predjenaKilometraza == -1'> Nema automobila koji je drugo mesto!</div>
                 <div id='second-place' v-if='automobili[1].predjenaKilometraza!== -1'>
                     <div class="card-header">
-                        <h1 style='color:gold'><i>#2</i></h1>
+                        <h1 style='color:#FF8C00'><i>#2</i></h1>
                         <h4 v-if='bestByKm'><b>Kilometraža:</b> {{automobili[1].predjenaKilometraza}} km</h4>
                         <h4 v-if='bestByKom'><b>Broj komentara:</b> {{automobili[1].brojKomentara}}</h4>
                         <h4 v-if='bestByRat'><b>Ukupna ocena:</b> {{automobili[1].ukupnaOcena}}</h4>
@@ -89,7 +89,7 @@
                 <div id='third-place-warn' class='alert alert-warning' v-if='automobili[2].predjenaKilometraza == -1'> Nema automobila koji je trece mesto!</div>
                 <div id='third-place' v-if='automobili[2].predjenaKilometraza !== -1'>
                      <div class="card-header">
-                        <h1 style='color:gold'><i>#3</i></h1>
+                        <h1 style='color:#FF8C00'><i>#3</i></h1>
                         <h4 v-if='bestByKm'><b>Kilometraža:</b> {{automobili[2].predjenaKilometraza}} km</h4>
                         <h4 v-if='bestByKom'><b>Broj komentara:</b> {{automobili[2].brojKomentara}}</h4>
                         <h4 v-if='bestByRat'><b>Ukupna ocena:</b> {{automobili[2].ukupnaOcena}}</h4>
@@ -218,7 +218,7 @@ export default {
 <style scoped>
 
 #titleEffect{
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 

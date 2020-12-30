@@ -101,7 +101,7 @@ export default {
 <style>
 
 #titleEffect{
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 

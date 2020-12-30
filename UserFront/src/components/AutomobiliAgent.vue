@@ -135,11 +135,11 @@
             </table>
 
             <div id='options'>
-                <router-link to="/cars/new"> <button class=' btn btn-lg classButton shadow'>+ Dodaj vozilo</button>
+                <router-link to="/carsAgent/new"> <button class=' btn btn-lg classButton shadow'>+ Dodaj vozilo</button>
                 </router-link>
-                <router-link to="/cars/comments"> <button class='btn classButton shadow'>Komentari</button>
+                <router-link to="/carsAgent/comments"> <button class='btn classButton shadow'>Komentari</button>
                 </router-link>
-                <router-link to="/reservations"> <button class='btn classButton shadow'>Rezervacije</button>
+                <router-link to="/reservationAgent/ads_overview"> <button class='btn classButton shadow'>Rezervacije</button>
                 </router-link>
             </div>
         
@@ -344,7 +344,7 @@ export default {
 <style scoped>
 
 #titleEffect{
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 
@@ -388,7 +388,7 @@ export default {
 .classButton:hover{
   margin-left: 5px;
   color:#fff;
-  background-color:gold;
+  background-color:#FF8C00;
   font-weight: bold;
   padding:10px;
 }

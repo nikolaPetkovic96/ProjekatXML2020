@@ -21,6 +21,10 @@ import AdsAgentNew from './components/OglasiAgentNew'
 import ReportAndStatisticsAgent from './components/IzvestajiIStatistikaAgent'
 import CenovnikAgentNew from './components/CenovnikAgentNew'
 import ReservationAgentNew from './components/RezervacijaAgentNew'
+import AutomobiliAgentNew from './components/AutomobiliAgentNew'
+import ReservationAdsOverview from './components/RezervacijaOglasiOverview'
+import AutomobiliAgentComments from './components/AutomobiliAgentComments'
+import AutomobiliAgentCommentsNew from './components/AutomobiliAgentCommentsNew'
 
 
 export default [
@@ -95,7 +99,7 @@ export default [
         component:AutomobiliAgent
     },
     {
-        path:'/reservationsAgent/',
+        path:'/reservationAgent/',
         name:'ReservationAgent',
         component:ReservationAgent
     },
@@ -128,6 +132,27 @@ export default [
         path:'/cars/:id/reservationAgent',
         name:'RezervacijaAgentNew',
         component:ReservationAgentNew
+    },
+    {
+        path:'/carsAgent/new',
+        name:'AutomobiliAgentNew',
+        component:AutomobiliAgentNew
+    },
+    {
+        path:'/reservationAgent/ads_overview',
+        name:'RezervacijaOglasiOverview',
+        component:ReservationAdsOverview
+    },
+    {
+        // path:'/cars/comments',
+        path:'/carsAgent/comments',
+        name:'AutomobiliAgentKomentar',
+        component:AutomobiliAgentComments
+    },
+    { 
+        path:'/carsAgent/comments/:id/new',
+        name:'carAgentNewComment',
+        component:AutomobiliAgentCommentsNew
     }
 
 ]

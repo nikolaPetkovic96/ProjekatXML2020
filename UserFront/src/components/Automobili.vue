@@ -348,7 +348,7 @@ export default {
 <style scoped>
 
 #titleEffect{
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 
@@ -392,7 +392,7 @@ export default {
 .classButton:hover{
   margin-left: 5px;
   color:#fff;
-  background-color:gold;
+  background-color:#FF8C00;
   font-weight: bold;
   padding:10px;
 }

@@ -122,7 +122,7 @@
                         exact>
                         <img src="../assets/CarHomeIcon3.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
-                            <h5 class="card-title mb-0">AutomobiliAgent</h5>
+                            <h5 class="card-title mb-0">Automobili</h5>
                             <div class="card-text text-black-50">Pogledajte listu svih automobila i dodajte novi...</div>
                         </div>
                     </router-link>
@@ -136,7 +136,7 @@
                         exact>
                         <img src="../assets/AdHomeIcon1.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
-                            <h5 class="card-title mb-0">Oglasi Agent</h5>
+                            <h5 class="card-title mb-0">Oglasi</h5>
                             <div class="card-text text-black-50">Pogledajte listu svih oglasa i dodajte novi oglas...</div>
                         </div>
                     </router-link>
@@ -146,11 +146,11 @@
             <!-- Reservations -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
-                    <router-link style='text-decoration: none;color:#35424a;' to="/reservationsAgent" class="nav-link"
+                    <router-link style='text-decoration: none;color:#35424a;' to="/reservationAgent" class="nav-link"
                         exact>
                         <img src="../assets/reservation1.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
-                            <h5 class="card-title mb-0">Rezervacije Agent</h5>
+                            <h5 class="card-title mb-0">Rezervacije</h5>
                             <div class="card-text text-black-50">Pogledajte listu rezervacija napravljenih za vaša vozila...</div>
                         </div>
                     </router-link>
@@ -163,7 +163,7 @@
                     <router-link style='text-decoration: none;color:#35424a;' to="/priceAgent" class="nav-link" exact>
                         <img src="../assets/priceTagHomeIcon2.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
-                            <h5 class="card-title mb-0">Cenovnik Agent</h5>
+                            <h5 class="card-title mb-0">Cenovnik</h5>
                             <div class="card-text text-black-50">Pogledajte listu cenovnika i dodajte novi...</div>
                         </div>
                     </router-link>
@@ -176,7 +176,7 @@
                     <router-link style='text-decoration: none;color:#35424a;' to="/statisticsAgent" class="nav-link" exact>
                         <img src="../assets/statisticHomeIcon1.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
-                            <h5 class="card-title mb-0">Izvestaj i Statistika Agent</h5>
+                            <h5 class="card-title mb-0">Izvestaj i Statistika</h5>
                             <div class="card-text text-black-50">Ostavite izvestaj i pogledajte statistiku o vasim vozilima...</div>
                         </div>
                     </router-link>
@@ -250,7 +250,7 @@ export default {
 <style scoped>
 
 #titleEffect{
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 

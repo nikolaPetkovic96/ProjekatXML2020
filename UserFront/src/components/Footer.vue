@@ -22,7 +22,7 @@ export default {
 #footer{
     padding:20px;
     margin-top:50px;
-    background-color:gold;
+    background-color:#FF8C00;
     color:#35424a;
     text-align: center;
     font-size: 14px;

@@ -103,7 +103,7 @@ export default {
 <style scoped>
 
 #titleEffect{
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 
@@ -122,7 +122,7 @@ export default {
 }
 
 .header5{
-    color:gold;
+    color:#FF8C00;
     font-weight: bold;
 }
 
