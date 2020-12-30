@@ -34,21 +34,21 @@ public class CarModelController {
 	}
 
 	@PostMapping("")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 
 	public TModelAutomobila addNew(@RequestBody TModelAutomobila t) {
 		return carBrandService.addNew(t);
 	}
 
 	@DeleteMapping("{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 
 	public boolean delete(@PathVariable(name = "id") Long t) {
 		return carBrandService.deleteOne(t);
 	}
 
 	@PutMapping("")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 
 	public TModelAutomobila change(@RequestBody TModelAutomobila t) {
 		return carBrandService.changeOne(t);

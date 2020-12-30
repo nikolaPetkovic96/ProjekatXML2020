@@ -51,7 +51,7 @@ public class CarModelService {
 	}
 
 	public boolean deleteOne(Long id) {
-		if (autoRepository.findAllByVrstaGorivaId(id).size() != 0) {
+		if (autoRepository.findAllByModelAutomobilaId(id).size() != 0) {
 			throw new DataIntegrityViolationException("Class is in use!");
 		}
 		Optional<TModelAutomobila> tip = carCalssRepositorz.findById(id);

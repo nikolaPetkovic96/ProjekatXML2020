@@ -30,23 +30,26 @@ public class CarBrandController {
 	public List<TMarkaAutomobila> getAll() {
 		return carBrandService.getAll();
 	}
+	
+	@GetMapping("test")
+	public String test() {
+		return "RADI";
+	}
 
 	@PostMapping("")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public TMarkaAutomobila addNew(@RequestBody TMarkaAutomobila t) {
 		return carBrandService.addNew(t);
 	}
 
 	@DeleteMapping("{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public boolean delete(@PathVariable(name = "id") Long t) {
 		return carBrandService.deleteOne(t);
 	}
 
 	@PutMapping("")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public TMarkaAutomobila change(@RequestBody TMarkaAutomobila t) {
 		return carBrandService.changeOne(t);
 	}

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -67,6 +68,12 @@ public class UserController {
 		return userService.activateUser(id, secret);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/deactivate/{id}", method = RequestMethod.GET)
+	public boolean deactivate(@PathVariable("id") Long user) {
+		return userService.deactivate(user);
+	}
+
 	// TODO refresh token
 	/*
 	 * @RequestMapping(value = "/refresh", method = RequestMethod.POST) public
@@ -78,9 +85,9 @@ public class UserController {
 	 * else { UserTokenState userTokenState = new UserTokenState(); return
 	 * ResponseEntity.badRequest().body(userTokenState); } }
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	// @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	// PARAMETar type odredjuje koje korisnike hoces, ako ga ne posaljes dobices sve
+	// PARAMETAR type odredjuje koje korisnike hoces, ako ga ne posaljes dobices sve
 	// moguce vredsnoti: admin, user, agent
 	// to se u zahtevu kuca kao localnhost..../api/user?type=admin
 	public List<UserDTO> getUsers(HttpServletRequest request, @RequestParam("type") Optional<String> type) {
@@ -91,5 +98,17 @@ public class UserController {
 	public HashMap<String, Object> auth(HttpServletRequest request) {
 		return userService.doAuth(request);
 	}
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/permissions", method = RequestMethod.GET)
+	public void changePersmissions(@RequestParam("id") Long id, @RequestParam("comment") Boolean comment,
+			@RequestParam("reservation") Boolean reservation, @RequestParam("message") Boolean message) {
+		userService.changePermissions(id, comment, reservation, message);
+	}
+	
+	@RequestMapping(value = "", method = RequestMethod.PUT)
+	public UserDTO changeUser(@RequestBody UserDTO user) {
+		return userService.changeUser(user);
+	}
+
 
 }

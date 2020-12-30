@@ -38,8 +38,8 @@ public class CommentsController {
 	}
 	
 	@PostMapping(value = "/{id}")
-	public KomentarDTO approve(@PathVariable("id") Long id) {
-		return commentService.approve(id);
+	public KomentarDTO approve(@PathVariable("id") Long id,@RequestParam("approved") String approved) {
+		return commentService.approve(id,Boolean.parseBoolean(approved));
 	}
 
 }

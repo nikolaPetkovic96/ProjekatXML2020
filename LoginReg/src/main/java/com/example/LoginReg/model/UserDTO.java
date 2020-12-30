@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.xml.bind.annotation.XmlElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class UserDTO {
 	protected Long id;
 	protected String korisnickoIme;
@@ -20,6 +22,17 @@ public class UserDTO {
 	protected String nazivFirme;
 	protected String poslovniMaticniBroj;
 	protected String uloga;
+	protected String staraLozinka;
+	@JsonIgnore
+	public String getStaraLozinka() {
+		return staraLozinka;
+	}
+
+	public void setStaraLozinka(String staraLozinka) {
+		this.staraLozinka = staraLozinka;
+	}
+
+	private boolean allowedToCommend, allowedToMessage,allowedToMakeReservation=true;
 	
 	protected Map<String, String> TAdresa;
 
@@ -38,7 +51,8 @@ public class UserDTO {
 	public void setKorisnickoIme(String korisnickoIme) {
 		this.korisnickoIme = korisnickoIme;
 	}
-
+	
+	@JsonIgnore
 	public String getLozinka() {
 		return lozinka;
 	}
@@ -125,6 +139,30 @@ public class UserDTO {
 
 	public void setUloga(String uloga) {
 		this.uloga = uloga;
+	}
+
+	public boolean isAllowedToCommend() {
+		return allowedToCommend;
+	}
+
+	public void setAllowedToCommend(boolean allowedToCommend) {
+		this.allowedToCommend = allowedToCommend;
+	}
+
+	public boolean isAllowedToMessage() {
+		return allowedToMessage;
+	}
+
+	public void setAllowedToMessage(boolean allowedToMessage) {
+		this.allowedToMessage = allowedToMessage;
+	}
+
+	public boolean isAllowedToMakeReservation() {
+		return allowedToMakeReservation;
+	}
+
+	public void setAllowedToMakeReservation(boolean allowedToMakeReservation) {
+		this.allowedToMakeReservation = allowedToMakeReservation;
 	}
 
 }

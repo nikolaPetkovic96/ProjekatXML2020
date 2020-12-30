@@ -70,7 +70,9 @@ public /* abstract */ class TUser /* implements UserDetails */ {
 	@Column(name = "poslovniMaticniBroj")
 	@XmlElement(name = "poslovniMaticniBroj", required = true)
 	protected String poslovniMaticniBroj;
-
+	
+	private boolean allowedToCommend, allowedToMessage,allowedToMakeReservation=true;
+	
 	public Long getId() {
 		return id;
 	}
@@ -190,6 +192,30 @@ public /* abstract */ class TUser /* implements UserDetails */ {
 
 	public void setPoslovniMaticniBroj(String poslovniMaticniBroj) {
 		this.poslovniMaticniBroj = poslovniMaticniBroj;
+	}
+
+	public boolean isAllowedToCommend() {
+		return allowedToCommend;
+	}
+
+	public void setAllowedToCommend(boolean allowedToCommend) {
+		this.allowedToCommend = allowedToCommend;
+	}
+
+	public boolean isAllowedToMessage() {
+		return allowedToMessage;
+	}
+
+	public void setAllowedToMessage(boolean allowedToMessage) {
+		this.allowedToMessage = allowedToMessage;
+	}
+
+	public boolean isAllowedToMakeReservation() {
+		return allowedToMakeReservation;
+	}
+
+	public void setAllowedToMakeReservation(boolean allowedToMakeReservation) {
+		this.allowedToMakeReservation = allowedToMakeReservation;
 	}
 
 }

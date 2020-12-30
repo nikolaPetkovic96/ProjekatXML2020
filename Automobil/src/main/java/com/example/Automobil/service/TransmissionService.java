@@ -17,14 +17,14 @@ import com.example.Automobil.repository.TTipMenjacaRepository;
 @Service
 public class TransmissionService {
 	@Autowired
-	private TTipMenjacaRepository tipGorivaRepository;
+	private TTipMenjacaRepository tTipMenjacaRepository;
 	@Autowired
 	private AutomobilRepository autoRepository;
 	@Autowired
 	private CommonDataRepository cmdRep;
 
 	public List<TTipMenjaca> getAll() {
-		return tipGorivaRepository.findAll();
+		return tTipMenjacaRepository.findAll();
 	}
 
 	public TTipMenjaca addNew(TTipMenjaca t) {
@@ -35,7 +35,7 @@ public class TransmissionService {
 		cmdRep.saveAndFlush(d);
 		t.setCommonDataId(d.getId());
 		try {
-			tipGorivaRepository.saveAndFlush(t);
+			tTipMenjacaRepository.saveAndFlush(t);
 		}
 
 		catch (Exception e) {try {
@@ -50,20 +50,20 @@ public class TransmissionService {
 	}
 
 	public boolean deleteOne(Long id) {
-		if (autoRepository.findAllByVrstaGorivaId(id).size() != 0) {
+		if (autoRepository.findAllByTipMenjacaId(id).size() != 0) {
 			throw new DataIntegrityViolationException("Type is in use!");
 		}
-		Optional<TTipMenjaca> tip = tipGorivaRepository.findById(id);
+		Optional<TTipMenjaca> tip = tTipMenjacaRepository.findById(id);
 		if (!tip.isPresent())
 			throw new DataIntegrityViolationException("Type not found!");
 
-		tipGorivaRepository.deleteById(id);
+		tTipMenjacaRepository.deleteById(id);
 		cmdRep.deleteById(id);
 		return true;
 	}
 
 	public TTipMenjaca changeOne(TTipMenjaca t) {
-		Optional<TTipMenjaca> tip = tipGorivaRepository.findById(t.getId());
+		Optional<TTipMenjaca> tip = tTipMenjacaRepository.findById(t.getId());
 		if (!tip.isPresent())
 			throw new DataIntegrityViolationException("Type not found!");
 		TTipMenjaca tt = tip.get();
@@ -71,7 +71,7 @@ public class TransmissionService {
 		cd.setDatumIzmene(LocalDateTime.now());
 		cmdRep.saveAndFlush(cd);
 		tt.setNazivMenjaca(t.getNazivMenjaca());
-		tipGorivaRepository.saveAndFlush(tt);
+		tTipMenjacaRepository.saveAndFlush(tt);
 		return tt;
 	}
 

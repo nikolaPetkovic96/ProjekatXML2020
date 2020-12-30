@@ -31,19 +31,19 @@ public class TransmissionController {
 		return fuelTypeService.getAll();
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("")
 	public TTipMenjaca addNew(@RequestBody TTipMenjaca t) {
 		return fuelTypeService.addNew(t);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("{id}")
 	public boolean delete(@PathVariable(name = "id") Long t) {
 		return fuelTypeService.deleteOne(t);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping("")
 	public TTipMenjaca change(@RequestBody TTipMenjaca t) {
 		return fuelTypeService.changeOne(t);

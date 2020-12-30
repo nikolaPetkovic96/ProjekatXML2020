@@ -31,20 +31,20 @@ public class CarClassController {
 		return carBrandService.getAll();
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("")
 	public TKlasaAutomobila addNew(@RequestBody TKlasaAutomobila t) {
 		return carBrandService.addNew(t);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("{id}")
 	public boolean delete(@PathVariable(name = "id") Long t) {
 		return carBrandService.deleteOne(t);
 	}
 
 	@PutMapping("")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public TKlasaAutomobila change(@RequestBody TKlasaAutomobila t) {
 		return carBrandService.changeOne(t);
 	}

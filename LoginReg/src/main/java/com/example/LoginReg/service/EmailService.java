@@ -24,16 +24,16 @@ public class EmailService {
 		mail.setFrom(env.getProperty("spring.mail.username"));
 		mail.setSubject("Aktivacioni email");
 		String body = null;
-		//TODO moze neka strancia da  se napravi, da ne prikaze samo true
+		// TODO moze neka strancia da se napravi, da ne prikaze samo true
 		if (u.getAuthorities().get(0).getName().equals("ROLE_USER"))
 			body = "Postovani  " + u.getIme() + " " + u.getPrezime()
 					+ ",\nDa biste aktivirali svoj nalog, potrebno je da kliknete na sledeci link: "
-					+ "LINK NA KOM JE STRANICA ZA PODESAVANJE LOZNKE/" + "?id=" + u.getId() + "&secret="
+					+ "http://localhost:2020/loginreg-service/api/user/activate-user" + "?id=" + u.getId() + "&secret="
 					+ u.getLozinka();
 		else
 			body = "Postovani  " + u.getIme() + " " + u.getPrezime()
 					+ ",\nDa biste aktivirali svoj nalog, potrebno je da kliknete na sledeci link: "
-					+ "http://localhost:2020/loginreg-service/api/user/activate-user" + "?id=" + u.getId() + "&secret="
+					+ "http://localhost:8081/registration/activate-agent" + "?id=" + u.getId() + "&secret="
 					+ u.getLozinka();
 		mail.setText(body);
 		javaMailSender.send(mail);

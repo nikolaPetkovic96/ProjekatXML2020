@@ -42,13 +42,16 @@ public class CommentService {
 		return commentMapper.toDTO(k);
 	}
 
-	public KomentarDTO approve(Long id) {
+	public KomentarDTO approve(Long id, boolean b) {
 		Komentar k = commentRepoitory.findById(id).get();
-		k.setOdobren(true);
+		k.setOdobren(b);
 		CommonData data = commonDataRepository.findById(k.getCommonDataId()).get();
 		data.setDatumIzmene(LocalDateTime.now());
 		commonDataRepository.saveAndFlush(data);
 		commentRepoitory.saveAndFlush(k);
 		return commentMapper.toDTO(k);
 	}
+
+	
+	
 }

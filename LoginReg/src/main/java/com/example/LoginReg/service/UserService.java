@@ -99,7 +99,7 @@ public class UserService {
 	public UserDTO registerUser(UserDTO user) {
 		TUser u = fromDTO(user);
 		u.setStatus("aktivan");
-		//TODO validarte
+		// TODO validarte
 		// Moze se validaciaj dodati, npr da se vrati neka greska kad email nije
 		// jedinstven i slicno...
 		Authority a = authorityRepository.findOneByName("ROLE_USER");
@@ -137,6 +137,8 @@ public class UserService {
 			adresaRepository.saveAndFlush(adr);
 			u.setAdresaId(adr.getId());
 			userRepository.saveAndFlush(u);
+			emailService.sendActivationEmail(u);
+
 		}
 
 		catch (Exception e) {
@@ -144,7 +146,6 @@ public class UserService {
 				adresaRepository.delete(adr);
 			throw new DataIntegrityViolationException("Data not valid!");
 		}
-		emailService.sendActivationEmail(u);
 		return user;
 	}
 
@@ -170,16 +171,16 @@ public class UserService {
 		}
 		return toDTO(u);
 	}
-	
+
 	public boolean activateUser(String ids, String secret) {
 		Long id = Long.parseLong(ids);
-		if (!userRepository.existsById(id))//pogrresan id
+		if (!userRepository.existsById(id))// pogrresan id
 			throw new DataIntegrityViolationException("Data not valid!");
 
 		TUser u = userRepository.findById(id).get();
-		if (u.getStatus().equals("aktivan"))//vec je aktiviran
+		if (u.getStatus().equals("aktivan"))// vec je aktiviran
 			throw new DataIntegrityViolationException("Data not valid!");
-		if (!encoder.encode(u.getEmail()).equals(secret))//pogresan secret
+		if (!encoder.encode(u.getEmail()).equals(secret))// pogresan secret
 			throw new DataIntegrityViolationException("Data not valid!");
 
 		u.setStatus("aktivan");
@@ -233,6 +234,9 @@ public class UserService {
 		adr.put("mesto", a.getMesto());
 		adr.put("ulica", a.getUlica());
 		user.setTAdresa(adr);
+		user.setAllowedToCommend(u.isAllowedToCommend());
+		user.setAllowedToMakeReservation(u.isAllowedToMakeReservation());
+		user.setAllowedToMessage(u.isAllowedToMessage());
 
 		String a1 = u.getAuthorities().get(0).getName();
 		if (a1.equals("ROLE_ADMIN"))
@@ -268,5 +272,90 @@ public class UserService {
 		adr.setMesto(user.getTAdresa().get("mesto"));
 		adr.setUlica(user.getTAdresa().get("ulica"));
 		return adr;
+	}
+
+	public boolean deactivate(Long id) {
+		if (!userRepository.existsById(id))// pogrresan id
+			throw new DataIntegrityViolationException("Data not valid!");
+
+		TUser u = userRepository.findById(id).get();
+		if (u.getStatus().equals("neaktivan"))// vec je aktiviran
+			throw new DataIntegrityViolationException("Data not valid!");
+		u.setStatus("neaktivan");
+		try {
+			userRepository.saveAndFlush(u);
+		}
+
+		catch (Exception e) {
+			throw new DataIntegrityViolationException("Data not valid!");
+		}
+		return true;
+	}
+
+	public void changePermissions(Long id, Boolean comment, Boolean reservation, Boolean message) {
+		if (!userRepository.existsById(id))// pogrresan id
+			throw new DataIntegrityViolationException("Data not valid!");
+
+		TUser u = userRepository.findById(id).get();
+		if (comment != null)
+			u.setAllowedToCommend(comment);
+		if (reservation != null)
+			u.setAllowedToMakeReservation(reservation);
+		if (message != null)
+			u.setAllowedToMessage(message);
+		try {
+			userRepository.saveAndFlush(u);
+		} catch (Exception e) {
+			throw new DataIntegrityViolationException("Data not valid!");
+		}
+	}
+
+	public UserDTO changeUser(UserDTO user) {
+		TUser u = userRepository.findOneByKorisnickoIme(user.getKorisnickoIme());
+		if (!encoder.matches(user.getStaraLozinka(), u.getLozinka()))
+			throw new DataIntegrityViolationException("Wrong password!");
+		if (user.getIme() != null)
+			u.setIme(user.getIme());
+		if (user.getJmbg() != null)
+			u.setJmbg(user.getJmbg());
+		if (user.getPol() != null)
+			u.setPol(user.getPol());
+		if (user.getNazivFirme() != null)
+			u.setNazivFirme(user.getNazivFirme());
+		if (user.getPoslovniMaticniBroj() != null)
+			u.setPoslovniMaticniBroj(user.getPoslovniMaticniBroj());
+		if (user.getPrezime() != null)
+			u.setPrezime(user.getPrezime());
+		if (user.getIme() != null)
+			u.setIme(user.getIme());
+		if (user.getIme() != null)
+			u.setIme(user.getIme());
+		if (user.getIme() != null)
+			u.setIme(user.getIme());
+		if (user.getIme() != null)
+			u.setIme(user.getIme());
+		if (user.getIme() != null)
+			u.setIme(user.getIme());
+		if (user.getLozinka() != null)
+			u.setLozinka(encoder.encode(user.getLozinka()));
+
+		Map<String, String> adr = user.getTAdresa();
+		if (adr != null) {
+			TAdresa a = adresaRepository.findById(u.getAdresaId()).get();
+			TAdresa newa = getAddressFromDTO(user);
+			if (newa.getBroj() != null)
+				a.setBroj(newa.getBroj());
+			if (newa.getMesto() != null)
+				a.setMesto(newa.getMesto());
+			if (newa.getUlica() != null)
+				a.setUlica(newa.getUlica());
+			if (newa.getPostanskiBroj() != null)
+				a.setPostanskiBroj(newa.getPostanskiBroj());
+			adresaRepository.save(a);
+
+		}
+		userRepository.save(u);
+
+		return user;
 	}
 }

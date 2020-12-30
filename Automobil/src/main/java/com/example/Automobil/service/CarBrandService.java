@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.Automobil.model.CommonData;
 import com.example.Automobil.model.TMarkaAutomobila;
+import com.example.Automobil.model.TModelAutomobila;
 import com.example.Automobil.repository.AutomobilRepository;
 import com.example.Automobil.repository.CommonDataRepository;
 import com.example.Automobil.repository.TMarkaAutomobilaRepository;
+import com.example.Automobil.repository.TModelAutomobilaRepository;
 
 @Service
 public class CarBrandService {
@@ -22,6 +24,13 @@ public class CarBrandService {
 	private AutomobilRepository autoRepository;
 	@Autowired
 	private CommonDataRepository cmdRep;
+	@Autowired
+	private CarModelService modSer;
+	
+	@Autowired
+	private TModelAutomobilaRepository modelRepo;
+
+
 
 	public List<TMarkaAutomobila> getAll() {
 		return carCalssRepositorz.findAll();
@@ -51,7 +60,7 @@ public class CarBrandService {
 	}
 
 	public boolean deleteOne(Long id) {
-		if (autoRepository.findAllByVrstaGorivaId(id).size() != 0) {
+		if (autoRepository.findAllByMarkaAutomobilaId(id).size() != 0) {
 			throw new DataIntegrityViolationException("Class is in use!");
 		}
 		Optional<TMarkaAutomobila> tip = carCalssRepositorz.findById(id);
@@ -60,6 +69,10 @@ public class CarBrandService {
 
 		carCalssRepositorz.deleteById(id);
 		cmdRep.deleteById(id);
+		List<TModelAutomobila> models=modelRepo.findAllBymarkaAutomobilaId(id);
+		for(TModelAutomobila model : models) {
+			modSer.deleteOne(model.getId());
+		}
 		return true;
 	}
 
