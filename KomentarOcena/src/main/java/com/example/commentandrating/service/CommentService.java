@@ -4,8 +4,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.example.commentandrating.dto.KomentarDTO;
 import com.example.commentandrating.model.CommonData;
@@ -37,7 +42,18 @@ public class CommentService {
 
 	public KomentarDTO createComent(KomentarDTO kom) {
 		//TODO provere: da li je realizovana, da li auto priprada toj rezervaciji, da li je vec unet komentar
+		HttpServletRequest request = 
+		        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
+		                .getRequest();
+		Long userId=Long.parseLong(request.getHeader("userid"));
+		
 		Komentar k = commentMapper.fromDto(kom);
+		CommonData cd=new CommonData();
+		cd.setUserId(userId);
+		String name=SecurityContextHolder.getContext().getAuthentication().getName();
+		k.setAutor(name);
+		commonDataRepository.saveAndFlush(cd);
+		k.setCommonDataId(cd.getId());
 		commentRepoitory.saveAndFlush(k);
 		return commentMapper.toDTO(k);
 	}

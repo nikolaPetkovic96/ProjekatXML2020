@@ -89,6 +89,7 @@ public class KomentarDTO {
 		this.automobilId = automobilId;
 		this.rezervacijaId = rezervacijaId;
 		this.datumIzmene = datumIzmene;
+		this.autor=autor;
 		this.datumKreiranja = datumKreiranja;
 	}
 

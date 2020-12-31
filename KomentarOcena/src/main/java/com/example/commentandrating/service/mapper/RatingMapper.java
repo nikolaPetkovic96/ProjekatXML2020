@@ -14,13 +14,9 @@ public class RatingMapper {
 	@Autowired
 	private CommonDataRepository commonDataRepository;
 
-	@Autowired
-	private TUserRepository tUserRepository;
-
 	public OcenaDTO toDTO(Ocena o) {
 		CommonData data = commonDataRepository.findById(o.getCommonDataId()).get();
-		String username = tUserRepository.findById(data.getUserid()).get().getKorisnickoIme();
-		OcenaDTO kom = new OcenaDTO(o.getId(), o.getVrednostOcene(), o.getAutomobilId(), o.getRezervacijaId(), username,
+		OcenaDTO kom = new OcenaDTO(o.getId(), o.getVrednostOcene(), o.getAutomobilId(), o.getRezervacijaId(), o.getAutor(),
 				data.getDatumKreiranja(), data.getDatumIzmene());
 		return kom;
 

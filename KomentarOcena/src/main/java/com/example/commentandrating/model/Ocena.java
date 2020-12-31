@@ -26,6 +26,8 @@ public class Ocena {
 	@Column(name = "rezervacija_id")
 	private Long rezervacijaId;
 
+	private String autor;
+
 	public Ocena() {
 		super();
 	}
@@ -78,6 +80,14 @@ public class Ocena {
 
 	public void setRezervacijaId(Long rezervacijaId) {
 		this.rezervacijaId = rezervacijaId;
+	}
+
+	public String getAutor() {
+		return autor;
+	}
+
+	public void setAutor(String autor) {
+		this.autor = autor;
 	}
 
 }

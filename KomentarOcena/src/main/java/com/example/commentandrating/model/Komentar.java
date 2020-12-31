@@ -29,7 +29,9 @@ public class Komentar {
 
 	@Column(name = "rezervacija_id")
 	private Long rezervacijaId;
-
+	
+	@Column(name = "autor", nullable = false)
+	protected String autor;
 
 	public Long getId() {
 		return id;
@@ -78,5 +80,14 @@ public class Komentar {
 	public void setRezervacijaId(Long rezervacijaId) {
 		this.rezervacijaId = rezervacijaId;
 	}
+
+	public String getAutor() {
+		return autor;
+	}
+
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
+	
 
 }

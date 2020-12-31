@@ -14,13 +14,9 @@ public class CommentMapper {
 	@Autowired
 	private CommonDataRepository commonDataRepository;
 
-	@Autowired
-	private TUserRepository tUserRepository;
-
 	public KomentarDTO toDTO(Komentar k) {
 		CommonData data = commonDataRepository.findById(k.getCommonDataId()).get();
-		String username = tUserRepository.findById(data.getUserid()).get().getKorisnickoIme();
-		KomentarDTO kom = new KomentarDTO(k.getId(), k.getTekstKomentara(), username, k.isOdobren(), k.getAutomobilId(),
+		KomentarDTO kom = new KomentarDTO(k.getId(), k.getTekstKomentara(), k.getAutor(), k.isOdobren(), k.getAutomobilId(),
 				k.getRezervacijaId(), data.getDatumKreiranja(), data.getDatumIzmene());
 		return kom;
 
@@ -34,6 +30,7 @@ public class CommentMapper {
 		Komentar kom = new Komentar();
 		kom.setAutomobilId(k.getAutomobilId());
 		kom.setOdobren(false);
+		
 		kom.setRezervacijaId(k.getRezervacijaId());
 		kom.setTekstKomentara(k.getTekstKomentara());
 		commonDataRepository.save(data);

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
@@ -34,9 +35,13 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
-			HttpServletResponse response) throws AuthenticationException, IOException {
-		UserTokenState a = userService.login(authenticationRequest);
-		return ResponseEntity.ok(a);
+			HttpServletResponse response) throws IOException {
+		try {
+			UserTokenState a = userService.login(authenticationRequest);
+			return ResponseEntity.ok(a);
+		} catch (AuthenticationException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Bad credentials!");
+		}
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -98,17 +103,22 @@ public class UserController {
 	public HashMap<String, Object> auth(HttpServletRequest request) {
 		return userService.doAuth(request);
 	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/permissions", method = RequestMethod.GET)
 	public void changePersmissions(@RequestParam("id") Long id, @RequestParam("comment") Boolean comment,
 			@RequestParam("reservation") Boolean reservation, @RequestParam("message") Boolean message) {
 		userService.changePermissions(id, comment, reservation, message);
 	}
-	
+
 	@RequestMapping(value = "", method = RequestMethod.PUT)
 	public UserDTO changeUser(@RequestBody UserDTO user) {
 		return userService.changeUser(user);
 	}
 
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public UserDTO myProfile() {
+		return userService.getMyProfile();
+	}
 
 }

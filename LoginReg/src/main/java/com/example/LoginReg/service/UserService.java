@@ -61,6 +61,7 @@ public class UserService {
 
 	public HashMap<String, Object> doAuth(HttpServletRequest request) {
 		String username;
+		Long userId=-500L;
 		Authentication t = SecurityContextHolder.getContext().getAuthentication();
 		try {
 			String authToken = tokenUtils.getToken(request);
@@ -69,7 +70,9 @@ public class UserService {
 			if (tokenUtils.validateToken(authToken, userDetails)) {
 				List<SimpleGrantedAuthority> ats = userDetails.getAuthorities().stream()
 						.map(x -> new SimpleGrantedAuthority(((Authority) x).getName())).collect(Collectors.toList());
-				t = new RememberMeAuthenticationToken(userDetails.getUsername(), userDetails, ats);
+				TUser user = userRepository.findOneByKorisnickoIme(username);
+				userId=user.getId();
+				t = new RememberMeAuthenticationToken(user.getId().toString(), userDetails, ats);
 			}
 		} catch (Exception e) {
 			List<GrantedAuthority> roles = new LinkedList<>();
@@ -78,6 +81,7 @@ public class UserService {
 		}
 		HashMap<String, Object> ret = new HashMap<>();
 		ret.put("username", t.getName());
+		ret.put("userid", userId);
 		Collection<? extends String> xdxdxdd = t.getAuthorities().stream().map(x -> x.getAuthority())
 				.collect(Collectors.toList());
 		ret.put("roles", xdxdxdd.toArray());
@@ -357,5 +361,11 @@ public class UserService {
 		userRepository.save(u);
 
 		return user;
+	}
+
+	public UserDTO getMyProfile() {
+		String n=SecurityContextHolder.getContext().getAuthentication().getName();
+		TUser u = userRepository.findOneByKorisnickoIme(n);
+		return toDTO(u);
 	}
 }

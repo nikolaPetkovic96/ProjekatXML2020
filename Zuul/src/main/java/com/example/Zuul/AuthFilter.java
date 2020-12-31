@@ -58,6 +58,9 @@ public class AuthFilter extends ZuulFilter {
 
 		HashMap resultString = response.getBody();
 		ctx.addZuulRequestHeader("username", (String) resultString.get("username"));
+		ctx.addZuulRequestHeader("userid", ((Integer) resultString.get("userid")).toString());
+
+		
 		List<String> xdxdxdd= (List<String>) resultString.get("roles");
 
 		ctx.addZuulRequestHeader("roles", Arrays.toString(xdxdxdd.toArray(new String[0])));
