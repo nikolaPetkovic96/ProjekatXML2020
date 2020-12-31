@@ -16,8 +16,6 @@
                                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                             </ol>
                             <div class="carousel-inner" role="listbox">
-                                <!-- <img src="../assets/No_Image_Available.png" alt=""> -->
-                                <!-- <h1>{{this.car.images[0]}}</h1> -->
                                 <!-- Slide One - Set the background image for this slide in the line below  "{background-image:  'url(' + getImgUrl() + ')}"-->
                                 <div class="carousel-item active"
                                     :style="{'background-image': 'url(' + this.automobil.images[0] + ')'}">
@@ -26,7 +24,6 @@
                                 <div class="carousel-item" v-bind:key="img" v-for="img in getOtherImgs"
                                     :style="{'background-image': 'url(' + img + ')'}">
                                 </div>
-
                             </div>
                             <a v-show="isOtherImgs" class="carousel-control-prev" href="#carouselExampleIndicators"
                                 role="button" data-slide="prev">
@@ -102,58 +99,63 @@
 
 <script>
 import StarRating from 'vue-star-rating'
-
+import agentDataService from '../services/AgentDataService'
 export default {
     name: 'Car-details',
     data:function(){
         return {
             isOtherImgs: true,
             noReview: false,
-
             //Isti DTO kao u AutomobiliComments.vue
             automobil:{
-                id:'1',
-                markaAut:'BMW',
-                modelAut:'M5',
-                klasaAut:'SUV',
-                vrstaGoriva:'dizel',
-                tipMenjaca:'manuelni',
-                ukupnaOcena:5,
-                brojSedistaZaDecu:1,
-                predjenaKilometraza:5000,
-                collisionDamageWaiver:true,
-                images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                // images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080'],
-                // images:[],
-                // reviews:[],
-                reviews:
-                [
-                    {
-                        id:'1',
-                        username:'VeryHappyUser002',
-                        text:'Najbolji automobil ikada! Sve pohvaleeeee! Vrh je bas',
-                        star:5,
-                        visible:true,
-                    },
-                    {
-                        id:'2',
-                        username:'happyUser1',
-                        text:'Najbolji automobil ikada! Sve pohvale!',
-                        star:3,
-                        visible:true,
-                    },
-                    {
-                        id:'3',
-                        username:'happyUserTest',
-                        text:'Najbolji automobil ikada! Sve pohvale! TEST VISIBILITY',
-                        star:5,
-                        visible:false,
-                    }
-                ]
+                id:'',
+                markaAut:'',
+                modelAut:'',
+                klasaAut:'',
+                vrstaGoriva:'',
+                tipMenjaca:'',
+                ukupnaOcena:null,
+                brojSedistaZaDecu:null,
+                predjenaKilometraza:null,
+                collisionDamageWaiver:null,
+                images:[],
+                //images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
+                reviews:[]
             },
         }
     },
     methods:{
+        getAutomobilDetails:function(){
+            agentDataService.getAutomobilDetails(this.id).then(response =>{
+                console.log('Ono sto stigne sa beka: ' + JSON.stringify(response.data));
+                this.automobil.id = response.data.id;
+                this.automobil.markaAut = response.data.markaAut;
+                this.automobil.modelAut = response.data.modelAut;
+                this.automobil.klasaAut = response.data.klasaAut;
+                this.automobil.vrstaGoriva = response.data. vrstaGoriva ;
+                this.automobil.tipMenjaca = response.data.tipMenjaca;
+                this.automobil.ukupnaOcena = response.data.ukupnaOcena;
+                this.automobil.brojSedistaZaDecu = response.data.brojSedistaZaDecu;
+                this.automobil.predjenaKilometraza = response.data.predjenaKilometraza;
+                this.automobil.collisionDamageWaiver = response.data.collisionDamageWaiver;
+                for(let i = 0; i < response.data.slikeVozila.slika.length; i++){
+                    console.log('Slike vozila: ' + response.data.slikeVozila.slika[i])
+                    console.log('atob slike vozila: ' + atob(response.data.slikeVozila.slika[i]));
+                    this.automobil.images.push(atob(response.data.slikeVozila.slika[i]));
+                }
+
+                console.log('Nakon mapiranja: ' + JSON.stringify(this.automobil));
+                // "slikeVozila": {
+                //         "id": 5,
+                //         "slika": [
+                //             "W29iamVjdCBGaWxlXQ=="
+                //         ],
+                //         "automobilId": 5,
+                //         "commonDataId": 83
+                //     },
+
+            });
+        },
         getFirstImg: function () {
 			//provera da li ima slika za dati stan
 			if (!this.automobil.images.length) {
@@ -218,6 +220,9 @@ export default {
             }
 
         }
+    },
+    created(){
+        this.getAutomobilDetails();
     },
     mounted() {
         this.carId = this.id;

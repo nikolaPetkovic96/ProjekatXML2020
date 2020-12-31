@@ -96,7 +96,7 @@ export default{
                     //automobil
                     automobil:{
                         id:'1',
-                        markaAut:'BMW',
+                        markaAut:'BMW ovaj za test',
                         modelAut:'M5',
                         klasaAut:'SUV',
                         vrstaGoriva:'dizel',

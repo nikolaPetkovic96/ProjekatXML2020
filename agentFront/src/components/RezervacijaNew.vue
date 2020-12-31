@@ -16,7 +16,7 @@
         <div style="margin-top:20px" v-if='messages.errorDates' class="alert alert-danger" v-html="messages.errorDates"></div>
         <label>Datum pocetka rezervacije:</label>
         <vuejsDatepicker placeholder="Select Start Date" :disabled-dates="disabledDates" :highlighted="dates"
-            v-model="rezervacijaOglasDTO.odDatuma" v-on:input="calculatePriceAndDate()">
+            v-model="rezervacijaOglasDTO.narudzbenica.odDatuma" v-on:input="calculatePriceAndDate()">
         </vuejsDatepicker>
         <label>Broj dana:</label>
         <select style="padding:7px; margin-right: 10px" id='NoOfDays' v-model="odabran_br_dana"
@@ -35,7 +35,7 @@
                         <th>Cena po kilometru</th>
                         <th>CDW</th>
                         <th></th>
-                        <th>Popust preko 20 dana</th>
+                        <th>Popust preko 30 dana</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,14 +58,14 @@
         <h4>{{rezervacijaOglasDTO.ukupnaCena}} din</h4>
 
         <label>Tekst rezervacije:</label>
-        <textarea v-model='rezervacijaOglasDTO.poruka' placeholder="message..."></textarea>
+        <textarea v-model='rezervacijaOglasDTO.napomenaRezervacije' placeholder="message..."></textarea>
         <button class="btn btn-lg btn-success margTop" v-on:click='makeReservation()'> Rezerviši </button>
     </div>
 </div>
 </template>
 
 <script>
-//import KlijentDataService from './components/KlijentDataService'
+import agentDataService from '../services/AgentDataService'
 import Datepicker from 'vuejs-datepicker'
 export default {
     data(){
@@ -80,15 +80,17 @@ export default {
             //DTO koji spaja atribute rezervacije i narudzbenice.
             rezervacijaOglasDTO:{
             //Rezervacija
-                ukupnaCena:0,                   //cena_po_danu * broj_dana
+                ukupnaCena:0,                   
                 bundle: false,                  //agent moze samo za pojedinacna vozila da fizicki zauzima...
                 statusRezervacije:'PENDING',    //defaultni status
-                poruka:'',
-            //Narudzbenica
-                oglasId:null,                   
-                odDatuma: null,
-                doDatuma: null,
-                agentId:null, // ili samo username pa na beku id da dodelimo...
+                napomenaRezervacije:'',
+                narudzbenica:{
+                    oglasId: null,                   
+                    odDatuma: null,
+                    doDatuma: null,
+                    agentId: null,
+                } 
+               
                 //userId:null //Ili Ime i prezime onoga za koga se rezervise da li treba???
             },
             
@@ -98,51 +100,16 @@ export default {
             },
             
             odabraniOglas:{
-                //oglas
-                id:1,
-                odDatuma:1607003400000, //3 dec
-                doDatuma:1609077000000, //27 dec
-                TAdresa:{
-                    mesto:'Novi Sad',
-                    ulica:'9. Marta',
-                    broj:'bb',
-                    postanskiBroj:'21000',
-                },
-                planiranaKilometraza:2000,
-                agentId:1,
-                username:'This host', //u DTOu za korisnika koji je kreirao oglas.
-                zauzetiTermini:[
-                    {
-                        from:1607004000000, //4 dec
-                        to: 1607263200000, // 6 dec
-                    },
-                    {
-                        from: 1607609580000, //10 dec
-                        to: 1608041580000, // 15 dec
-                    }
-                ],
-                //automobil u okviru oglasa
-                automobil:{
-                    id:'1',
-                    markaAut:'BMW',
-                    modelAut:'M5',
-                    klasaAut:'SUV',
-                    vrstaGoriva:'dizel',
-                    tipMenjaca:'manuelni',
-                    ukupnaOcena:5,
-                    brojSedistaZaDecu:1,
-                    predjenaKilometraza:5000,
-                    collisionDamageWaiver:true,
-                },
-                //cenovnik u okviru oglasa    
-                cenovnik:{
-                    id:'1',
-                    cenaPoDanu:100,
-                    nazivCenovnika:'Cenovnik 1',
-                    popustZaPreko30Dana:10,
-                    cenaCollisionDamageWaiver:1000,
-                    cenaPoKilometru:10
-                },
+                id:null,
+                odDatuma:null, 
+                doDatuma:null, 
+                adresa:{},
+                planiranaKilometraza:null,
+                agentId:null,
+                username:'', //u DTOu za korisnika koji je kreirao oglas.
+                zauzetiTermini:[],
+                automobil:{},
+                cenovnik:{},
             },
 
             messages: {
@@ -220,7 +187,7 @@ export default {
 				}
             }
             //Provera da je unet pocetni interval
-            if(this.rezervacijaOglasDTO.odDatuma == null){
+            if(this.rezervacijaOglasDTO.narudzbenica.odDatuma == null){
                 this.messages.errorDates = `<h4>Morate odabrati početni termin rezervacije!</h4>`;
                 setTimeout(() => this.messages.errorDates = '', 5000);
             }
@@ -237,20 +204,27 @@ export default {
 				setTimeout(() => this.messages.errorDates = '', 10000);
 			}
             else{
-                this.rezervacijaOglasDTO.odDatuma = this.dates.from; //nije potrebno
-                this.rezervacijaOglasDTO.doDatuma = this.dates.to;
+                this.rezervacijaOglasDTO.narudzbenica.odDatuma = this.dates.from; //nije potrebno
+                this.rezervacijaOglasDTO.narudzbenica.doDatuma = this.dates.to;
                 //OBRISATI POSLE
-                console.log(`Rezervacija koju saljem: 
-                    UkupnaCena: ${this.rezervacijaOglasDTO.ukupnaCena},
-                    Bundle: ${this.rezervacijaOglasDTO.bundle},
-                    StatusRezervacije: ${this.rezervacijaOglasDTO.statusRezervacije},
-                    Poruka: ${this.rezervacijaOglasDTO.poruka},
-                    OglasId:${this.rezervacijaOglasDTO.oglasId},                   
-                    OdDatuma: ${this.rezervacijaOglasDTO.odDatuma},
-                    DoDatuma: ${this.rezervacijaOglasDTO.doDatuma},
-                    AgentId:${this.rezervacijaOglasDTO.agentId},
-                `);
+               console.log(JSON.stringify(this.rezervacijaOglasDTO));
+
+                agentDataService.addRezervacija(this.rezervacijaOglasDTO).then(response => {
+                    alert('Vaš termin je uspešno rezervisan!');
+                    this.$router.push(`/reservation/ads_overview`);
+                }).catch(error  => {
+                    if (error.response.status === 500 || error.response.status === 404) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokušajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+
+                    else if (error.response.status === 500 || error.response.data.message === 'You are blocked!') {
+                        this.messages.errorResponse = `<h4>Žao nam je vaš profil je blokiran! Ne možete izvršiti rezervaciju!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
+
         },
 
         // pomocna metoda za ogranicen odabir dana:
@@ -278,7 +252,7 @@ export default {
                 this.rezervacijaOglasDTO.ukupnaCena = this.rezervacijaOglasDTO.ukupnaCena -  this.popust;
                 
             }
-            this.dates.from = new Date(this.rezervacijaOglasDTO.odDatuma);
+            this.dates.from = new Date(this.rezervacijaOglasDTO.narudzbenica.odDatuma);
 			this.dates.to = new Date(this.dates.from.getTime() + this.odabran_br_dana * 1000 * 60 * 60 * 24);
             this.error = false;
 
@@ -289,10 +263,7 @@ export default {
 
 		insertReservData: function () {
             // dodaje se u rezervaciju id oglasa za koji se pravi rezervacija
-            this.rezervacijaOglasDTO.oglasId = this.id;
-
-			// dodaje se u rezervaciju id agenta koji pravi rezervaciju
-			// this.manuelnaRezervacija.userId = this.user.id iz cookia; ovo moze i na beku da se odradi 
+            this.rezervacijaOglasDTO.narudzbenica.oglasId = this.id;
 
 			// dodaje se u rezervaciju inicijalni broj dana koji je uvek bar 1
             this.odabran_br_dana = 1;
@@ -310,10 +281,12 @@ export default {
 		},
 	},
 	created() {
-        // za sada se ovde poziva, kasnije kada getujemo reklamu
-        // ce se pozvati iz setAd metode u mounted fazi...
-        // this.insertReservData(); 
-    
+
+        agentDataService.getOglasDetails(this.id).
+        then(response => (this.setAd(response.data)));
+
+        const token = JSON.parse(localStorage.getItem('parsToken'));
+        this.rezervacijaOglasDTO.narudzbenica.agentId = token.id;
         // Ako je prazan token znaci da user nije ulogovan pa se preusmerava na login stranicu.
 		// if (!localStorage.getItem('jwt'))
 		// 	this.$router.push('/login');
@@ -323,9 +296,7 @@ export default {
 		//dodaje se opseg dana za izbor trajanja iznajmljivanja
 		this.br_dana = this.range(1, 45);
         this.setAd(this.odabraniOglas);
-		// axios
-		// 	.get('rest/ad/' + this.$route.params.id)
-		// 	.then(Response => (this.setAd(Response.data)));
+	
 	}
 }
 </script>

@@ -31,7 +31,7 @@
                         <img src="../assets/AdHomeIcon1.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-0">Oglasi</h5>
-                            <div class="card-text text-black-50">Pogledajte listu svih oglasa i dodajte novi...</div>
+                            <div class="card-text text-black-50">Pogledajte listu svih oglasa i dodajte novi oglas...</div>
                         </div>
                     </router-link>
                 </div>
@@ -70,15 +70,15 @@
                     <router-link style='text-decoration: none;color:#35424a;' to="/statistics" class="nav-link" exact>
                         <img src="../assets/statisticHomeIcon1.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
-                            <h5 class="card-title mb-0">Statistika</h5>
-                            <div class="card-text text-black-50">Pogledajte statistiku o vasim vozilima...</div>
+                            <h5 class="card-title mb-0">Izvestaj i Statistika</h5>
+                            <div class="card-text text-black-50">Ostavite izvestaj i pogledajte statistiku o vasim vozilima...</div>
                         </div>
                     </router-link>
                 </div>
             </div>
 
-            <!-- Messages-->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <!-- Messages DA POSTANU ISTORIJA IZVESTAJA -->
+            <!-- <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
                     <router-link style='text-decoration: none;color:#35424a;' to="/messages" class="nav-link" exact>
                         <img src="../assets/messageHomeIcon1.1.jpg" class="card-img-top" alt="...">
@@ -88,7 +88,7 @@
                         </div>
                     </router-link>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Profile-->
             <div class="col-xl-3 col-md-6 mb-4">

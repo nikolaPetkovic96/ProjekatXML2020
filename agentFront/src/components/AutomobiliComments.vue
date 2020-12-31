@@ -50,11 +50,6 @@ export default {
     name: 'AutomobiliKomentar',
     data:function(){
         return {
-
-            //Kod prikaza sa beka se spoje Komentar i Ocena u review i tako se salje AutomobiliReviewDTO
-            //iz jedne get metode u npr. KomentariController.
-            //Isti DTO kao u AutomobiliDetails.vue
-            //Kod agenta komentari se vezuju za automobil... Kod usera za rezervaciju, a preko nje i za automobil...
             automobili: [],
         }
     },

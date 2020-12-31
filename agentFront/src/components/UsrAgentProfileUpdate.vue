@@ -262,7 +262,7 @@ export default {
                 })
                 .catch(error => {
                     if (error.response.status === 500 || error.response.status === 404) {
-                        this.messages.errorResponse = `<h4>We had some server errors, please try again later!</h4>`;
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru, molimo Vas pokušajte kasnije!</h4>`;
                         setTimeout(() => this.messages.errorResponse = '', 5000);
                     }
                 });

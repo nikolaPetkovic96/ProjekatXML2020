@@ -5,9 +5,6 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
         <div class="container" id='main'>
-            <!-- <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
-            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div> -->
-
             <table class="table">
                 <thead>
                     <tr>
@@ -20,7 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>                
-                <tr v-bind:key="narudzbenica.id" v-for='narudzbenica in naruzdbenice'>
+                <tr v-bind:key="narudzbenica.id" v-for='narudzbenica in rezervacija.narudzbenice'>
                     <td>{{narudzbenica.oglas.automobil.markaAut}} {{narudzbenica.oglas.automobil.modelAut}} ({{narudzbenica.oglas.automobil.klasaAut}})</td>
                     <td>{{narudzbenica.oglas.planiranaKilometraza}} km</td>
                     <td>{{narudzbenica.oglas.cenovnik.nazivCenovnika}}</td>
@@ -32,7 +29,8 @@
                 </tr>
                 </tbody>
             </table>
-
+            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
+             <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
             <div v-if='showNewReport' id='new-report'>
                 <div class="container" id='page-title'>
                     <h1 style="margin-top:10px;color:#35424a;">Novi <span id='titleEffect'>Izvestaj</span></h1>
@@ -61,20 +59,20 @@
                             <td>{{newReportPom.planiranaKilometraza}} km</td>
                             <td>{{newReportPom.prekoracenaKilometraza}} km</td>
                             <td>{{newReportPom.cenaPoKilometru}} din</td>
-                            <td>{{newReportPom.dodatniTroskovi}} din</td>   
-                        </tr>     
-                    </tbody>            
+                            <td>{{newReportPom.dodatniTroskovi}} din</td>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <div id='bill-warning' class="alert alert-danger">
                     <h5>Racun u iznosu od {{newReportPom.dodatniTroskovi}} dinara ce biti poslat korisniku na naplatu.</h5>
                 </div>
                 
-                <label>Dodatne informacije:</label> 
+                <label>Dodatne informacije:</label>
                 <div v-if='messages.errorText' class="alert alert-danger" v-html="messages.errorText"></div>
                 <textarea v-model='izvestaj.tekstIzvestaja' placeholder="Unesi info..."></textarea>
                 <br>
-
+               
                 <button class="btn btn-lg btn-success shadow" v-on:click='addReport()'> Potvrdi </button>
                 <button class="btn btn-lg btn-danger shadow" v-on:click='cancelNewReport()'> Odustani </button>
             </div>
@@ -83,6 +81,7 @@
 </template>
 
 <script>
+import agentDataService from '../services/AgentDataService'
 export default {
     name: 'ReportNew',
     data:function(){
@@ -103,110 +102,17 @@ export default {
             //OVO SE SALJE NA BEK...
             izvestaj:{
                 automobilId:null,
-                rezervacijaId:null, // Da li i rezervacijaId treba??
+                rezervacijaId:null, 
                 narudzbenicaId:null,
                 predjenaKilometraza:0,
+                prekoracenaKilometraza:0,
+                dodatniTroskovi:0,
                 tekstIzvestaja:'',
             },
-
             
-            naruzdbenice:[
-                {
-                    id:1,
-                    odDatuma:'18.6.2020',
-                    doDatuma:'25.7.2020',
-                    oglasId:1,
-                    userId:2,
-                    agentId:1, 
-                    oglas:{
-                        id:1,
-                        odDatuma:'25.5.2020',
-                        doDatuma:'25.6.2020',
-                        planiranaKilometraza:2000,
-                        agentId:1,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                        korisnickoIme:'This host',  //u DTOu za korisnika koji je kreirao oglas.
-                        TAdresa:{
-                            mesto:'Novi Sad',
-                            ulica:'9. Marta',
-                            broj:'bb',
-                            postanskiBroj:'21000',
-                            longitude:'45',
-                            latitude:'54',
-                        },
-                        //automobil
-                        automobil:{
-                            id:1,
-                            markaAut:'BMW',
-                            modelAut:'M5',
-                            klasaAut:'SUV',
-                            vrstaGoriva:'dizel',
-                            tipMenjaca:'manuelni',
-                            ukupnaOcena:5,
-                            brojSedistaZaDecu:1,
-                            predjenaKilometraza:5000,
-                            collisionDamageWaiver:true,
-                            images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                        },
-                        //cena    
-                        cenovnik:{
-                            id:'1',
-                            cenaPoDanu:100,
-                            nazivCenovnika:'Cenovnik 1',
-                            popustZaPreko30Dana:'10%',
-                            cenaCollisionDamageWaiver:1000,
-                            cenaPoKilometru:10
-                        },
-                    },
-                },
+            rezervacija:{
+            },
             
-                {
-                    id:2,
-                    agentId:2,
-                    userId:5,
-                    oglasId:2,
-                    odDatuma:'25.6.2020',
-                    doDatuma:'10.7.2020',
-                    oglas:{
-                        id:2,
-                        odDatuma:'18.6.2020',
-                        doDatuma:'25.7.2020',
-                        TAdresa:{
-                            mesto:'Beograd',
-                            ulica:'Ne znanog i znanog junaka',
-                            broj:'bb',
-                            postanskiBroj:'11000',
-                            longitude:'21.23',
-                            latitude:'34.14',
-                        },
-                        planiranaKilometraza:2500,
-                        agentId:2,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                        korisnickoIme:'Other host', //u DTOu za korisnika koji je kreirao oglas.
-                        //Oglas/Automobil
-                        automobil:{
-                            id:2,
-                            markaAut:'Audi',
-                            modelAut:'A6',
-                            klasaAut:'Gradski',
-                            vrstaGoriva:'dizel',
-                            tipMenjaca:'manuelni',
-                            predjenaKilometraza:4500,
-                            ukupnaOcena:4.25,
-                            collisionDamageWaiver:true,
-                            brojSedistaZaDecu:1,
-                            images:['https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                        },
-                        //Oglas/Cenovnik
-                        cenovnik:{ 
-                            id:'2',
-                            cenaPoDanu:500,
-                            nazivCenovnika:'Cenovnik 2',
-                            popustZaPreko30Dana:'20%',
-                            cenaCollisionDamageWaiver:null,
-                            cenaPoKilometru:20
-                        },
-                    },
-                },
-            ],
             messages: {
                 errorKm: '',
                 errorText: '',
@@ -216,27 +122,33 @@ export default {
         }
     },
     methods:{
+        getAllNarudzbenice:function(){
+            console.log("Get all narudzbenice!")
+            agentDataService.getRezervacijaDetails(this.id).then(response => {
+                this.rezervacija = response.data;
+            });
+        },
+
         showCreateReport(oglas, narudzbenicaId){
             //ako je vec otvoren prozor za kreiranje novog izvestaja samo neka se doda drugi id
             if(this.showNewReport === true){
                 this.izvestaj.narudzbenicaId = narudzbenicaId,
                 this.izvestaj.automobilId = oglas.automobil.id;
+                this.izvestaj.predjenaKilometraza = 0;
+                this.izvestaj.tekstIzvestaja = '';
                 this.newReportPom.planiranaKilometraza = oglas.planiranaKilometraza;
                 this.newReportPom.cenaPoKilometru = oglas.cenovnik.cenaPoKilometru;
-                console.log('this.izvestaj.automobilId:' + this.izvestaj.automobilId);
-                console.log('this.izvestaj.planiranaKilometraza:' + this.izvestaj.planiranaKilometraza);
-                console.log('this.newReportPom.cenaPoKilometru:' + this.newReportPom.cenaPoKilometru);
             }
             //ako je zatvoren prozor klikom na dugme se prvo otvara prozor za kreiranje pa se dodaje i id auta.
             else{
                 this.showNewReport = !this.showNewReport;
                 this.izvestaj.narudzbenicaId = narudzbenicaId,
                 this.izvestaj.automobilId = oglas.automobil.id;
+                this.izvestaj.predjenaKilometraza = 0;
+                this.izvestaj.tekstIzvestaja = '';
                 this.newReportPom.planiranaKilometraza = oglas.planiranaKilometraza;
                 this.newReportPom.cenaPoKilometru = oglas.cenovnik.cenaPoKilometru;
-                console.log('this.izvestaj.automobilId:' + this.izvestaj.automobilId);
-                console.log('this.newReportPom.planiranaKilometraza:' + this.newReportPom.planiranaKilometraza);
-                console.log('this.newReportPom.cenaPoKilometru:' + this.newReportPom.cenaPoKilometru);
+               
             }
 
             this.newReportPom.automobilReport = oglas.automobil;
@@ -250,7 +162,7 @@ export default {
             this.newReportPom.cenaPoKilometru= null;
             this.newReportPom.planiranaKilometraza= null;
             this.newReportPom.prekoracenaKilometraza= 0;
-            this.newReportPom.cenaPoKilometru= 0; //mora se proveriti da li se uopste moze uneti prekoracenje tj da li postoji cena po km...
+            this.newReportPom.cenaPoKilometru= 0; 
             this.newReportPom.dodatniTroskovi= 0;
         },
         calculateKilometeres:function(){
@@ -274,41 +186,34 @@ export default {
 				this.messages.errorKm = `<h4>Broj predjenih kilometara mora biti broj!</h4>`;
 				setTimeout(() => this.messages.errorKm = '', 3000);
 			}
-
 			else if (this.izvestaj.predjenaKilometraza == 0 || this.izvestaj.predjenaKilometraza == '') {
 				this.messages.errorKm = `<h4>Morate uneti broj predjenih kilometara!</h4>`;
 				setTimeout(() => this.messages.errorKm = '', 3000);
             }
-            
-            // else if (this.izvestaj.tekstIzvestaja == '') {
-			// 	this.messages.errorText = `<h4>Polje broj predjenih kilometara ne sme biti prazno!</h4>`;
-			// 	setTimeout(() => this.messages.errorText = '', 3000);
-			// }
             else {
                 this.izvestaj.rezervacijaId = this.id;
-                alert(`Izvestaj:
-                RezervacijaId: ${this.izvestaj.rezervacijaId},
-                NarudzbenicaId: ${this.izvestaj.narudzbenicaId},
-                automobilId: ${this.izvestaj.automobilId},
-                predjenaKm: ${this.izvestaj.predjenaKilometraza},
-                tekstIzv: ${this.izvestaj.tekstIzvestaja},
-                
-                `);
-                // axios
-                //     .post('rest/reviews/', this.review)
-                //     .then(response => {
-                //         this.messages.successResponse = `<h4>Your review was sent successfully! Thank you for your feedback!</h4>`;
-                //         this.review.text = '';
-                //         this.review.star = null;
-                //         setTimeout(() => this.messages.successResponse = '', 5000);
+                this.izvestaj.prekoracenaKilometraza = this.newReportPom.prekoracenaKilometraza;
+                this.izvestaj.dodatniTroskovi = this.newReportPom.dodatniTroskovi;
 
-                //     })
-                //     .catch(error => {
-                //         if (error.response.status === 500 || error.response.status === 404) {
-                //             this.messages.errorResponse = `<h4>We had some server errors, please try again later!</h4>`;
-                //             setTimeout(() => this.messages.errorResponse = '', 5000);
-                //         }
-                //     });
+               agentDataService.addIzvestaj(this.izvestaj)
+                    .then(response => {
+                        this.messages.successResponse = `<h4>Vaš izveštaj je uspešno poslat!</h4>`;
+                        this.showNewReport = false;
+                        setTimeout(() => this.messages.successResponse = '', 5000);
+
+                    })
+                    .catch(error => {
+                         if(error.response.status === 500 && error.response.data.message === 'Report already exist!') {
+                            this.messages.errorResponse = `<h4>Već postoji napravljen izveštaj za dati automobil!</h4>`;
+                            this.showNewReport = false;
+                            setTimeout(() => this.messages.errorResponse = '', 5000);
+                        }
+                        else if(error.response.status === 500 || error.response.status === 404) {
+                            this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru, molimo Vas pokušajte ponovo kasnije!</h4>`;
+                            setTimeout(() => this.messages.errorResponse = '', 5000);
+                        }
+                       
+                    });
             }
         },
 
@@ -317,14 +222,13 @@ export default {
 			return isNaN(num);
 		}
     },
-
     computed: {
         id() {
-            return this.$route.params.id; //preuzimam id rezervacije kako bih izvukao 
+            return this.$route.params.id; //preuzimam id rezervacije kako bih izvukao narudzbenice vezane za nju
         }
     },
     created() {
-        
+        this.getAllNarudzbenice();
     },
     
 }

@@ -10,9 +10,9 @@
         <section id="newsletter">
             <div class="container">
                 <h1>Još uvek niste naš član? Postanite odmah...</h1>
-                <form>
+                <!-- <form>
                     <router-link to='/registration' class="nav-link" exact> <button type='submit' class="btn button_1" id='btnRegistration'>Registration</button> </router-link>
-                </form>
+                </form> -->
             </div>
         </section>
 

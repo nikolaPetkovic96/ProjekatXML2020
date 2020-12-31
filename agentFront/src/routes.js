@@ -2,7 +2,6 @@ import Home from './components/Home'
 import About from './components/About'
 
 import LoginForm from '../src/forms/LoginForm'
-import RegForm from '../src/forms/RegForm'
 
 import Homepage from './components/Homepage'
 import UserProfile from './components/UsrAgentProfile'
@@ -24,7 +23,6 @@ import ReservationDetails from './components/RezervacijaDetails'
 import ReservationAdsOverview from './components/RezervacijaOglasiOverview'
 import Ads from './components/Oglasi'
 import AdsNew from './components/OglasiNew'
-import Messages from './components/Poruke'
 import MessagesOvervieNew from './components/PorukeOverviewNew'
 
 export default [
@@ -42,11 +40,6 @@ export default [
         path:'/login',
         name:'LoginForm',
         component:LoginForm
-    },
-    {
-        path:'/registration',
-        name:'RegistrationForm',
-        component:RegForm
     },
     {
         path:'/home',
@@ -140,11 +133,6 @@ export default [
         path:'/ads/:id/new',
         name:'AdsNew',
         component:AdsNew
-    },
-    {
-        path:'/messages',
-        name:'Poruke',
-        component:Messages
     },
     {
         path:'/messages/:id/overview',
