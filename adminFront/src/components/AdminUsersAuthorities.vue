@@ -215,8 +215,12 @@ export default {
         },
     },
     created(){
-        console.log('Created!');
-        this.getAllUsers();
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }
+        else{
+            this.getAllUsers();
+        }
     }
 }
 </script>

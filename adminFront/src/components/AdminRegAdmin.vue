@@ -176,7 +176,11 @@ export default {
             //isNaN(num) returns true if the variable does NOT contain a valid number
             return isNaN(num);
         }
-
+    },
+    created(){
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }
     }
 }
 </script>

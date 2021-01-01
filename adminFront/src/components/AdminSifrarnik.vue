@@ -1066,8 +1066,15 @@ export default {
         },
     },
     created(){
-        this.getAllOptions();
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }
+        else{
+            this.getAllOptions();
+        }
+        
     }  
+
 }
     
 </script>
