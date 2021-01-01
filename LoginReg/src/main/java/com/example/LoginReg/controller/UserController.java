@@ -111,7 +111,7 @@ public class UserController {
 		userService.changePermissions(id, comment, reservation, message);
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.PUT)
+	@RequestMapping(value = "/profile/update", method = RequestMethod.PUT)
 	public UserDTO changeUser(@RequestBody UserDTO user) {
 		return userService.changeUser(user);
 	}

@@ -24,9 +24,9 @@ public class CORSFilter extends ZuulFilter {
 		HttpServletResponse response = ctx.getResponse();
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-		response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-requested-with");
+		response.addHeader("Access-Control-Allow-Headers", "*");
 		response.addHeader("Access-Control-Max-Age", "3600");
-
+		response.addHeader("Referrer-Policy", "no-referrer");
 		if (request.getMethod().equalsIgnoreCase("options")) {
 			response.setStatus(200);
 			ctx.unset();

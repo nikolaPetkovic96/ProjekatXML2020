@@ -162,8 +162,8 @@ public class UserService {
 		if (!u.getLozinka().equals(user.get("secret")))
 			throw new DataIntegrityViolationException("Data not valid!");
 
-		u.setKorisnickoIme(user.get("korisnickoIme"));
-		u.setLozinka(encoder.encode(user.get("lozinka")));
+		u.setKorisnickoIme(user.get("username"));
+		u.setLozinka(encoder.encode(user.get("password")));
 
 		u.setStatus("aktivan");
 		try {

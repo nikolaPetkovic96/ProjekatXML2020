@@ -30,7 +30,12 @@ public class EmailService {
 					+ ",\nDa biste aktivirali svoj nalog, potrebno je da kliknete na sledeci link: "
 					+ "http://localhost:2020/loginreg-service/api/user/activate-user" + "?id=" + u.getId() + "&secret="
 					+ u.getLozinka();
-		else
+		else if(u.getAuthorities().get(0).getName().equals("ROLE_ADMIN"))
+			body = "Postovani  " + u.getIme() + " " + u.getPrezime()
+					+ ",\nDa biste aktivirali svoj nalog, potrebno je da kliknete na sledeci link: "
+					+ "http://localhost:8081/registration/activate-admin" + "?id=" + u.getId() + "&secret="
+					+ u.getLozinka();
+		else if(u.getAuthorities().get(0).getName().equals("ROLE_AGENT"))
 			body = "Postovani  " + u.getIme() + " " + u.getPrezime()
 					+ ",\nDa biste aktivirali svoj nalog, potrebno je da kliknete na sledeci link: "
 					+ "http://localhost:8081/registration/activate-agent" + "?id=" + u.getId() + "&secret="
