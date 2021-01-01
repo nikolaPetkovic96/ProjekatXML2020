@@ -5,15 +5,15 @@
         <hr style='background:#35424a;height:1px;'>
     </div>
 
-    <div style='font-size:25px;'>
+    <div style='font-size:25px;' class="container">
         <label>User</label>
-        <switches v-model="mode"  theme="bulma" color="green"></switches>
+        <switches  v-model="mode"  theme="bulma" color="green"></switches>
         <!-- <switches v-model="enabled" theme="bootstrap" color="blue"></switches> -->
         <label>Agent</label>
     </div>
 
     <!-- Page Content -->
-    <div class="container" v-show=!mode>
+    <div class="container" v-show=korisnik>
         <div class="row"> 
 
             <!-- Cars -->
@@ -112,7 +112,7 @@
         </div><!-- /.row -->
     </div>
 
-    <div class="container" v-show=mode>
+    <div class="container" v-show=agent>
         <div class="row"> 
 
             <!-- Cars -->
@@ -225,7 +225,10 @@ export default {
             user:{
                 username:''
             },
-            mode: false
+            mode: false,
+            korisnik : true,
+            agent : false,
+            temp : ''
         }
     },
     methods:{
@@ -239,10 +242,49 @@ export default {
             return JSON.parse(jsonPayload);
         }
     },
+    watch:{
+        mode: function(val){
+            console.log("KLIJENT: " + this.korisnik)
+            this.agent = !this.agent;
+            this.korisnik = !this.korisnik;
+            console.log("KLIJENT: " + this.korisnik)
+            if(this.agent == true){
+                localStorage.setItem("userMode", "agent")
+            }
+            else{
+                localStorage.setItem("userMode", "korisnik")
+            }
+            console.log("LOCALE STORAGE: " + localStorage.getItem("userMode"))
+        }
+    },
     created(){
-        let parsToken = this.parseJwt(localStorage.getItem('token'));
-        localStorage.setItem('parsToken', JSON.stringify(parsToken));
-        this.user.username = parsToken.username;
+        console.log("AAAA");
+        this.temp = ""
+        try{
+            this.temp = localStorage.getItem("userMode");
+            console.log("MODE JE: " + this.temp)
+            if(this.temp == "korisnik"){
+            this.mode = false;
+            }
+            else if(this.temp == "agent"){
+                this.mode = true;
+            }
+        }catch(err){
+            
+        }finally{
+            if (this.temp == ""){
+            // this.korisnik = true;
+            this.mode = true;
+            }
+        } 
+        
+        
+
+    //     let parsToken = this.parseJwt(localStorage.getItem('token'));
+    //     temp = localStorage.getItem("userMode")
+    //     localStorage.setItem('parsToken', JSON.stringify(parsToken));
+    //    this.user.username = parsToken.username;
+
     },
 }
 </script>

@@ -25,6 +25,7 @@ import AutomobiliAgentNew from './components/AutomobiliAgentNew'
 import ReservationAdsOverview from './components/RezervacijaOglasiOverview'
 import AutomobiliAgentComments from './components/AutomobiliAgentComments'
 import AutomobiliAgentCommentsNew from './components/AutomobiliAgentCommentsNew'
+import ShoppingCart from './components/ShoppingCart'
 
 
 export default [
@@ -153,6 +154,11 @@ export default [
         path:'/carsAgent/comments/:id/new',
         name:'carAgentNewComment',
         component:AutomobiliAgentCommentsNew
+    },
+    {
+        path:'/shoppingCart',
+        name:'shoppingCart',
+        component: ShoppingCart
     }
 
 ]
