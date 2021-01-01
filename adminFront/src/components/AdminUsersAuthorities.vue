@@ -32,8 +32,8 @@
                         <td>{{korisnik.tadresa.mesto}} {{korisnik.tadresa.ulica}} {{korisnik.tadresa.broj}}</td>
                         <td>{{korisnik.status}}</td>
                         <td>
-                            <a href="#edit-amenity"><button v-if='korisnik.status=="aktivan"'  class=" btn-sm btn-outline-primary" v-on:click='activateUser(korisnik.id)'> blokiraj </button></a>
-                            <a href="#edit-amenity"><button v-if='korisnik.status=="blokiran"' class=" btn-sm btn-outline-primary" v-on:click='blockUser(korisnik.id)'> aktiviraj </button></a>
+                            <a href="#edit-amenity"><button v-if='korisnik.status=="neaktivan"'  class=" btn-sm btn-outline-primary" v-on:click='activateUser(korisnik.id)'> aktiviraj </button></a>
+                            <a href="#edit-amenity"><button v-if='korisnik.status=="aktivan"' class=" btn-sm btn-outline-primary" v-on:click='blockUser(korisnik.id)'> blokiraj </button></a>
                         </td>
                          <td><a href="#change-permision"><button class="btn-sm btn-outline-primary" v-on:click='checkPermission(korisnik)'> permisije </button></a>
                         <td><button class="btn-sm btn-danger" v-on:click='deleteUser(korisnik.id)'> ukloni </button>
@@ -41,7 +41,8 @@
                     </tr>
                 </tbody>
             </table>
-
+            <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
+            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
             <div v-if='isChangePermision' id="change-permision">
                 <div class="container" id='page-title'>
                     <h1 style="margin-top:10px;color:#35424a;">Lista <span id='titleEffect'>Permisija</span>
@@ -53,10 +54,8 @@
                         <h4><b>Username:</b> {{showUser.korisnickoIme}} </h4>
                         <h4><b>Ime i prezime:</b> {{showUser.ime}} {{showUser.prezime}}</h4>
                     </div>
-                    <!-- <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
-                    <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div> -->
+               
                     <div id='codeType' class="row">
-                        <!-- <div v-if='messages.errorMarka' class="alert alert-danger" v-html="messages.errorMarka"></div> -->
                         <div class="col-md-4 col-sm-6 mb-4">
                             <label>Ostavljanje komentara i ocena:</label>
                             <div id="comments">
@@ -88,7 +87,7 @@
                             </div>
                         </div>
                     </div> <!--row--> <!--Ili show user prosledjume u sendPermission ako je -->
-                    <button class="btn btn-top btn-success" v-on:click='sendPermission(permisije)'>Potvrdi</button>
+                    <button class="btn btn-top btn-success" v-on:click='sendPermission()'>Potvrdi</button>
                     <button class="btn btn-danger" v-on:click='closePermission()'>Odustani</button>
                 </div> <!--Container-->
             </div>
@@ -110,21 +109,26 @@ export default {
             isChangePermision:false,
             //Ovo dodati u User klasu
             permisije:{
+                id:null,
                 komentari:false,
                 poruke:true,
                 rezervacija:true,
             },
             beckupPermisije:{
+                id:null,
                 komentari:null,
                 poruke:null,
                 rezervacija:null,
             },
             korisnici:[],
+            messages: {
+                errorResponse: '',
+                successResponse: '',
+            }
         }
     },
     methods:{
         getAllUsers:function(){
-            console.log("Usao u getAllUsers!");
             adminDataService.getAllUsers().then(response => {
                 console.log("response: " + response.data);
                 this.korisnici = response.data;
@@ -132,36 +136,79 @@ export default {
             });
         },
         activateUser:function(id){
-            alert(`Status usera sa id:${id} ce biti postavljen na aktivan!`);
+            if(confirm("Da li ste sigurni da želite aktivirati korisnika?")){
+                adminDataService.changeUsersStatus(id).then(response => {
+                    this.getAllUsers();
+                });
+            }
         },
         blockUser:function(id){
-            alert(`Status usera sa id:${id} ce biti postavljen na blokiran!`);
+            if(confirm("Da li ste sigurni da želite blokirati korisnika?")){
+                adminDataService.changeUsersStatus(id).then(response => {
+                    this.getAllUsers();
+                });
+            }
         },
         checkPermission:function(chosenUser){
             if(this.isChangePermision === false){
                 this.isChangePermision = true;
                 this.showUser = chosenUser;
+
+                this.permisije.id = chosenUser.id ,
+                this.permisije.komentari = chosenUser.allowedToCommend;
+                this.permisije.poruke = chosenUser.allowedToMessage;
+                this.permisije.rezervacija = chosenUser.allowedToMakeReservation;
             }
             else if(this.isChangePermision === true){
                 this.showUser = chosenUser;
+
+                this.permisije.id = chosenUser.id ,
+                this.permisije.komentari = chosenUser.allowedToCommend;
+                this.permisije.poruke = chosenUser.allowedToMessage;
+                this.permisije.rezervacija = chosenUser.allowedToMakeReservation;
             }
             //kada se udje u prikaz i izmenu permisija
             //trenutne permisije se bekapuju ukoliko korisnik izmeni permisije
             //ali ih ne sacuva nego cancel uradi kako bi se sacuvale stare permisije...
+            this.beckupPermisije.id = this.permisije.id,
             this.beckupPermisije.komentari = this.permisije.komentari;
             this.beckupPermisije.poruke = this.permisije.poruke;
             this.beckupPermisije.rezervacija = this.permisije.rezervacija;
         },
         deleteUser:function(id){
-            alert(`User sa id:${id} ce biti obrisan!`);
+            if(confirm("Da li ste sigurni da želite obrisati korisnika?")){
+                adminDataService.deleteUser(id).then(response => {
+                    this.getAllUsers();
+                });
+            }
         },
-        sendPermission:function(korisnik){
-
+        sendPermission:function(){
+            let request = "?";
+            request += `id=${this.permisije.id}`;
+            request += `&comment=${ this.permisije.komentari}`;
+            request += `&reservation=${this.permisije.rezervacija}`;
+            request += `&message=${this.permisije.poruke}`;
+            
+            adminDataService.changePermission(request).then(response => {
+                this.messages.successResponse = `<h4>Uspešno ste izmenili permisije korisnika!</h4>`;
+                setTimeout(() => this.messages.successResponse = '', 3000);
+                this.isChangePermision = false;
+                this.getAllUsers();
+            }).catch(error => {
+                // && error.response.data.message === "Wrong password!"
+                if (error.response.status === 500 || error.response.status === 404) {
+                    this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru, molimo Vas pokušajte ponovo kasnije!</h4>`;
+                    this.isChangePermision = false;
+                    setTimeout(() => this.messages.errorResponse = '', 3000);
+                }
+            
+            });
         },
         closePermission:function(){
             this.isChangePermision = false;
             //ovo preurediti prilikom povezivanja fronta i beka
             //Mozda prilikom cancela samo da se refreshuje stranica, tako bi se vratile stare permisije...
+            this.permisije.id = this.beckupPermisije.id ,
             this.permisije.komentari = this.beckupPermisije.komentari;
             this.permisije.poruke = this.beckupPermisije.poruke;
             this.permisije.rezervacija = this.beckupPermisije.rezervacija;

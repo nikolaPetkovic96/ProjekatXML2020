@@ -208,7 +208,7 @@ export default {
                     })
                     .catch(error => {
                         // && error.response.data.message === "Wrong password!"
-                        if(error.response.status === 500  ){
+                        if(error.response.status === 409 ){
                             this.messages.errorResponse = `<h4>Vaša stara sifra je netačna! Molimo Vas pokušajte ponovo...</h4>`;
             
                             setTimeout(()=>this.messages.errorResponse='', 5000);

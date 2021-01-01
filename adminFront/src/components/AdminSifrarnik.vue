@@ -991,6 +991,7 @@ export default {
             if(confirm("Da li ste sigurni da želite obrisati ovu marku? Biće obrisani i svi modeli vezni za nju!"))
                 adminDataService.deleteMarkaAut(id).then(response => {
                     this.getAllMarka();
+                    this.getAllModel();
                 }).catch(error => {
                     if(error.response.status === 500 && error.response.data.message === 'There are cars connected to this brand!'){
                         this.messages.errorResponseDel= `<h4>Ne možete obrisati ovu marku jer postoji automobil za koji je vezana!</h4>`;

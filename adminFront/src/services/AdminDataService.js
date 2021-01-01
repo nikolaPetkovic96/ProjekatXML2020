@@ -5,6 +5,7 @@ import axios from "axios";
 const API_URL = "http://localhost:2020";
 const LOGINREG_API_URL = `${API_URL}/loginreg-service/api/user`;
 const CAR_API_URL = `${API_URL}/automobil-service`; //npr: http://localhost:2020/automobil-service/brand
+const REVIEW_API_URL = `${API_URL}/rating-service`;
 //3. Glavni deo: napravi klasu koja ima sve funkciju za pozivanje get/set/put/delet metode kojoj se prosledjuje 
 //gore definisana putanja
 
@@ -22,6 +23,16 @@ class AdminDataService{
         const request = "?type=user";
         // const request = "";
         return axios.get(`${LOGINREG_API_URL}/${request}`);
+    }
+    changeUsersStatus(id){
+        return axios.get(`${LOGINREG_API_URL}/deactivate/${id}`);
+    }
+    deleteUser(id){
+        return axios.get(`${LOGINREG_API_URL}/block/${id}`);
+    }
+    changePermission(request){
+        console.log(JSON.stringify(request));
+        return axios.get(`${LOGINREG_API_URL}/permissions${request}`);
     }
     //AdminRegAdmin.vue
     addAdmin(admin){
@@ -129,7 +140,18 @@ class AdminDataService{
         return axios.put(`${CAR_API_URL}/fuel/`, updatedObject);
     }
 
-
+    //REVIWS
+    getAllReviws(){
+        //vraca samo za automobil sa id=1; preurediti da vraca za sve automobile
+        const id=1;
+        return axios.get(`${REVIEW_API_URL}/review/${id}`);
+    }
+    approveComment(id, approved){
+        console.log('id: ' + id);
+        console.log('approved: ' + approved);
+        return axios.post(`${REVIEW_API_URL}/comment/${id}?approved=${approved}`);
+    }
+    
 }
 
 export default new AdminDataService();

@@ -5,155 +5,128 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
         <!-- Objavljivanje ili odbijanje komentara korisnika. -->
-         <div id='main' class='container'>
-                <div class="comments" v-bind:key="automobil.id" v-for='automobil in automobili'>
+        <div id='main' class='container'>
+            <!-- <div class="comments" v-bind:key="automobil.id" v-for='automobil in automobili'>
                     <div id='carInfo'>
-                        <div class="card-header">
-                            <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
-                            <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
-                            <h4><b>Ukupna ocena:</b> {{automobil.ukupnaOcena}}</h4>
+                    <div class="card-header">
+                        <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
+                        <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
+                        <h4><b>Ukupna ocena:</b> {{automobil.ukupnaOcena}}</h4>
+                    </div>
+                </div>
+                <div v-show='isThereReviews(automobil)' class="card-body">
+                        <h3>Nema ocene niti komentara za ovaj automobil...</h3>
+                </div>
+                <div id='all-comments' v-bind:key="comment.id" v-for='comment in automobil.reviews'> -->
+                <div id='all-comments'  class="comments" v-bind:key="comment.id" v-for='comment in reviews'>
+                    <div class="single-comment">
+                        <div id='username'>{{comment.username}} </div>
+                        <div id='star-rating'>
+                            <star-rating
+                                inactive-color="#35424a"
+                                active-color="gold"
+                                v-bind:read-only= "true"
+                                v-bind:star-size="25"
+                                v-bind:show-rating="false"
+                                v-bind:rating="comment.star">
+                            </star-rating>
+                        </div>
+                        <div id='comment'>
+                            {{comment.text}}  
+                        </div>
+                        <div id='comment-visibility' style="margin-bottom: 5px;">
+                            <label style="display:block;">Prikazi komentar</label>
+                            <input type="checkbox" v-on:mouseup='checkComment(comment)' v-model='comment.odobren'>
+                            <div id='visibility-message' v-if='comment.odobren'>
+                                <p>Ovaj komentar i ocena ce biti prikazani drugim korisnicima!</p> 
+                            </div>
                         </div>
                     </div>
-                    <div v-show='isThereReviews(automobil)' class="card-body">
-                            <h3>Nema ocene niti komentara za ovaj automobil...</h3>
-                    </div>
-                    <div id='all-comments' v-bind:key="comment.id" v-for='comment in automobil.reviews'>
-                        <div class="single-comment">
-                            <div id='username'>{{comment.username}} </div>
-                            <div id='star-rating'>
-                                <star-rating
-                                    inactive-color="#35424a"
-                                    active-color="gold"
-                                    v-bind:read-only= "true"
-                                    v-bind:star-size="25"
-                                    v-bind:show-rating="false"
-                                    v-bind:rating="comment.star">
-                                </star-rating>
-                            </div>
-                            <div id='comment'>
-                                {{comment.text}}  
-                            </div>
-                            <div id='comment-visibility' style="margin-bottom: 5px;">
-                                <label style="display:block;">Prikazi komentar</label>
-                                <input type="checkbox" v-on:mouseup='checkComment(comment)' v-model='comment.odobren'>
-                                <div id='visibility-message' v-if='comment.odobren'>
-                                    <p>Ovaj komentar i ocena ce biti prikazani drugim korisnicima!</p> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> <!--comments-->
-            </div>
+                </div>
+            <!-- </div> comments -->
+        </div>
     </div> 
 </template>
 
 <script>
+import adminDataService from '../services/AdminDataService'
 import StarRating from 'vue-star-rating'
 export default {
     name:'Users-message-overview',
     data:function(){
         return{
-            automobili: [
-                {
-                    id:'1',
-                    markaAut:'BMW',
-                    modelAut:'M5',
-                    klasaAut:'SUV',
-                    vrstaGoriva:'dizel',
-                    tipMenjaca:'manuelni',
-                    ukupnaOcena:5,
-                    brojSedistaZaDecu:1,
-                    predjenaKilometraza:5000,
-                    collisionDamageWaiver:true,
-                    images:[],
-                    reviews:
-                    [
-                        {
-                            id:'1',
-                            username:'ThisUserMessage',
-                            text:'Najbolji automobil ikada! Sve pohvaleeeee! Vrh je bas',
-                            star:5,
-                            odobren:true,
-                        },
-                    ]
-                },
-                {
-                    id:'2',
-                    markaAut:'Mercedes',
-                    modelAut:'R8',
-                    klasaAut:'Old Tajmer',
-                    vrstaGoriva:'dizel',
-                    tipMenjaca:'manuelni',
-                    ukupnaOcena:3,
-                    brojSedistaZaDecu:2,
-                    predjenaKilometraza:800,
-                    collisionDamageWaiver:true,
-                    images:[],
-                    reviews:[
-                        {
-                            id:'3',
-                            username:'ThisUserMessage',
-                            text:'Nije netki automobil! Sda dnl, lndakd ondasjb jdba ndisa!',
-                            star:2,
-                            odobren:false,
-                        },
-                        {
-                            id:'4',
-                            username:'ThisUserMessage',
-                            text:'Nije netki automobil! Moglo je to mnogo bolje! Nisam bas odusevljen uslugom',
-                            star:4,
-                            odobren:true,
-                        },
- 
-                    ]
-                },
-                {
-                    id:'3',
-                    markaAut:'Audi',
-                    modelAut:'A6',
-                    klasaAut:'Gradski auto',
-                    vrstaGoriva:'dizel',
-                    tipMenjaca:'manuelni',
-                    ukupnaOcena:4,
-                    brojSedistaZaDecu:2,
-                    predjenaKilometraza:650,
-                    collisionDamageWaiver:false,
-                    images:[],
-                    reviews:[
-                        {
-                            id:'5',
-                            username:'ThisUserMessage',
-                            text:'Sve naj naj! Dsadas dsadsd das, dasjdiod ndi assndi.',
-                            star:5,
-                            odobren:true,
-                        }
-                    ],
-                },
+            reviews:[
+                // {
+                //     id:'1',
+                //     username:'ThisUserMessage',
+                //     text:'Najbolji automobil ikada! Sve pohvaleeeee! Vrh je bas',
+                //     star:5,
+                //     odobren:true,
+                // },
+                //     {
+                //     id:'3',
+                //     username:'ThisUserMessage',
+                //     text:'Nije netki automobil! Sda dnl, lndakd ondasjb jdba ndisa!',
+                //     star:2,
+                //     odobren:false,
+                // },
             ],
+            // automobili: [
+            //     {
+            //         id:'1',
+            //         markaAut:'BMW',
+            //         modelAut:'M5',
+            //         klasaAut:'SUV',
+            //         vrstaGoriva:'dizel',
+            //         tipMenjaca:'manuelni',
+            //         ukupnaOcena:5,
+            //         brojSedistaZaDecu:1,
+            //         predjenaKilometraza:5000,
+            //         collisionDamageWaiver:true,
+            //         images:[],
+            //         reviews:
+            //         [
+            //             {
+            //                 id:'1',
+            //                 username:'ThisUserMessage',
+            //                 text:'Najbolji automobil ikada! Sve pohvaleeeee! Vrh je bas',
+            //                 star:5,
+            //                 odobren:true,
+            //             },
+            //               {
+            //                 id:'3',
+            //                 username:'ThisUserMessage',
+            //                 text:'Nije netki automobil! Sda dnl, lndakd ondasjb jdba ndisa!',
+            //                 star:2,
+            //                 odobren:false,
+            //             },
+            //         ]
+            //     },
+              
+            // ],
         }
     },
     methods:{
+        getAllReviews:function(){
+            adminDataService.getAllReviws().then(response => {
+                this.reviews = response.data;
+                console.log('Reviews:');
+                console.log(JSON.stringify(this.reviews));
+            });
+        },
         showComments:function(id){
             this.$router.push(`/adminTest/${id}/comments`);;
         },
-        getComments: function () {
-            // dobavljanje svih komentara preko apartmana za prikaz adminu ili hostu
-            axios
-                .get('rest/apartment/all')
-                .then(response => {
-                    this.apartments = response.data;
-                })
-        },
-        checkComment: function (updatedComment) {
 
-            updatedComment.visible = !updatedComment.visible;
-             //mora ovako jer inace kasni za jednu promenu checkbox;
-            // updatedComment.odobren = !updatedComment.odobren;
-            // axios
-            //     .put(`rest/reviews/${updatedComment.id}`, updatedComment)
-            //     .then(response => {
-            //         this.getComments();
-            //     })
+        checkComment: function (updatedComment) {
+            console.log(JSON.stringify(updatedComment));
+            // updatedComment.visible = !updatedComment.visible;
+            //mora ovako jer inace kasni za jednu promenu checkbox;
+            updatedComment.odobren = !updatedComment.odobren;
+            adminDataService.approveComment(updatedComment.automobKomentarId, updatedComment.odobren)
+                .then(response => {
+                    this.getAllReviews();
+                })
         },
         isThereReviews:function(automobil){     
             console.log('this.apartment.reviews.length: ' + automobil.reviews.length);   
@@ -169,7 +142,7 @@ export default {
         'star-rating':StarRating
     },
     created(){
-        //getujemo sve automobile sa svim njihovim rezervacijama...
+        this.getAllReviews();
     }
 }
 </script>
