@@ -57,8 +57,7 @@ class AdminDataService{
 
     // PROFIL
     // AdminProfile.vue
-    getAdmin(id){
-        console.log('getAdmin: ' + id);
+    getAdmin(){
         return axios.get(`${LOGINREG_API_URL}/profile`);
     }
     //AdminProfile.vue i AdminProfileUpdate.vue

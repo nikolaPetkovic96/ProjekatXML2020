@@ -54,7 +54,24 @@ export default {
     name: 'Admin-profile',
     data(){
         return{
-            profile: {}
+           profile: {
+            	id:null,
+                korisnickoIme:null,
+                lozinka:null,
+                email:null,
+                status:null,
+                pol:null,
+                prezime:null,
+                ime:null,
+                jmbg:null,
+                staraLozinka:null,
+                tadresa:{
+                    mesto:'',
+                    ulica:'',
+                    broj:'',
+                    postanskiBroj:'',
+                }
+            },
         }
     },
     methods:{

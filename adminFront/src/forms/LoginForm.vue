@@ -96,13 +96,6 @@ export default {
         
     },
     created(){
-      //preuzimam id klinike na cijoj sam profilnoj stranici:
-      if(this.$route.query.token) {
-        this.generatedCode = this.$route.query.token;
-        PacijentDataService.verifyPacijenta({
-          registrationCode : this.generatedCode,
-        });
-      }
     }
   }
 </script>

@@ -94,6 +94,12 @@ export default {
                 ime:null,
                 jmbg:null,
                 staraLozinka:null,
+                tadresa:{
+                    mesto:'',
+                    ulica:'',
+                    broj:'',
+                    postanskiBroj:'',
+                }
             },
 
 			changedPassword: {
@@ -241,11 +247,6 @@ export default {
                 });
             }
 		},
-		getUserProfile: function () {
-			axios.get(`profile/${this.user.username}`).then(Response => {
-				this.profile = Response.data;
-			})
-        }
     },
     computed:{
         id() {
