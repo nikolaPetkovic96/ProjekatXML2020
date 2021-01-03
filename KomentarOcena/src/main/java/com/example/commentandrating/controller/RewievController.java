@@ -21,5 +21,4 @@ public class RewievController {
 	public List<ReviewDTO> getRatings(@PathVariable("id") Long carId) {
 		return reviewService.getReviews(carId);
 	}
-
 }

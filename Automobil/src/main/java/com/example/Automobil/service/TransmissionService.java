@@ -58,7 +58,7 @@ public class TransmissionService {
 			throw new DataIntegrityViolationException("Type not found!");
 
 		tTipMenjacaRepository.deleteById(id);
-		cmdRep.deleteById(id);
+		cmdRep.deleteById(tip.get().getCommonDataId());
 		return true;
 	}
 

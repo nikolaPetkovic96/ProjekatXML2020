@@ -141,6 +141,7 @@ public class UserService {
 			adresaRepository.saveAndFlush(adr);
 			u.setAdresaId(adr.getId());
 			userRepository.saveAndFlush(u);
+			user.setId(u.getId());
 			emailService.sendActivationEmail(u);
 
 		}
@@ -266,6 +267,8 @@ public class UserService {
 		u.setIme(user.getIme());
 		u.setPrezime(user.getPrezime());
 		u.setJmbg(user.getJmbg());
+		u.setNazivFirme(user.getNazivFirme());
+		u.setPoslovniMaticniBroj(user.getPoslovniMaticniBroj());
 		return u;
 	}
 
@@ -278,14 +281,22 @@ public class UserService {
 		return adr;
 	}
 
-	public boolean deactivate(Long id) {
+	public boolean deactivate(Long id, String string ) {
 		if (!userRepository.existsById(id))// pogrresan id
 			throw new DataIntegrityViolationException("Data not valid!");
 
 		TUser u = userRepository.findById(id).get();
-		if (u.getStatus().equals("neaktivan"))// vec je aktiviran
-			throw new DataIntegrityViolationException("Data not valid!");
-		u.setStatus("neaktivan");
+		
+		if (u.getStatus().equals("neaktivan") && string.equals("neaktivan")) {
+			u.setStatus("aktivan");
+		}
+		else if(u.getStatus().equals("aktivan") && string.equals("neaktivan")) {
+			u.setStatus(string);
+		}
+		else if(string.equals("obrisan")) {
+			u.setStatus(string);
+		}
+			
 		try {
 			userRepository.saveAndFlush(u);
 		}
@@ -295,6 +306,7 @@ public class UserService {
 		}
 		return true;
 	}
+	
 
 	public void changePermissions(Long id, Boolean comment, Boolean reservation, Boolean message) {
 		if (!userRepository.existsById(id))// pogrresan id
@@ -316,8 +328,7 @@ public class UserService {
 
 	public UserDTO changeUser(UserDTO user) {
 		TUser u = userRepository.findOneByKorisnickoIme(user.getKorisnickoIme());
-		if (!encoder.matches(user.getStaraLozinka(), u.getLozinka()))
-			throw new DataIntegrityViolationException("Wrong password!");
+	
 		if (user.getIme() != null)
 			u.setIme(user.getIme());
 		if (user.getJmbg() != null)
@@ -340,9 +351,11 @@ public class UserService {
 			u.setIme(user.getIme());
 		if (user.getIme() != null)
 			u.setIme(user.getIme());
-		if (user.getLozinka() != null)
+		if (user.getLozinka() != null) {
+			if (!encoder.matches(user.getStaraLozinka(), u.getLozinka()))
+				throw new DataIntegrityViolationException("Wrong password!");
 			u.setLozinka(encoder.encode(user.getLozinka()));
-
+		}
 		Map<String, String> adr = user.getTAdresa();
 		if (adr != null) {
 			TAdresa a = adresaRepository.findById(u.getAdresaId()).get();

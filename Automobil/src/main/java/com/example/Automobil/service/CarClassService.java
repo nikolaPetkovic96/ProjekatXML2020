@@ -41,7 +41,7 @@ public class CarClassService {
 		catch (Exception e) {
 			try {
 				cmdRep.delete(d);
-			}catch (Exception exc) {
+			} catch (Exception exc) {
 				// TODO: handle exception
 			}
 			throw new DataIntegrityViolationException("Car class is not unique!");
@@ -59,7 +59,7 @@ public class CarClassService {
 			throw new DataIntegrityViolationException("Class not found!");
 
 		carCalssRepositorz.deleteById(id);
-		cmdRep.deleteById(id);
+		cmdRep.deleteById(tip.get().getCommonDataId());
 		return true;
 	}
 

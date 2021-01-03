@@ -36,10 +36,17 @@ public class EmailService {
 					+ "http://localhost:8081/registration/activate-admin" + "?id=" + u.getId() + "&secret="
 					+ u.getLozinka();
 		else if(u.getAuthorities().get(0).getName().equals("ROLE_AGENT"))
-			body = "Postovani  " + u.getIme() + " " + u.getPrezime()
-					+ ",\nDa biste aktivirali svoj nalog, potrebno je da kliknete na sledeci link: "
-					+ "http://localhost:8081/registration/activate-agent" + "?id=" + u.getId() + "&secret="
-					+ u.getLozinka();
+			if(u.getIme().equals("") && u.getPrezime().equals(""))
+				body = "Postovani " + u.getNazivFirme()
+				+ ",\nDa biste aktivirali nalog vaše firme, potrebno je da kliknete na sledeci link: "
+				+ "http://localhost:8081/registration/activate-agent" + "?id=" + u.getId() + "&secret="
+				+ u.getLozinka();
+			else
+				body = "Postovani  " + u.getIme() + " " + u.getPrezime()
+				+ ",\nDa biste aktivirali svoj nalog, potrebno je da kliknete na sledeci link: "
+				+ "http://localhost:8081/registration/activate-agent" + "?id=" + u.getId() + "&secret="
+				+ u.getLozinka();
+				
 		mail.setText(body);
 		javaMailSender.send(mail);
 	}

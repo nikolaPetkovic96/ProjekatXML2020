@@ -46,19 +46,19 @@ public /* abstract */ class TUser /* implements UserDetails */ {
 	@Column(name = "adresa_id", nullable = false)
 	protected Long adresaId;
 
-	@Column(name = "pol", nullable = false)
+	@Column(name = "pol", nullable = true)
 	@XmlElement(name = "pol", required = true, defaultValue = "Drugo")
 	protected String pol;
 
-	@Column(name = "ime", nullable = false)
+	@Column(name = "ime", nullable = true)
 	@XmlElement(name = "ime", required = true)
 	protected String ime;
 
-	@Column(name = "prezime", nullable = false)
+	@Column(name = "prezime", nullable = true)
 	@XmlElement(name = "prezime", required = true)
 	protected String prezime;
 
-	@Column(name = "jmbg", nullable = false)
+	@Column(name = "jmbg", nullable = true)
 	@XmlElement(name = "jmbg", required = true)
 	protected String jmbg;
 

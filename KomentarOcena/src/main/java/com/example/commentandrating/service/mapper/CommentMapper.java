@@ -7,7 +7,7 @@ import com.example.commentandrating.dto.KomentarDTO;
 import com.example.commentandrating.model.CommonData;
 import com.example.commentandrating.model.Komentar;
 import com.example.commentandrating.repository.CommonDataRepository;
-import com.example.commentandrating.repository.TUserRepository;
+
 
 @Component
 public class CommentMapper {

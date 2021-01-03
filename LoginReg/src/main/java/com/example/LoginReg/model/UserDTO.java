@@ -2,10 +2,8 @@ package com.example.LoginReg.model;
 
 import java.util.Map;
 
-import javax.persistence.Column;
-import javax.xml.bind.annotation.XmlElement;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserDTO {
 	protected Long id;
@@ -27,6 +25,9 @@ public class UserDTO {
 	public String getStaraLozinka() {
 		return staraLozinka;
 	}
+
+	
+	@JsonProperty
 
 	public void setStaraLozinka(String staraLozinka) {
 		this.staraLozinka = staraLozinka;
@@ -56,6 +57,7 @@ public class UserDTO {
 	public String getLozinka() {
 		return lozinka;
 	}
+	@JsonProperty
 
 	public void setLozinka(String lozinka) {
 		this.lozinka = lozinka;

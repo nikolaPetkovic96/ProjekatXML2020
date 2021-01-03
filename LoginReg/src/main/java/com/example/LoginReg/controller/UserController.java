@@ -76,7 +76,13 @@ public class UserController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/deactivate/{id}", method = RequestMethod.GET)
 	public boolean deactivate(@PathVariable("id") Long user) {
-		return userService.deactivate(user);
+		return userService.deactivate(user,"neaktivan");
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/block/{id}", method = RequestMethod.GET)
+	public boolean block(@PathVariable("id") Long user) {
+		return userService.deactivate(user,"obrisan");
 	}
 
 	// TODO refresh token
@@ -90,7 +96,7 @@ public class UserController {
 	 * else { UserTokenState userTokenState = new UserTokenState(); return
 	 * ResponseEntity.badRequest().body(userTokenState); } }
 	 */
-	// @PreAuthorize("hasRole('ROLE_ADMIN')")
+	 @PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	// PARAMETAR type odredjuje koje korisnike hoces, ako ga ne posaljes dobices sve
 	// moguce vredsnoti: admin, user, agent
@@ -103,19 +109,21 @@ public class UserController {
 	public HashMap<String, Object> auth(HttpServletRequest request) {
 		return userService.doAuth(request);
 	}
-
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/permissions", method = RequestMethod.GET)
-	public void changePersmissions(@RequestParam("id") Long id, @RequestParam("comment") Boolean comment,
-			@RequestParam("reservation") Boolean reservation, @RequestParam("message") Boolean message) {
-		userService.changePermissions(id, comment, reservation, message);
+	public void changePersmissions(@RequestParam("id") Long id, @RequestParam("comment") Optional<Boolean> comment,
+			@RequestParam("reservation") Optional<Boolean> reservation, @RequestParam("message") Optional<Boolean> message) {
+		userService.changePermissions(id, comment.orElse(null), reservation.orElse(null), message.orElse(null));
 	}
-
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/profile/update", method = RequestMethod.PUT)
 	public UserDTO changeUser(@RequestBody UserDTO user) {
 		return userService.changeUser(user);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public UserDTO myProfile() {
 		return userService.getMyProfile();

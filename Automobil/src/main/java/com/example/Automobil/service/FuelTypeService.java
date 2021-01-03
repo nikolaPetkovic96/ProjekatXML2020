@@ -58,7 +58,7 @@ public class FuelTypeService {
 			throw new DataIntegrityViolationException("Type not found!");
 
 		tipGorivaRepository.deleteById(id);
-		cmdRep.deleteById(id);
+		cmdRep.deleteById(tip.get().getCommonDataId());
 		return true;
 	}
 

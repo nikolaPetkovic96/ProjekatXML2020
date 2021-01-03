@@ -29,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		} else {
 			boolean enabled = user.getStatus().equals("aktivan") ? true : false;
 
-			User u = new User(user.getKorisnickoIme(), user.getLozinka(), enabled, enabled, true, true,
+			User u = new User(user.getKorisnickoIme(), user.getLozinka(), enabled, enabled, true, !user.getStatus().equals("blokiran"),
 					user.getAuthorities());
 			// User u = new User(user.getKorisnickoIme(), user.getLozinka(),
 			// user.getAuthorities());

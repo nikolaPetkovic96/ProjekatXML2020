@@ -52,10 +52,6 @@ public class FuelTypeController {
 		return fuelTypeService.changeOne(t);
 	}
 
-	@ExceptionHandler(DataIntegrityViolationException.class)
-	@ResponseStatus(value = HttpStatus.CONFLICT, reason = "Data integrity violation")
-	public void conflict() {
 
-	}
 
 }

@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,7 @@ public class CarModelService {
 		return t;
 	}
 
+	@Transactional(value=TxType.REQUIRED)
 	public boolean deleteOne(Long id) {
 		if (autoRepository.findAllByModelAutomobilaId(id).size() != 0) {
 			throw new DataIntegrityViolationException("Class is in use!");
@@ -59,7 +63,7 @@ public class CarModelService {
 			throw new DataIntegrityViolationException("Class not found!");
 
 		carCalssRepositorz.deleteById(id);
-		cmdRep.deleteById(id);
+		cmdRep.deleteById(tip.get().getCommonDataId());
 		return true;
 	}
 
