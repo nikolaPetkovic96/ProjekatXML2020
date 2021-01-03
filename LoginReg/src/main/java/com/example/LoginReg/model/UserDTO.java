@@ -28,7 +28,6 @@ public class UserDTO {
 
 	
 	@JsonProperty
-
 	public void setStaraLozinka(String staraLozinka) {
 		this.staraLozinka = staraLozinka;
 	}

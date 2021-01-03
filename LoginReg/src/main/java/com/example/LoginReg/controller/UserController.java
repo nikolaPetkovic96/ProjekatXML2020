@@ -117,13 +117,13 @@ public class UserController {
 		userService.changePermissions(id, comment.orElse(null), reservation.orElse(null), message.orElse(null));
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
 	@RequestMapping(value = "/profile/update", method = RequestMethod.PUT)
 	public UserDTO changeUser(@RequestBody UserDTO user) {
 		return userService.changeUser(user);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public UserDTO myProfile() {
 		return userService.getMyProfile();

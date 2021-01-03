@@ -32,21 +32,21 @@ public class FuelTypeController {
 	}
 
 	@PostMapping("")
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 
 	public TTipGoriva addNew(@RequestBody TTipGoriva t) {
 		return fuelTypeService.addNew(t);
 	}
 
 	@DeleteMapping("{id}")
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 
 	public boolean delete(@PathVariable(name = "id") Long t) {
 		return fuelTypeService.deleteOne(t);
 	}
 
 	@PutMapping("")
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 
 	public TTipGoriva change(@RequestBody TTipGoriva t) {
 		return fuelTypeService.changeOne(t);

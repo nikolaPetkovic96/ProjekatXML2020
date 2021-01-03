@@ -49,6 +49,4 @@ public class CarClassController {
 		return carBrandService.changeOne(t);
 	}
 
-
-
 }

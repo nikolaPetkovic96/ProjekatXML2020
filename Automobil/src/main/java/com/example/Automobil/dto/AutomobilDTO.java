@@ -1,14 +1,6 @@
 package com.example.Automobil.dto;
 
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-
 public class AutomobilDTO {
 
 	private Long id;
@@ -30,11 +22,13 @@ public class AutomobilDTO {
 
 	private Long user_id;
 	private String username;
+	
+	private float ukupnaOcena;
 
 	public AutomobilDTO(Long id, Long markaAutomobilaId, Long modelAutomobilaId, Long klasaAutomobilaId,
 			Long vrstaGorivaId, Long tipMenjacaId, float predjenaKilometraza, float planiranaKilometraza,
 			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId, List<byte[]> slike,
-			String markaNaziv, String modelNaziv, String klasaNaziv, Long string, String username) {
+			String markaNaziv, String modelNaziv, String klasaNaziv, Long string, String username, float ukupnaOcena) {
 		super();
 		this.id = id;
 		this.markaAutomobilaId = markaAutomobilaId;
@@ -53,6 +47,7 @@ public class AutomobilDTO {
 		this.klasaNaziv = klasaNaziv;
 		this.user_id = string;
 		this.username = username;
+		this.ukupnaOcena = ukupnaOcena;
 	}
 
 	public Long getId() {
@@ -190,4 +185,14 @@ public class AutomobilDTO {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public float getUkupnaOcena() {
+		return ukupnaOcena;
+	}
+
+	public void setUkupnaOcena(float ukupnaOcena) {
+		this.ukupnaOcena = ukupnaOcena;
+	}
+
+
 }

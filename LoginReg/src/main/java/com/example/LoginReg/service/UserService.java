@@ -115,6 +115,7 @@ public class UserService {
 			adresaRepository.saveAndFlush(adr);
 			u.setAdresaId(adr.getId());
 			userRepository.saveAndFlush(u);
+			emailService.sendActivationEmail(u);
 		}
 
 		catch (Exception e) {

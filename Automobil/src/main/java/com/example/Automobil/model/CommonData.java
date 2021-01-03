@@ -110,7 +110,7 @@ public class CommonData {
 		this.datumIzmene = value;
 	}
 	
-	public Long getUserid() {
+	public Long getUserId() {
 		return userId;
 	}
 

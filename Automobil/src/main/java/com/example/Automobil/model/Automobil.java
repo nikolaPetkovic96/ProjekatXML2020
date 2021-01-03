@@ -5,29 +5,19 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.example.Automobil.model;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -80,15 +70,18 @@ public class Automobil {
 	@Column(name = "common_data_id", nullable = false)
 	protected Long commonDataId;
 	
+	@Column(name = "ukupna_ocena", nullable = false)
+	private float ukupnaOcena;
+	
+//	private String agentUsername;
 	
 	public Automobil() {
 		super();
 	}
 
-
 	public Automobil(Long id, Long markaAutomobilaId,Long modelAutomobilaId,
 			Long klasaAutomobilaId, Long vrstaGorivaId,Long tipMenjacaId, float predjenaKilometraza,
-			float planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId) {
+			float planiranaKilometraza, float ukupnaOcena, boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId) {
 		super();
 		this.id = id;
 		this.markaAutomobilaId = markaAutomobilaId;
@@ -101,8 +94,8 @@ public class Automobil {
 		this.collisionDamageWaiver = collisionDamageWaiver;
 		this.brojSedistaZaDecu = brojSedistaZaDecu;
 		this.commonDataId=commonDataId;
+		this.ukupnaOcena = ukupnaOcena;
 	}
-
 
     public Long getId() {
         return id;
@@ -213,5 +206,14 @@ public class Automobil {
 		this.commonDataId = commonDataId;
 	}
 	
-    
+	public float getUkupnaOcena() {
+		return ukupnaOcena;
+	}
+
+
+	public void setUkupnaOcena(float ukupnaOcena) {
+		this.ukupnaOcena = ukupnaOcena;
+	}
+	
+	
 }
