@@ -202,12 +202,16 @@ export default {
         },
     },
     created(){
-        // 1. se getuje rezervacija ciji id je prosledjen u urlu;
-        this.novaPoruka.rezervacijaId = this.id;
-        const token = JSON.parse(localStorage.getItem('parsToken'));
-        this.userId = token.id;
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            // 1. se getuje rezervacija ciji id je prosledjen u urlu;
+            this.novaPoruka.rezervacijaId = this.id;
+            const token = JSON.parse(localStorage.getItem('parsToken'));
+            this.userId = token.id;
 
-        this.getAllMessages();
+            this.getAllMessages();
+        }
     }
 }
 </script>

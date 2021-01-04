@@ -31,7 +31,8 @@
             <div class="row" >
                 <div class="col-lg-4 col-sm-6 mb-4" v-bind:key='oglas.id' v-for="oglas in sortedOglasi">
                 <div class="card h-100">
-                    <img id='overview-img' class="card-img-top" v-bind:src="oglas.automobil.images[0]" alt="">
+                    <img id='overview-img' class="card-img-top" v-bind:src="oglas.automobil.slikeVozila.slika[0]" alt="">
+                    
                     <div class="card-body">
                     <!-- <h4 class="card-title">
                         <a href="#">Project One</a>
@@ -66,6 +67,7 @@
 <script>
 import Datepicker from 'vuejs-datepicker'
 import StarRating from 'vue-star-rating'
+import AgentDataService from '../services/AgentDataService'
 export default{
     data(){
         return{
@@ -77,305 +79,74 @@ export default{
             currentSortDir: 'asc',
 
             oglasi:[
-                {
-                    //oglas
-                    id:1,
-                    odDatuma:'25.5.2020',
-                    doDatuma:'25.6.2020',
-                    TAdresa:{
-                        mesto:'Novi Sad',
-                        ulica:'9. Marta',
-                        broj:'bb',
-                        postanskiBroj:'21000',
-                        longitude:'45',
-                        latitude:'54',
-                    },
-                    planiranaKilometraza:2000,
-                    agentId:1,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoImeAgenta:'This host',  //u DTOu za korisnika koji je kreirao oglas.
-                    //automobil
-                    automobil:{
-                        id:'1',
-                        markaAut:'BMW ovaj za test',
-                        modelAut:'M5',
-                        klasaAut:'SUV',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        ukupnaOcena:5,
-                        brojSedistaZaDecu:1,
-                        predjenaKilometraza:5000,
-                        collisionDamageWaiver:true,
-                        images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
+                // {
+                //     //oglas
+                //     id:1,
+                //     odDatuma:'25.5.2020',
+                //     doDatuma:'25.6.2020',
+                //     TAdresa:{
+                //         mesto:'Novi Sad',
+                //         ulica:'9. Marta',
+                //         broj:'bb',
+                //         postanskiBroj:'21000',
+                //         longitude:'45',
+                //         latitude:'54',
+                //     },
+                //     planiranaKilometraza:2000,
+                //     agentId:1,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
+                //     korisnickoImeAgenta:'This host',  //u DTOu za korisnika koji je kreirao oglas.
+                //     //automobil
+                //     automobil:{
+                //         id:'1',
+                //         markaAut:'BMW ovaj za test',
+                //         modelAut:'M5',
+                //         klasaAut:'SUV',
+                //         vrstaGoriva:'dizel',
+                //         tipMenjaca:'manuelni',
+                //         ukupnaOcena:5,
+                //         brojSedistaZaDecu:1,
+                //         predjenaKilometraza:5000,
+                //         collisionDamageWaiver:true,
+                //         images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
                     
-                    },
-                    //cena    
-                    cenovnik:{
-                        id:'1',
-                        cenaPoDanu:100,
-                        nazivCenovnika:'Cenovnik 1',
-                        popustZaPreko30Dana:'10%',
-                        cenaCollisionDamageWaiver:1000,
-                        cenaPoKilometru:10
+                //     },
+                //     //cena    
+                //     cenovnik:{
+                //         id:'1',
+                //         cenaPoDanu:100,
+                //         nazivCenovnika:'Cenovnik 1',
+                //         popustZaPreko30Dana:'10%',
+                //         cenaCollisionDamageWaiver:1000,
+                //         cenaPoKilometru:10
                         
-                    },
-                },
-                {
-                    //oglas
-                    id:2,
-                    odDatuma:'18.6.2020',
-                    doDatuma:'25.7.2020',
-                    TAdresa:{
-                        mesto:'Beograd',
-                        ulica:'Ne znanog i znanog junaka',
-                        broj:'bb',
-                        postanskiBroj:'11000',
-                        longitude:'21.23',
-                        latitude:'34.14',
-                    },
-                    planiranaKilometraza:2500,
-                    agentId:2,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'Other host', //u DTOu za korisnika koji je kreirao oglas.
-                    //Oglas/Automobil
-                    automobil:{
-                        id:1,
-                        markaAut:'Audi',
-                        modelAut:'A6',
-                        klasaAut:'Gradski',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        predjenaKilometraza:4500,
-                        ukupnaOcena:4.25,
-                        collisionDamageWaiver:true,
-                        brojSedistaZaDecu:1,
-                        images:['https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    //Oglas/Cenovnik
-                    cenovnik:{ 
-                        id:'2',
-                        cenaPoDanu:500,
-                        nazivCenovnika:'Cenovnik 2',
-                        popustZaPreko30Dana:'20%',
-                        cenaCollisionDamageWaiver:null,
-                        cenaPoKilometru:20
-                    },
-                },
-                {
-                    //oglas
-                    id:3,
-                    odDatuma:'25.5.2020',
-                    doDatuma:'15.6.2020',
-                    TAdresa:{
-                        mesto:'Novi Sad',
-                        ulica:'19. Juna',
-                        broj:'45',
-                        postanskiBroj:'11000',
-                        longitude:'12',
-                        latitude:'21',
-                    },
-                    planiranaKilometraza:3000,
-                    agentId:1,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'This host',  //u DTOu za korisnika koji je kreirao oglas.
-                    //automobil
-                    automobil:{
-                        id:'3',
-                        markaAut:'Audi',
-                        modelAut:'A6',
-                        klasaAut:'Gradski auto',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        ukupnaOcena:3.12,
-                        brojSedistaZaDecu:2,
-                        predjenaKilometraza:12500,
-                        collisionDamageWaiver:false,
-                        images:['https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    cenovnik:{
-                        id:'3',
-                        cenaPoDanu:300,
-                        nazivCenovnika:'Cenovnik 3',
-                        popustZaPreko30Dana:null,
-                        cenaCollisionDamageWaiver:3000,
-                        cenaPoKilometru:30
-                    },
-                },
-                {
-                    //oglas
-                    id:4,
-                    odDatuma:'25.5.2020',
-                    doDatuma:'25.6.2020',
-                    TAdresa:{
-                        mesto:'Novi Sad',
-                        ulica:'9. Marta',
-                        broj:'bb',
-                        postanskiBroj:'21000',
-                        longitude:'45',
-                        latitude:'54',
-                    },
-                    planiranaKilometraza:2000,
-                    agentId:2,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'Other host', //u DTOu za korisnika koji je kreirao oglas.
-                    //automobil
-                    automobil:{
-                        id:'1',
-                        markaAut:'BMW',
-                        modelAut:'M5',
-                        klasaAut:'SUV',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        ukupnaOcena:2,
-                        brojSedistaZaDecu:1,
-                        predjenaKilometraza:12000,
-                        collisionDamageWaiver:true,
-                        images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    //cena    
-                    cenovnik:{
-                        id:'1',
-                        cenaPoDanu:80,
-                        nazivCenovnika:'Cenovnik 1',
-                        popustZaPreko30Dana:'10%',
-                        cenaCollisionDamageWaiver:1000,
-                        cenaPoKilometru:10
-                        
-                    },
-                },
-                {
-                    //oglas
-                    id:5,
-                    odDatuma:'18.6.2020',
-                    doDatuma:'25.7.2020',
-                    TAdresa:{
-                        mesto:'Beograd',
-                        ulica:'Ne znanog i znanog junaka',
-                        broj:'bb',
-                        postanskiBroj:'11000',
-                        longitude:'21.23',
-                        latitude:'34.14',
-                    },
-                    planiranaKilometraza:2500,
-                    agentId:3,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'Some totlay other host', //u DTOu za korisnika koji je kreirao oglas.
-                    //Oglas/Automobil
-                    automobil:{
-                        id:1,
-                        markaAut:'Fiat',
-                        modelAut:'Punot',
-                        klasaAut:'Gradski',
-                        vrstaGoriva:'Benzin',
-                        tipMenjaca:'manuelni',
-                        predjenaKilometraza:4800,
-                        ukupnaOcena:3.2,
-                        collisionDamageWaiver:true,
-                        brojSedistaZaDecu:1,
-                        images:['https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    //Oglas/Cenovnik
-                    cenovnik:{ 
-                        id:'2',
-                        cenaPoDanu:1200,
-                        nazivCenovnika:'Cenovnik 2',
-                        popustZaPreko30Dana:'20%',
-                        cenaCollisionDamageWaiver:null,
-                        cenaPoKilometru:20
-                    },
-                },
-                {
-                    //oglas
-                    id:6,
-                    odDatuma:'25.5.2020',
-                    doDatuma:'15.6.2020',
-                    TAdresa:{
-                        mesto:'Novi Sad',
-                        ulica:'19. Juna',
-                        broj:'45',
-                        postanskiBroj:'11000',
-                        longitude:'12',
-                        latitude:'21',
-                    },
-                    planiranaKilometraza:3000,
-                    agentId:3,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'Some totlay other host', //u DTOu za korisnika koji je kreirao oglas.
-                    //automobil
-                    automobil:{
-                        id:'3',
-                        markaAut:'Fiat',
-                        modelAut:'500L',
-                        klasaAut:'Gradski auto',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        ukupnaOcena:1.5,
-                        brojSedistaZaDecu:2,
-                        predjenaKilometraza:6500,
-                        collisionDamageWaiver:false,
-                        images:['https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    cenovnik:{
-                        id:'3',
-                        cenaPoDanu:450,
-                        nazivCenovnika:'Cenovnik 3',
-                        popustZaPreko30Dana:null,
-                        cenaCollisionDamageWaiver:3000,
-                        cenaPoKilometru:30
-                    },
-                }
+                //     },
+                // },
+              
             ],
 
             //sortiranje:
             currentSort: 'cena',
             currentSortDir: 'asc',
 
-            //sve treba da se getuje sa beka sa getAllMarka, GetAllModel... i smesti u ove promenljive
-            markaAut:['BMW','Audi','Mercedes','Tesla','Fiat'],
-            modelAut:['M5','R8','A6','A8','Punto','500L'],
-            klasaAut:['SUV','Old Tajmer','Gradski auto'],
-            tipGoriva:['benzin','dizel','plin','vodonik'], 
-            tipMenjaca:['manuelni','automatksi','poluautomatski'],
-            brojSedZaDec:null,
-
-            messages: {
-                errorAddress: '',
-                errorPrice: '',
-                errorPlannedCm: '',
-                errorDates: '',
-                errorResponse: '',
-                successResponse: '',
-            },
            
         }
     },
     methods:{
+
+   
+        getAllOglasiDetailsImg:function(){
+            AgentDataService.getAllOglasiDetailsImg().then(response => {
+                this.oglasi = response.data;
+            });
+        },
+
         makeReseravation:function(id){
             //alert(`Za automobil id ${id} ce biti napravljena rezervacija!`);
             this.$router.push(`/cars/${id}/reservation`);
         }, 
-        resetFilter:function(){
-            this.searchedCar.lokacija = "";
-            this.searchedCar.od =  null;
-            this.searchedCar.do =  null;
-            this.searchedCar.cenaMin =  null;
-            this.searchedCar.cenaMax =  null;
-            this.searchedCar.markaAut =  null;
-            this.searchedCar.modelAutv =  null;
-            this.searchedCar.klasaAut =  null;
-            this.searchedCar.tipGoriva =  null;
-            this.searchedCar.tipMenjaca =  null;
-            this.searchedCar.brojSedZaDec =  null;
-            this.searchedCar.ColDmgWaiv =  null;
-            this.searchedCar.predjenaKilometraza =  null;
-        },
         showDetails:function(id){
             this.$router.push(`/cars/${id}/details`);
-        },
-    
-        // Pomocna metoda za ogranicen odabir broja sedista za decu:
-        range(start = 1, end) {
-            var ans = [];
-            for (let i = start; i <= end; i++) {
-                ans.push(i);
-            }
-            return ans;
-        },
-        
+        },     
      
 
         // metoda za sortiranje 
@@ -421,17 +192,18 @@ export default{
             });
         },
     },
-    created() {
-        //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
-        this.brojSedZaDec = this.range(0, 5);
-    },
     components: {
         vuejsDatepicker:Datepicker,
         'star-rating':StarRating
     },
-
     created(){
+         // Ako je prazan token znaci da user nije ulogovan pa se preusmerava na login stranicu.
         //getuju se svi oglasi koji pripadaju tom agentu...
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            this.getAllOglasiDetailsImg();
+        }
     },
 }
         

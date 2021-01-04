@@ -374,9 +374,13 @@ export default {
     },
     created() {
         //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
-        this.brojSedZaDec = this.range(0, 5);
-        this.getAutomobiliList();
-        this.getAllOptions();
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            this.brojSedZaDec = this.range(0, 5);
+            this.getAutomobiliList();
+            this.getAllOptions();
+        }
     }
 }
 </script>

@@ -8,20 +8,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            
+            <li v-if='loggedIn==false' class="nav-item active">
               <router-link to='/' class="nav-link" exact> Home
+                <span class="sr-only">(current)</span>
+              </router-link>
+            </li>
+             <li v-if='loggedIn==true' class="nav-item active">
+              <router-link to='/home' class="nav-link" exact> Home
                 <span class="sr-only">(current)</span>
               </router-link>
             </li>
             <li class="nav-item">
               <router-link to='/about' class="nav-link" exact>About</router-link>
             </li>
-            <li class="nav-item">
-              <router-link to='/patient' class="nav-link" exact  v-show="loggedIn==true"> Profil pacijenta </router-link>
-            </li>
           </ul>
           
-          <router-link  to='/login' class="nav-link" exact> <button v-show="loggedIn==false" class="btn" id='btnLogin'>Log In</button> </router-link>
+          <router-link to='/login' class="nav-link" exact> <button v-show="loggedIn==false" class="btn" id='btnLogin'>Log In</button> </router-link>
           <button  class="btn" v-show="loggedIn==true" id='btnLogout' v-on:click='logOut()'>Log Out</button> 
         </div>
       </div>
@@ -30,9 +33,9 @@
   </div>
 </template>
 
-<script>
+<script> 
+import axios from 'axios'
 import { bus } from '../main'; 
-import axios from "axios";
 export default {
   name: 'Navigation',
   components: {
@@ -40,8 +43,7 @@ export default {
 
   data:function(){
     return{
-      // loggedOut: false, //loginvan je treba da pise log out dugme
-       loggedIn: false,
+      loggedIn: localStorage.getItem('token') ? true : false,
     }
   },
   methods:{
@@ -49,6 +51,7 @@ export default {
       if(confirm('Da li ste sigurni da se zelite izlogovati?')){
         if(localStorage.getItem('token')){
           localStorage.removeItem('token');
+          localStorage.removeItem('parsToken');
           axios.defaults.headers.common['Authorization'] = undefined;
   
           this.loggedIn = false;  //logoutovan je treba da pise log in dugme
@@ -56,15 +59,14 @@ export default {
         }
       }
     },
-  
   },
   created(){
-
     //Prilikom created osluskujem da li je doslo do eventa login i ako jeste kazem da je loginova;
      bus.$on('loggedIn',(data)=>{
        this.loggedIn = data;
      });
   }
+  
 }
 </script>
 

@@ -287,7 +287,11 @@ export default {
     },
     computed: {
         id() {
-            return this.$route.params.id; //preuzimam id automobila na cijoj sam stranici za prikaz detalja
+            if(JSON.parse(localStorage.getItem('token')) == null){
+                this.$router.push(`/login`);
+            }else{
+                return this.$route.params.id; //preuzimam id automobila na cijoj sam stranici za prikaz detalja
+            }
         },
     },
     created() {

@@ -116,12 +116,11 @@ export default {
         }
     },
     created() {
-        //ovo radi...
-        // if (!localStorage.getItem('token')){
-        //     this.$router.push('/login');
-        // }
-
-        this.getReservation(); 
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            this.getReservation(); 
+        }
     },
 }
 </script>

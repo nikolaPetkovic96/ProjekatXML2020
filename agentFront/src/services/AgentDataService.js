@@ -1,6 +1,6 @@
 // 1. Import axios
 import axios from "axios";
-// import Routes from './routes'
+
 // 2. Definisati url i smestiti token u header
 const API_URL = "http://localhost:8080";
 
@@ -24,6 +24,7 @@ class AgentDataService{
     }
 
     //CENOVNIK
+
     //Cenovnik.vue i OglasiNew.vue
     getAllCenovnik(){
         return axios.get(`${API_URL}/cenovnik/`);
@@ -73,6 +74,7 @@ class AgentDataService{
     }
 
     //OGLAS
+
     //Oglasi.vue
     getAllAgentsOglas(){
         return axios.get(`${API_URL}/oglas/agent`);
@@ -84,14 +86,17 @@ class AgentDataService{
     addOglas(oglas){
         return axios.post(`${API_URL}/oglas/`, oglas);
     }
-
     //RezervacijaOglasiOverview.vue
     getOglasDetails(id){
         return axios.get(`${API_URL}/oglas/${id}/details`);
     }
+    //RezervacijaOglasiOverview.vue
+    getAllOglasiDetailsImg(){
+        return axios.get(`${API_URL}/oglas/img`);
+    }
 
     //KOMENTARI
-    
+
     //(AutomobiliComments.vue)
     getAllAutomobiliReview(){
         return axios.get(`${API_URL}/automobilReview/`);
@@ -101,22 +106,28 @@ class AgentDataService{
     }
 
     //PORUKE
+
     addPoruka(poruka){
         return axios.post(`${API_URL}/poruka/`, poruka);
     }
 
     //IZVESTAJ
+
     addIzvestaj(izvestaj){
         return axios.post(`${API_URL}/izvestaj/`, izvestaj);
     }
 
     //AUTOMOBILI
+
     //Automobili.vue
     getAllAutomobili(){
         return axios.get(`${API_URL}/automobil/`);
     }
     deleteAutomobil(id){
         return axios.delete(`${API_URL}/automobil/${id}/`);
+    }
+    searchAutomobil(searchedQuery){
+        return axios.get(`${API_URL}/search${searchedQuery}`);
     }
     //OglasiNew.vue i AutomobiliEdit.vue
     getAutomobil(id){
@@ -134,20 +145,13 @@ class AgentDataService{
     getAutomobilDetails(id){
         return axios.get(`${API_URL}/automobil/${id}/details`);
     }
-
     //AutomobiliEdit.vue
     updateAutomobil(automobil){
         return axios.put(`${API_URL}/automobil/`, automobil);
     }
 
-    searchAutomobil(searchedQuery){
-        console.log(`/search${searchedQuery}`);
-        return axios.get(`${API_URL}/search${searchedQuery}`);
-        // return axios.get(`/search` + searchedQuery);
-    }
-    
+    //OPCIJE
 
-    //Opcije
     //AutomobilNew.vue
     getAllMarkaAut(){
         return axios.get(`${API_URL}/markaAutomobila/`);

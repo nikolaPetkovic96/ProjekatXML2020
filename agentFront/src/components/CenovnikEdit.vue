@@ -143,7 +143,11 @@ export default {
         }
     },
     created(){
-        this.getPrice();
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            this.getPrice();
+        }
     }
 }
 

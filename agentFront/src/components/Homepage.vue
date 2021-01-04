@@ -128,9 +128,14 @@ export default {
         },
     },
     created(){
-        let parsToken = this.parseJwt(localStorage.getItem('token'));
-        localStorage.setItem('parsToken', JSON.stringify(parsToken));
-        this.user.username = parsToken.username;
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+           
+            let parsToken = this.parseJwt(localStorage.getItem('token'));
+            localStorage.setItem('parsToken', JSON.stringify(parsToken));
+            this.user.username = parsToken.username;
+        }
     },
 }
 </script>

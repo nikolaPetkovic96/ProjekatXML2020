@@ -81,7 +81,11 @@ export default {
         },
     },
     created(){
-        this.getAllAgentsOglas();
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            this.getAllAgentsOglas();
+        }
     }
 }
 </script>

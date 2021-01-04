@@ -228,7 +228,11 @@ export default {
         }
     },
     created() {
-        this.getAllNarudzbenice();
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            this.getAllNarudzbenice();
+        }
     },
     
 }

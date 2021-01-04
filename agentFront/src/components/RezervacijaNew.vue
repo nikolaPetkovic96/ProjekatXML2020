@@ -281,15 +281,16 @@ export default {
 		},
 	},
 	created() {
-
-        agentDataService.getOglasDetails(this.id).
-        then(response => (this.setAd(response.data)));
-
-        const token = JSON.parse(localStorage.getItem('parsToken'));
-        this.rezervacijaOglasDTO.narudzbenica.agentId = token.id;
         // Ako je prazan token znaci da user nije ulogovan pa se preusmerava na login stranicu.
-		// if (!localStorage.getItem('jwt'))
-		// 	this.$router.push('/login');
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            agentDataService.getOglasDetails(this.id).
+            then(response => (this.setAd(response.data)));
+
+            const token = JSON.parse(localStorage.getItem('parsToken'));
+            this.rezervacijaOglasDTO.narudzbenica.agentId = token.id;
+        }
 
 	},
 	mounted() {

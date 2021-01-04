@@ -292,7 +292,11 @@ export default {
         },
     },
     created(){
-        this.getAgentProfileData(this.id);
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            this.getAgentProfileData(this.id);
+        }
     },
 }
 </script>

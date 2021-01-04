@@ -73,6 +73,8 @@ export default {
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
               localStorage.setItem('token', JSON.stringify(this.token))
               
+              //Kad se uloguje bacim ivent (emitujem da je doslo do promene)
+              bus.$emit('loggedIn',true);
               this.$router.push('/home');
               
             }           
@@ -94,7 +96,7 @@ export default {
         
     },
     created(){
-     
+      
     }
   }
 </script>

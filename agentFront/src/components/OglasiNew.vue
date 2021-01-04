@@ -256,8 +256,12 @@ export default {
       }
     },
     created() {
-      this.getAllPrices();
-      this.getAutomobil();
+      if(JSON.parse(localStorage.getItem('token')) == null){
+          this.$router.push(`/login`);
+      }else{
+        this.getAllPrices();
+        this.getAutomobil();
+      }
     },
     mounted() {
       //Preuzet id automobila iz urla se smesta u oglas.

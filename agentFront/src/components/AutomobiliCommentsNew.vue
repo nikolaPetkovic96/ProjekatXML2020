@@ -70,11 +70,13 @@ export default {
         }
     },
     created() {
-        // const token = JSON.parse(localStorage.getItem('token'));
-        // if (!token.accessToken){
-        //     this.$router.push('/login');
-        // }
-        this.noviKomentar.automobilId = this.id;
+        const token = JSON.parse(localStorage.getItem('token'));
+        if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            this.noviKomentar.automobilId = this.id;
+        }
+        
     },
     
 }
