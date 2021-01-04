@@ -25,7 +25,7 @@ export default {
     background-color:#FF8C00;
     color:#35424a;
     text-align: center;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 </style>

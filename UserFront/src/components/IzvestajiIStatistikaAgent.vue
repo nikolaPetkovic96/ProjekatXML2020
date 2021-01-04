@@ -33,11 +33,11 @@
             </table>
         </div>
 
-        <div class="container" id='page-title'>
+        <!-- <div class="container" id='page-title'>
             <h1 style="margin-top:10px;color:#35424a;">Statistika upotrebe <span id='titleEffect'>automobila</span></h1>
             <hr style='background:#35424a;height:1px;'>
-        </div>
-        <div id='main' class='container'>
+        </div> -->
+        <!-- <div id='main' class='container'>
               (Ne obracati paznju sto ne prikazuje trenutno navecu km i rejting)
 	        <div id='criterium' class="row">
 					<div class="col-md-4 col-sm-6 mb-4">
@@ -54,8 +54,8 @@
 						<h4>Najviša ocena</h4>
 						<button v-on:click='getBestByRating()'><img src="../assets/ratingSign2.jpg" alt=""></button>
 					</div>
-            </div>
-            <div id='places' v-if='showRank'>
+            </div> -->
+            <!-- <div id='places' v-if='showRank'>
                 <div id='first-place-warn' class='alert alert-warning' v-if='automobili[0].predjenaKilometraza == -1'> Nema automobila koji je prvo mesto!</div>                    
                 <div id='first-place' v-if='automobili[0].predjenaKilometraza !== -1'>
                     <div class="card-header">
@@ -69,7 +69,7 @@
                         <h5 v-if='bestByRat || bestByKm'><b>Broj komentara:</b> {{automobili[0].brojKomentara}}</h5>
                         <h5 v-if='bestByKom || bestByKm '><b>Ukupna ocena:</b> {{automobili[0].ukupnaOcena}}</h5>
                     </div>
-                </div><!-- </first-place> -->
+                </div>
                 <hr>
                 <div id='second-place-warn' class='alert alert-warning' v-if='automobili[1].predjenaKilometraza == -1'> Nema automobila koji je drugo mesto!</div>
                 <div id='second-place' v-if='automobili[1].predjenaKilometraza!== -1'>
@@ -84,7 +84,7 @@
                         <h6 v-if='bestByRat || bestByKm'><b>Broj komentara:</b> {{automobili[1].brojKomentara}}</h6>
                         <h6 v-if='bestByKom || bestByKm '><b>Ukupna ocena:</b> {{automobili[1].ukupnaOcena}}</h6>
                     </div>
-                </div><!-- </second-place> -->
+                </div>
                 <hr>
                 <div id='third-place-warn' class='alert alert-warning' v-if='automobili[2].predjenaKilometraza == -1'> Nema automobila koji je trece mesto!</div>
                 <div id='third-place' v-if='automobili[2].predjenaKilometraza !== -1'>
@@ -99,9 +99,9 @@
                         <h6 v-if='bestByRat || bestByKm'><b>Broj komentara:</b> {{automobili[2].brojKomentara}}</h6>
                         <h6 v-if='bestByKom || bestByKm '><b>Ukupna ocena:</b> {{automobili[2].ukupnaOcena}}</h6>
                     </div>
-               </div> <!-- </third-place> -->
-            </div>
-        </div>
+               </div> 
+            </div> 
+        </div> -->
     </div>
 </template>
 

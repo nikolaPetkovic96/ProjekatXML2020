@@ -37,57 +37,64 @@
                                 <button style="margin-left:90px;margin-top:150px" class="btn btn-outline-success my-2 my-sm-0" type="button" v-on:click.prevent='searchCar()'>Search</button>
                             </span>
                             <span id='searcIcon' class="col-xl-1 marg-top" style='margin-left:45px;'>
-                                <!-- <img v-on:click='isSearch = !isSearch' src='../../assets/searchIcon1.png' style="display:inline;"> -->
+                                <img v-on:click='isSearch = !isSearch' src='../assets/searchIcon1.png' style="display:inline;">
                             </span>
                         </div>
                     </div>
                     <div style='display:inline; margin-top:5px;' v-show='isSearch' id="advanced_search">
-                        <span class="col-xl-6 col-md-6 mb-1">
-                            <span class="span_search">Cena</span>
-                            <input class="form-control mr-sm-2" type="text" placeholder="min cena" aria-label="Search" v-model="searchedCar.cenaMin">
-                            <span style="padding-right:6px;" class="span_search"> - </span>
-                            <input class="form-control mr-sm-2" type="text" placeholder="max cena" aria-label="Search" v-model="searchedCar.cenaMax">
-                        </span>
-                        <span class="col-xl-3 col-md-6 mb-1">
+                        <span style='margin-left:8%;margin-bottom:5%;'>
                             <span class="span_search">Marka</span>
-                            <select style="padding:5px;" v-model="searchedCar.markaAut">
+                            <select style="padding:5px;" v-model="searchedCarShow.markaAut">
                                 <option disabled value="">Marka automobila</option>
-                                <option v-bind:key="marka" v-for="marka in markaAut">{{marka}}</option>
+                                <!-- <option v-bind:key="marka" v-for="marka in markaAut">{{marka}}</option> -->
+                                <option  v-bind:key="marka.id" v-on:click='addChoosenMarka(marka.id)' v-for="marka in markaAut">{{marka.nazivMarke}}</option> 
                             </select>
                         </span>
 
                         <div style='display:inline; margin-top:15px;' id='third_raw' >
-                            <span class="col-xl-3 col-md-6 mb-3">
+                            <span style='margin-left:5%;margin-bottom:5%;'>
                                 <span class="span_search">Model</span>
-                                <select style="padding:5px;" v-model="searchedCar.modelAut">
+                                <select style="padding:5px;" v-model="searchedCarShow.modelAut">
                                     <option disabled value="">Model automobila</option>
-                                    <option v-bind:key="model" v-for="model in modelAut">{{model}}</option>
+                                    <!-- <option v-bind:key="model" v-for="model in modelAut">{{model}}</option> -->
+                                    <option v-bind:key="model.id" v-on:click='addChoosenModel(model.id)' v-for="model in modelAutFilt">{{model.nazivModela}}</option>
                                 </select>
+                                   <small v-show='modelAutFilt.length == 0' style="color:red;">* prvo odaberite marku</small>
+                                   <small v-show='modelAutFilt.length != 0' style="color:#fff;">* prvo odaberite marku</small>
                             </span>
-                            <span class="col-xl-3 col-md-6 mb-3">
+                            
+                            <span style='margin-left:2%;margin-bottom:5%;'>
                                 <span class="span_search">Klasa</span>
-                                <select style="padding:5px;" v-model="searchedCar.klasaAut">
+                                <select style="padding:5px;" v-model="searchedCarShow.klasaAut">
                                     <option disabled value="">Klasa automobila</option>
-                                    <option v-bind:key="klasa" v-for="klasa in klasaAut">{{klasa}}</option>
+                                    <!-- <option v-bind:key="klasa" v-for="klasa in klasaAut">{{klasa}}</option> -->
+                                        <option v-bind:key="klasa.id" v-on:click='addChoosenKlasa(klasa.id)' v-for="klasa in klasaAut">{{klasa.nazivKlase}}</option>
                                 </select>
                             </span>
-                            <span class="col-xl-3 col-md-6 mb-3">
+                            <span style='margin-left:8%;margin-bottom:5%;'>
                                 <span class="span_search">Tip menjaca</span>
-                                <select style="padding:5px;" v-model="searchedCar.tipMenjaca">
+                                <select style="margin-top:5px;padding:5px;" v-model="searchedCarShow.tipMenjaca">
                                     <option disabled value="">Tip menajca</option>
-                                    <option v-bind:key="menjac" v-for="menjac in tipMenjaca">{{menjac}}</option>
+                                    <!-- <option v-bind:key="menjac" v-for="menjac in tipMenjaca">{{menjac}}</option> -->
+                                    <option v-bind:key="menjac.id" v-on:click='addChoosenMenjac(menjac.id)'  v-for="menjac in tipMenjaca">{{menjac.nazivMenjaca}}</option>
                                 </select>
                             </span>
-                            <span class="col-xl-3 col-md-6 mb-3">
+                            <span style='margin-left:5%;margin-bottom:5%;'>
                                 <span class="span_search">Tip goriva</span>
-                                <select style="padding:5px;" v-model="searchedCar.tipGoriva">
+                                <select style="padding:5px;" v-model="searchedCarShow.tipGoriva">
                                     <option disabled value="">Tip goriva</option>
-                                    <option v-bind:key="gorivo" v-for="gorivo in tipGoriva">{{gorivo}}</option>
+                                    <!-- <option v-bind:key="gorivo" v-for="gorivo in tipGoriva">{{gorivo}}</option> -->
+                                    <option v-bind:key="gorivo.id" v-on:click='addChoosenGorivo(gorivo.id)' v-for="gorivo in tipGoriva">{{gorivo.nazivTipa}}</option> 
                                 </select>
                             </span>
-
+                            <span style='margin-left:2%;margin-bottom:5%;'>
+                                <span class="span_search">Cena</span>
+                                <input class="form-control mr-sm-2" type="text" placeholder="min cena" aria-label="Search" v-model="searchedCar.cenaMin">
+                                <span style="padding-right:6px;" class="span_search"> - </span>
+                                <input class="form-control mr-sm-2" type="text" placeholder="max cena" aria-label="Search" v-model="searchedCar.cenaMax">
+                            </span>
                             <div id='fourth_raw' style='display:inline; margin-top:5px;'>
-                                <span class="col-xl-3 col-md-6 mb-2">
+                                <span style='margin-left:8%;margin-bottom:5%;'>
                                     <span class="span_search">Decija sedista</span>
                                     <select style="padding:5px;" v-model="searchedCar.brojSedZaDec">
                                         <option disabled value="">Br. sed. za decu</option>
@@ -123,10 +130,10 @@
                 </div>
 
                 <div id='cartbs' v-if='cartIsNotEmpty && !isAlreadySearched' >
-                        <!-- <img src="../../assets/logo.png" alt=""> -->
-                        <router-link to="/shoppingCart"><button class="arrow btn btn-lg btn-outline-dark">
-                            Korpa
-                        </button></router-link>
+                    <!-- <img src="../../assets/logo.png" alt=""> -->
+                    <router-link to="/shoppingCart"><button class="arrow btn btn-lg btn-outline-dark">
+                        Korpa
+                    </button></router-link>
                 </div>
             </div>
 
@@ -138,20 +145,20 @@
             <div  v-if='isAlreadySearched==true' id='sort'>
                 <h5 class='theme-colr'><small> <b>Sortiraj:</b>  </small></h5>
                 <button @click="sort('ocena')" class="arrow btn btn-lg btn-outline-primary"> Ocena
-                    <!-- <img v-if='currentSortDir == "asc" && currentSort== "ocena"' src='../../assets/up-arrow1.1.png'>
-                    <img v-if='currentSortDir == "desc" && currentSort== "ocena" ' src='../../assets/up-arrow1.1.png'> -->
+                    <img v-if='currentSortDir == "asc" && currentSort== "ocena"' src='../assets/up-arrow1.1.png'>
+                    <img v-if='currentSortDir == "desc" && currentSort== "ocena" ' src='../assets/up-arrow1.1.png'>
                 </button>
                 <button @click="sort('cena')" class="arrow btn btn-lg btn-outline-primary"> Cena
-                    <!-- <img v-if='currentSortDir == "asc"  && currentSort== "cena"' src='../../assets/up-arrow1.1.png'>
-                    <img v-if='currentSortDir == "desc"  && currentSort== "cena"' src='../../assets/up-arrow1.1.png'> -->
+                    <img v-if='currentSortDir == "asc"  && currentSort== "cena"' src='../assets/up-arrow1.1.png'>
+                    <img v-if='currentSortDir == "desc"  && currentSort== "cena"' src='../assets/up-arrow1.1.png'>
                 </button>
                 <button @click="sort('predjenaKilometraza')" class="arrow btn btn-lg btn-outline-primary"> Kilometraza
-                    <!-- <img v-if='currentSortDir == "asc"  && currentSort== "predjenaKilometraza"' src='../../assets/up-arrow1.1.png'>
-                    <img v-if='currentSortDir == "desc"  && currentSort== "predjenaKilometraza"' src='../../assets/up-arrow1.1.png'> -->
+                    <img v-if='currentSortDir == "asc"  && currentSort== "predjenaKilometraza"' src='../assets/up-arrow1.1.png'>
+                    <img v-if='currentSortDir == "desc"  && currentSort== "predjenaKilometraza"' src='../assets/up-arrow1.1.png'>
                 </button>
                 
                 <div id='cart'>
-                    <!-- <img src="../../assets/messageSign.jpg" alt=""> -->
+                    <img src="../assets/cartIcon2.png" alt="">
                     <router-link to="/shoppingCart"><button class="arrow btn btn-lg btn-outline-dark">
                         Korpa
                     </button></router-link>
@@ -188,38 +195,14 @@
                 </div>
             </div>
             <!-- /.row -->
-
-            <!-- Pagination ?????-->
-            <!-- <ul class="pagination justify-content-center">
-                <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item">
-                <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul> -->
-
         </div> <!-- /.container -->
     </div>
 </template>
 
 <script>
+import StarRating from "vue-star-rating";
 import Datepicker from 'vuejs-datepicker'
+import UserDataService from '../services/UserDataService'
 export default {
     name: 'UserAutomobil',
     data:function(){
@@ -240,13 +223,13 @@ export default {
                 do: null,
                 cenaMin:null,
                 cenaMax:null,
-                markaAut:null,
-                modelAut:null,
-                klasaAut:null,
-                tipGoriva:null,
-                tipMenjaca:null,
+                markaAutId:null,
+                modelAutId:null,
+                klasaAutId:null,
+                tipGorivaId:null,
+                tipMenjacaId:null,
                 brojSedZaDec:null,
-                ColDmgWaiv:false,
+                ColDmgWaiv:null,
                 predjenaKilometraza:null
             },
             oglasi:[
@@ -494,12 +477,24 @@ export default {
             currentSort: 'cena',
             currentSortDir: 'asc',
             //sve treba da se getuje sa beka sa getAllMarka, GetAllModel... i smesti u ove promenljive
-            markaAut:['BMW','Audi','Mercedes','Tesla','Fiat'],
-            modelAut:['M5','R8','A6','A8','Punto','500L'],
-            klasaAut:['SUV','Old Tajmer','Gradski auto'],
-            tipGoriva:['benzin','dizel','plin','vodonik'], 
-            tipMenjaca:['manuelni','automatksi','poluautomatski'],
+            modelAutFilt:[], //filtrirani prikaz modela spram odabrane marke
+            markaAut:[],
+            modelAut:[],
+            klasaAut:[],
+            tipMenjaca:[],
+            tipGoriva:[],
+
+            //Pomocna promenljiva za prikaz naziva odabranih komponenti
+            searchedCarShow:{
+                markaAutId:null,
+                modelAutId:null,
+                klasaAutId:null,
+                tipGorivaId:null,
+                tipMenjacaId:null,
+            },
+
             brojSedZaDec:null,
+
             messages: {
                 errorAddress: '',
                 errorPrice: '',
@@ -523,21 +518,76 @@ export default {
            
         }
     },
-    methods:{        
+    methods:{       
+        getAllOptions:function(){
+            UserDataService.getAllMarkaAut().then(response => {
+                this.markaAut = response.data;
+            });
+            UserDataService.getAllModelAut().then(response => {
+                this.modelAut = response.data;
+            });
+            UserDataService.getAllKlasaAut().then(response => {
+                this.klasaAut = response.data;
+            });
+            UserDataService.getAllTipMenjaca().then(response => {
+                this.tipMenjaca = response.data;
+            });
+            UserDataService.getAllTipGoriva().then(response => {
+                this.tipGoriva = response.data;
+            });
+        }, 
+        addChoosenMarka:function(id){
+        console.log("Usao u addChoosenMarka " + id);
+        this.searchedCar.markaAutId = id;
+        this.modelAutFilt = [];
+        for(let i = 0; i < this.modelAut.length; i++){
+            if(this.modelAut[i].markaAutomobilaId == id){
+                console.log('nasao poklapanje');
+                console.log('id: ' + id);
+                console.log('model.markaAutomobilaId: ' + this.modelAut[i].markaAutomobilaId);
+                this.modelAutFilt.push(this.modelAut[i]);
+            }
+        }
+        },
+        addChoosenModel:function(id){
+            console.log("Usao u addChoosenModel " + id);
+            this.searchedCar.modelAutId = id;
+        },
+        addChoosenKlasa:function(id){
+            console.log("Usao u addChoosenMarka " + id);
+            this.searchedCar.klasaAutId = id;
+        },
+        addChoosenMenjac:function(id){
+            console.log("Usao u addChoosenMenjac " + id);
+            this.searchedCar.tipMenjacaId = id;
+        },
+        addChoosenGorivo:function(id){
+            console.log("Usao u addChoosenGorivo " + id);
+            this.searchedCar.tipGorivaId = id;
+        },
+
         resetFilter:function(){
             this.searchedCar.lokacija = "";
             this.searchedCar.od =  null;
             this.searchedCar.do =  null;
             this.searchedCar.cenaMin =  null;
             this.searchedCar.cenaMax =  null;
-            this.searchedCar.markaAut =  null;
-            this.searchedCar.modelAutv =  null;
-            this.searchedCar.klasaAut =  null;
-            this.searchedCar.tipGoriva =  null;
-            this.searchedCar.tipMenjaca =  null;
+            this.searchedCar.markaAutId =  null;
+            this.searchedCar.modelAutId =  null;
+            this.searchedCar.klasaAutId =  null;
+            this.searchedCar.tipGorivaId =  null;
+            this.searchedCar.tipMenjacaId =  null;
             this.searchedCar.brojSedZaDec =  null;
             this.searchedCar.ColDmgWaiv =  null;
             this.searchedCar.predjenaKilometraza =  null;
+
+            this.searchedCarShow.markaAut =  null;
+            this.searchedCarShow.modelAut =  null;
+            this.searchedCarShow.klasaAut =  null;
+            this.searchedCarShow.tipGoriva =  null;
+            this.searchedCarShow.tipMenjaca =  null;
+
+            this.getAutomobiliList();
         },
         showDetails:function(id){
             this.$router.push(`/cars/${id}/details`);
@@ -589,67 +639,70 @@ export default {
                 this.odabraniDatum.do = this.searchedCar.do;
                 //Kada se jednom izvrsi pretraga, bila ona uspesna ili neuspesna uklanja se default prikaz stranice....
                 this.isAlreadySearched = true;
-                console.log(`Trazite automobil:
-                lokacija: ${this.searchedCar.lokacija}
-                od: ${this.searchedCar.od}
-                do: ${this.searchedCar.do}
-                cenaMin: ${this.searchedCar.cenaMin}
-                cenaMax: ${this.searchedCar.cenaMax}
-                markaAut: ${this.searchedCar.markaAut}
-                modelAut: ${this.searchedCar.modelAut}
-                klasaAut: ${this.searchedCar.klasaAut}
-                tipGoriva: ${this.searchedCar.tipGoriva}
-                brojSedZaDec: ${this.searchedCar.brojSedZaDec}
-                ColDmgWaiv: ${this.searchedCar.ColDmgWaiv}
-                kilometraza: ${this.searchedCar.kilometraza}
-                `);
-                // console.log(this.dates);
-                if (this.searchedCar.lokacija !== null) {
+  
+                
+                if (!!this.searchedCar.lokacija) {
                     this.searchedQuery += 'lokacija=' + this.searchedCar.lokacija;
                 }
-                if (this.searchedCar.od != null) {
+                if (!!this.searchedCar.od) {
                     // let od_datuma = this.searchedCar.od.getTime();
                     let od_datuma = this.searchedCar.od;
                     this.searchedQuery += '&od=' + od_datuma;
                 }
-                if (this.searchedCar.do != null) {
+                if (!!this.searchedCar.do) {
                     // let do_datuma = this.searchedCar.do.getTime();
                     let do_datuma = this.searchedCar.do;
                     this.searchedQuery += '&do=' + do_datuma;
                 }
-                if (this.searchedCar.cenaMin !== null) {
+                if (!!this.searchedCar.cenaMin) {
                     this.searchedQuery += '&cenaMin=' + this.searchedCar.cenaMin;
                 }
-                if (this.searchedCar.cenaMax !== null) {
+                if (!!this.searchedCar.cenaMax) {
                     this.searchedQuery += '&cenaMax=' + this.searchedCar.cenaMax;
                 }
-                if (this.searchedCar.markaAut !== null) {
-                    this.searchedQuery += '&markaAut=' + this.searchedCar.markaAut;
+                if (!!this.searchedCar.markaAutId) {
+                    this.searchedQuery += 'markaAut=' + this.searchedCar.markaAutId;
                 }
-                if (this.searchedCar.modelAut !== null) {
-                    this.searchedQuery += '&modelAut=' + this.searchedCar.modelAut;
+                if (!!this.searchedCar.modelAutId) {
+                    this.searchedQuery += '&modelAut=' + this.searchedCar.modelAutId;
                 }
-                if (this.searchedCar.klasaAut) {
-                    this.searchedQuery += '&klasaAut=' + this.searchedCar.klasaAut;
+                if (!!this.searchedCar.klasaAutId) {
+                    this.searchedQuery += '&klasaAut=' + this.searchedCar.klasaAutId;
                 }
-                if (this.searchedCar.tipGoriva !== null) {
-                    this.searchedQuery += '&tipGoriva=' + this.searchedCar.tipGoriva;
+                if (!!this.searchedCar.tipMenjacaId) {
+                    this.searchedQuery += '&tipMenjaca=' + this.searchedCar.tipMenjacaId;
                 }
-                if (this.searchedCar.brojSedZaDec !== null) {
+                if (!!this.searchedCar.tipGorivaId) {
+                    this.searchedQuery += '&tipGoriva=' + this.searchedCar.tipGorivaId;
+                }
+                if (!!this.searchedCar.brojSedZaDec) {
                     this.searchedQuery += '&brojSedZaDec=' + this.searchedCar.brojSedZaDec;
                 }
-                if (this.searchedCar.ColDmgWaiv !== null) {
+                if (!!this.searchedCar.ColDmgWaiv) {
                     this.searchedQuery += '&ColDmgWaiv=' + this.searchedCar.ColDmgWaiv;
                 }
-                if (this.searchedCar.kilometraza !== null) {
-                    this.searchedQuery += '&kilometraza=' + this.searchedCar.kilometraza;
+                if (!!this.searchedCar.predjenaKilometraza) {
+                    this.searchedQuery += '&kilometraza=' + this.searchedCar.predjenaKilometraza;
                 }
-                // axios
-                //     .get('rest/apartment/search' + this.searchedQuery)
-                //     .then(response => {
-                //         this.apartments = response.data;
-                //         this.searchedQuery = '?';
-                //     });
+
+                //Ovo obrisati
+                console.log(`Trazite automobil:
+                    ${JSON.stringify(this.searchedCar)}
+                `);
+
+                console.log(`Query:
+                    ${JSON.stringify(this.searchedQuery)}
+                `);
+                
+                UserDataService.searchAutomobil(this.searchedQuery).then(response => {
+                    this.automobili = response.data;
+                    this.searchedQuery = '?';
+                }).catch(error =>{
+                    if (error.response.status === 500 || error.response.status === 404) {
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru, molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
             
         },
@@ -669,7 +722,7 @@ export default {
         },
     },
     computed: {
-        //Ova metoda staloni vrsi poredjenje izmedju oglasa po kriterijumu koji se prosledi klikom na kolonu;
+        //Ova metoda stalno vrsi poredjenje izmedju oglasa po kriterijumu koji se prosledi klikom na kolonu;
         //Prvo se proveri da li je smer sortiranja rastuci ili opadajuci za this.currentSortDir i onda se poredi svaki oglas po prosledjenom 
         //kriterijumu tj po this.currentSort
         sortedOglasi: function () {
@@ -699,10 +752,13 @@ export default {
         //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
         this.brojSedZaDec = this.range(0, 5);
         // Preuzimanje objekta korpa iz localStorage
-        
         if(JSON.parse(localStorage.getItem('cart'))!= null){
             this.cartIsNotEmpty = true;
         }
+        
+        // dobavljanje svih sifrarnika
+        this.getAllOptions();
+
     },
     mounted() {
         let to = new Date();
@@ -711,6 +767,7 @@ export default {
     },
     components: {
         vuejsDatepicker:Datepicker,
+        "star-rating": StarRating,
     },
 }
 </script>

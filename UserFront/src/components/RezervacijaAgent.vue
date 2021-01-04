@@ -38,7 +38,7 @@
                 </tr>
                 </tbody>
             </table>
-            <button  v-on:click='newManualReservation()' class="btn  btn-success" style='padding-left: 5px;'>Ručno rezervisanje</button>
+            <!-- <button  v-on:click='newManualReservation()' class="btn  btn-success" style='padding-left: 5px;'>Ručno rezervisanje</button> -->
         
         </div> <!--main-->
     </div>

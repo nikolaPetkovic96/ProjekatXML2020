@@ -1,38 +1,37 @@
  <template>
  <div id="Login">
- <!-- login forma -->
     <div class="container-fluid">
-    <div class="row no-gutter">
-        <div id='bgImage' class="d-none d-md-flex col-md-4 col-lg-6 ">
-         <img src='src/assets/login1.1.png'>
-        </div>
-        <div class="col-md-8 col-lg-6">
-        <div class="login d-flex align-items-center py-5">
-            <div class="container">
-            <div class="row">
-                <div class="col-md-9 col-lg-8 mx-auto">
-                <h3 class="login-heading mb-4">Welcome back!</h3>
+      <div class="row no-gutter">
+          <div id='bgImage' class="d-none d-md-flex col-md-4 col-lg-6 ">
+          <img src='src/assets/login1.1.png'>
+          </div>
+          <div class="col-md-8 col-lg-6">
+          <div class="login d-flex align-items-center py-5">
+              <div class="container">
+              <div class="row">
+                  <div class="col-md-9 col-lg-8 mx-auto">
+                  <h3 class="login-heading mb-4">Welcome back!</h3>
 
-                <div v-if='errorMessage' class="alert alert-danger" v-html="errorMessage"></div>
-                <form>
-                    <div class="form-label-group">
-                    <input  v-model="username"  id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                    <label for="inputEmail">Username</label>
-                    </div>
+                  <div v-if='errorMessage' class="alert alert-danger" v-html="errorMessage"></div>
+                  <form>
+                      <div class="form-label-group">
+                      <input  v-model="username"  id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                      <label for="inputEmail">Username</label>
+                      </div>
 
-                    <div class="form-label-group">
-                    <input v-model ="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                    <label for="inputPassword">Password</label>
-                    </div>
+                      <div class="form-label-group">
+                      <input v-model ="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                      <label for="inputPassword">Password</label>
+                      </div>
 
-                    <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" v-on:click='submition()'>
-                        Sign in
-                    </button>
-                </form>
-                </div>
-            </div>
-            </div>
-        </div>
+                      <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" v-on:click='submition()'>
+                          Sign in
+                      </button>
+                  </form>
+                  </div>
+              </div>
+              </div>
+          </div>
         </div>
     </div>
     </div>
@@ -41,7 +40,7 @@
 </template>
 
 <script>
-
+import UserDataService from '../services/UserDataService';
 import {bus} from '../main'
 import axios from "axios";
 export default {
@@ -60,31 +59,31 @@ export default {
       }
     },
     methods: {
-      submition: function () {
+      submition:function() {
         console.log(this.username);
         console.log(this.password);
-        axios.post(`http://localhost:8080/auth/login`, {
+        UserDataService.userLoginUser({
           username:this.username,
           password:this.password,
-         }).then(response => {
-            if(response.status === 200 ){
-              console.log("Status 200");
-              this.token = response.data;
-              axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
-              localStorage.setItem('token', JSON.stringify(this.token))
-              this.$router.push('/home');           
-            }           
-          }).catch(error => {
-            localStorage.setItem('token', "Korisnik")
-            console.log("AAAAAAA")
+        }).then(response => {
+          if(response.status === 200 ){
+            console.log("Status 200");
+            this.token = response.data;
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
+            localStorage.setItem('token', JSON.stringify(this.token))
+            
+            //Kad se uloguje bacim ivent (emitujem da je doslo do promene)
+            bus.$emit('loggedIn',true);
             this.$router.push('/home');
-            // if(error.response.status === 500  && error.response.data.message==='Bad credentials'){
-            //   this.errorMessage = `<h4>Username ili password su pogresno uneti!</h4>`;
-              
-            //   setTimeout(()=>this.errorMessage='',3000);
-            // }
-          });
-        },
+          }           
+        }).catch(error => {
+          if(error.response.status === 401  && error.response.data ==='Bad credentials!'){
+            this.errorMessage = `<h4>Username ili password su pogresno uneti!</h4>`;
+            
+            setTimeout(()=>this.errorMessage='',3000);
+          }
+        });
+      },
     },
     computed:{
         
@@ -106,12 +105,6 @@ export default {
 .image {
   min-height: 100vh;
 }
-
-/* .bg-image {
-  background-image: url('../assets/login.jpg');
-  background-size: cover;
-  background-position: center;
-} */
 
 .login-heading {
   font-weight: 300;

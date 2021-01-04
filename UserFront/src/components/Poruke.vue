@@ -12,25 +12,34 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Rezervisan od</th> 
+                        <!-- <th>Rezervisan od</th>  -->
                         <th>Ukupna cena</th>
                         <th>Bundle</th>
                         <th>Status</th>
                         <th>Detalji</th>
                         <th>Poruke</th>
+                        <th>Komentar</th>
+                        <th>Odustani/Plati</th>
                     </tr>
                 </thead>
                 <tbody>                
                 <tr v-bind:key="rezervacija.id" v-for='rezervacija in rezervacije'>
-                    <td>{{rezervacija.username}}</td>
+                    <!-- <td>{{rezervacija.username}}</td> -->
                     <td>{{rezervacija.ukupnaCena}}</td>
                     <td>{{rezervacija.bundle}}</td>
                     <td>{{rezervacija.statusRezervacije}}</td>
                     <td>
-                        <button v-on:click='showDetails(rezervacija.id)' class="btn-outline-primary"> detalji </button>
+                        <button v-on:click='showDetails(rezervacija.id)' class=" btn-sml btn-outline-primary"> detalji </button>
                     </td>
                     <td>
-                        <button v-on:click='openMessage(rezervacija.id)'  class="btn-outline-primary"> Poruke </button>
+                        <button v-on:click='openMessage(rezervacija.id)'  class="btn-sml btn-outline-primary"> poruke </button>
+                    </td>
+                     <td>
+                        <button v-on:click='showDetails(rezervacija.id)' class=" btn-sml btn-outline-primary"> komentar </button>
+                    </td>
+                    <td>
+                        <button v-on:click='openMessage(rezervacija.id)'  class="btn-sml btn-outline-danger"> odustani </button>
+                        <button v-on:click='openMessage(rezervacija.id)'  class="btn-sml btn-outline-success"> plati </button>
                     </td>
                 </tr>
                 </tbody>

@@ -85,7 +85,7 @@
             </div> -->
 
             <!-- Messages-->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <!-- <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
                     <router-link style='text-decoration: none;color:#35424a;' to="/messages" class="nav-link" exact>
                         <img src="../assets/messageHomeIcon1.1.jpg" class="card-img-top" alt="...">
@@ -95,7 +95,7 @@
                         </div>
                     </router-link>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Profile-->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -176,7 +176,7 @@
                     <router-link style='text-decoration: none;color:#35424a;' to="/statisticsAgent" class="nav-link" exact>
                         <img src="../assets/statisticHomeIcon1.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
-                            <h5 class="card-title mb-0">Izvestaj i Statistika</h5>
+                            <h5 class="card-title mb-0">Izvestaji</h5>
                             <div class="card-text text-black-50">Ostavite izvestaj i pogledajte statistiku o vasim vozilima...</div>
                         </div>
                     </router-link>
@@ -184,7 +184,7 @@
             </div>
 
             <!-- Messages-->
-            <div class="col-xl-3 col-md-6 mb-4">
+            <!-- <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
                     <router-link style='text-decoration: none;color:#35424a;' to="/messages" class="nav-link" exact>
                         <img src="../assets/messageHomeIcon1.1.jpg" class="card-img-top" alt="...">
@@ -194,7 +194,7 @@
                         </div>
                     </router-link>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Profile-->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -258,34 +258,37 @@ export default {
         }
     },
     created(){
-        console.log("AAAA");
-        this.temp = ""
-        try{
-            this.temp = localStorage.getItem("userMode");
-            console.log("MODE JE: " + this.temp)
-            if(this.temp == "korisnik"){
-            this.mode = false;
-            }
-            else if(this.temp == "agent"){
+        //if(JSON.parse(localStorage.getItem('token')) == null){
+         //   this.$router.push(`/login`);
+        //}else{
+         //   let parsToken = this.parseJwt(localStorage.getItem('token'));
+           // localStorage.setItem('parsToken', JSON.stringify(parsToken));
+            //this.user.username = parsToken.sub;
+
+            this.temp = ""
+            try{
+                this.temp = localStorage.getItem("userMode");
+                console.log("MODE JE: " + this.temp)
+                if(this.temp == "korisnik"){
+                this.mode = false;
+                }
+                else if(this.temp == "agent"){
+                    this.mode = true;
+                }
+            }catch(err){
+                
+            }finally{
+                if (this.temp == ""){
+                // this.korisnik = true;
                 this.mode = true;
-            }
-        }catch(err){
-            
-        }finally{
-            if (this.temp == ""){
-            // this.korisnik = true;
-            this.mode = true;
-            }
-        } 
-        
-        
-
-    //     let parsToken = this.parseJwt(localStorage.getItem('token'));
-    //     temp = localStorage.getItem("userMode")
-    //     localStorage.setItem('parsToken', JSON.stringify(parsToken));
-    //    this.user.username = parsToken.username;
-
-    },
+                }
+            } 
+        // let parsToken = this.parseJwt(localStorage.getItem('token'));
+        temp = localStorage.getItem("userMode")
+        localStorage.setItem('parsToken', JSON.stringify(parsToken));
+        this.user.username = parsToken.username;
+        }
+    // },
 }
 </script>
 

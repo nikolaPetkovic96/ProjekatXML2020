@@ -8,8 +8,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li v-if='loggedIn==false' class="nav-item active">
               <router-link to='/' class="nav-link" exact> Home
+                <span class="sr-only">(current)</span>
+              </router-link>
+            </li>
+             <li v-if='loggedIn==true' class="nav-item active">
+              <router-link to='/home' class="nav-link" exact> Home
                 <span class="sr-only">(current)</span>
               </router-link>
             </li>
@@ -40,8 +45,7 @@ export default {
 
   data:function(){
     return{
-      // loggedOut: false, //loginvan je treba da pise log out dugme
-       loggedIn: false,
+      loggedIn: localStorage.getItem('token') ? true : false,
     }
   },
   methods:{
@@ -49,9 +53,10 @@ export default {
       if(confirm('Da li ste sigurni da se zelite izlogovati?')){
         if(localStorage.getItem('token')){
           localStorage.removeItem('token');
+          localStorage.removeItem('parsToken');
           axios.defaults.headers.common['Authorization'] = undefined;
   
-          this.loggedIn = false;  //logoutovan je treba da pise log in dugme
+          this.loggedIn = false;  //logout-ovan je treba da pise log in dugme
           this.$router.push('/');
         }
       }
@@ -97,6 +102,7 @@ a{
 #btnLogin{
   height:38px;
   background-color:#FF8C00;
+  /* background-color:#e8491d; */
   color:#fff;
   border:none;
   padding: 0 20px;

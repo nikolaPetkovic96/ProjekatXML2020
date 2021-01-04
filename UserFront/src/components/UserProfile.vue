@@ -36,8 +36,8 @@
 
                     <li class="list-group-item">
                         <h5 class="header5">Adresa</h5>
-                        <h6>{{profile.adresa.ulica}} {{profile.adresa.broj}} (ulica/broj)</h6>
-                        <h6>{{profile.adresa.postanskiBroj}} {{profile.adresa.mesto}} (post_br/grad)</h6>
+                        <h6>{{profile.tadresa.ulica}} {{profile.tadresa.broj}} (ulica/broj)</h6>
+                        <h6>{{profile.tadresa.postanskiBroj}} {{profile.tadresa.mesto}} (post_br/grad)</h6>
                     </li>
                 </ul>
 
@@ -54,10 +54,10 @@ import UserDataService from '../services/UserDataService'
 export default {
     data(){
         return{
-        //kada je agent osoba //zakomentarisati kod za test agent firma
-         profile: {
+            //Ostaviti proil objekat zbog mapiranja
+            profile: {
                 //Osoba
-                id:'',
+                id:null,
                 ime:'',
                 prezime:'',
                 jmbg:'',
@@ -66,7 +66,7 @@ export default {
                 korisnickoIme:'',
                 email:'',
                 status:'',
-                adresa:{
+                tadresa:{
                     mesto:'',
                     ulica:'',
                     broj:'',
@@ -94,7 +94,7 @@ export default {
 
     created(){
         let parsToken = JSON.parse(localStorage.getItem('parsToken'));
-        this.getUserProfileData(parsToken.id);
+        this.getUserProfileData(parsToken.jti);
     },
 
 }
