@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +28,7 @@ public class RatingsController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public OcenaDTO getCommentById(@PathVariable("id") Long id) {
+	public OcenaDTO getOcenaById(@PathVariable("id") Long id) {
 		return ratingService.getRating(id);
 	}
 
@@ -35,5 +36,14 @@ public class RatingsController {
 	public OcenaDTO addComment(@RequestBody OcenaDTO kom) {
 		return ratingService.createRating(kom);
 	}
-
+	
+	@PutMapping(value="")
+	public OcenaDTO updateOcena(@RequestBody OcenaDTO dto) throws Exception {
+		return ratingService.updateOcena(dto);
+	}
+	
+	@GetMapping(value = "/svi")
+	public List<OcenaDTO> getAllRatings(){
+		return ratingService.getAllRatings();
+	}
 }

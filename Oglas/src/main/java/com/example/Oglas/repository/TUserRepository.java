@@ -11,5 +11,6 @@ public interface TUserRepository extends JpaRepository<TUser, Long>{
 //	TUser findByUsername(String username);
 //
 //	TUser findByRegistrationCode(String registrationCode);
+	public TUser findOneByKorisnickoIme(String username);
 
 }

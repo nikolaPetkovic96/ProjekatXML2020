@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,5 +42,12 @@ public class CommentsController {
 	public KomentarDTO approve(@PathVariable("id") Long id,@RequestParam("approved") String approved) {
 		return commentService.approve(id,Boolean.parseBoolean(approved));
 	}
-
+	@GetMapping(value = "/all")
+	public List<KomentarDTO> getComments(){
+		return commentService.getAllComments();
+	}
+	@PutMapping(value="")
+	public KomentarDTO updateKomentar(@RequestBody KomentarDTO kom) throws Exception {
+		return commentService.updateComment(kom);
+	}
 }

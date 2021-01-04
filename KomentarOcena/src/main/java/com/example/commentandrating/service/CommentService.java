@@ -27,7 +27,8 @@ public class CommentService {
 	private CommentMapper commentMapper;
 	@Autowired
 	private CommonDataRepository commonDataRepository;
-
+	@Autowired
+	private CommonDataService cmdServ;
 	public List<KomentarDTO> getComments(Long carId, Long reservationId, Boolean approved) {
 
 		return commentRepoitory.findAll().stream().filter(comment -> carId == null || comment.getAutomobilId() == carId)
@@ -65,6 +66,29 @@ public class CommentService {
 		data.setDatumIzmene(LocalDateTime.now());
 		commonDataRepository.saveAndFlush(data);
 		commentRepoitory.saveAndFlush(k);
+		return commentMapper.toDTO(k);
+	}
+
+	public List<KomentarDTO> getAllComments() {
+		return commentRepoitory.findAll().stream().map(x->commentMapper.toDTO(x)).collect(Collectors.toList());
+	}
+
+	public KomentarDTO updateComment(KomentarDTO kom) throws Exception {
+		// TODO Auto-generated method stub
+		Komentar k=commentRepoitory.findById(kom.getId()).orElse(null);
+		if(k==null) {
+			//nepostojeci komentar
+			return null;
+		}
+		CommonData cmd=cmdServ.findOne(kom.getId());
+		cmd.setDatumIzmene(LocalDateTime.now());
+		cmd=cmdServ.updateCommonData(cmd.getId(), cmd);
+		
+		k.setId(kom.getId());
+		k.setTekstKomentara(kom.getTekstKomentara());
+		k.setOdobren(kom.isOdobren());
+		k.setCommonDataId(cmd.getId());
+		k=commentRepoitory.save(k);
 		return commentMapper.toDTO(k);
 	}
 

@@ -84,16 +84,6 @@ public class Rezervacija {
     @XmlElement(name = "Ukupna_cena", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
     protected double ukupnaCena;
     
-    @Column(name="od_datuma")
-    @XmlElement(name = "Od_datuma", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
-    @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime odDatuma;
-    
-    @Column(name="do_datuma")
-    @XmlElement(name = "Do_datuma", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
-    @XmlSchemaType(name = "dateTime")
-    protected LocalDateTime doDatuma;
-    
     @Column(name="bundle")
     @XmlElement(name = "Bundle", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
     protected Boolean bundle;
@@ -107,6 +97,10 @@ public class Rezervacija {
     @Column(name="commonDataId")
     protected Long commonDataId;
     
+    @Column(name="napomena")
+	private String napomena;
+
+    
     
     
 	//   @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
@@ -117,29 +111,28 @@ public class Rezervacija {
 	//    protected List<Oglas> oglas;
 	//    protected List<Poruka> poruka;
     
-    @ManyToMany
-	@JoinTable(
-	  name = "rezervacije_oglasi", 
-	  joinColumns = @JoinColumn(name = "rezervacija_id"), 
-	  inverseJoinColumns = @JoinColumn(name = "oglas_id"))
-    protected List<Oglas> oglasi;
+//    @ManyToMany
+//	@JoinTable(
+//	  name = "rezervacije_oglasi", 
+//	  joinColumns = @JoinColumn(name = "rezervacija_id"), 
+//	  inverseJoinColumns = @JoinColumn(name = "oglas_id"))
+//    protected List<Oglas> oglasi;
+    
 
 	public Rezervacija() {
 		super();
 	}
 
-	public Rezervacija(Long id, double ukupnaCena, LocalDateTime odDatuma, LocalDateTime doDatuma, Boolean bundle,
-			String statusRezervacije, Long commonDataId) {
+	public Rezervacija(Long id, double ukupnaCena,  Boolean bundle,
+			String statusRezervacije,String napomena, Long commonDataId) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
-		this.odDatuma = odDatuma;
-		this.doDatuma = doDatuma;
 		this.bundle = bundle;
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
+		this.napomena=napomena;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -155,22 +148,6 @@ public class Rezervacija {
 
 	public void setUkupnaCena(double ukupnaCena) {
 		this.ukupnaCena = ukupnaCena;
-	}
-
-	public LocalDateTime getOdDatuma() {
-		return odDatuma;
-	}
-
-	public void setOdDatuma(LocalDateTime odDatuma) {
-		this.odDatuma = odDatuma;
-	}
-
-	public LocalDateTime getDoDatuma() {
-		return doDatuma;
-	}
-
-	public void setDoDatuma(LocalDateTime doDatuma) {
-		this.doDatuma = doDatuma;
 	}
 
 	public Boolean getBundle() {
@@ -196,5 +173,21 @@ public class Rezervacija {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
+
+	public String getNapomena() {
+		return napomena;
+	}
+
+	public void setNapomena(String napomena) {
+		this.napomena = napomena;
+	}
+
+//	public List<Oglas> getOglasi() {
+//		return oglasi;
+//	}
+//
+//	public void setOglasi(List<Oglas> oglasi) {
+//		this.oglasi = oglasi;
+//	}
 
 }

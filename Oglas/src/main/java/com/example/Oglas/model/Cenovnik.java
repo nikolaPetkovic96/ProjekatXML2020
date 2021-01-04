@@ -83,7 +83,27 @@ public class Cenovnik {
     @XmlElement(name = "CenaPoKilometru", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
     protected int cenaPoKilometru;
 	
-    public Long getId() {
+	@Column(name="common_data_id")
+	protected Long commonDataId;
+	
+    public Cenovnik() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Cenovnik(Long id, int cenaPoDanu, String nazivCenovnika, int popustZaPreko30Dana,
+			int cenaCollisionDamageWaiver, int cenaPoKilometru, Long commonDataId) {
+		super();
+		this.id = id;
+		this.cenaPoDanu = cenaPoDanu;
+		this.nazivCenovnika = nazivCenovnika;
+		this.popustZaPreko30Dana = popustZaPreko30Dana;
+		this.cenaCollisionDamageWaiver = cenaCollisionDamageWaiver;
+		this.cenaPoKilometru = cenaPoKilometru;
+		this.commonDataId = commonDataId;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -141,5 +161,13 @@ public class Cenovnik {
     public void setCenaPoKilometru(int value) {
         this.cenaPoKilometru = value;
     }
+
+	public Long getCommonDataId() {
+		return commonDataId;
+	}
+
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
+	}
     
 }

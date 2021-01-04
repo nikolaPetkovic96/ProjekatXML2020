@@ -3,6 +3,8 @@ package com.example.Reservation.repository.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,5 +50,14 @@ public class TUserService {
 		public void deleteTUser(Long id) {
 			tuserRepository.deleteById(id);
 		}
+		public TUser findByUsername(String username) {
+			List<TUser>  all=tuserRepository.findAll().stream().collect(Collectors.toList());
+			for(TUser u : all){
+				if(u.getKorisnickoIme().equals(username))
+					return u;
+			}
+			return null;
+		}
+		
 
 }

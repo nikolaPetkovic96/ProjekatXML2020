@@ -214,6 +214,4 @@ public class Automobil {
 	public void setUkupnaOcena(float ukupnaOcena) {
 		this.ukupnaOcena = ukupnaOcena;
 	}
-	
-	
 }

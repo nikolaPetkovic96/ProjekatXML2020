@@ -11,22 +11,24 @@ public class PorukaDTO {
 	//private Long automobilId;
 	//Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
     private String username;
+    private CommonDataDTO cmdDTO;
 
 	public PorukaDTO() {
 		
 	}
 	
-	public PorukaDTO(Poruka p) {
+	public PorukaDTO(Poruka p,String username,CommonDataDTO cmd) {
 		this.id =p.getId();
 		this.tekstPoruke = p.getTekstPoruke();
 		this.rezervacijaId = p.getRezervacijaId();
 		this.commonDataId = p.getCommonDataId();
-		//this.automobilId = p.getAutomobilId();
-	
+		this.cmdDTO=cmd;
+		this.username=username;
+		
 	}
 	
 	public PorukaDTO(Long id, String tekstPoruke, Long rezervacijaId,
-			Long commonDataId, Long automobilId, String username) {
+			Long commonDataId, Long automobilId, String username, CommonDataDTO cmd) {
 		super();
 		this.id = id;
 		this.tekstPoruke = tekstPoruke;
@@ -34,15 +36,18 @@ public class PorukaDTO {
 		this.commonDataId = commonDataId;
 		//this.automobilId = automobilId;
 		this.username = username;
+		this.cmdDTO=cmd;
+
 	}
 	public PorukaDTO(Long id, String tekstPoruke, Long rezervacijaId,
-			Long commonDataId, String username) {
+			Long commonDataId, String username, CommonDataDTO cmd) {
 		super();
 		this.id = id;
 		this.tekstPoruke = tekstPoruke;
 		this.rezervacijaId = rezervacijaId;
 		this.commonDataId = commonDataId;
 		this.username = username;
+		this.cmdDTO=cmd;
 	}
 
 	public Long getId() {
@@ -93,5 +98,12 @@ public class PorukaDTO {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
+	public CommonDataDTO getCmdDTO() {
+		return cmdDTO;
+	}
+
+	public void setCmdDTO(CommonDataDTO cmdDTO) {
+		this.cmdDTO = cmdDTO;
+	}
 }

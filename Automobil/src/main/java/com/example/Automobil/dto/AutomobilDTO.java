@@ -50,6 +50,28 @@ public class AutomobilDTO {
 		this.ukupnaOcena = ukupnaOcena;
 	}
 
+	public AutomobilDTO(AutomobilDTO auto) {
+		super();
+		this.id = auto.id;
+		this.markaAutomobilaId = auto.markaAutomobilaId;
+		this.modelAutomobilaId = auto.modelAutomobilaId;
+		this.klasaAutomobilaId = auto.klasaAutomobilaId;
+		this.vrstaGorivaId = auto.vrstaGorivaId;
+		this.tipMenjacaId = auto.tipMenjacaId;
+		this.predjenaKilometraza = auto.predjenaKilometraza;
+		this.planiranaKilometraza = auto.planiranaKilometraza;
+		this.collisionDamageWaiver = auto.collisionDamageWaiver;
+		this.brojSedistaZaDecu = auto.brojSedistaZaDecu;
+		this.commonDataId = auto.commonDataId;
+		this.slike = auto.slike;
+		MarkaNaziv = auto.MarkaNaziv;
+		this.modelNaziv = auto.modelNaziv;
+		this.klasaNaziv = auto.klasaNaziv;
+		this.user_id = auto.getUser_id();
+		this.username = auto.username;
+		this.ukupnaOcena = auto.ukupnaOcena;
+	}
+
 	public Long getId() {
 		return id;
 	}

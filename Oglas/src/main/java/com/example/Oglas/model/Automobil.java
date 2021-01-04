@@ -87,11 +87,6 @@ public class Automobil {
     @XmlElement(name = "Predjena_kilometraza")
     protected float predjenaKilometraza;
     
-	@Column(name = "plan_kilom", nullable = false)
-    @XmlElement(name = "Planirana_kilometraza", required = true)
-    @XmlSchemaType(name = "positiveInteger")
-    protected float planiranaKilometraza;
-    
 	@Column(name = "col_dmg_waiver", nullable = false)
     @XmlElement(name = "Collision_Damage_Waiver")
     protected boolean collisionDamageWaiver;
@@ -99,16 +94,21 @@ public class Automobil {
 	@Column(name = "br_sedista_za_decu", nullable = false)
     @XmlElement(name = "Broj_sedista_za_decu")
     protected int brojSedistaZaDecu;
+	
+	@Column(name="common_data_id")
+	protected Long commonDataId;
+	
+	@Column(name = "ukupna_ocena", nullable = false)
+    protected float ukupnaOcena;
 
 	
 	public Automobil() {
 		super();
 	}
 
-
 	public Automobil(Long id, Long markaAutomobilaId,Long modelAutomobilaId,
 			Long klasaAutomobilaId, Long vrstaGorivaId,Long tipMenjacaId, float predjenaKilometraza,
-			float planiranaKilometraza, boolean collisionDamageWaiver, int brojSedistaZaDecu) {
+			 boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId, float ukupnaOcena) {
 		super();
 		this.id = id;
 		this.markaAutomobilaId = markaAutomobilaId;
@@ -117,109 +117,98 @@ public class Automobil {
 		this.vrstaGorivaId = vrstaGorivaId;
 		this.tipMenjacaId = tipMenjacaId;
 		this.predjenaKilometraza = predjenaKilometraza;
-		this.planiranaKilometraza = planiranaKilometraza;
 		this.collisionDamageWaiver = collisionDamageWaiver;
 		this.brojSedistaZaDecu = brojSedistaZaDecu;
+		this.commonDataId=commonDataId;
+		this.ukupnaOcena=ukupnaOcena;
 	}
-
 
     public Long getId() {
         return id;
     }
 
-
     public void setId(Long value) {
         this.id = value;
     }
     
-
 	public Long getMarkaAutomobilaId() {
 		return markaAutomobilaId;
 	}
-
 
 	public void setMarkaAutomobilaId(Long markaAutomobilaId) {
 		this.markaAutomobilaId = markaAutomobilaId;
 	}
 
-
 	public Long getModelAutomobilaId() {
 		return modelAutomobilaId;
 	}
-
 
 	public void setModelAutomobilaId(Long modelAutomobilaId) {
 		this.modelAutomobilaId = modelAutomobilaId;
 	}
 
-
 	public Long getKlasaAutomobilaId() {
 		return klasaAutomobilaId;
 	}
-
 
 	public void setKlasaAutomobilaId(Long klasaAutomobilaId) {
 		this.klasaAutomobilaId = klasaAutomobilaId;
 	}
 
-
 	public Long getVrstaGorivaId() {
 		return vrstaGorivaId;
 	}
-
 
 	public void setVrstaGorivaId(Long vrstaGorivaId) {
 		this.vrstaGorivaId = vrstaGorivaId;
 	}
 
-
 	public Long getTipMenjacaId() {
 		return tipMenjacaId;
 	}
-
 
 	public void setTipMenjacaId(Long tipMenjacaId) {
 		this.tipMenjacaId = tipMenjacaId;
 	}
 
-
 	public float getPredjenaKilometraza() {
 		return predjenaKilometraza;
 	}
-
 
 	public void setPredjenaKilometraza(float predjenaKilometraza) {
 		this.predjenaKilometraza = predjenaKilometraza;
 	}
 
-
-	public float getPlaniranaKilometraza() {
-		return planiranaKilometraza;
-	}
-
-
-	public void setPlaniranaKilometraza(float planiranaKilometraza) {
-		this.planiranaKilometraza = planiranaKilometraza;
-	}
-
-
 	public boolean isCollisionDamageWaiver() {
 		return collisionDamageWaiver;
 	}
-
 
 	public void setCollisionDamageWaiver(boolean collisionDamageWaiver) {
 		this.collisionDamageWaiver = collisionDamageWaiver;
 	}
 
-
 	public int getBrojSedistaZaDecu() {
 		return brojSedistaZaDecu;
 	}
 
-
 	public void setBrojSedistaZaDecu(int brojSedistaZaDecu) {
 		this.brojSedistaZaDecu = brojSedistaZaDecu;
 	}
-    
+
+	public Long getCommonDataId() {
+		return commonDataId;
+	}
+
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
+	}
+
+	public float getUkupnaOcena() {
+		return ukupnaOcena;
+	}
+
+	public void setUkupnaOcena(float ukupnaOcena) {
+		this.ukupnaOcena = ukupnaOcena;
+	}
+   
 }

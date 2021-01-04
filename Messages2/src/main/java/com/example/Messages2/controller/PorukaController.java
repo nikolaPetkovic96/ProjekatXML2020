@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ public class PorukaController {
 	@Autowired
 	private PorukaService porService;
 	
+
 	@GetMapping(value = "")
 	public List<PorukaDTO> getPoruke(	@RequestParam(name = "rez_id", required = false) Long rezId
 			){
@@ -43,5 +45,15 @@ public class PorukaController {
 	@DeleteMapping("/{id}")
 	public void deletePoruka(	@PathVariable("id") Long id) {
 		 porService.deletePoruka(id);
+	}
+	
+	@PutMapping(value="")
+	public PorukaDTO updatePoruka(@RequestBody PorukaDTO poruka) throws Exception {
+		return porService.updatePoruka(poruka.getId(), poruka);
+	}
+	
+	@GetMapping(value="/sve")
+	public List<PorukaDTO> getAllPoruke(){
+		return porService.getAllMessages();
 	}
 }

@@ -9,7 +9,6 @@
 package com.example.Reservation.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -83,22 +82,27 @@ public class Oglas {
     @Column(name="automobil_id")
 	private Long automobilId;
     
+	@Column(name="planirana_km")
+    private float planiranaKm;
+
+	@Column(name="adresa_id")
+	private Long adresaId;   
     
     //Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
 	//private Firma firma;
 	//private RegistrovaniKorisnik reg_korisnik;
-    @ManyToMany
-    @JoinTable(
-    		  name = "rezervacije_oglasi", 
-    		  joinColumns = @JoinColumn(name = "oglas_id"), 
-    		  inverseJoinColumns = @JoinColumn(name = "rezervacija_id"))
-	private List<Rezervacija> rezervacije;
+//    @ManyToMany
+//    @JoinTable(
+//    		  name = "rezervacije_oglasi", 
+//    		  joinColumns = @JoinColumn(name = "oglas_id"), 
+//    		  inverseJoinColumns = @JoinColumn(name = "rezervacija_id"))
+//	private List<Rezervacija> rezervacije;
 
     public Oglas() {
 		super();
 	}
     
-    public Oglas(Long id, LocalDateTime  odDatuma, LocalDateTime  doDatuma, Long cenovnikId, Long commonDataId, Long automobilId) {
+    public Oglas(Long id, LocalDateTime  odDatuma, LocalDateTime  doDatuma, Long cenovnikId, Long automobilId, float planiranaKm,Long adresaId, Long commonDataId) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma;
@@ -106,7 +110,8 @@ public class Oglas {
 		this.cenovnikId = cenovnikId;
 		this.commonDataId = commonDataId;
 		this.automobilId = automobilId;
-		this.rezervacije=new ArrayList<>();
+		this.planiranaKm=planiranaKm;
+		this.adresaId=adresaId;
 	}
 
 	public Long getId() {
@@ -167,12 +172,20 @@ public class Oglas {
 		this.automobilId = automobilId;
 	}
 
-	public List<Rezervacija> getRezervacije() {
-		return rezervacije;
+	public float getPlaniranaKm() {
+		return planiranaKm;
 	}
 
-	public void setRezervacije(List<Rezervacija> rezervacije) {
-		this.rezervacije = rezervacije;
+	public void setPlaniranaKm(float planiranaKm) {
+		this.planiranaKm = planiranaKm;
+	}
+
+	public Long getAdresaId() {
+		return adresaId;
+	}
+
+	public void setAdresaId(Long adresaId) {
+		this.adresaId = adresaId;
 	}
 
 }
