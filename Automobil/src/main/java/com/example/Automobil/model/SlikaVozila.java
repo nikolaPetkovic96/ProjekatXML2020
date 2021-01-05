@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 
 @Entity
-public class TSlikaVozila {
+public class SlikaVozila {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,11 +59,11 @@ public class TSlikaVozila {
     private Long automobilId;
 
 
-	public TSlikaVozila() {
+	public SlikaVozila() {
 		super();
 	}
 
-	public TSlikaVozila(Long id, String[] slika, Long commonDataId, Long automobilId) {
+	public SlikaVozila(Long id, String[] slika, Long commonDataId, Long automobilId) {
 		super();
 		this.id = id;
 		this.slika = slika;

@@ -1,10 +1,8 @@
 package com.example.Automobil.dto;
 
-
-
 import com.example.Automobil.model.Automobil;
 
-public class AutomobilAgentDTO {
+public class AutomobilImgDTO {
 
 	private Long id;
 	private float ukupnaOcena;
@@ -17,14 +15,16 @@ public class AutomobilAgentDTO {
 	private String klasaAut;
 	private String tipMenjaca;
 	private String tipGoriva;
-	private Long commonDataId;//ne treba samo za testiranje CRUD
+	private Long commonDataId;//ne treba, samo za testiranje CRUD
 	
-	public AutomobilAgentDTO() {
+	private TSlikaVozilaDTO slikeVozila;
+	
+	public AutomobilImgDTO() {
 		
 	}
 
-	public AutomobilAgentDTO(Automobil a, String markaAut , String modelAut,
-			 String klasaAut, String tipMenjaca, String tipGoriva) {	
+	public AutomobilImgDTO(Automobil a, String markaAut , String modelAut,
+			 String klasaAut, String tipMenjaca, String tipGoriva, TSlikaVozilaDTO slikeVozila) {	
 		this.id = a.getId();	
 		this.ukupnaOcena = a.getUkupnaOcena();
 		this.predjenaKilometraza = a.getPredjenaKilometraza();
@@ -38,11 +38,32 @@ public class AutomobilAgentDTO {
 		this.klasaAut = klasaAut;
 		this.tipMenjaca = tipMenjaca;
 		this.tipGoriva = tipGoriva;
+		
+		this.slikeVozila = slikeVozila;
 	}
 	
-	public AutomobilAgentDTO(Long id, float ukupnaOcena, float predjenaKilometraza, float planiranaKilometraza,
+	//Moze se AutomobilDTO promeniti da vraca i nazive komonenti automob...
+	public AutomobilImgDTO(AutomobilDTO a, TSlikaVozilaDTO slikeVozila) {	
+		this.id = a.getId();	
+		this.ukupnaOcena = a.getUkupnaOcena();
+		this.predjenaKilometraza = a.getPredjenaKilometraza();
+		this.collisionDamageWaiver = a.isCollisionDamageWaiver();
+		this.brojSedistaZaDecu = a.getBrojSedistaZaDecu();
+		
+		this.commonDataId =  a.getCommonDataId();
+
+		this.markaAut = a.getMarkaAut();
+		this.modelAut = a.getModelAut();
+		this.klasaAut = a.getKlasaAut();
+		this.tipMenjaca = a.getTipMenjaca();
+		this.tipGoriva = a.getTipGoriva();
+		
+		this.slikeVozila = slikeVozila;
+	}
+	
+	public AutomobilImgDTO(Long id, float ukupnaOcena, float predjenaKilometraza, float planiranaKilometraza,
 			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId,
-			String markaAut , String modelAut, String klasaAut, String tipMenjaca, String tipGoriva) {
+			String markaAut , String modelAut, String klasaAut, String tipMenjaca, String tipGoriva, TSlikaVozilaDTO slikeVozila) {
 		super();
 		this.id = id;
 		this.ukupnaOcena = ukupnaOcena;
@@ -56,6 +77,8 @@ public class AutomobilAgentDTO {
 		this.klasaAut = klasaAut;
 		this.tipMenjaca = tipMenjaca;
 		this.tipGoriva = tipGoriva;
+		
+		this.slikeVozila = slikeVozila;
 		
 	}
 
@@ -157,4 +180,14 @@ public class AutomobilAgentDTO {
 	public void setTipGoriva(String tipGoriva) {
 		this.tipGoriva = tipGoriva;
 	}
+
+	public TSlikaVozilaDTO getSlikeVozila() {
+		return slikeVozila;
+	}
+
+	public void setSlikeVozila(TSlikaVozilaDTO slikeVozila) {
+		this.slikeVozila = slikeVozila;
+	}
+	
+
 }

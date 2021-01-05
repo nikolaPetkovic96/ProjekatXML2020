@@ -3,8 +3,8 @@ package com.example.Automobil.service.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.Automobil.dto.AutomobilAgentDTO;
 import com.example.Automobil.dto.AutomobilDTO;
+import com.example.Automobil.dto.AutomobilPomDTO;
 import com.example.Automobil.model.Automobil;
 import com.example.Automobil.model.CommonData;
 import com.example.Automobil.repository.CommonDataRepository;
@@ -32,14 +32,14 @@ public class AutomobilMapper {
 	@Autowired
 	private TTipMenjacaRepository tipMenjacaRep;
 
-	public AutomobilDTO toDTO(Automobil a) {
+	public AutomobilPomDTO toPomDTO(Automobil a) {
 		CommonData data = cmdRep.findById(a.getCommonDataId()).get();
 		String marka = markaRep.findById(a.getMarkaAutomobilaId()).get().getNazivMarke();
 		String model = modelRep.findById(a.getModelAutomobilaId()).get().getNazivModela();
 		String klasa = klasaRep.findById(a.getKlasaAutomobilaId()).get().getNazivKlase();
 		String Username = "";// tUserRep.findById(data.getUserid()).get().getKorisnickoIme();
 
-		AutomobilDTO autoDTO = new AutomobilDTO(a.getId(), a.getMarkaAutomobilaId(), a.getModelAutomobilaId(),
+		AutomobilPomDTO autoDTO = new AutomobilPomDTO(a.getId(), a.getMarkaAutomobilaId(), a.getModelAutomobilaId(),
 				a.getKlasaAutomobilaId(), a.getVrstaGorivaId(), a.getTipMenjacaId(), a.getPredjenaKilometraza(),
 				a.getPlaniranaKilometraza(), a.isCollisionDamageWaiver(), a.getBrojSedistaZaDecu(), a.getCommonDataId(),
 				null,
@@ -47,19 +47,19 @@ public class AutomobilMapper {
 		return autoDTO;
 	}
 	
-	public AutomobilAgentDTO toAgentDTO(Automobil a) {
+	public AutomobilDTO toDTO(Automobil a) {
 		String marka = markaRep.findById(a.getMarkaAutomobilaId()).get().getNazivMarke();
 		String model = modelRep.findById(a.getModelAutomobilaId()).get().getNazivModela();
 		String klasa = klasaRep.findById(a.getKlasaAutomobilaId()).get().getNazivKlase();
 		String menjac = tipMenjacaRep.findById(a.getTipMenjacaId()).get().getNazivMenjaca();
 		String gorivo = tipGorivaRep.findById(a.getVrstaGorivaId()).get().getNazivTipa();
 
-		AutomobilAgentDTO autoDTO = new AutomobilAgentDTO(a, marka, model, klasa, menjac, gorivo);
+		AutomobilDTO autoDTO = new AutomobilDTO(a, marka, model, klasa, menjac, gorivo);
 		return autoDTO;
 	}
 
 	
-	public Automobil fromDTO(AutomobilDTO dto) {
+	public Automobil fromPomDTO(AutomobilPomDTO dto) {
 		CommonData data = new CommonData();
 		
 		Automobil a = new Automobil(dto.getId(), dto.getMarkaAutomobilaId(), dto.getModelAutomobilaId(),

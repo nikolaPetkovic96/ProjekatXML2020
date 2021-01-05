@@ -1,77 +1,65 @@
 package com.example.Automobil.dto;
 
-import java.util.List;
+
+
+import com.example.Automobil.model.Automobil;
+
 public class AutomobilDTO {
 
 	private Long id;
-	private Long markaAutomobilaId;
-	private Long modelAutomobilaId;
-	private Long klasaAutomobilaId;
-	private Long vrstaGorivaId;
-	private Long tipMenjacaId;
+	private float ukupnaOcena;
 	private float predjenaKilometraza;
-	private float planiranaKilometraza;
 	private boolean collisionDamageWaiver;
 	private int brojSedistaZaDecu;
-	private Long commonDataId;
-
-	private List<byte[]> slike;
-	private String MarkaNaziv;
-	private String modelNaziv;
-	private String klasaNaziv;
-
-	private Long user_id;
-	private String username;
 	
-	private float ukupnaOcena;
+	private String markaAut;
+	private String modelAut;
+	private String klasaAut;
+	private String tipMenjaca;
+	private String tipGoriva;
+	private Long commonDataId;//ne treba samo za testiranje CRUD
+	
+	public AutomobilDTO() {
+		
+	}
 
-	public AutomobilDTO(Long id, Long markaAutomobilaId, Long modelAutomobilaId, Long klasaAutomobilaId,
-			Long vrstaGorivaId, Long tipMenjacaId, float predjenaKilometraza, float planiranaKilometraza,
-			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId, List<byte[]> slike,
-			String markaNaziv, String modelNaziv, String klasaNaziv, Long string, String username, float ukupnaOcena) {
+	public AutomobilDTO(Automobil a, String markaAut , String modelAut,
+			 String klasaAut, String tipMenjaca, String tipGoriva) {	
+		this.id = a.getId();	
+		this.ukupnaOcena = a.getUkupnaOcena();
+		this.predjenaKilometraza = a.getPredjenaKilometraza();
+		this.collisionDamageWaiver = a.isCollisionDamageWaiver();
+		this.brojSedistaZaDecu = a.getBrojSedistaZaDecu();
+		
+		this.commonDataId =  a.getCommonDataId();
+
+		this.markaAut = markaAut;
+		this.modelAut = modelAut;
+		this.klasaAut = klasaAut;
+		this.tipMenjaca = tipMenjaca;
+		this.tipGoriva = tipGoriva;
+	}
+	
+	public AutomobilDTO(Long id, float ukupnaOcena, float predjenaKilometraza, float planiranaKilometraza,
+			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId,
+			String markaAut , String modelAut, String klasaAut, String tipMenjaca, String tipGoriva) {
 		super();
 		this.id = id;
-		this.markaAutomobilaId = markaAutomobilaId;
-		this.modelAutomobilaId = modelAutomobilaId;
-		this.klasaAutomobilaId = klasaAutomobilaId;
-		this.vrstaGorivaId = vrstaGorivaId;
-		this.tipMenjacaId = tipMenjacaId;
+		this.ukupnaOcena = ukupnaOcena;
 		this.predjenaKilometraza = predjenaKilometraza;
-		this.planiranaKilometraza = planiranaKilometraza;
 		this.collisionDamageWaiver = collisionDamageWaiver;
 		this.brojSedistaZaDecu = brojSedistaZaDecu;
+		
 		this.commonDataId = commonDataId;
-		this.slike = slike;
-		MarkaNaziv = markaNaziv;
-		this.modelNaziv = modelNaziv;
-		this.klasaNaziv = klasaNaziv;
-		this.user_id = string;
-		this.username = username;
-		this.ukupnaOcena = ukupnaOcena;
+		this.markaAut = markaAut;
+		this.modelAut = modelAut;
+		this.klasaAut = klasaAut;
+		this.tipMenjaca = tipMenjaca;
+		this.tipGoriva = tipGoriva;
+		
 	}
 
-	public AutomobilDTO(AutomobilDTO auto) {
-		super();
-		this.id = auto.id;
-		this.markaAutomobilaId = auto.markaAutomobilaId;
-		this.modelAutomobilaId = auto.modelAutomobilaId;
-		this.klasaAutomobilaId = auto.klasaAutomobilaId;
-		this.vrstaGorivaId = auto.vrstaGorivaId;
-		this.tipMenjacaId = auto.tipMenjacaId;
-		this.predjenaKilometraza = auto.predjenaKilometraza;
-		this.planiranaKilometraza = auto.planiranaKilometraza;
-		this.collisionDamageWaiver = auto.collisionDamageWaiver;
-		this.brojSedistaZaDecu = auto.brojSedistaZaDecu;
-		this.commonDataId = auto.commonDataId;
-		this.slike = auto.slike;
-		MarkaNaziv = auto.MarkaNaziv;
-		this.modelNaziv = auto.modelNaziv;
-		this.klasaNaziv = auto.klasaNaziv;
-		this.user_id = auto.getUser_id();
-		this.username = auto.username;
-		this.ukupnaOcena = auto.ukupnaOcena;
-	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -80,60 +68,20 @@ public class AutomobilDTO {
 		this.id = id;
 	}
 
-	public Long getMarkaAutomobilaId() {
-		return markaAutomobilaId;
-	}
-
-	public void setMarkaAutomobilaId(Long markaAutomobilaId) {
-		this.markaAutomobilaId = markaAutomobilaId;
-	}
-
-	public Long getModelAutomobilaId() {
-		return modelAutomobilaId;
-	}
-
-	public void setModelAutomobilaId(Long modelAutomobilaId) {
-		this.modelAutomobilaId = modelAutomobilaId;
-	}
-
-	public Long getKlasaAutomobilaId() {
-		return klasaAutomobilaId;
-	}
-
-	public void setKlasaAutomobilaId(Long klasaAutomobilaId) {
-		this.klasaAutomobilaId = klasaAutomobilaId;
-	}
-
-	public Long getVrstaGorivaId() {
-		return vrstaGorivaId;
-	}
-
-	public void setVrstaGorivaId(Long vrstaGorivaId) {
-		this.vrstaGorivaId = vrstaGorivaId;
-	}
-
-	public Long getTipMenjacaId() {
-		return tipMenjacaId;
-	}
-
-	public void setTipMenjacaId(Long tipMenjacaId) {
-		this.tipMenjacaId = tipMenjacaId;
-	}
-
 	public float getPredjenaKilometraza() {
 		return predjenaKilometraza;
+	}
+	
+	public float getUkupnaOcena() {
+		return ukupnaOcena;
+	}
+
+	public void setUkupnaOcena(float ukupnaOcena) {
+		this.ukupnaOcena = ukupnaOcena;
 	}
 
 	public void setPredjenaKilometraza(float predjenaKilometraza) {
 		this.predjenaKilometraza = predjenaKilometraza;
-	}
-
-	public float getPlaniranaKilometraza() {
-		return planiranaKilometraza;
-	}
-
-	public void setPlaniranaKilometraza(float planiranaKilometraza) {
-		this.planiranaKilometraza = planiranaKilometraza;
 	}
 
 	public boolean isCollisionDamageWaiver() {
@@ -160,61 +108,53 @@ public class AutomobilDTO {
 		this.commonDataId = commonDataId;
 	}
 
-	public List<byte[]> getSlike() {
-		return slike;
-	}
 
-	public void setSlike(List<byte[]> slike) {
-		this.slike = slike;
-	}
-
-	public String getMarkaNaziv() {
-		return MarkaNaziv;
-	}
-
-	public void setMarkaNaziv(String markaNaziv) {
-		MarkaNaziv = markaNaziv;
-	}
-
-	public String getModelNaziv() {
-		return modelNaziv;
-	}
-
-	public void setModelNaziv(String modelNaziv) {
-		this.modelNaziv = modelNaziv;
-	}
-
-	public String getKlasaNaziv() {
-		return klasaNaziv;
-	}
-
-	public void setKlasaNaziv(String klasaNaziv) {
-		this.klasaNaziv = klasaNaziv;
-	}
-
-	public Long getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public float getUkupnaOcena() {
-		return ukupnaOcena;
-	}
-
-	public void setUkupnaOcena(float ukupnaOcena) {
-		this.ukupnaOcena = ukupnaOcena;
+	public String getMarkaAut() {
+		return markaAut;
 	}
 
 
+	public void setMarkaAut(String markaAut) {
+		this.markaAut = markaAut;
+	}
+
+
+	public String getModelAut() {
+		return modelAut;
+	}
+
+
+	public void setModelAut(String modelAut) {
+		this.modelAut = modelAut;
+	}
+
+
+	public String getKlasaAut() {
+		return klasaAut;
+	}
+
+
+	public void setKlasaAut(String klasaAut) {
+		this.klasaAut = klasaAut;
+	}
+
+
+	public String getTipMenjaca() {
+		return tipMenjaca;
+	}
+
+
+	public void setTipMenjaca(String tipMenjaca) {
+		this.tipMenjaca = tipMenjaca;
+	}
+
+
+	public String getTipGoriva() {
+		return tipGoriva;
+	}
+
+
+	public void setTipGoriva(String tipGoriva) {
+		this.tipGoriva = tipGoriva;
+	}
 }

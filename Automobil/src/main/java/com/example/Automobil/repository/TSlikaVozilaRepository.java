@@ -6,4 +6,5 @@ import com.example.Automobil.model.TSlikaVozila;
 
 public interface TSlikaVozilaRepository extends JpaRepository<TSlikaVozila, Long> {
 
+	TSlikaVozila findByAutomobilId(Long automobilId);
 }
