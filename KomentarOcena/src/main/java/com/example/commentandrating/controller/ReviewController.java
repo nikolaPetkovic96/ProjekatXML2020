@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.commentandrating.dto.ReviewDTO;
-import com.example.commentandrating.service.ReviewSercice;
+import com.example.commentandrating.service.ReviewService;
 
 @RestController
 @RequestMapping(value = "review")
-public class RewievController {
+public class ReviewController {
 	@Autowired
-	private ReviewSercice reviewService;
+	private ReviewService reviewService;
 
 	@GetMapping(value = "/{id}")
 	public List<ReviewDTO> getRatings(@PathVariable("id") Long carId) {

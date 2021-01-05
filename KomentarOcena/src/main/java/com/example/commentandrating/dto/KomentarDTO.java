@@ -12,6 +12,31 @@ public class KomentarDTO {
 	private Long rezervacijaId;
 	protected LocalDateTime datumIzmene, datumKreiranja;
 	
+	private long autorId; 
+	
+	public KomentarDTO(Long id, String tekstKomentara, String autor, boolean odobren, Long automobilId,
+			Long rezervacijaId, LocalDateTime datumIzmene, LocalDateTime datumKreiranja, long autorId) {
+		super();
+		this.id = id;
+		this.tekstKomentara = tekstKomentara;
+		this.autor = autor;
+		this.odobren = odobren;
+		this.automobilId = automobilId;
+		this.rezervacijaId = rezervacijaId;
+		this.datumIzmene = datumIzmene;
+		this.autor=autor;
+		this.datumKreiranja = datumKreiranja;
+		this.autorId = autorId;
+	}
+
+	public long getAutorId() {
+		return autorId;
+	}
+
+	public void setAutorId(long autorId) {
+		this.autorId = autorId;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -78,19 +103,4 @@ public class KomentarDTO {
 
 	public KomentarDTO() {
 	}
-
-	public KomentarDTO(Long id, String tekstKomentara, String autor, boolean odobren, Long automobilId,
-			Long rezervacijaId, LocalDateTime datumIzmene, LocalDateTime datumKreiranja) {
-		super();
-		this.id = id;
-		this.tekstKomentara = tekstKomentara;
-		this.autor = autor;
-		this.odobren = odobren;
-		this.automobilId = automobilId;
-		this.rezervacijaId = rezervacijaId;
-		this.datumIzmene = datumIzmene;
-		this.autor=autor;
-		this.datumKreiranja = datumKreiranja;
-	}
-
 }

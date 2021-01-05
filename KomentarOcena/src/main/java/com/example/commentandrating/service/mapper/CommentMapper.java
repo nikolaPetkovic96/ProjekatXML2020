@@ -17,7 +17,7 @@ public class CommentMapper {
 	public KomentarDTO toDTO(Komentar k) {
 		CommonData data = commonDataRepository.findById(k.getCommonDataId()).get();
 		KomentarDTO kom = new KomentarDTO(k.getId(), k.getTekstKomentara(), k.getAutor(), k.isOdobren(), k.getAutomobilId(),
-				k.getRezervacijaId(), data.getDatumKreiranja(), data.getDatumIzmene());
+				k.getRezervacijaId(), data.getDatumKreiranja(), data.getDatumIzmene(), data.getUserid());
 		return kom;
 
 	}
