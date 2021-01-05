@@ -1,16 +1,16 @@
-package com.example.Messages2.service.mapper;
+package com.example.Reservation.repository.service.mapper;
 
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.Messages2.dto.PorukaDTO;
-import com.example.Messages2.dto.PorukaNewDTO;
-import com.example.Messages2.model.CommonData;
-import com.example.Messages2.model.Poruka;
-import com.example.Messages2.repository.CommonDataRepository;
-import com.example.Messages2.repository.TUserRepository;
+import com.example.Reservation.dto.PorukaDTO;
+import com.example.Reservation.model.CommonData;
+import com.example.Reservation.model.Poruka;
+import com.example.Reservation.repository.CommonDataRepository;
+import com.example.Reservation.repository.TUserRepository;
+
 @Component
 public class PorukaMapper {
 

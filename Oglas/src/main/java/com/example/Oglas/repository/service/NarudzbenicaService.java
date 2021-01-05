@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.Oglas.dto.NarudzbenicaDTO;
 import com.example.Oglas.model.CommonData;
@@ -16,7 +17,7 @@ import com.example.Oglas.repository.service.mapper.NaruzbenicaMapper;
 
 
 
-
+@Service
 public class NarudzbenicaService {
 	@Autowired
 	private NarudzbenicaRepository narRep;

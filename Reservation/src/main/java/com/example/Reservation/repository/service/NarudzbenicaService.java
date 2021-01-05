@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.Reservation.dto.NarudzbenicaDTO;
 import com.example.Reservation.dto.NarudzbenicaNewDTO;
@@ -18,7 +19,7 @@ import com.example.Reservation.repository.OglasRepository;
 import com.example.Reservation.repository.service.mapper.NaruzbenicaMapper;
 
 
-
+@Service
 public class NarudzbenicaService {
 	@Autowired
 	private NarudzbenicaRepository narRep;

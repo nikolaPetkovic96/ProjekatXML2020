@@ -1,4 +1,4 @@
-package com.example.Oglas.repository.service;
+package com.example.Reservation.repository.service;
 
 import java.time.LocalDateTime;
 

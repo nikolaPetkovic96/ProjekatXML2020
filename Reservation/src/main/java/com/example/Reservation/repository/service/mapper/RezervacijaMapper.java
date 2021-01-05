@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.Reservation.dto.NarudzbenicaDTO;
+import com.example.Reservation.dto.PorukaDTO;
 import com.example.Reservation.dto.RezervacijaDTO;
 import com.example.Reservation.dto.RezervacijaFullDTO;
 import com.example.Reservation.model.CommonData;
@@ -18,6 +20,7 @@ import com.example.Reservation.model.Rezervacija;
 import com.example.Reservation.repository.CommonDataRepository;
 import com.example.Reservation.repository.NarudzbenicaRepository;
 import com.example.Reservation.repository.OglasRepository;
+import com.example.Reservation.repository.PorukaRepository;
 import com.example.Reservation.repository.TUserRepository;
 import com.example.Reservation.repository.service.NarudzbenicaService;
 @Component
@@ -32,6 +35,10 @@ public class RezervacijaMapper {
 	private NarudzbenicaRepository narRep;
 	@Autowired 
 	public NarudzbenicaService narServ;
+	@Autowired
+	private PorukaRepository porRep;
+	@Autowired
+	private PorukaMapper porMap;
 	
 	public RezervacijaDTO toDTO(Rezervacija r) {
 		
@@ -111,6 +118,7 @@ public class RezervacijaMapper {
 		CommonData data = commonDataRepository.findById(r.getCommonDataId()).get();
 		String username = tUserRepository.findById(data.getUserid()).get().getKorisnickoIme();
 		List<NarudzbenicaDTO> narudzbenice=narServ.getAllByRez(r.getId());
-		RezervacijaFullDTO fullDTO=new RezervacijaFullDTO(r, username, narudzbenice, poruke)
+		List<PorukaDTO> poruke=porRep.findAll().stream().filter(x->x.getRezervacijaId().equals(r.getId())).map(x->porMap.toDTO(x)).collect(Collectors.toList());
+		RezervacijaFullDTO fullDTO=new RezervacijaFullDTO(r, username, narudzbenice, poruke);
 	}
 }

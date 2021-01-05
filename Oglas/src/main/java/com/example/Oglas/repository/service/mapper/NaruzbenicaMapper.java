@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.example.Oglas.dto.NarudzbenicaDTO;
 import com.example.Oglas.model.Izvestaj;
@@ -11,7 +12,7 @@ import com.example.Oglas.model.Narudzbenica;
 import com.example.Oglas.repository.IzvestajRepository;
 import com.example.Oglas.repository.NarudzbenicaRepository;
 
-
+@Component
 public class NaruzbenicaMapper {
 
 	@Autowired

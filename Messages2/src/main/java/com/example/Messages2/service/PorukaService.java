@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.Messages2.dto.PorukaDTO;
+import com.example.Messages2.dto.PorukaNewDTO;
 import com.example.Messages2.model.CommonData;
 import com.example.Messages2.model.Poruka;
 import com.example.Messages2.repository.CommonDataRepository;
@@ -71,8 +72,15 @@ public class PorukaService {
 			
 		}
 		
-		public void deletePoruka(Long id) {
-			porukaRepository.deleteById(id);
+		public Boolean deletePoruka(Long id) {
+			try {
+				cmdServ.deleteCommonData(porukaRepository.getOne(id).getCommonDataId());
+				porukaRepository.deleteById(id);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
 		}
 		public List<PorukaDTO> getAllMessages(Long rez_id){	//sve poruke razmenjene u vezi rezervacije
 			return porukaRepository.findAll().stream().filter(p-> p.getRezervacijaId()==rez_id).map(p->porMapper.toDTO(p)).collect(Collectors.toList());
@@ -87,5 +95,23 @@ public class PorukaService {
 			// TODO Auto-generated method stub
 			return porukaRepository.findAll().stream().map(p->porMapper.toDTO(p)).collect(Collectors.toList());
 			}
+
+		public PorukaNewDTO updatePoruka(Long id, PorukaNewDTO dto) throws Exception {
+			Poruka p=porukaRepository.findById(dto.getId()).orElseGet(null);
+			if(p==null) {
+				return null;
+			}
+			CommonData postojeci=cmdRep.findById(p.getCommonDataId()).orElseGet(null);
+			LocalDateTime now=LocalDateTime.now();
+			postojeci.setDatumIzmene(now);
+			postojeci=cmdServ.updateCommonData(postojeci.getId(), postojeci);
+			
+			p.setId(dto.getId());
+			p.setTekstPoruke(dto.getTekstPoruke());
+			p.setCommonDataId(postojeci.getId());
+			
+			p=porukaRepository.save(p);
+			return new PorukaNewDTO(p);
+		}
 		
 }		
