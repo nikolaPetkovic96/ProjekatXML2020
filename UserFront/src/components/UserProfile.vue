@@ -93,8 +93,14 @@ export default {
     },
 
     created(){
-        let parsToken = JSON.parse(localStorage.getItem('parsToken'));
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+            let parsToken = JSON.parse(localStorage.getItem('parsToken'));
         this.getUserProfileData(parsToken.jti);
+        }
+        
     },
 
 }

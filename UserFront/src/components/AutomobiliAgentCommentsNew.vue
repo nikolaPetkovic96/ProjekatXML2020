@@ -74,7 +74,12 @@ export default {
         // if (!token.accessToken){
         //     this.$router.push('/login');
         // }
-        this.noviKomentar.automobilId = this.id;
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+            this.noviKomentar.automobilId = this.id;
+        }
     },
     
 }

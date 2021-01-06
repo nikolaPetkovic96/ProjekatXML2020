@@ -210,7 +210,12 @@ export default {
 
     },
     created(){
-        this.getAllExpiredReservation();
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+            this.getAllExpiredReservation();
+        }   
     }
 }
 </script>

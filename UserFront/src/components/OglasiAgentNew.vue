@@ -296,7 +296,15 @@ export default {
       let to = new Date();
       to.setDate(to.getDate() - 1);
       this.disabledDates.to = to;
-    }
+    },
+     created(){
+       if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+          
+        }
+     }
 }
 </script>
 

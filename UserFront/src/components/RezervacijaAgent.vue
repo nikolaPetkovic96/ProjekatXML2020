@@ -136,7 +136,13 @@ export default {
         }
     },
     created() {
-        this.getAllReservation();
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+            this.getAllReservation();
+        }
+        
     }
 }
 </script>

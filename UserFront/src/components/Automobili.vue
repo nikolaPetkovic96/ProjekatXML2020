@@ -749,6 +749,10 @@ export default {
         },
     },
     created() {
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{        
         //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
         this.brojSedZaDec = this.range(0, 5);
         // Preuzimanje objekta korpa iz localStorage
@@ -758,7 +762,7 @@ export default {
         
         // dobavljanje svih sifrarnika
         this.getAllOptions();
-
+        }
     },
     mounted() {
         let to = new Date();

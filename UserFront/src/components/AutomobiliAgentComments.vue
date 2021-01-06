@@ -81,7 +81,12 @@ export default {
         'star-rating':StarRating
     },
     created(){
-        this.getComments();
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+            this.getComments();
+        }
     }
 }
 </script>

@@ -26,6 +26,7 @@ import ReservationAdsOverview from './components/RezervacijaOglasiOverview'
 import AutomobiliAgentComments from './components/AutomobiliAgentComments'
 import AutomobiliAgentCommentsNew from './components/AutomobiliAgentCommentsNew'
 import ShoppingCart from './components/ShoppingCart'
+import AutomobiliEdit from './components/AutomobiliEdit'
 
 
 export default [
@@ -159,6 +160,11 @@ export default [
         path:'/shoppingCart',
         name:'shoppingCart',
         component: ShoppingCart
+    },
+    {
+        path:'/cars/:id/edit',
+        name:'AutomobiliEdit',
+        component:AutomobiliEdit
     }
 
 ]

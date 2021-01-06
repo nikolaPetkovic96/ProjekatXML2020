@@ -258,12 +258,13 @@ export default {
         }
     },
     created(){
-        //if(JSON.parse(localStorage.getItem('token')) == null){
-         //   this.$router.push(`/login`);
-        //}else{
-         //   let parsToken = this.parseJwt(localStorage.getItem('token'));
-           // localStorage.setItem('parsToken', JSON.stringify(parsToken));
-            //this.user.username = parsToken.sub;
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+           let parsToken = this.parseJwt(localStorage.getItem('token'));
+           localStorage.setItem('parsToken', JSON.stringify(parsToken));
+            this.user.username = parsToken.sub;
 
             this.temp = ""
             try{
@@ -288,7 +289,7 @@ export default {
         localStorage.setItem('parsToken', JSON.stringify(parsToken));
         this.user.username = parsToken.username;
         }
-    // },
+    },
 }
 </script>
 

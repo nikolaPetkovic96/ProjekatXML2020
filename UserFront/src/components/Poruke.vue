@@ -85,6 +85,14 @@ export default {
         showDetails(id){
             this.$router.push(`/reservation/${id}/details`);
         }
+    },
+    created(){
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+            
+        }
     }
 }
 </script>

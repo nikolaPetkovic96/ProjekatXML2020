@@ -316,7 +316,13 @@ export default {
     
         // Ako je prazan token znaci da user nije ulogovan pa se preusmerava na login stranicu.
 		// if (!localStorage.getItem('jwt'))
-		// 	this.$router.push('/login');
+        // 	this.$router.push('/login');
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+            
+        }
 
 	},
 	mounted() {

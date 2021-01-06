@@ -47,6 +47,7 @@ class UserDataService{
     getAllAutomobiliAgent(){
         return axios.get(`${CAR_API_URL}/car/agent`);
     }
+    
 
     //SIFRARNIK
     //Automobili.vue

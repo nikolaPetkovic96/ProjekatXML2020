@@ -518,19 +518,25 @@
       },
     },
     created(){
-      // Preuzimanje objekta korpa iz localStorage
-      this.korpa = JSON.parse(localStorage.getItem('cart'));
-      
-      // this.poruke = JSON.parse(localStorage.getItem('messages'));
-      let oglasiIzKorpe = [];
-      for(let i = 0; i < this.korpa.length; i++){
-        //ili preko urla ih poslati...
-        oglasiIzKorpe.push(this.korpa[i].oglasId);
-        //Traze se svi oglasi iz korpe preko id-ja kako bi se smestili u odabraniOglasi 
-        //i prikazali njihovi podacu i slike vizuelno u korpi...
-        //getAdsById(oglasiIzKorpe).response(this.oglasi_korpa = response)....  
+      if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+          // Preuzimanje objekta korpa iz localStorage
+          this.korpa = JSON.parse(localStorage.getItem('cart'));
+          
+          // this.poruke = JSON.parse(localStorage.getItem('messages'));
+          let oglasiIzKorpe = [];
+          for(let i = 0; i < this.korpa.length; i++){
+            //ili preko urla ih poslati...
+            oglasiIzKorpe.push(this.korpa[i].oglasId);
+            //Traze se svi oglasi iz korpe preko id-ja kako bi se smestili u odabraniOglasi 
+            //i prikazali njihovi podacu i slike vizuelno u korpi...
+            //getAdsById(oglasiIzKorpe).response(this.oglasi_korpa = response)....  
       }
       this.countTotalPrice();
+        }
+      
     },
   }
 </script>
