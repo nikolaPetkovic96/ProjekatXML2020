@@ -65,7 +65,7 @@ public class Cenovnik {
 	
 	@Column(name = "cena_po_danu", nullable = false)
     @XmlElement(name = "CenaPoDanu", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
-    protected int cenaPoDanu;
+    protected float cenaPoDanu;
     
 	@Column(name = "naziv_cenovnika", nullable = false)
     @XmlElement(name = "Naziv_cenovnika", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
@@ -73,15 +73,15 @@ public class Cenovnik {
     
 	@Column(name = "popust30", nullable = false)
     @XmlElement(name = "PopustZaPreko30Dana", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
-    protected int popustZaPreko30Dana;
+    protected float popustZaPreko30Dana;
     
 	@Column(name = "cenaColDmgeWaiver", nullable = false)
     @XmlElement(name = "CenaCollisionDamageWaiver", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
-    protected int cenaCollisionDamageWaiver;
+    protected float cenaCollisionDamageWaiver;
     
 	@Column(name = "cena_km", nullable = false)
     @XmlElement(name = "CenaPoKilometru", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
-    protected int cenaPoKilometru;
+    protected float cenaPoKilometru;
 	
 	@Column(name="common_data_id")
 	protected Long commonDataId;
@@ -91,8 +91,8 @@ public class Cenovnik {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cenovnik(Long id, int cenaPoDanu, String nazivCenovnika, int popustZaPreko30Dana,
-			int cenaCollisionDamageWaiver, int cenaPoKilometru, Long commonDataId) {
+	public Cenovnik(Long id, float cenaPoDanu, String nazivCenovnika, float popustZaPreko30Dana,
+			float cenaCollisionDamageWaiver, float cenaPoKilometru, Long commonDataId) {
 		super();
 		this.id = id;
 		this.cenaPoDanu = cenaPoDanu;
@@ -113,12 +113,12 @@ public class Cenovnik {
     }
 
 
-    public int getCenaPoDanu() {
+    public float getCenaPoDanu() {
         return cenaPoDanu;
     }
 
 
-    public void setCenaPoDanu(int value) {
+    public void setCenaPoDanu(float value) {
         this.cenaPoDanu = value;
     }
 
@@ -133,32 +133,32 @@ public class Cenovnik {
     }
 
 
-    public int getPopustZaPreko30Dana() {
+    public float getPopustZaPreko30Dana() {
         return popustZaPreko30Dana;
     }
 
 
-    public void setPopustZaPreko30Dana(int value) {
+    public void setPopustZaPreko30Dana(float value) {
         this.popustZaPreko30Dana = value;
     }
 
 
-    public int getCenaCollisionDamageWaiver() {
+    public float getCenaCollisionDamageWaiver() {
         return cenaCollisionDamageWaiver;
     }
 
 
-    public void setCenaCollisionDamageWaiver(int value) {
+    public void setCenaCollisionDamageWaiver(float value) {
         this.cenaCollisionDamageWaiver = value;
     }
 
 
-    public int getCenaPoKilometru() {
+    public float getCenaPoKilometru() {
         return cenaPoKilometru;
     }
 
 
-    public void setCenaPoKilometru(int value) {
+    public void setCenaPoKilometru(float value) {
         this.cenaPoKilometru = value;
     }
 

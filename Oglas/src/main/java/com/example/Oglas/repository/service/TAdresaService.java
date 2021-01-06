@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.Oglas.dto.AdresaDTO;
 import com.example.Oglas.model.CommonData;
 import com.example.Oglas.model.TAdresa;
+import com.example.Oglas.repository.CommonDataRepository;
 import com.example.Oglas.repository.TAdresaRepository;
 @Service
 public class TAdresaService {

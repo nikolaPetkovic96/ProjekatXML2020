@@ -11,6 +11,7 @@ import com.example.Oglas.dto.NarudzbenicaDTO;
 import com.example.Oglas.model.CommonData;
 import com.example.Oglas.model.Narudzbenica;
 import com.example.Oglas.model.Oglas;
+import com.example.Oglas.repository.CommonDataRepository;
 import com.example.Oglas.repository.NarudzbenicaRepository;
 import com.example.Oglas.repository.OglasRepository;
 import com.example.Oglas.repository.service.mapper.NaruzbenicaMapper;

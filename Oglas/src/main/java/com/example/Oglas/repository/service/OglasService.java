@@ -8,8 +8,12 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.example.Oglas.dto.OglasDTO;
 import com.example.Oglas.dto.OglasNewDTO;
@@ -17,10 +21,8 @@ import com.example.Oglas.model.CommonData;
 import com.example.Oglas.model.Narudzbenica;
 import com.example.Oglas.model.Oglas;
 import com.example.Oglas.model.TAdresa;
-import com.example.Oglas.model.TUser;
 import com.example.Oglas.repository.CommonDataRepository;
 import com.example.Oglas.repository.OglasRepository;
-import com.example.Oglas.repository.UserRepository;
 import com.example.Oglas.repository.service.mapper.OglasMapper;
 
 @Service
@@ -31,14 +33,15 @@ public class OglasService {
 	private OglasMapper oglasMapper;
 	@Autowired
 	private OglasRepository oglasRep;
-	@Autowired
-	private UserService userServ;
+//	@Autowired
+//	private UserService userServ;
 	@Autowired
 	private TAdresaService adrServ;
 	@Autowired
 	private CommonDataService cmdServ;
 	@Autowired
 	private NarudzbenicaService narServ;
+	
 	
 	public OglasDTO getOglas(Long id) {
 		return oglasRep.findById(id).map(oglas-> oglasMapper.toDTO(oglas)).orElse(null);
@@ -95,17 +98,20 @@ public class OglasService {
 	}
 
 	public OglasDTO addOglas(OglasNewDTO dto,String username) throws Exception {
-		TUser user=userServ.findByUsername(username);
+		HttpServletRequest request = 
+		        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
+		                .getRequest();
+		Long userId = Long.parseLong(request.getHeader("userid"));
 		
-		if(isIntervalSlobodan(user.getId(), dto)==false) {
+		if(isIntervalSlobodan(userId, dto)==false) {
 			throw new Exception("Za odabrani termin vec postoji oglas!");
 		}
 		CommonData cmd=new CommonData();
 		cmd.setDatumKreiranja(LocalDateTime.now());
-		cmd.setUserId(user.getId());
+		cmd.setUserId(userId);
 		cmd.setDatumIzmene(LocalDateTime.now());
 		
-		TAdresa adresa=adrServ.addAdresa(dto.getAdresa(),user.getId());
+		TAdresa adresa=adrServ.addAdresa(dto.getAdresa(),userId);
 		
 		Oglas novi=new Oglas();
 		novi.setOdDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getOdDatuma()), TimeZone.getDefault().toZoneId()));
@@ -161,6 +167,18 @@ public class OglasService {
 		}
 		
 		return zauzetiTermini;
+	}
+
+	public List<OglasDTO> getOglaseForUser() {
+		//Ovako se izvalaci id usera iz zahteva
+		HttpServletRequest request = 
+		        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
+		                .getRequest();
+		Long userId = Long.parseLong(request.getHeader("userid"));
+		return oglasRep.findAll().stream().
+				filter(oglas-> oglas.getId()==userId).
+				map(oglas->oglasMapper.toDTO(oglas))
+				.collect(Collectors.toList());
 	}
 			
 			
