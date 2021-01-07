@@ -4,6 +4,7 @@ const API_URL = "http://localhost:2020";
 const LOGINREG_API_URL = `${API_URL}/loginreg-service/api/user`;
 const CAR_API_URL = `${API_URL}/automobil-service`; //npr: http://localhost:2020/automobil-service/brand
 const REVIEW_API_URL = `${API_URL}/rating-service`;
+const RESERVATION_API_URL = `${API_URL}/reservation-service`
 
 //Za svaki zahtev se dodaje token za autorizaciju i 
 //autenitifikaciju ulogovanog korisnika u zaglavlje upita
@@ -14,7 +15,7 @@ if(JSON.parse(localStorage.getItem('token')) != null){
 
 class UserDataService{
     
-    //USER
+     //USER
     
     //LoginForm.vue
     userLoginUser(form){
@@ -23,11 +24,9 @@ class UserDataService{
     userRegistration(form){
         return axios.post(`${LOGINREG_API_URL}/register`, form);
     }
-    
-
 
     // PROFIL
-    // UserProfile.vue, USerProfileUpdate.vue
+    // UserProfile.vue, UserProfileUpdate.vue
     getUser(id){
         console.log('getUser: ' + id);
         return axios.get(`${LOGINREG_API_URL}/profile`);
@@ -37,21 +36,62 @@ class UserDataService{
         return axios.put(`${LOGINREG_API_URL}/profile/update`, profile);
     }
 
-    //AUTOMOBILI
-
+     //AUTOMOBILI
+    //ZA USERA KASNIJE
     // Automobili.vue
-    searchAutomobil(searchedQuery){
-        return axios.get(`${CAR_API_URL}/search${searchedQuery}`);
-    }
+    // searchAutomobil(searchedQuery){
+    //     return axios.get(`${CAR_API_URL}/search${searchedQuery}`);
+    // }
     //AutomobiliAgent.vue
     getAllAutomobiliAgent(){
         return axios.get(`${CAR_API_URL}/car/agent`);
     }
-    
+    searchAgentModeCar(searchedQuery){
+        console.log(`${CAR_API_URL}/car/agent/search${searchedQuery}`);
+        return axios.get(`${CAR_API_URL}/car/agent/search${searchedQuery}`);
+    }
+    addAutomobil(automobil){
+        return axios.post(`${CAR_API_URL}/car/agent/`, automobil);
+    }
+    // AutomobiliDetails.vue OglasiAgentNew
+    getAutomobilDetails(id){
+        return axios.get(`${CAR_API_URL}/car/${id}/details/`);
+    }
+    getAutomobilDetailsReviews(id){
+        console.log('review id: ' + id);
+        return axios.get(`${REVIEW_API_URL}/review/${id}`);
+    }
 
-    //SIFRARNIK
+      //CENOVNIK
+    //Cenovnik.vue i OglasiNew.vue
+    getAllCenovnik(){
+        return axios.get(`${CAR_API_URL}/price/`);
+    }
+    getCenovnik(id){
+        return axios.get(`${CAR_API_URL}/price/${id}`);
+    }
+    addCenovnik(cenovnik){
+        console.log('Novi cenovnik: ' + JSON.stringify(cenovnik));
+        return axios.post(`${CAR_API_URL}/price/`, cenovnik);
+    }
+    updateCenovnik(cenovnik){
+        console.log('Edit cenovnik: ' + JSON.stringify(cenovnik));
+        return axios.put(`${CAR_API_URL}/price/`, cenovnik);
+    }
+    deleteCenovnik(id){
+        return axios.delete(`${CAR_API_URL}/price/${id}`);
+    }
+
+
+    // getAllAutomobiliReview(){
+    //     return axios.get(`${REVIEW_API_URL}/comment`)
+    // }
+    // getAllRezervacijeOsnovno(){
+    //     return axios.get(`${RESERVATION_API_URL}/rating`)
+    // }
+
+  //SIFRARNIK
     //Automobili.vue
-
     getAllMarkaAut(){
         return axios.get(`${CAR_API_URL}/brand`);
     }
@@ -68,27 +108,12 @@ class UserDataService{
         return axios.get(`${CAR_API_URL}/fuel`);
     }
 
+    //Reviews(Komentari i ocene)
+    addKomentar(komentar){
+        console.log('komentar: ' + JSON.stringify(komentar) );
+        return axios.post(`${REVIEW_API_URL}/comment/`, komentar);
+    }
 
-    addPoruka(msg){
-        return axios.post(`${API_URL}/poruka`, msg)
-    }
-    getRezervacijaDetails(id){
-        return axios.get(`${API_URL}/rezervacija/${id}/details`)
-    }
-    getAllRezervacijeOsnovno(){
-        return axios.get(`${API_URL}/rezervacija/`)
-    }
-    searchCarsFiltered(filtered){
-        return axios.post(`${API_URL}/searchCars`, filtered)
-    }
-     //Oglasi.vue
-     getAllUsersOglas(){
-        return axios.get(`${API_URL}/oglas/user`)
-    }
-    //IZVESTAJ
-    addIzvestaj(izvestaj){
-        return axios.post(`${API_URL}/izvestajAgent/`, izvestaj);
-    }
 }
 
 export default new UserDataService();

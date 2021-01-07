@@ -81,8 +81,8 @@
           <h4>Ocene i komentari</h4>
         </div>
 
-        <div class="card-body" v-bind:key="review.id" v-for="review in automobil.reviews" v-show="review.visible">
-          <div style="margin-bottom: 10px" id="star-rating">
+        <div class="card-body" v-bind:key="review.id" v-for="review in automobil.reviews" v-show="!noReview">
+          <div style="margin-bottom: 10px" id="star-rating" v-if='review.star > 0'>
             <star-rating
               inactive-color="#35424a"
               active-color="gold"
@@ -131,9 +131,10 @@ export default {
     };
   },
   methods: {
+
     getAutomobilDetails: function () {
       UserDataService.getAutomobilDetails(this.id).then((response) => {
-        // console.log("Ono sto stigne sa beka: " + JSON.stringify(response.data));
+       
         this.automobil.id = response.data.id;
         this.automobil.markaAut = response.data.markaAut;
         this.automobil.modelAut = response.data.modelAut;
@@ -143,12 +144,18 @@ export default {
         this.automobil.ukupnaOcena = response.data.ukupnaOcena;
         this.automobil.brojSedistaZaDecu = response.data.brojSedistaZaDecu;
         this.automobil.predjenaKilometraza = response.data.predjenaKilometraza;
-        this.automobil.collisionDamageWaiver =
-          response.data.collisionDamageWaiver;
+        this.automobil.collisionDamageWaiver = response.data.collisionDamageWaiver;
         for (let i = 0; i < response.data.slikeVozila.slika.length; i++) {
           this.automobil.images.push(response.data.slikeVozila.slika[i]);
         }
-        // console.log(this.automobil.images);
+        //console.log(this.automobil.images);
+      });
+    },
+    getAutomobilReviews:function(){
+      UserDataService.getAutomobilDetailsReviews(this.id).then(response => {
+        this.automobil.reviews = response.data;
+        JSON.stringify('this.automobil.reviews: ' + this.automobil.reviews);
+        this.noComment();
       });
     },
     getFirstImg: function () {
@@ -163,33 +170,37 @@ export default {
       }
     },
     noComment: function () {
-      if (
-        this.automobil.reviews === undefined ||
-        this.automobil.reviews.length === 0
-      ) {
+      if (this.automobil.reviews === undefined || this.automobil.reviews.length === 0) {
+        console.log('Usao u slucaj kada je duzina prazna: ');
+        console.log('this.automobil.reviews.length: ' + this.automobil.reviews.length);
         this.noReview = true;
-      } else if (
-        this.automobil.reviews !== undefined ||
-        this.automobil.reviews.length !== 0
-      ) {
+        console.log('this.noReview: ' + this.noReview);
+      } else if ( this.automobil.reviews !== undefined || this.automobil.reviews.length !== 0) {
+          console.log('Usao u slucaj kada  duzina NIJE prazna: ');
+        console.log('this.automobil.reviews.length: ' + this.automobil.reviews.length);
         let visible = false;
         //ako ima komentara za dati stan, prolazimo kroz sve komentare
         //i proveravamo da li su odobreni ako ni jedan nije odobren opet prikazujemo poruku
         for (let i = 0; i < this.automobil.reviews.length; i++) {
-          if (this.automobil.reviews[i].visible === false) {
+          if (this.automobil.reviews[i].odobren === false) {
+            console.log(`odobren[${i}]: ` + this.automobil.reviews[i].odobren);
             continue;
           } else {
             visible = true;
             break;
           }
         }
+        console.log("visible: " + visible);
         //Ako je visibility svakog komentara false onda
         //prikazuje poruku kako nema komentara
         if (visible === false) {
+          console.log('Usao u noReview = true');
           this.noReview = true;
-        }
-      } else {
+        } else {
+        console.log('Usao u noReview = false');
         this.noReview = false;
+      }
+      console.log("this.noReview: " + this.noReview);
       }
     },
   },
@@ -221,25 +232,23 @@ export default {
         this.$router.push(`/login`);
     }else{
       this.getAutomobilDetails();
+      this.getAutomobilReviews();
+      this.noComment();
     }
   },
   mounted() {
-    
-    this.carId = this.id;
-    // this.getFirstImg();
-    this.noComment();
   },
 };
 </script>
 
 <style scoped>
 #titleEffect {
-  color: gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 
 #car-details header .carousel-item {
-  height: 100vh;
+  height: 85vh;
   min-height: 350px;
   background: no-repeat center center scroll;
   -webkit-background-size: cover;

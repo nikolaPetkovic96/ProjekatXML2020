@@ -22,7 +22,11 @@
                 <div v-if='messages.errorCenaCDW' class="alert alert-danger" v-html="messages.errorCenaCDW"></div>       
                 <label class='label'>Cena za Collision Damage Waiver :</label>
                 <input style="width:100%; padding:10px; margin-bottom:25px" type="text" placeholder="Unesite CDW..." v-model="noviCenovnik.cenaCollisionDamageWaiver">
-                
+
+                <!-- <div v-if='messages.errorCena30Dana' class="alert alert-danger" v-html="messages.errorCena30Dana"></div>       
+                <label class='label'>Popust za preko 30 dana (u %):</label>
+                <input style="width:100%; padding:10px; margin-bottom:25px" type="text" placeholder="Unesite popust..." v-model="noviCenovnik.popustZaPreko30Dana">
+                 -->
                 <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
                 <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
                 <button class="btn btn-success" v-on:click='addPrice()'>Potvrdi</button>
@@ -33,7 +37,7 @@
 </template>
 
 <script>
-import userDataService from '../services/UserDataService'
+import UserDataService from '../services/UserDataService'
 export default {
     name: 'cenovnik-new',
     data(){
@@ -41,6 +45,7 @@ export default {
             noviCenovnik:{
                 nazivCenovnika:'',
                 cenaPoDanu: '',
+                popustZaPreko30Dana:'',
                 cenaCollisionDamageWaiver:'',
                 cenaPoKilometru:''
             },
@@ -82,6 +87,16 @@ export default {
                 this.messages.errorCenaCDW =  `<h4>CDW mora biti broj!</h4>`;
                 setTimeout(()=>this.messages.errorCenaCDW = '' , 5000);
             }
+
+            // else if(this.isNumeric(this.noviCenovnik.popustZaPreko30Dana)){
+            //     this.messages.errorCena30Dana =  `<h4>Popust mora biti broj!</h4>`;
+            //     setTimeout(()=>this.messages.errorCena30Dana = '' , 5000); 
+            // }
+
+            // else if(this.noviCenovnik.popustZaPreko30Dana < 0 || this.noviCenovnik.popustZaPreko30Dana > 100 ){
+            //     this.messages.errorCena30Dana =  `<h4>Popust mora biti broj u intervalu od 0 do 100!</h4>`;
+            //     setTimeout(()=>this.messages.errorCena30Dana = '' , 5000); 
+            // }
             
             else if(this.noviCenovnik.nazivCenovnika == '' && this.noviCenovnik.cenaPoDanu == '' &&  this.noviCenovnik.CenaPoKilometru == ''){
                 this.messages.errorNaziv =  `<h4>Naziv cenovnika ne sme biti prazno polje!</h4>`;
@@ -92,7 +107,7 @@ export default {
                 setTimeout(()=> this.messages.errorCenaPoKilometru = '', 5000); 
             }
             else{
-               userDataService.addCenovnik(this.noviCenovnik).then(Response => {
+                UserDataService.addCenovnik(this.noviCenovnik).then(Response => {
                     this.messages.successResponse = `<h4>Novi cenovnik je uspešno dodat!</h4>`;
                     this.resetFields();
                     setTimeout(() => this.messages.successResponse='', 5000);
@@ -107,7 +122,7 @@ export default {
             }
         },
         closeNew:function(){
-            this.$router.push('/price');
+            this.$router.push('/priceAgent');
         },
         isNumeric(num) {
             //isNaN(num) returns true if the variable does NOT contain a valid number
@@ -118,16 +133,12 @@ export default {
             this.noviCenovnik.nazivCenovnika= '';
             this.noviCenovnik.cenaPoDanu = '';
             this.noviCenovnik.cenaPoKilometru = '';
+            // this.noviCenovnik.popustZaPreko30Dana = '';
             this.noviCenovnik.cenaCollisionDamageWaiver = '';
         }
     },
     created(){
-        if(JSON.parse(localStorage.getItem('token')) == null){
-           this.$router.push(`/login`);
-        }
-        else{
-            
-        }
+     
     },
 }
 </script>

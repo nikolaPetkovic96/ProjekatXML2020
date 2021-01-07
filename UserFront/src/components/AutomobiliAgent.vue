@@ -126,9 +126,9 @@
                 </tbody>
             </table>
             <div id='options'>
-                <router-link to="/cars/new"> <button class=' btn btn-lg classButton shadow'>+ Dodaj vozilo</button>
+                <router-link to="/carsAgent/new"> <button class=' btn btn-lg classButton shadow'>+ Dodaj vozilo</button>
                 </router-link>
-                <router-link to="/cars/comments"> <button class='btn classButton shadow'>Komentari</button>
+                <router-link to="/carsAgent/comments"> <button class='btn classButton shadow'>Komentari</button>
                 </router-link>
                 <router-link to="/reservations"> <button class='btn classButton shadow'>Rezervacije</button>
                 </router-link>
@@ -140,7 +140,7 @@
 <script>
 import UserDataService from '../services/UserDataService'
 export default {
-    name: 'Footer',
+    name: 'AutomobiliAgent',
     data:function(){
         return {
             //sortiranje:
@@ -188,7 +188,7 @@ export default {
     },
     methods:{
         getAutomobiliList:function(){
-            UserDataService.getAllAutomobili().then(response => {
+            UserDataService.getAllAutomobiliAgent().then(response => {
                 this.automobili = response.data;
             });
         },
@@ -290,7 +290,7 @@ export default {
             this.searchedCar.brojSedZaDec =  null;
             this.searchedCar.ColDmgWaiv =  null;
             this.searchedCar.predjenaKilometraza =  null;
-
+            this.modelAutFilt = []
             this.searchedCarShow.markaAut =  null;
             this.searchedCarShow.modelAut =  null;
             this.searchedCarShow.klasaAut =  null;
@@ -302,7 +302,7 @@ export default {
 
         //Metoda za koja salje parametre za pretragu automobila i vraca listu automobila kao rezultat
         searchCar() {
-            console.log(`Trazite apartman:
+            console.log(`Trazite vozilo:
             markaAut: ${this.searchedCar.markaAutId}
             modelAut: ${this.searchedCar.modelAutId}
             klasaAut: ${this.searchedCar.klasaAutId}
@@ -342,7 +342,7 @@ export default {
             //Ovo obrisati
             console.log(`SearchedQuery : ${this.searchedQuery}`);
             
-            UserDataService.searchAutomobil(this.searchedQuery).then(response => {
+            UserDataService.searchAgentModeCar(this.searchedQuery).then(response => {
                 this.automobili = response.data;
                 this.searchedQuery = '?';
             }).catch(error =>{
@@ -388,7 +388,7 @@ export default {
 <style scoped>
 
 #titleEffect{
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 
@@ -432,7 +432,7 @@ export default {
 .classButton:hover{
   margin-left: 5px;
   color:#fff;
-  background-color:gold;
+  background-color:#FF8C00;
   font-weight: bold;
   padding:10px;
 }

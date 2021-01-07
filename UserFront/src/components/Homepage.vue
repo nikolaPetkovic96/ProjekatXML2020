@@ -285,7 +285,7 @@ export default {
                 }
             } 
         // let parsToken = this.parseJwt(localStorage.getItem('token'));
-        temp = localStorage.getItem("userMode")
+        const temp = localStorage.getItem("userMode")
         localStorage.setItem('parsToken', JSON.stringify(parsToken));
         this.user.username = parsToken.username;
         }

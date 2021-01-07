@@ -16,10 +16,11 @@
                         </div>
                     </div>
                     <div v-show='isThereReviews(automobil)' class="card-body">
-                            <h3>Nema ocene niti komentara za ovaj automobil...</h3>
+                        <h3>Nema ocene niti komentara za ovaj automobil...</h3>
                     </div>
                     <div id='all-comments' v-bind:key="comment.id" v-for='comment in automobil.reviews'>
-                        <div class="single-comment">
+
+                        <div class="single-comment"  v-show='!isThereReviews(automobil)'>
                             <div id='username'>{{comment.username}} </div>
                             <div id='star-rating' v-if='comment.star > 0'>
                                 <star-rating
@@ -44,26 +45,57 @@
 </template>
 
 <script>
-import userDataService from '../services/UserDataService'
+import UserDataService from '../services/UserDataService'
 import StarRating from 'vue-star-rating'
 export default {
     name: 'AutomobiliKomentar',
     data:function(){
         return {
-
-            //Kod prikaza sa beka se spoje Komentar i Ocena u review i tako se salje AutomobiliReviewDTO
-            //iz jedne get metode u npr. KomentariController.
-            //Isti DTO kao u AutomobiliDetails.vue
-            //Kod agenta komentari se vezuju za automobil... Kod usera za rezervaciju, a preko nje i za automobil...
             automobili: [],
+            reviews:[],
+            autovi:[],
         }
     },
-  methods: {
-        getComments: function () {
-            userDataService.getAllAutomobiliReview().then(response => {
-                this.automobili = response.data;
-            })
+    methods: {
+        getAgentsAutomobils: function () {
+            UserDataService.getAllAutomobiliAgent().then(response => {
+                this.autovi = response.data;
+                console.log('this.automobili.length: ' + this.autovi.length);
+                console.log(`this.automobili: ` + JSON.stringify(this.autovi));
+                this.getAutomobilReviews(this.autovi);
+            });
         },
+        // getAutomobilReviews:function(){
+        //     console.log('GET REVIEWS');
+        //     console.log('this.automobili.length: ' + this.automobili.length);
+        //     for(let i = 0; i<this.automobili.length; i++){
+        //         console.log(`this.automobili[${i}].id` + this.automobili[i].id);
+        //         UserDataService.getAutomobilDetailsReviews(this.automobili[i].id).then(response => {
+        //         this.automobili[i].reviews = response.data;
+        //     });
+        //     }  
+        // },
+        getAutomobilReviews:function(automobili){
+            console.log('GET REVIEWS2');
+            console.log('this.automobili.length: ' + automobili.length);
+            console.log(`this.automobiliREVIEW: ` + JSON.stringify(automobili));
+             for(let i = 0; i< automobili.length; i++){
+                console.log(`this.automobili[${i}].id` + automobili[i].id);
+
+                UserDataService.getAutomobilDetailsReviews(automobili[i].id).then(response => {
+                automobili[i].reviews = response.data;
+                console.log(`REVIEW!: ` + JSON.stringify(response.data));
+                console.log(`automobili[${i}]:`, automobili[i]);
+                console.log(`automobili[${i}].reviews:`, automobili[i].reviews);
+                this.reviews.push(response.data);
+                this.automobili.push(automobili[i]);
+            });
+            }  
+            // this.automobili[i] = automobili[i];
+            console.log(`KRAJ: ` + JSON.stringify(this.automobili));
+            console.log(`REVIEWS: ` + JSON.stringify(this.reviews));
+        },
+
         isThereReviews:function(automobil){     
             if(automobil.reviews === undefined || automobil.reviews.length === 0){
               return true;
@@ -73,19 +105,17 @@ export default {
             }
         },
         addComment(id){
-            this.$router.push(`/cars/comments/${id}/new`);
+            this.$router.push(`/carsAgent/comments/${id}/new`);
         }
-
     },
     components: {
         'star-rating':StarRating
     },
     created(){
         if(JSON.parse(localStorage.getItem('token')) == null){
-           this.$router.push(`/login`);
-        }
-        else{
-            this.getComments();
+            this.$router.push(`/login`);
+        }else{
+            this.getAgentsAutomobils();
         }
     }
 }
@@ -94,7 +124,7 @@ export default {
 <style scoped>
 
 #titleEffect{
-  color:gold;
+  color:#FF8C00;
   font-weight: bold;
 }
 

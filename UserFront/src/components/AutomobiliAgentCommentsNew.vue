@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import userDataService from '../services/UserDataService'
+import UserDataService from '../services/UserDataService'
 export default {
     name: 'carNewComment',
     data:function(){
@@ -47,19 +47,18 @@ export default {
                 odobren: ${this.noviKomentar.odobren},
             `);
 
-                userDataService.addKomentar(this.noviKomentar)
-                    .then(response => {
-                        this.messages.successResponse = `<h4>Vaša poruka je uspešno poslata!</h4>`;
-                        this.noviKomentar.tekstKomentara = '';
-                        setTimeout(() => this.messages.successResponse = '', 5000);
-
-                    })
-                    .catch(error => {
-                        if (error.response.status === 500 || error.response.status === 404) {
-                            this.messages.errorResponse = `<h4>Žao nam je imali smo nekoh problema na serveru, molimo Vas pokušajte kasnije!</h4>`;
-                            setTimeout(() => this.messages.errorResponse = '', 5000);
-                        }
-                    });
+            UserDataService.addKomentar(this.noviKomentar)
+                .then(response => {
+                    this.noviKomentar.tekstKomentara = '';
+                    alert('Vaša poruka je uspešno poslata');
+                    this.$router.push(`/carsAgent/comments`);
+                })
+                .catch(error => {
+                    if (error.response.status === 500 || error.response.status === 404) {
+                        this.messages.errorResponse = `<h4>Žao nam je imali smo nekoh problema na serveru, molimo Vas pokušajte kasnije!</h4>`;
+                        setTimeout(() => this.messages.errorResponse = '', 5000);
+                    }
+                });
             }
         },
     },
@@ -70,16 +69,13 @@ export default {
         }
     },
     created() {
-        // const token = JSON.parse(localStorage.getItem('token'));
-        // if (!token.accessToken){
-        //     this.$router.push('/login');
-        // }
+        const token = JSON.parse(localStorage.getItem('token'));
         if(JSON.parse(localStorage.getItem('token')) == null){
-           this.$router.push(`/login`);
-        }
-        else{
+            this.$router.push(`/login`);
+        }else{
             this.noviKomentar.automobilId = this.id;
         }
+        
     },
     
 }
@@ -87,7 +83,7 @@ export default {
 
 <style scoped>
 #titleEffect{
-    color:gold;
+    color:#FF8C00;
     font-weight: bold;
 }
 #car-new-comment label{

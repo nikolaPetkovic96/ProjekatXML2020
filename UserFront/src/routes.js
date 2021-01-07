@@ -5,28 +5,33 @@ import LoginForm from './forms/LoginForm'
 import Homepage from './components/Homepage'
 import UserProfile from './components/UserProfile'
 import UserProfileUpdate from './components/UserProfileUpdate'
+
+import Automobili from './components/Automobili'
+import AutomobiliDetails from './components/AutomobiliDetails'
+import AutomobiliAgent from './components/AutomobiliAgent'
+import AutomobiliEdit from './components/AutomobiliEdit'
+import AutomobiliAgentNew from './components/AutomobiliAgentNew'
+
 import Poruke from './components/Poruke' 
 import PorukeOverview from './components/PorukeOverview'
 import ReservationDetails from './components/RezervacijaDetails'
 import Reservation from './components/Rezervacija'
-import Automobili from './components/Automobili'
-import AutomobiliDetails from './components/AutomobiliDetails'
 import ReservationNew from './components/RezervacijaNew'
-
-import AutomobiliAgent from './components/AutomobiliAgent'
 import ReservationAgent from './components/RezervacijaAgent'
 import CenovnikAgent from './components/CenovnikAgent'
+import CenovnikAgentEdit from './components/CenovnikAgentEdit'
+import CenovnikAgentNew from './components/CenovnikAgentNew'
 import AdsAgent from './components/OglasiAgent'
 import AdsAgentNew from './components/OglasiAgentNew'
 import ReportAndStatisticsAgent from './components/IzvestajiIStatistikaAgent'
-import CenovnikAgentNew from './components/CenovnikAgentNew'
 import ReservationAgentNew from './components/RezervacijaAgentNew'
-import AutomobiliAgentNew from './components/AutomobiliAgentNew'
+
 import ReservationAdsOverview from './components/RezervacijaOglasiOverview'
 import AutomobiliAgentComments from './components/AutomobiliAgentComments'
 import AutomobiliAgentCommentsNew from './components/AutomobiliAgentCommentsNew'
 import ShoppingCart from './components/ShoppingCart'
-import AutomobiliEdit from './components/AutomobiliEdit'
+
+import About from './components/About'
 
 
 export default [
@@ -111,9 +116,24 @@ export default [
         component:CenovnikAgent
     },
     {
+        path:'/priceAgent/:id/edit',
+        name:'CenovnikEdit',
+        component:CenovnikAgentEdit
+    },
+    {
+        path:'/priceAgent/new',
+        name:'CenovnikAgentNew',
+        component:CenovnikAgentNew
+    },
+    {
         path:'/adsAgent/',
         name:'OglasiAgent',
         component:AdsAgent
+    },
+    {
+        path:'/ads/:id/new',
+        name:'AdsAgentNew',
+        component:AdsAgentNew
     },
     {
         path:'/adsAgent/:id/new',
@@ -124,11 +144,6 @@ export default [
         path:'/statisticsAgent',
         name:'IzvestajiIStatistikeAgent',
         component:ReportAndStatisticsAgent
-    },
-    {
-        path:'/priceAgent/new',
-        name:'CenovnikAgentNew',
-        component:CenovnikAgentNew
     },
     {
         path:'/cars/:id/reservationAgent',
@@ -165,6 +180,11 @@ export default [
         path:'/cars/:id/edit',
         name:'AutomobiliEdit',
         component:AutomobiliEdit
+    },
+    {
+        path:'/about',
+        name:'About',
+        component:About 
     }
 
 ]

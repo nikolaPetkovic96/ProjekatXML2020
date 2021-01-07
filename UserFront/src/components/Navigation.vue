@@ -21,9 +21,7 @@
             <li class="nav-item">
               <router-link to='/about' class="nav-link" exact>About</router-link>
             </li>
-            <li class="nav-item">
-              <router-link to='/patient' class="nav-link" exact  v-show="loggedIn==true"> Profil pacijenta </router-link>
-            </li>
+            
           </ul>
           
           <router-link  to='/login' class="nav-link" exact> <button v-show="loggedIn==false" class="btn" id='btnLogin'>Log In</button> </router-link>
