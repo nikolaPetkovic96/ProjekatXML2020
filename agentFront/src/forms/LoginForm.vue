@@ -84,11 +84,6 @@ export default {
               
               setTimeout(()=>this.errorMessage='',3000);
             }
-            //else if(error.response.status === 500  && error.response.data.message==='User is disabled'){
-            //   this.errorMessage = `<h4>Zabranjen je pristup vasem nalogu!</h4>`;
-
-            //   setTimeout(()=>this.errorMessage='',3000);
-            // }
           });
         },
     },

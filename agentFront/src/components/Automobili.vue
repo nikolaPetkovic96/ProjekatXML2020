@@ -159,13 +159,13 @@ export default {
                 predjenaKilometraza:null
             },
 
-            //Pomocna promenljiva za prikaz naziva odabranik komponenti
+            //Pomocna promenljiva za prikaz naziva odabranih komponenti
             searchedCarShow:{
-                markaAutId:null,
-                modelAutId:null,
-                klasaAutId:null,
-                tipGorivaId:null,
-                tipMenjacaId:null,
+                markaAut:null,
+                modelAut:null,
+                klasaAut:null,
+                tipGoriva:null,
+                tipMenjaca:null,
             },
             messages: {
                 errorResponse: '',

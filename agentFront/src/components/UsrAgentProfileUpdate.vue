@@ -24,8 +24,8 @@
 					<label>Prezime</label>
 					<input type="text" class="form-control" v-model="profile.prezime" />
 				</fieldset>
-
-				<div class="form-label-group" v-if='isAgentType == "osoba"'>
+                
+				<div class="form-group" v-if='isAgentType == "osoba"'>
 					<label>Pol</label>
 					<br>
 					<input type="radio" v-model="profile.pol" required value="Muski"> Muski
@@ -54,7 +54,6 @@
                     <input class="one-forth" placeholder="Unesite ulicu..." v-model='profile.adresa.ulica'>
                     <input class="one-forth" placeholder="Unesite broj..." v-model='profile.adresa.broj'>
                     <input class="one-forth" placeholder="Unesite postanski broj..." v-model='profile.adresa.postanskiBroj'>
-
                 </div>
 
 				<hr>

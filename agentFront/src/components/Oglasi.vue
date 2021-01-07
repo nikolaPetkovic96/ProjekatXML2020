@@ -12,8 +12,8 @@
                 <thead>
                     <tr>
                         <th>Automobil</th> <!--Marka + model-->
-                        <th>Od</th>
-                        <th>Do</th>
+                        <th>Od (mm:dd:yy)</th>
+                        <th>Do </th>
                         <th>Lokacija</th>
                         <th>Planirana km</th>
                         <th>Cenovnik</th>
@@ -22,11 +22,11 @@
                         <th>Obrsi oglas</th>
                     </tr>
                 </thead>
-                <tbody>                
+                <tbody>     
                     <tr v-bind:key="oglas.id" v-for='oglas in oglasi'>
                         <td>{{oglas.automobil.markaAut}} {{oglas.automobil.modelAut}} ({{oglas.automobil.klasaAut}})</td>
-                        <td>{{oglas.odDatuma}}</td>
-                        <td>{{oglas.doDatuma}}</td>
+                        <td>{{formatDatuma(oglas.odDatuma)}}</td>
+                        <td>{{formatDatuma(oglas.doDatuma)}}</td>
                         <td>{{oglas.adresa.mesto}}</td>
                         <td>{{oglas.planiranaKilometraza}} km</td>
                         <td>{{oglas.cenovnik.nazivCenovnika}}</td>
@@ -38,12 +38,10 @@
                     </tr>
                 </tbody>
             </table>
-            <!-- <router-link to="/ads/new"> <button class=' btn btn-success shadow'>Kreiraj oglas</button></router-link> -->
         </div> <!--main-->
     </div>
    
 </template>
-
 <script>
 import agentDataService from '../services/AgentDataService'
 export default {
@@ -78,6 +76,11 @@ export default {
                     }
                 });
             }
+        },
+        formatDatuma(datum){
+            const date = new Date(datum);       //konvertujemo input tip u Date
+            return date.toLocaleDateString();
+           
         },
     },
     created(){

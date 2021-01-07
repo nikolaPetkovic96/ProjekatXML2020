@@ -38,7 +38,6 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
         <div id='main' class='container'>
-              (Ne obracati paznju sto ne prikazuje trenutno navecu km i rejting)
 	        <div id='criterium' class="row">
 					<div class="col-md-4 col-sm-6 mb-4">
                         <h4>Najviše komentara</h4>
@@ -131,7 +130,17 @@ export default {
         getBestByComments:function(){
             if(this.showRank===true){
                 agentDataService.getBestByCategory("comment").then(response => {
-                   this.automobili = response.data;
+                    this.automobili = response.data;
+                    console.log('this.automobili.id: ' + this.automobili.id);
+                    if(this.automobili.length == 0){
+                        this.addDummyCars(0);
+                    }
+                    else if(this.automobili.length == 1){
+                        this.addDummyCars(1);
+                    }
+                    else if(this.automobili.length == 2){
+                        this.addDummyCars(2);
+                    }
                 });
             }
             else{
@@ -148,7 +157,7 @@ export default {
                     console.log('200 OK');
                     this.automobili = response.data;
                     console.log('this.automobili.id: ' + this.automobili.id);
-                     if(this.automobili.length == 0){
+                    if(this.automobili.length == 0){
                         this.addDummyCars(0);
                     }
                     else if(this.automobili.length == 1){
@@ -166,7 +175,32 @@ export default {
             this.bestByKm = true;
             this.bestByRat = false;
         },
-        //ukoliko je prosledjen sa beka samo jedan automobil
+
+        getBestByRating:function(){
+            if(this.showRank===true){
+                agentDataService.getBestByCategory("rating").then(response => {
+                    this.automobili = response.data;
+                    console.log('this.automobili.id: ' + this.automobili.id);
+                    if(this.automobili.length == 0){
+                        this.addDummyCars(0);
+                    }
+                    else if(this.automobili.length == 1){
+                        this.addDummyCars(1);
+                    }
+                    else if(this.automobili.length == 2){
+                        this.addDummyCars(2);
+                    }
+                });
+            }
+            else{
+                this.showRank = !this.showRank;
+            }
+            this.bestByKom = false;
+            this.bestByKm = false;
+            this.bestByRat = true;
+        },
+
+         //ukoliko je prosledjen sa beka samo jedan automobil
         //Onda se popunjavaju 2. i 3. mesto nekim praznim
         //Vozilom da ne bi pukao front
         addDummyCars(noOfCars){
@@ -186,20 +220,6 @@ export default {
             else if(noOfCars == 2){
                 this.automobili[2] = dummyAuto;
             }
-        },
-
-        getBestByRating:function(){
-            if(this.showRank===true){
-                agentDataService.getBestByCategory("rating").then(response => {
-                   this.automobili = response.data;
-                });
-            }
-            else{
-                this.showRank = !this.showRank;
-            }
-            this.bestByKom = false;
-            this.bestByKm = false;
-            this.bestByRat = true;
         },
         writeReport:function(id){
             this.$router.push(`/statistics/${id}/report`);

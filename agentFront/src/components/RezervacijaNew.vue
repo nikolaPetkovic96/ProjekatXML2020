@@ -13,6 +13,7 @@
             </div>
         </div>
 
+        <h4 class='h4'><b>Termin rezervacije:</b></h4>
         <div style="margin-top:20px" v-if='messages.errorDates' class="alert alert-danger" v-html="messages.errorDates"></div>
         <label>Datum pocetka rezervacije:</label>
         <vuejsDatepicker placeholder="Select Start Date" :disabled-dates="disabledDates" :highlighted="dates"
@@ -24,7 +25,7 @@
             <option disabled value="">Broj dana</option>
             <option v-bind:key="dan" v-for='dan in br_dana'>{{dan}}</option>
         </select>
-
+        <h4 class='h4'><b>Cenovnik:</b></h4>
         <div id='cenovnik'>
             <label> Cenovnik rezervacije: </label>
             <table id='showPriceTable'>
@@ -51,14 +52,14 @@
             </table>
         </div>
 
-        <h5><label for="">Vrednost popusta</label> </h5>
-        <h5>{{popust}} din</h5>
+        <div class="reserv_end">
+            Vrednost popusta: {{popust}} din<br>
+            Ukupna cena: {{rezervacijaOglasDTO.ukupnaCena}} din
+        </div>
 
-        <label>Ukupna cena:</label>
-        <h4>{{rezervacijaOglasDTO.ukupnaCena}} din</h4>
 
-        <label>Tekst rezervacije:</label>
-        <textarea v-model='rezervacijaOglasDTO.napomenaRezervacije' placeholder="message..."></textarea>
+        <!-- <label class='h4'><b>Tekst rezervacije: </b></label>
+        <textarea v-model='rezervacijaOglasDTO.napomenaRezervacije' placeholder="message..."></textarea> -->
         <button class="btn btn-lg btn-success margTop" v-on:click='makeReservation()'> Rezerviši </button>
     </div>
 </div>
@@ -226,6 +227,11 @@ export default {
             }
 
         },
+        formatDatuma(datum){
+            const date = new Date(datum);       //konvertujemo input tip u Date
+            return date.toLocaleDateString();
+           
+        },
 
         // pomocna metoda za ogranicen odabir dana:
 		range: function (start = 1, end) {
@@ -322,11 +328,12 @@ export default {
   padding:8px;
 }
 
-/* Za ocenu */
+/* Za cenu */
 #showPriceTable{
-    /* color:crimson; */
+    width: 100%;
     color:#35424a;
     margin-top:10px;
+    font-size: 20px;
     border-bottom: 1px solid lightgrey;
 } 
 
@@ -340,6 +347,31 @@ export default {
 
 .margTop{
     margin-top: 15px;
+}
+
+.h4{
+    padding:10px;
+    margin-bottom:15px;
+    margin-top:35px;
+    background-color:gold;
+    color:#fff;
+    font-weight: bold;
+    border-bottom:2px solid #35424a;;
+}
+
+b{
+    color: #35424a;
+}
+
+.reserv_end{
+  padding:10px;
+  margin-bottom:15px;
+  margin-top:35px;
+  background-color:#35424a;
+  color:#fff;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom:2px solid gold;
 }
 
 </style>
