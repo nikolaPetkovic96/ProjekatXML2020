@@ -1,7 +1,9 @@
 package com.example.Oglas.controller;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,11 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.example.Oglas.dto.OglasDTO;
+import com.example.Oglas.dto.OglasDetailsImgDTO;
 import com.example.Oglas.dto.OglasNewDTO;
 import com.example.Oglas.repository.TAdresaRepository;
 import com.example.Oglas.service.CommonDataService;
@@ -84,7 +88,7 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 	@PostMapping(value="")
 	public ResponseEntity<?> addOglas(Principal principal, @RequestBody OglasNewDTO dto)  throws Exception {
 		String username = principal.getName();
-		System.out.println(username);
+		//System.out.println(username);
 		return oglasService.addOglas(dto, username);
 	}
 	
@@ -92,5 +96,29 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 	public ResponseEntity<String> deleteOglas(@PathVariable Long id) {
 		return oglasService.deleteOglas(id);
 	}	
+	
+	@GetMapping(value="search")
+	public List<OglasDetailsImgDTO> searchOglas(
+			@RequestParam("markaAut") Optional<Long> markaAutId,
+			@RequestParam("modelAut") Optional<Long> modelAutId,
+			@RequestParam("klasaAut") Optional<Long> klasaAutId,
+			@RequestParam("tipMenjaca") Optional<Long> tipMenjacaId,
+			@RequestParam("tipGoriva") Optional<Long> tipGorivaId,
+			@RequestParam("brojSedZaDec") Optional<Integer> brojSedZaDec,
+			@RequestParam("ColDmgWaiv") Optional<Boolean> ColDmgWaiv,
+			@RequestParam("kilometraza") Optional<Float> kilometraza,
+			@RequestParam("cenaMin") Optional<Float> cenaMin,
+			@RequestParam("cenaMax") Optional<Float> cenaMax,
+			@RequestParam("od") Optional<LocalDateTime> odDatum,
+			@RequestParam("do") Optional<LocalDateTime> doDatum
+			,Principal principal) throws Exception{
+		String username = principal.getName();
+		return oglasService.pretragaOglasa(markaAutId.orElse(null),modelAutId.orElse(null),klasaAutId.orElse(null),
+											tipMenjacaId.orElse(null),tipGorivaId.orElse(null),brojSedZaDec.orElse(null),
+											ColDmgWaiv.orElse(null),kilometraza.orElse(null),
+											cenaMin.orElse(null),cenaMax.orElse(null),
+											odDatum.orElse(null),doDatum.orElse(null)
+											,username);
+	}
 
 }

@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.Oglas.dto.AutomobilDTO;
+import com.example.Oglas.dto.AutomobilImgDTO;
+import com.example.Oglas.dto.TSlikaVozilaDTO;
 import com.example.Oglas.model.Automobil;
+import com.example.Oglas.model.auto.TSlikaVozila;
 import com.example.Oglas.repository.CommonDataRepository;
 import com.example.Oglas.repository.auto.TKlasaAutomobilaRepository;
 import com.example.Oglas.repository.auto.TMarkaAutomobilaRepository;
@@ -12,6 +15,7 @@ import com.example.Oglas.repository.auto.TModelAutomobilaRepository;
 import com.example.Oglas.repository.auto.TTipGorivaRepository;
 
 import com.example.Oglas.repository.auto.TTipMenjacaRepository;
+import com.example.Oglas.service.TSlikaVozilaService;
 
 
 @Component
@@ -31,7 +35,8 @@ public class AutomobilMapper {
 	private TTipGorivaRepository tipGorivaRep;
 	@Autowired
 	private TTipMenjacaRepository tipMenjacaRep;
-
+	@Autowired
+	private TSlikaVozilaService slikaServ;
 	
 	
 	public AutomobilDTO toDTO(Automobil a) {
@@ -43,6 +48,11 @@ public class AutomobilMapper {
 
 		AutomobilDTO autoDTO = new AutomobilDTO(a, marka, model, klasa, menjac, gorivo);
 		return autoDTO;
+	}
+	public AutomobilImgDTO toImgDTO(Automobil a) throws Exception {
+		TSlikaVozilaDTO slikaDTO=new TSlikaVozilaDTO(slikaServ.getSlikaVozilaByAutomobilId(a.getId()));
+		AutomobilImgDTO imgDTO=new AutomobilImgDTO(toDTO(a),slikaDTO);
+		return null;
 	}
 
 	

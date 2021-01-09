@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
@@ -20,11 +21,16 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.example.Oglas.dto.OglasDTO;
+import com.example.Oglas.dto.OglasDetailsImgDTO;
 import com.example.Oglas.dto.OglasNewDTO;
+import com.example.Oglas.model.Automobil;
+import com.example.Oglas.model.Cenovnik;
 import com.example.Oglas.model.CommonData;
 import com.example.Oglas.model.Narudzbenica;
 import com.example.Oglas.model.Oglas;
 import com.example.Oglas.model.TAdresa;
+import com.example.Oglas.repository.AutomobilRepository;
+import com.example.Oglas.repository.CenovnikRepository;
 import com.example.Oglas.repository.CommonDataRepository;
 import com.example.Oglas.repository.OglasRepository;
 import com.example.Oglas.service.mapper.OglasMapper;
@@ -45,14 +51,19 @@ public class OglasService {
 	private CommonDataService cmdServ;
 	@Autowired
 	private NarudzbenicaService narServ;
-	
-	
+	@Autowired
+	private AutomobilRepository autoRep;
+	@Autowired
+	private CenovnikRepository cenRep;
 	//GET ALL
 	public List<OglasDTO> getAll() {
 		List<Oglas> pom = oglasRep.findAll();
 		List<OglasDTO> retDTO = new ArrayList<>();
 		for(Oglas p:pom) {
+			if(p.getDoDatuma().isAfter(LocalDateTime.now()))
+			{
 			retDTO.add(oglasMapper.toDTO(p));
+			}
 		}
 		return retDTO;
 //		return oglasRep.findAll().stream().
@@ -199,6 +210,88 @@ public class OglasService {
 		
 		return zauzetiTermini;
 	}
+
+//	public List<OglasWithPicturesDTO> pretragaOglasa(Optional<Long> markaAutId, Optional<Long> modelAutId,
+//			Optional<Long> klasaAutId, Optional<Long> tipMenjacaId, Optional<Long> tipGorivaId,
+//			Optional<Integer> brojSedZaDec, Optional<Boolean> colDmgWaiv, Optional<Float> kilometraza,
+//			Optional<Float> cenaMin, Optional<Float> cenaMax, Optional<Float> odDatum, Optional<Float> doDatum) {
+//		// TODO Auto-generated method stub
+//		List<Oglas> pom = oglasRep.findAll();		
+//		List<OglasWithPicturesDTO> retDTO = new ArrayList<>();
+//		for(Oglas p:pom) {
+//			retDTO.add(oglasMapper.toPicturesDTO(p));
+//		}
+//		List<OglasWithPicturesDTO> filtrirani = new ArrayList<>();
+//		for (OglasWithPicturesDTO o : retDTO) {
+//			if(markaAutId!=null && !o.getAutomobil().getMarkaAut().equals(markaAutId.toString()))
+//				//ako je markaId null predji na sledecu proveru, ako je nije null porveri da li je jednaka markiAutaId trenutnog oglasa
+//				//ako su jednake predji na sledecu proveru, ako nisu jednake obustavi proveru i predji na sledeci oglas
+//				continue;
+//			if(modelAutId!=null && !o.getAutomobil().getModelAut().equals(modelAutId.toString()))
+//				continue;
+//			if(klasaAutId!=null && !o.getAutomobil().getKlasaAut().equals(klasaAutId.toString()))
+//				continue;
+//			if(tipMenjacaId!=null && o.getAutomobil().getTipMenjaca().equals(tipMenjacaId.toString()))
+//				continue;
+//			if(tipGorivaId!=null && o.getAutomobil().getTipGoriva().equals(tipGorivaId.toString()))
+//				continue;
+//			if(brojSedZaDec!=null && o.getAutomobil().getBrojSedistaZaDecu()==)
+//				continue;
+//		} 
+//		return retDTO;
+//	}
+	
+	public List<OglasDetailsImgDTO> pretragaOglasa(Long markaAutId, Long modelAutId,
+			Long klasaAutId, Long tipMenjacaId, Long tipGorivaId,
+			Integer brojSedZaDec, Boolean colDmgWaiv, Float kilometraza,
+			Float cenaMin, Float cenaMax, LocalDateTime odDatum, LocalDateTime doDatum, String username) throws Exception {
+		// TODO Auto-generated method stub
+		List<Oglas> pom = oglasRep.findAll();				//pokupi sve oglase
+		List<OglasDetailsImgDTO> retDTO = new ArrayList<>();
+		for(Oglas o:pom) {	//proveri svaki pojedinacno oglas sa parametrima zahteva
+			//provera datuma
+			if(odDatum!=null && o.getOdDatuma().isBefore(odDatum)) continue;
+			if(odDatum!=null && o.getDoDatuma().isAfter(doDatum)) continue;
+			//provera cenovnika
+			Cenovnik c=cenRep.findById(o.getCenovnikId()).orElse(null);
+			if(c==null) {
+				throw new Exception ("pretragaOglasa: za oglas"+ o.getId()+" nije nadjen cenovnik!");
+			}
+			if(cenaMin!=null  && c.getCenaPoDanu()<cenaMin) continue;
+			if(cenaMin!=null  && c.getCenaPoDanu()>cenaMax) continue;
 			
+			//provera automobila
+			Automobil a=autoRep.findById(o.getAutomobilId()).orElse(null);
+			if(a==null) {
+				throw new Exception ("pretragaOglasa: za oglas"+ o.getId()+" nisu nadjena kola !");
+			}
+			if(markaAutId!=null && a.getMarkaAutomobilaId()!=markaAutId)
+				//ako je markaId null predji na sledecu proveru, ako je nije null porveri da li je jednaka markiAutaId trenutnog oglasa
+				//ako su jednake predji na sledecu proveru, ako nisu jednake obustavi proveru i predji na sledeci oglas
+				continue;
+			if(modelAutId!=null && a.getModelAutomobilaId()!=modelAutId)	continue;
+			if(klasaAutId!=null && a.getKlasaAutomobilaId()!=klasaAutId) continue;
+			if(tipMenjacaId!=null && a.getTipMenjacaId()!=tipMenjacaId) continue;
+			if(tipGorivaId!=null && a.getVrstaGorivaId()!=tipGorivaId) continue;
+			if(brojSedZaDec!=null && a.getBrojSedistaZaDecu()!=brojSedZaDec) continue;
+			if(colDmgWaiv!=null && a.isCollisionDamageWaiver()!=colDmgWaiv) continue;
+			if(kilometraza!=null && a.getPredjenaKilometraza()!=kilometraza) continue;
 			
-}
+//			if(a.getMarkaAutomobilaId()!=markaAutId)
+//				//ako je markaId null predji na sledecu proveru, ako je nije null porveri da li je jednaka markiAutaId trenutnog oglasa
+//				//ako su jednake predji na sledecu proveru, ako nisu jednake obustavi proveru i predji na sledeci oglas
+//				continue;
+//			if( a.getModelAutomobilaId()!=modelAutId)	continue;
+//			if(a.getKlasaAutomobilaId()!=klasaAutId) continue;
+//			if(a.getTipMenjacaId()!=tipMenjacaId) continue;
+//			if(a.getVrstaGorivaId()!=tipGorivaId) continue;
+//			if(a.getBrojSedistaZaDecu()!=brojSedZaDec) continue;
+//			if(a.isCollisionDamageWaiver()!=colDmgWaiv) continue;
+//			if(a.getPredjenaKilometraza()!=kilometraza) continue;
+			//prosle sve provere, kreirati OglasDetailsImgDTO i dodati ga u listu 
+			retDTO.add(oglasMapper.toImgDTO(o,a,c,username));				
+		}
+			return null;
+	} 
+}	
+
