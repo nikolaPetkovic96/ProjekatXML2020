@@ -17,7 +17,7 @@ public class OglasDetailsDTO {
 	private String korImeAgenta;						//onoga ko je napravio oglas (samo u DTO)
     private List<HashMap<String, Long>> zauzetiTermini; //(samo u DTO)
     private AdresaDTO adresa;							//(samo u DTO)
-    private AutomobilDTO automobil;						//(samo u DTO)
+//    private AutomobilDTO automobil;						//(samo u DTO)
     private CenovnikDTO cenovnik;						//(samo u DTO)
 	
 	public OglasDetailsDTO() {
@@ -35,7 +35,7 @@ public class OglasDetailsDTO {
 
 
 	public OglasDetailsDTO(Oglas o, String korImeAgenta, Long agentId, List<HashMap<String, Long>> zauzetiTermini,
-			AdresaDTO adresa, AutomobilDTO automobil, CenovnikDTO cenovnik) {
+			AdresaDTO adresa,/* AutomobilDTO automobil,*/ CenovnikDTO cenovnik) {
 		super();
 		this.id = o.getId();
 		this.odDatuma = o.getOdDatuma().atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
@@ -45,13 +45,13 @@ public class OglasDetailsDTO {
 		this.korImeAgenta = korImeAgenta;
 		this.zauzetiTermini = zauzetiTermini;
 		this.adresa = adresa;
-		this.automobil = automobil;
+//		this.automobil = automobil;
 		this.cenovnik = cenovnik;
 	}
 
 	public OglasDetailsDTO(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long cenovnikId, Long automobilId, Long adresaId,
 			Long planiranaKilometraza, Long commonDataId, String korImeAgenta, Long agentId, List<HashMap<String, Long>> zauzetiTermini, 
-			AdresaDTO adresa, AutomobilDTO automobil, CenovnikDTO cenovnik) {
+			AdresaDTO adresa,/* AutomobilDTO automobil,*/ CenovnikDTO cenovnik) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma.atZone(TimeZone.getDefault().toZoneId()).toInstant().toEpochMilli();
@@ -60,7 +60,7 @@ public class OglasDetailsDTO {
 		this.korImeAgenta = korImeAgenta;
 		this.zauzetiTermini = zauzetiTermini;
 		this.adresa = adresa;
-		this.automobil = automobil;
+//		this.automobil = automobil;
 		this.cenovnik = cenovnik;
 	}
 
@@ -128,13 +128,13 @@ public class OglasDetailsDTO {
 		this.adresa = adresa;
 	}
 
-	public AutomobilDTO getAutomobil() {
+	/*	public AutomobilDTO getAutomobil() {
 		return automobil;
 	}
 
 	public void setAutomobil(AutomobilDTO automobil) {
 		this.automobil = automobil;
-	}
+	}*/
 
 	public CenovnikDTO getCenovnik() {
 		return cenovnik;

@@ -5,9 +5,11 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
+
 package com.example.Reservation.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,13 +23,11 @@ import javax.xml.bind.annotation.XmlType;
 //import com.example.Messages.SchemaToJava2.model.user.Firma;
 //import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
 
+
 /**
- * <p>
- * Java class for anonymous complex type.
+ * <p>Java class for anonymous complex type.
  * 
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -48,60 +48,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "id", "automobil", "odDatuma", "doDatuma", "cenovnik" })
+@XmlType(name = "", propOrder = {
+    "id",
+    "automobil",
+    "odDatuma",
+    "doDatuma",
+    "cenovnik"
+})
 @XmlRootElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
-@Entity
+@Entity 
 public class Oglas {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
-	protected Long id;
-
-	@XmlElement(name = "Od_datuma", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
-	@XmlSchemaType(name = "dateTime")
-	protected LocalDateTime odDatuma;
-
-	@XmlElement(name = "Do_datuma", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
-	@XmlSchemaType(name = "dateTime")
-	protected LocalDateTime doDatuma;
-
-	// Jedan oglas se kreira sa samo jednim cenovnikom(druga strana bidirekcije)w
-	@XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
-	@Column(name = "cenovnik_id")
-	protected Long cenovnikId;
-
-	@Column(name = "common_data_id")
+    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
+    protected Long id; 
+    
+    @XmlElement(name = "Od_datuma", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
+    @XmlSchemaType(name = "dateTime")
+    protected LocalDateTime odDatuma;
+    
+    @XmlElement(name = "Do_datuma", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
+    @XmlSchemaType(name = "dateTime")
+    protected LocalDateTime  doDatuma;
+    
+    //Jedan oglas se kreira sa samo jednim cenovnikom(druga strana bidirekcije)w
+    @XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
+    @Column(name="cenovnik_id")
+    protected Long cenovnikId;
+    
+    @Column(name="common_data_id")
 	private Long commonDataId;
-
-	@Column(name = "automobil_id")
+	
+    @Column(name="automobil_id")
 	private Long automobilId;
+    
+    
+    //Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
+	//private Firma firma;
+	//private RegistrovaniKorisnik reg_korisnik;
+    @ManyToMany
+    @JoinTable(
+    		  name = "rezervacije_oglasi", 
+    		  joinColumns = @JoinColumn(name = "oglas_id"), 
+    		  inverseJoinColumns = @JoinColumn(name = "rezervacija_id"))
+	private List<Rezervacija> rezervacije;
 
-	@Column(name = "planirana_km")
-	private float planiranaKm;
-
-	@Column(name = "adresa_id")
-	private Long adresaId;
-
-	@Column(name = "username")
-	private String username;
-
-	// Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
-	// private Firma firma;
-	// private RegistrovaniKorisnik reg_korisnik;
-//    @ManyToMany
-//    @JoinTable(
-//    		  name = "rezervacije_oglasi", 
-//    		  joinColumns = @JoinColumn(name = "oglas_id"), 
-//    		  inverseJoinColumns = @JoinColumn(name = "rezervacija_id"))
-//	private List<Rezervacija> rezervacije;
-
-	public Oglas() {
+    public Oglas() {
 		super();
 	}
-
-	public Oglas(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long cenovnikId, Long automobilId,
-			float planiranaKm, Long adresaId, Long commonDataId, String username) {
+    
+    public Oglas(Long id, LocalDateTime  odDatuma, LocalDateTime  doDatuma, Long cenovnikId, Long commonDataId, Long automobilId) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma;
@@ -109,81 +106,73 @@ public class Oglas {
 		this.cenovnikId = cenovnikId;
 		this.commonDataId = commonDataId;
 		this.automobilId = automobilId;
-		this.planiranaKm = planiranaKm;
-		this.adresaId = adresaId;
-		this.username = username;
+		this.rezervacije=new ArrayList<>();
 	}
 
 	public Long getId() {
-		return id;
-	}
+        return id;
+    }
 
 	public void setId(Long value) {
-		this.id = value;
-	}
+        this.id = value;
+    }
 
-	public LocalDateTime getOdDatuma() {
-		return odDatuma;
-	}
 
-	public void setOdDatuma(LocalDateTime value) {
-		this.odDatuma = value;
-	}
+    public LocalDateTime  getOdDatuma() {
+        return odDatuma;
+    }
 
-	public LocalDateTime getDoDatuma() {
-		return doDatuma;
-	}
 
-	public void setDoDatuma(LocalDateTime value) {
-		this.doDatuma = value;
-	}
+    public void setOdDatuma(LocalDateTime value) {
+        this.odDatuma = value;
+    }
+
+    
+    public LocalDateTime getDoDatuma() {
+        return doDatuma;
+    }
+
+
+    public void setDoDatuma(LocalDateTime value) {
+        this.doDatuma = value;
+    }
+
 
 	public Long getCenovnikId() {
 		return cenovnikId;
 	}
 
+
 	public void setCenovnikId(Long cenovnikId) {
 		this.cenovnikId = cenovnikId;
 	}
+
 
 	public Long getCommonDataId() {
 		return commonDataId;
 	}
 
+
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
+
 
 	public Long getAutomobilId() {
 		return automobilId;
 	}
 
+
 	public void setAutomobilId(Long automobilId) {
 		this.automobilId = automobilId;
 	}
 
-	public float getPlaniranaKm() {
-		return planiranaKm;
+	public List<Rezervacija> getRezervacije() {
+		return rezervacije;
 	}
 
-	public void setPlaniranaKm(float planiranaKm) {
-		this.planiranaKm = planiranaKm;
-	}
-
-	public Long getAdresaId() {
-		return adresaId;
-	}
-
-	public void setAdresaId(Long adresaId) {
-		this.adresaId = adresaId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setRezervacije(List<Rezervacija> rezervacije) {
+		this.rezervacije = rezervacije;
 	}
 
 }

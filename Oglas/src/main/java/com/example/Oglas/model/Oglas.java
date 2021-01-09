@@ -84,7 +84,7 @@ public class Oglas {
 	@Column(name = "automobil_id")
 	private Long automobilId;
 
-	@Column(name = "planirana_km")
+	@Column(name = "plan_km")
 	private float planiranaKm;
 
 	@Column(name = "adresa_id")
@@ -92,16 +92,6 @@ public class Oglas {
 
 	@Column(name = "username")
 	private String username;
-
-	// Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
-	// private Firma firma;
-	// private RegistrovaniKorisnik reg_korisnik;
-//    @ManyToMany
-//    @JoinTable(
-//    		  name = "rezervacije_oglasi", 
-//    		  joinColumns = @JoinColumn(name = "oglas_id"), 
-//    		  inverseJoinColumns = @JoinColumn(name = "rezervacija_id"))
-//	private List<Rezervacija> rezervacije;
 
 	public Oglas() {
 		super();

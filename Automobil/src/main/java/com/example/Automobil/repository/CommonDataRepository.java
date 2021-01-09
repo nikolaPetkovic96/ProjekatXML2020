@@ -8,6 +8,6 @@ import com.example.Automobil.model.CommonData;
 
 public interface CommonDataRepository extends JpaRepository<CommonData, Long> {
 
-	Optional<CommonData> findById(Long commonDataId);
+//	CommonData findById(Long commonDataId);
 
 }

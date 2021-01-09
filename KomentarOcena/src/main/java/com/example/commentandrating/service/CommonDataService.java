@@ -6,16 +6,17 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import com.example.commentandrating.model.CommonData;
 import com.example.commentandrating.repository.CommonDataRepository;
 
-@Service
+
+@Component
 public class CommonDataService {
 
 	@Autowired
 	private CommonDataRepository commonDataRepository;
+	
 	
 	public List<CommonData> getAllCommonData(){
 		List<CommonData> commonData = new ArrayList<>();
@@ -26,15 +27,15 @@ public class CommonDataService {
 	public CommonData findOne(Long id) {
 		return commonDataRepository.findById(id).orElseGet(null);
 	}
-	
-	public CommonData addCommonData(CommonData commonData) throws Exception{
+
+	public CommonData addCommonData(CommonData commonData)  throws Exception{
 		if(commonData.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
 		}
 		CommonData savedCommonData = commonDataRepository.save(commonData);
 		return savedCommonData;
 	}
-	
+
 	public CommonData updateCommonData(Long id, CommonData commonData) throws Exception{
 		Optional<CommonData> commonDataToUpdate = commonDataRepository.findById(id);
 		if(commonDataToUpdate == null) {
@@ -47,4 +48,5 @@ public class CommonDataService {
 	public void deleteCommonData(Long id) {
 		commonDataRepository.deleteById(id);
 	}
+		
 }

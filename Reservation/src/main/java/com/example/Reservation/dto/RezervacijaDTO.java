@@ -10,17 +10,16 @@ public class RezervacijaDTO {
 
 	private Long id;
 	private double ukupnaCena;
-	//private LocalDateTime odDatuma;
-	//private LocalDateTime doDatuma;
+	private LocalDateTime odDatuma;
+	private LocalDateTime doDatuma;
 	private Boolean bundle;
 	private String statusRezervacije;
 	private Long commonDataId;
 	private String username;
-	//private List<Long> narudzbeniceId;	//oglasi koji su u rezervaciji
-	//private List<Long> automobili_id; //automobili iz oglasa
+	private List<Long> oglasi_id;	//oglasi koji su u rezervaciji
+	private List<Long> automobili_id; //automobili iz oglasa
 	private LocalDateTime datumKreiranja;
 	private LocalDateTime datumPoslednjeIzmene;
-	private String napomena;
 	
     
 //	private List<OglasDTO> oglas;
@@ -39,24 +38,25 @@ public class RezervacijaDTO {
 		this.commonDataId = r.getCommonDataId();
 	}*/
 	
-	public RezervacijaDTO(Long id, double ukupnaCena,/* LocalDateTime odDatuma, LocalDateTime doDatuma,*/ Boolean bundle, Long commonDataId,
-			String statusRezervacije, String username,/*List<Long> narudzbenice_id,*/LocalDateTime datumKreiranja,LocalDateTime datumPoslednjeIzmene, String napomena) {
+	public RezervacijaDTO(Long id, double ukupnaCena, LocalDateTime odDatuma, LocalDateTime doDatuma, Boolean bundle, Long commonDataId,
+			String statusRezervacije, String username,List<Long> oglasi_id,List<Long> automobili_id,LocalDateTime datumKreiranja,LocalDateTime datumPoslednjeIzmene) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
-		//this.odDatuma = odDatuma;
-		//this.doDatuma = doDatuma;
+		this.odDatuma = odDatuma;
+		this.doDatuma = doDatuma;
 		this.bundle = bundle;
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
 		this.username = username;
-		//this.narudzbeniceId=narudzbenice_id;
-		//this.automobili_id=automobili_id;
+		this.oglasi_id=oglasi_id;
+		this.automobili_id=automobili_id;
 		this.datumKreiranja=datumKreiranja;
 		this.datumPoslednjeIzmene=datumPoslednjeIzmene;
-		this.napomena=napomena;
 //		this.oglas = oglas;
-	}	
+	
+	}
+	
 
 	public void setId(Long id) {
 		this.id = id;
@@ -74,21 +74,21 @@ public class RezervacijaDTO {
 		this.ukupnaCena = ukupnaCena;
 	}
 
-//	public LocalDateTime getOdDatuma() {
-//		return odDatuma;
-//	}
-//
-//	public void setOdDatuma(LocalDateTime odDatuma) {
-//		this.odDatuma = odDatuma;
-//	}
+	public LocalDateTime getOdDatuma() {
+		return odDatuma;
+	}
 
-//	public LocalDateTime getDoDatuma() {
-//		return doDatuma;
-//	}
-//
-//	public void setDoDatuma(LocalDateTime doDatuma) {
-//		this.doDatuma = doDatuma;
-//	}
+	public void setOdDatuma(LocalDateTime odDatuma) {
+		this.odDatuma = odDatuma;
+	}
+
+	public LocalDateTime getDoDatuma() {
+		return doDatuma;
+	}
+
+	public void setDoDatuma(LocalDateTime doDatuma) {
+		this.doDatuma = doDatuma;
+	}
 
 	public Boolean getBundle() {
 		return bundle;
@@ -122,13 +122,21 @@ public class RezervacijaDTO {
 		this.username = username;
 	}
 
-//	public List<Long> getAutomobili_id() {
-//		return automobili_id;
-//	}
-//
-//	public void setAutomobili_id(List<Long> automobili) {
-//		this.automobili_id = automobili;
-//	}
+	public List<Long> getOglasi_id() {
+		return oglasi_id;
+	}
+
+	public void setOglasi_id(List<Long> oglasi_id) {
+		this.oglasi_id = oglasi_id;
+	}
+
+	public List<Long> getAutomobili_id() {
+		return automobili_id;
+	}
+
+	public void setAutomobili_id(List<Long> automobili) {
+		this.automobili_id = automobili;
+	}
 
 	public LocalDateTime getDatumKreiranja() {
 		return datumKreiranja;
@@ -145,22 +153,6 @@ public class RezervacijaDTO {
 	public void setDatumPoslednjeIzmene(LocalDateTime datumPoslednjeIzmene) {
 		this.datumPoslednjeIzmene = datumPoslednjeIzmene;
 	}
-
-	public String getNapomena() {
-		return napomena;
-	}
-
-	public void setNapomena(String napomena) {
-		this.napomena = napomena;
-	}
-
-//	public List<Long> getNarudzbeniceId() {
-//		return narudzbeniceId;
-//	}
-//
-//	public void setNarudzbeniceId(List<Long> narudzbeniceId) {
-//		this.narudzbeniceId = narudzbeniceId;
-//	}
 
 //	public List<OglasDTO> getOglas() {
 //		return oglas;

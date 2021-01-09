@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,13 +21,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.example.Oglas.dto.OglasDTO;
 import com.example.Oglas.dto.OglasNewDTO;
 import com.example.Oglas.repository.TAdresaRepository;
-import com.example.Oglas.repository.service.CommonDataService;
-import com.example.Oglas.repository.service.NarudzbenicaService;
-import com.example.Oglas.repository.service.OglasService;
-import com.example.Oglas.repository.service.TAdresaService;
+import com.example.Oglas.service.CommonDataService;
+import com.example.Oglas.service.NarudzbenicaService;
+import com.example.Oglas.service.OglasService;
 
 @RestController
-@RequestMapping(value="/oglas")		//Nema UPDATE, za izmenu bi se morao obrisati ceo oglas pa postaviti novi, 
+@RequestMapping(value="/ads")		//Nema UPDATE, za izmenu bi se morao obrisati ceo oglas pa postaviti novi, 
 public class OglasController {		//za pokretanje i testiranje eureka, zuul, loginReg,Automobil, oglas
 	@Autowired
 	private OglasService oglasService;
@@ -48,21 +46,34 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 			return new ResponseEntity<>(all, HttpStatus.OK);
 		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	@GetMapping(value="/user/{id}")
-	public ResponseEntity<List<OglasDTO>> getAllAgentsOglas(@PathVariable("id") Long id) {
+	
+	//Obrisati
+//	@GetMapping(value="/user/{id}")
+//	public ResponseEntity<List<OglasDTO>> getAllAgentsOglas(@PathVariable("id") Long id) {
+//		
+//		List<OglasDTO> all=oglasService.getOglaseForUser(id);
+//		if(all!=null)
+//			return new ResponseEntity<>(all, HttpStatus.OK);
+//		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//	}
+	
+	@GetMapping(value="/agent")
+	public ResponseEntity<List<OglasDTO>> getAllAgentsOglas() {
 		
-		List<OglasDTO> all=oglasService.getOglaseForUser(id);
+		List<OglasDTO> all=oglasService.getOglaseForUser();
 		if(all!=null)
 			return new ResponseEntity<>(all, HttpStatus.OK);
 		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
+	
 	@GetMapping(value= "/{id}")
 	public ResponseEntity<OglasDTO> getOglas(@PathVariable("id") Long id){
 		OglasDTO o=oglasService.getOglas(id);
 		if(o!=null)
 			return new ResponseEntity<>(o, HttpStatus.OK);
 		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+	}	
+	
 	@GetMapping(value= "/{id}/details")		//todo
 	public ResponseEntity<OglasDTO> getOglasDetails(@PathVariable("id") Long id){
 		OglasDTO o=oglasService.getOglasDetails(id);
@@ -71,36 +82,15 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	@PostMapping(value="")
-	public ResponseEntity<OglasDTO> addOglas(Principal principal, @RequestBody OglasNewDTO dto)  throws Exception {
-		String username=principal.getName();
+	public ResponseEntity<?> addOglas(Principal principal, @RequestBody OglasNewDTO dto)  throws Exception {
+		String username = principal.getName();
 		System.out.println(username);
-		OglasDTO novi=oglasService.addOglas(dto, username);
-		if(novi!=null)
-			return new ResponseEntity<>(novi, HttpStatus.CREATED);
-		else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		return oglasService.addOglas(dto, username);
 	}
+	
 	@DeleteMapping(value="/{id}")
-	public ResponseEntity<Void> deleteOglas(@PathVariable Long id) {
-		Boolean uspeh=oglasService.deleteOglas(id);
-		if(uspeh)
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<String> deleteOglas(@PathVariable Long id) {
+		return oglasService.deleteOglas(id);
 	}	
-
-	private Long getUserId() {
-		HttpServletRequest request = 
-		        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
-		                .getRequest();
-		Long userId = Long.parseLong(request.getHeader("userid"));
-		return userId;
-	}
-//	private Long getUsername() {
-//		HttpServletRequest request = 
-//		        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
-//		                .getRequest();
-//		Long userId = Long.parseLong(request.getHeader("username"));
-//		return userId;
-//	}
 
 }

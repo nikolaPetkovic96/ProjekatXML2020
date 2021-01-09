@@ -32,6 +32,7 @@ public class Komentar {
 	
 	@Column(name = "autor", nullable = false)
 	protected String autor;
+	
 
 	public Long getId() {
 		return id;

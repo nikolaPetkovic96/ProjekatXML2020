@@ -67,9 +67,16 @@ public class AutomobilController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(method=RequestMethod.POST, value="/agent", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public AutomobilImgDTO addAutomobil(Principal principal, @RequestBody AutomobilNewDTO dto) throws Exception{
-		return autoService.addAutomobil(dto);
+		return autoService.addNewAutomobil(dto);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	//Ovo je za automobil details vise odradjeno...
+	@RequestMapping(method=RequestMethod.GET, value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AutomobilDTO getAutomobil(@PathVariable("id") Long id) throws Exception{
+		
+		return autoService.findOneDTO(id);
+	}
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	//Ovo je za automobil details vise odradjeno...
@@ -77,6 +84,21 @@ public class AutomobilController {
 	public AutomobilImgDTO getAutomobilDetails(@PathVariable("id") Long id) throws Exception{
 		
 		return autoService.findOneWithDetails(id);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(method=RequestMethod.PUT, value="", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public AutomobilDTO updateAutomobil(@RequestBody AutomobilNewDTO dto) throws Exception{
+		
+		return autoService.updAutomobil(dto);
+		
+	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public boolean deleteAutomobil(@PathVariable Long id) throws Exception{
+		
+		return autoService.deleteAutomobil(id);
 	}
 	
 }

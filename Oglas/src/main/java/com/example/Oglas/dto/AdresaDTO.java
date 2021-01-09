@@ -5,31 +5,32 @@ import com.example.Oglas.model.TAdresa;
 public class AdresaDTO {
 	private Long id;
 	private String mesto;
-	private int postanskiBroj;
+	private String postanskiBroj;
 	private String ulica;
-	private int broj;
-    private Long commonDataId;
+	private String broj;
+//    private Long commonDataId;
 	
 	public AdresaDTO() {}
 	
-	public AdresaDTO(Long id, String mesto, int postanskiBroj, String ulica, int broj, Long commonDataId) {
+	public AdresaDTO(Long id, String mesto, String postanskiBroj, String ulica, String broj/*, Long commonDataId*/) {
 		super();
 		this.id = id;
 		this.mesto = mesto;
 		this.postanskiBroj = postanskiBroj;
 		this.ulica = ulica;
 		this.broj = broj;
-		this.commonDataId = commonDataId;
+//		this.commonDataId = commonDataId;
 	}
 	
 	public AdresaDTO(TAdresa a) {
 		super();
 		this.id = a.getId();
 		this.mesto = a.getMesto();
-		this.postanskiBroj = Integer.valueOf(a.getPostanskiBroj());
+		this.postanskiBroj = a.getPostanskiBroj();
 		this.ulica = a.getUlica();
-		this.broj = Integer.valueOf(a.getBroj());
-		this.commonDataId = a.getCommonDataId();
+		this.broj = a.getBroj();
+//		this.broj = Integer.valueOf(a.getBroj());
+		//this.commonDataId = a.getCommonDataId();
 	}
 
 	public Long getId() {
@@ -44,10 +45,10 @@ public class AdresaDTO {
 	public void setMesto(String mesto) {
 		this.mesto = mesto;
 	}
-	public int getPostanskiBroj() {
+	public String getPostanskiBroj() {
 		return postanskiBroj;
 	}
-	public void setPostanskiBroj(int postanskiBroj) {
+	public void setPostanskiBroj(String postanskiBroj) {
 		this.postanskiBroj = postanskiBroj;
 	}
 	public String getUlica() {
@@ -56,18 +57,18 @@ public class AdresaDTO {
 	public void setUlica(String ulica) {
 		this.ulica = ulica;
 	}
-	public int getBroj() {
+	public String getBroj() {
 		return broj;
 	}
-	public void setBroj(int broj) {
+	public void setBroj(String broj) {
 		this.broj = broj;
 	}
 
-	public Long getCommonDataId() {
-		return commonDataId;
-	}
-	public void setCommonDataId(Long commonDataId) {
-		this.commonDataId = commonDataId;
-	}
+//	public Long getCommonDataId() {
+//		return commonDataId;
+//	}
+//	public void setCommonDataId(Long commonDataId) {
+//		this.commonDataId = commonDataId;
+//	}
 
 }

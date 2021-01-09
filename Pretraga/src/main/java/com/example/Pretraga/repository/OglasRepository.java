@@ -1,9 +1,0 @@
-package com.example.Pretraga.repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.example.Pretraga.model.Oglas;
-
-public interface OglasRepository extends JpaRepository<Oglas, Long>{
-
-}

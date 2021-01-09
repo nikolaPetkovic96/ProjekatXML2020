@@ -41,7 +41,7 @@ public class AutomobilMapper {
 
 		AutomobilPomDTO autoDTO = new AutomobilPomDTO(a.getId(), a.getMarkaAutomobilaId(), a.getModelAutomobilaId(),
 				a.getKlasaAutomobilaId(), a.getVrstaGorivaId(), a.getTipMenjacaId(), a.getPredjenaKilometraza(),
-				a.getPlaniranaKilometraza(), a.isCollisionDamageWaiver(), a.getBrojSedistaZaDecu(), a.getCommonDataId(),
+				a.isCollisionDamageWaiver(), a.getBrojSedistaZaDecu(), a.getCommonDataId(),
 				null,
 				marka, model, klasa, data.getUserId(), Username, a.getUkupnaOcena());
 		return autoDTO;
@@ -64,7 +64,7 @@ public class AutomobilMapper {
 		
 		Automobil a = new Automobil(dto.getId(), dto.getMarkaAutomobilaId(), dto.getModelAutomobilaId(),
 				dto.getKlasaAutomobilaId(), dto.getVrstaGorivaId(), dto.getTipMenjacaId(), dto.getPredjenaKilometraza(),
-				dto.getPlaniranaKilometraza(), dto.getUkupnaOcena(), dto.isCollisionDamageWaiver(), dto.getBrojSedistaZaDecu(), dto.getCommonDataId());
+				dto.getUkupnaOcena(), dto.isCollisionDamageWaiver(), dto.getBrojSedistaZaDecu(), dto.getCommonDataId());
 		cmdRep.save(data);
 		cmdRep.flush();
 		a.setCommonDataId(data.getId());

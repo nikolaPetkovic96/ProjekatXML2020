@@ -36,22 +36,9 @@ public class TAdresa {
 	@Column(name = "broj")
 	@XmlElement(name = "Broj")
 	protected String broj;
-	
-	@Column(name="common_data_id")
-	protected Long commonDataId;
-	
+
 	public TAdresa() {
 		super();
-	}
-
-	public TAdresa(Long id, String mesto, String postanskiBroj, String ulica, String broj, Long commonDataId) {
-		super();
-		this.id = id;
-		this.mesto = mesto;
-		this.postanskiBroj = postanskiBroj;
-		this.ulica = ulica;
-		this.broj = broj;
-		this.commonDataId=commonDataId;
 	}
 
 	public Long getId() {
@@ -92,14 +79,6 @@ public class TAdresa {
 
 	public void setBroj(String broj) {
 		this.broj = broj;
-	}
-
-	public Long getCommonDataId() {
-		return commonDataId;
-	}
-
-	public void setCommonDataId(Long commonDataId) {
-		this.commonDataId = commonDataId;
 	}
 
 }

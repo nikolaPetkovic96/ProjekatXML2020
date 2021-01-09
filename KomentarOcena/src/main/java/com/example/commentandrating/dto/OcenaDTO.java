@@ -80,4 +80,5 @@ public class OcenaDTO {
 	public void setDatumKreiranja(LocalDateTime datumKreiranja) {
 		this.datumKreiranja = datumKreiranja;
 	}
+
 }

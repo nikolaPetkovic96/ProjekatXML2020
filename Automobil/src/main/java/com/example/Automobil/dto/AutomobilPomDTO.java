@@ -10,7 +10,6 @@ public class AutomobilPomDTO {
 	private Long vrstaGorivaId;
 	private Long tipMenjacaId;
 	private float predjenaKilometraza;
-	private float planiranaKilometraza;
 	private boolean collisionDamageWaiver;
 	private int brojSedistaZaDecu;
 	private Long commonDataId;
@@ -26,7 +25,7 @@ public class AutomobilPomDTO {
 	private float ukupnaOcena;
 
 	public AutomobilPomDTO(Long id, Long markaAutomobilaId, Long modelAutomobilaId, Long klasaAutomobilaId,
-			Long vrstaGorivaId, Long tipMenjacaId, float predjenaKilometraza, float planiranaKilometraza,
+			Long vrstaGorivaId, Long tipMenjacaId, float predjenaKilometraza,
 			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId, List<byte[]> slike,
 			String markaNaziv, String modelNaziv, String klasaNaziv, Long string, String username, float ukupnaOcena) {
 		super();
@@ -37,7 +36,6 @@ public class AutomobilPomDTO {
 		this.vrstaGorivaId = vrstaGorivaId;
 		this.tipMenjacaId = tipMenjacaId;
 		this.predjenaKilometraza = predjenaKilometraza;
-		this.planiranaKilometraza = planiranaKilometraza;
 		this.collisionDamageWaiver = collisionDamageWaiver;
 		this.brojSedistaZaDecu = brojSedistaZaDecu;
 		this.commonDataId = commonDataId;
@@ -104,14 +102,6 @@ public class AutomobilPomDTO {
 
 	public void setPredjenaKilometraza(float predjenaKilometraza) {
 		this.predjenaKilometraza = predjenaKilometraza;
-	}
-
-	public float getPlaniranaKilometraza() {
-		return planiranaKilometraza;
-	}
-
-	public void setPlaniranaKilometraza(float planiranaKilometraza) {
-		this.planiranaKilometraza = planiranaKilometraza;
 	}
 
 	public boolean isCollisionDamageWaiver() {

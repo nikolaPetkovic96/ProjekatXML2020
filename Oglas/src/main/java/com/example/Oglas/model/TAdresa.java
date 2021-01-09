@@ -1,4 +1,3 @@
-
 package com.example.Oglas.model;
 
 import javax.persistence.Column;
@@ -27,7 +26,7 @@ public class TAdresa {
 
 	@Column(name = "postanskiBroj", nullable = false)
 	@XmlElement(name = "Postanski_broj")
-	protected int postanskiBroj;
+	protected String postanskiBroj;
 
 	@Column(name = "ulica", nullable = false)
 	@XmlElement(name = "Ulica", required = true)
@@ -35,23 +34,10 @@ public class TAdresa {
 
 	@Column(name = "broj")
 	@XmlElement(name = "Broj")
-	protected int broj;
-	
-	@Column(name="common_data_id")
-	protected Long commonDataId;
-	
+	protected String broj;
+
 	public TAdresa() {
 		super();
-	}
-
-	public TAdresa(Long id, String mesto, int postanskiBroj, String ulica, int broj, Long commonDataId) {
-		super();
-		this.id = id;
-		this.mesto = mesto;
-		this.postanskiBroj = postanskiBroj;
-		this.ulica = ulica;
-		this.broj = broj;
-		this.commonDataId=commonDataId;
 	}
 
 	public Long getId() {
@@ -70,11 +56,11 @@ public class TAdresa {
 		this.mesto = mesto;
 	}
 
-	public int getPostanskiBroj() {
+	public String getPostanskiBroj() {
 		return postanskiBroj;
 	}
 
-	public void setPostanskiBroj(int postanskiBroj) {
+	public void setPostanskiBroj(String postanskiBroj) {
 		this.postanskiBroj = postanskiBroj;
 	}
 
@@ -86,20 +72,12 @@ public class TAdresa {
 		this.ulica = ulica;
 	}
 
-	public int getBroj() {
+	public String getBroj() {
 		return broj;
 	}
 
-	public void setBroj(int broj) {
+	public void setBroj(String broj) {
 		this.broj = broj;
-	}
-
-	public Long getCommonDataId() {
-		return commonDataId;
-	}
-
-	public void setCommonDataId(Long commonDataId) {
-		this.commonDataId = commonDataId;
 	}
 
 }

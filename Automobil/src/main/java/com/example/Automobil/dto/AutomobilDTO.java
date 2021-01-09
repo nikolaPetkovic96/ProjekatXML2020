@@ -40,7 +40,7 @@ public class AutomobilDTO {
 		this.tipGoriva = tipGoriva;
 	}
 	
-	public AutomobilDTO(Long id, float ukupnaOcena, float predjenaKilometraza, float planiranaKilometraza,
+	public AutomobilDTO(Long id, float ukupnaOcena, float predjenaKilometraza,
 			boolean collisionDamageWaiver, int brojSedistaZaDecu, Long commonDataId,
 			String markaAut , String modelAut, String klasaAut, String tipMenjaca, String tipGoriva) {
 		super();

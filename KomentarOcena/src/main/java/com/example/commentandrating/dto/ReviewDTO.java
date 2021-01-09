@@ -2,6 +2,7 @@ package com.example.commentandrating.dto;
 
 public class ReviewDTO {
 
+		private Long automobilId;
         private Long automobKomentarId;
         private Long automobOcenaId;
         private String username;   			//autor komentara
@@ -16,7 +17,8 @@ public class ReviewDTO {
 		//Kada je user ostavio komentar I ocenu
 		public ReviewDTO(OcenaDTO oc, KomentarDTO kom) {
 			super();
-			this.automobOcenaId = oc.getAutomobilId();
+			this.automobilId = kom.getAutomobilId();
+			this.automobOcenaId = oc.getId();
 			this.star = oc.getVrednostOcene();
 			this.automobKomentarId = kom.getId();
 			this.username = kom.getAutor();
@@ -27,6 +29,7 @@ public class ReviewDTO {
 		//Kada je agent ostavio SAMO komentar
 		public ReviewDTO(KomentarDTO kom) {
 			super();
+			this.automobilId = kom.getAutomobilId();
 			this.automobKomentarId = kom.getId();
 			this.username = kom.getAutor();
 			this.text = kom.getTekstKomentara();
@@ -34,8 +37,9 @@ public class ReviewDTO {
 		}
 
 
-		public ReviewDTO(Long automobKomentarId,Long automobOcenaId, String username, String text, boolean odobren, float star) {
+		public ReviewDTO(Long automobilId, Long automobKomentarId,Long automobOcenaId, String username, String text, boolean odobren, float star) {
 			super();
+			this.automobilId = automobilId;
 			this.automobKomentarId = automobKomentarId;
 			this.automobOcenaId = automobOcenaId;
 			this.username = username;
@@ -103,5 +107,15 @@ public class ReviewDTO {
 		public void setStar(float star) {
 			this.star = star;
 		}
+
+		public Long getAutomobilId() {
+			return automobilId;
+		}
+
+		public void setAutomobilId(Long automobilId) {
+			this.automobilId = automobilId;
+		}
+		
+		
      
 }

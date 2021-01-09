@@ -15,11 +15,12 @@ public class OglasDTO {
 	private Long commonDataId;
 	private Long automobilId;
 	private String username;
-	private Long adresId;
+	private Long adresaId;
     private List<HashMap<String, LocalDateTime>> zauzetiTermini; //(samo u DTO)
     private AdresaDTO adresa;				//(samo u DTO)
     private AutomobilDTO automobil;			//(samo u DTO)
     private CenovnikDTO cenovnik;
+	private float planiranaKm;
 	
 	public OglasDTO() {
 		super();
@@ -33,10 +34,10 @@ public class OglasDTO {
 		this.cenovnikId = o.getCenovnikId();
 		this.commonDataId = o.getCommonDataId();
 		this.automobilId = o.getAutomobilId();
-		this.adresId=o.getAdresaId();		
-		this.adresa=adresa;
-		this.automobil=a;
-		this.cenovnik=c;
+		this.adresaId = o.getAdresaId();		
+		this.adresa = adresa;
+		this.automobil = a;
+		this.cenovnik = c;
 	}
 	public OglasDTO(Oglas o) {
 		super();
@@ -46,10 +47,11 @@ public class OglasDTO {
 		this.cenovnikId = o.getCenovnikId();
 		this.commonDataId = o.getCommonDataId();
 		this.automobilId = o.getAutomobilId();
-		this.adresId=o.getAdresaId();		
+		this.adresaId = o.getAdresaId();
+		this.planiranaKm = o.getPlaniranaKm();
 	}
 
-	public OglasDTO(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long cenovnikId, Long commonDataId, Long automobilId, String username, Long adresaId) {
+	public OglasDTO(Long id, LocalDateTime odDatuma, LocalDateTime doDatuma, Long cenovnikId, Long commonDataId, Long automobilId, String username, Long adresaId, 	float planiranaKm) {
 		super();
 		this.id = id;
 		this.odDatuma = odDatuma;
@@ -58,7 +60,8 @@ public class OglasDTO {
 		this.commonDataId = commonDataId;
 		this.automobilId = automobilId;
 		this.username = username;
-		this.adresId=adresaId;
+		this.adresaId = adresaId;
+		this.planiranaKm = planiranaKm;
 	}
 
 	public Long getId() {
@@ -117,12 +120,12 @@ public class OglasDTO {
 		this.username = username;
 	}
 
-	public Long getAdresId() {
-		return adresId;
+	public Long getAdresaId() {
+		return adresaId;
 	}
 
-	public void setAdresId(Long adresId) {
-		this.adresId = adresId;
+	public void setAdresaId(Long adresaId) {
+		this.adresaId = adresaId;
 	}
 
 	public List<HashMap<String, LocalDateTime>> getZauzetiTermini() {
@@ -156,4 +159,13 @@ public class OglasDTO {
 	public void setCenovnik(CenovnikDTO cenovnik) {
 		this.cenovnik = cenovnik;
 	}
+
+	public float getPlaniranaKm() {
+		return planiranaKm;
+	}
+
+	public void setPlaniranaKm(float planiranaKm) {
+		this.planiranaKm = planiranaKm;
+	}
+	
 }

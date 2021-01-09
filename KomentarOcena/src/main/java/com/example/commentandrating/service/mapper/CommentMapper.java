@@ -29,7 +29,7 @@ public class CommentMapper {
 		// tUserRepository.findById(data.getUserid()).get().getKorisnickoIme();
 		Komentar kom = new Komentar();
 		kom.setAutomobilId(k.getAutomobilId());
-		kom.setOdobren(false);
+		kom.setOdobren(true);
 		
 		kom.setRezervacijaId(k.getRezervacijaId());
 		kom.setTekstKomentara(k.getTekstKomentara());
