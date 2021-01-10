@@ -22,8 +22,14 @@ public class NaruzbenicaMapper {
 	private IzvestajRepository izvRep;
 	
 	public NarudzbenicaDTO toDTO(Narudzbenica n) {
-		List<Izvestaj> all=izvRep.findAll().stream().filter(x->x.getNarudzbenicaId().equals(n.getId())).collect(Collectors.toList());
-		Long izvestajId=all.get(0).getId();
+		List<Izvestaj> all=izvRep.findAll().stream().collect(Collectors.toList());
+		Long izvestajId=null;
+		for(Izvestaj i : all) {
+			if (i.getNarudzbenicaId()==n.getId()) {
+				izvestajId=n.getAgentId();
+				break;
+			}
+		}
 		NarudzbenicaDTO dto=new NarudzbenicaDTO(n.getId(),
 												n.getAgentId(),
 												n.getUserId(), 

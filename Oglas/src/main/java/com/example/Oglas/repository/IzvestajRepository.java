@@ -7,5 +7,6 @@ import com.example.Oglas.model.Izvestaj;
 
 public interface IzvestajRepository extends JpaRepository<Izvestaj, Long>{
 
+
 	
 }
