@@ -1,13 +1,20 @@
 package com.example.Oglas.controller;
 
 import java.security.Principal;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,6 +49,7 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 	private NarudzbenicaService narudzbService;
 	@Autowired
 	private TAdresaRepository adresaRep;
+	
 		
 	@GetMapping(value="")
 	public ResponseEntity<List<OglasDTO>> getAllOglas() {
@@ -51,17 +59,16 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	//Obrisati
-//	@GetMapping(value="/user/{id}")
-//	public ResponseEntity<List<OglasDTO>> getAllAgentsOglas(@PathVariable("id") Long id) {
+//	@GetMapping(value="/agent")
+//	public ResponseEntity<List<OglasDetailsImgDTO>> getAllOglasImg() {
 //		
-//		List<OglasDTO> all=oglasService.getOglaseForUser(id);
+//		List<OglasDetailsImgDTO> all = oglasService.getAllOglasImg();
 //		if(all!=null)
 //			return new ResponseEntity<>(all, HttpStatus.OK);
 //		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //	}
 	
-	@GetMapping(value="/user")
+	@GetMapping(value="/agent")
 	public ResponseEntity<List<OglasDTO>> getAllAgentsOglas() {
 		
 		List<OglasDTO> all=oglasService.getOglaseForUser();
@@ -77,10 +84,12 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 			return new ResponseEntity<>(o, HttpStatus.OK);
 		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}	
+	
 	@GetMapping(value="/img")
 	List<OglasDetailsImgDTO> getAllOglasWithImg(Principal principal) throws Exception{
 		return oglasService.getAllWithImages();
 	}
+	
 //	@GetMapping(value= "/{id}/details")		//todo
 //	public ResponseEntity<OglasDTO> getOglasDetails(@PathVariable("id") Long id){
 //		OglasDTO o=oglasService.getOglasDetails(id);
@@ -112,15 +121,24 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 			@RequestParam("kilometraza") Optional<Float> kilometraza,
 			@RequestParam("cenaMin") Optional<Float> cenaMin,
 			@RequestParam("cenaMax") Optional<Float> cenaMax,
-			@RequestParam("od") Optional<LocalDateTime> odDatum,
-			@RequestParam("do") Optional<LocalDateTime> doDatum
+			@RequestParam("od") Optional<Long> odDatum,
+			@RequestParam("do") Optional<Long> doDatum
 			,Principal principal) throws Exception{
 		String username = principal.getName();
+		
+		//Mora ova konverzija zato sto puca sa fronta error ako se ne stave odDatum i doDatum u Optional<>
+		//A kada se stave u Optional<> onda puca Instant.ofEpocheMilli jer ne moze da radi sa Optional<> tipom
+		Long odDat = odDatum.orElse(null);
+		Long doDat = doDatum.orElse(null);
+		
+		LocalDateTime odDatuma = LocalDateTime.ofInstant(Instant.ofEpochMilli(odDat), TimeZone.getDefault().toZoneId());
+		LocalDateTime doDatuma = LocalDateTime.ofInstant(Instant.ofEpochMilli(doDat), TimeZone.getDefault().toZoneId());
+		
 		return oglasService.pretragaOglasa(markaAutId.orElse(null),modelAutId.orElse(null),klasaAutId.orElse(null),
 											tipMenjacaId.orElse(null),tipGorivaId.orElse(null),brojSedZaDec.orElse(null),
 											ColDmgWaiv.orElse(null),kilometraza.orElse(null),
 											cenaMin.orElse(null),cenaMax.orElse(null),
-											odDatum.orElse(null),doDatum.orElse(null)
+											odDatuma ,doDatuma
 											,username);
 	}
 

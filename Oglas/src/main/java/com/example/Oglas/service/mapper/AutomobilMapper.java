@@ -38,7 +38,6 @@ public class AutomobilMapper {
 	@Autowired
 	private TSlikaVozilaService slikaServ;
 	
-	
 	public AutomobilDTO toDTO(Automobil a) {
 		String marka = markaRep.findById(a.getMarkaAutomobilaId()).get().getNazivMarke();
 		String model = modelRep.findById(a.getModelAutomobilaId()).get().getNazivModela();
@@ -51,10 +50,8 @@ public class AutomobilMapper {
 	}
 	public AutomobilImgDTO toImgDTO(Automobil a) throws Exception {
 		TSlikaVozilaDTO slikaDTO=new TSlikaVozilaDTO(slikaServ.getSlikaVozilaByAutomobilId(a.getId()));
-		AutomobilImgDTO imgDTO=new AutomobilImgDTO(toDTO(a),slikaDTO);
-		return null;
+		AutomobilImgDTO imgDTO = new AutomobilImgDTO(toDTO(a),slikaDTO);
+		return imgDTO;
 	}
-
-	
 
 }

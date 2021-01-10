@@ -110,12 +110,12 @@ INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_p
 INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_po_km, popust_30_dan, common_data_id) VALUES('Gradski cenovnik',1800, 2000, 800, 50, 27)
 
 --Oglas (Mogu se obrisati 4,5,6 iz guia)
-INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2021-01-01 21:58:58','2021-01-25 18:57:58',25000,-2, 1, 1, 28, 'BestUser') --reprezentativan
-INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-11-01 21:58:58','2020-12-02 18:57:58',3000, -3, 2, 2, 29, 'BestUser')
-INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-01 21:58:58','2020-12-22 18:57:58',12000,-4, 1, 3, 30, 'Ranko')
-INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-09 21:58:58','2018-12-18 18:57:58',16500,-5, 2, 1, 31, 'BestUser')
-INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-01 21:58:58','2020-12-31 18:57:58',4500, -6, 1, 2 ,32, 'BestUser')
-INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-10 21:58:58','2012-12-20 18:57:58',10500,-7, 2, 3, 33, 'Pera')
+--INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2021-01-01 21:58:58','2021-01-25 18:57:58',25000,-2, 1, 1, 28, 'BestUser') --reprezentativan
+--INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-11-01 21:58:58','2020-12-02 18:57:58',3000, -3, 2, 2, 29, 'BestUser')
+--INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-01 21:58:58','2020-12-22 18:57:58',12000,-4, 1, 3, 30, 'Ranko')
+--INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-09 21:58:58','2018-12-18 18:57:58',16500,-5, 2, 1, 31, 'BestUser')
+--INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-01 21:58:58','2020-12-31 18:57:58',4500, -6, 1, 2 ,32, 'BestUser')
+--INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-10 21:58:58','2012-12-20 18:57:58',10500,-7, 2, 3, 33, 'Pera')
 
 --Narudzbenice za rezervacije
 INSERT INTO Narudzbenica(od_datuma, do_datuma, oglas_id, rezervacija_id, agent_id, common_data_id, izvestaj_id, user_id) VALUES('2021-01-05 21:58:58','2021-01-13 18:57:58', 1, 1, -5, 34, 1, -4)-- jos traje  -- Anna00  Anna00 dve odvojene rezerv (4,5)

@@ -69,12 +69,12 @@ INSERT INTO TTip_Goriva(naziv_tipa, common_data_id) VALUES('Benizn', 17)
 INSERT INTO TTip_Goriva(naziv_tipa, common_data_id) VALUES('Bezolovno', 18)
 
 --Automobil
-INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (1, true, 1, 1, 1, 56000, 3,1, 3.8, 19)
-INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (2, true, 2, 1, 2, 6700, 1, 2, 4.5, 20)
-INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (1, true, 3, 2, 3, 526000, 2,1, 3.6, 21)
-INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (2, true, 1, 2, 4, 56000, 3,1, 3.8, 22)
-INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (0, true, 2, 3, 5, 6700, 1,2, 4.5, 23)
-INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (4, true, 3, 3, 6, 86000, 2,1, 3.6, 24)
+--INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (1, true, 1, 1, 1, 56000, 3,1, 3.8, 19)
+--INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (2, true, 2, 1, 2, 6700, 1, 2, 4.5, 20)
+--INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (1, true, 3, 2, 3, 526000, 2,1, 3.6, 21)
+--INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (2, true, 1, 2, 4, 56000, 3,1, 3.8, 22)
+--INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (0, true, 2, 3, 5, 6700, 1,2, 4.5, 23)
+--INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (4, true, 3, 3, 6, 86000, 2,1, 3.6, 24)
 
 --Cenovnik
 INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_po_km, popust_30_dan, common_data_id) VALUES('Porodicni paket',2500, 2200, 1200, 10, 25)

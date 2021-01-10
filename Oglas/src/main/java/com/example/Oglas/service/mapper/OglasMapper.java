@@ -1,5 +1,6 @@
 package com.example.Oglas.service.mapper;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,31 +102,21 @@ public class OglasMapper {
 		o.setAutomobilId(dto.getAutomobilId());
 		o.setId(dto.getId());
 		o.setUsername(username);
-		//o.setOdDatuma(dto.getOdDatuma());
-		//o.setDoDatuma(dto.getOdDatuma());
+		o.setOdDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getOdDatuma()), TimeZone.getDefault().toZoneId()));
+		o.setDoDatuma(LocalDateTime.ofInstant(Instant.ofEpochMilli(dto.getDoDatuma()), TimeZone.getDefault().toZoneId()));
 		o.setCenovnikId(dto.getCenovnikId());
 		cmdRep.save(data);
 		cmdRep.flush();
 		o.setCommonDataId(data.getId());
 		return o;
 	}
-	public OglasDetailsImgDTO toImgDTO(Oglas o, Automobil a, Cenovnik c, String username) throws Exception {
-		List<HashMap<String, Long>> zauzetiTermini = getZauzetiTermini(o.getId());
-		AdresaDTO adresa = new AdresaDTO(adrServ.findById(o.getAdresaId()));
-		 AutomobilImgDTO automobil=autMapper.toImgDTO(a);
-		 CenovnikDTO cenovnik=new CenovnikDTO(c);
-		 String korImeAgenta = o.getUsername();
-		 Long agentId = cmdServ.findOne(o.getCommonDataId()).getUserId();
-		OglasDetailsImgDTO dto=new OglasDetailsImgDTO(o, korImeAgenta, agentId, zauzetiTermini, adresa, automobil, cenovnik);
-		return dto;
-	}
 	public OglasDetailsImgDTO toImgDTO(Oglas o, Automobil a, Cenovnik c) throws Exception {
 		List<HashMap<String, Long>> zauzetiTermini = getZauzetiTermini(o.getId());
 		AdresaDTO adresa = new AdresaDTO(adrServ.findById(o.getAdresaId()));
-		 AutomobilImgDTO automobil=autMapper.toImgDTO(a);
-		 CenovnikDTO cenovnik=new CenovnikDTO(c);
-		 String korImeAgenta = o.getUsername();
-		 Long agentId = cmdServ.findOne(o.getCommonDataId()).getUserId();
+		AutomobilImgDTO automobil = autMapper.toImgDTO(a);
+		CenovnikDTO cenovnik=new CenovnikDTO(c);
+		String korImeAgenta = o.getUsername();
+		Long agentId = cmdServ.findOne(o.getCommonDataId()).getUserId();
 		OglasDetailsImgDTO dto=new OglasDetailsImgDTO(o, korImeAgenta, agentId, zauzetiTermini, adresa, automobil, cenovnik);
 		return dto;
 	}

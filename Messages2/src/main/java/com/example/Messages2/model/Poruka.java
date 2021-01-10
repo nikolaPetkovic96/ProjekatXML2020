@@ -77,23 +77,23 @@ public class Poruka {
     @Column(name = "common_data_id", nullable = false)
     protected Long commonDataId;
     
-    //Jedan komentar se kreira od samo jedne firme(druga strana bidirekcije)
-	//private Firma firma;
-	//Jedna poruka se kreira od samo jednog registrovanog korisnika(druga strana bidirekcije)
-	//private RegistrovaniKorisnik reg_korisnik;
+    @Column(name = "username", nullable = false)
+    private String username;
+   
     
 	public Poruka() {
 		super();
 	}
 	
 
-	public Poruka(Long id, String tekstPoruke, Long rezervacijaId, Long automobilId, Long commonDataId) {
+	public Poruka(Long id, String tekstPoruke, Long rezervacijaId, Long automobilId, Long commonDataId, String username) {
 		super();
 		this.id = id;
 		this.tekstPoruke = tekstPoruke;
 		this.rezervacijaId = rezervacijaId;
 		this.automobilId = automobilId;
 		this.commonDataId = commonDataId;
+		this.username = username;
 	}
 
 	public Long getId() {
@@ -135,5 +135,17 @@ public class Poruka {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	
    
 }
