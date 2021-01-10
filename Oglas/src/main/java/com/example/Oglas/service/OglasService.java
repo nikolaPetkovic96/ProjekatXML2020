@@ -291,7 +291,27 @@ public class OglasService {
 			//prosle sve provere, kreirati OglasDetailsImgDTO i dodati ga u listu 
 			retDTO.add(oglasMapper.toImgDTO(o,a,c,username));				
 		}
-			return null;
-	} 
+			return retDTO;
+	}
+
+	public List<OglasDetailsImgDTO> getAllWithImages() throws Exception {
+		List<Oglas> pom = oglasRep.findAll();				//pokupi sve oglase
+		List<OglasDetailsImgDTO> retDTO = new ArrayList<>();
+		for(Oglas o:pom) {	//proveri svaki pojedinacno oglas sa parametrima zahteva
+			Cenovnik c=cenRep.findById(o.getCenovnikId()).orElse(null);
+			if(c==null) {
+				throw new Exception ("pretragaOglasa: za oglas"+ o.getId()+" nije nadjen cenovnik!");
+			}
+			//provera automobila
+			Automobil a=autoRep.findById(o.getAutomobilId()).orElse(null);
+			if(a==null) {
+				throw new Exception ("pretragaOglasa: za oglas"+ o.getId()+" nisu nadjena kola !");
+			}
+			
+			retDTO.add(oglasMapper.toImgDTO(o,a,c));				
+		}
+			return retDTO;
+	}
+	 
 }	
 

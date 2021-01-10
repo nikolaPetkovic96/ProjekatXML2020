@@ -119,6 +119,16 @@ public class OglasMapper {
 		OglasDetailsImgDTO dto=new OglasDetailsImgDTO(o, korImeAgenta, agentId, zauzetiTermini, adresa, automobil, cenovnik);
 		return dto;
 	}
+	public OglasDetailsImgDTO toImgDTO(Oglas o, Automobil a, Cenovnik c) throws Exception {
+		List<HashMap<String, Long>> zauzetiTermini = getZauzetiTermini(o.getId());
+		AdresaDTO adresa = new AdresaDTO(adrServ.findById(o.getAdresaId()));
+		 AutomobilImgDTO automobil=autMapper.toImgDTO(a);
+		 CenovnikDTO cenovnik=new CenovnikDTO(c);
+		 String korImeAgenta = o.getUsername();
+		 Long agentId = cmdServ.findOne(o.getCommonDataId()).getUserId();
+		OglasDetailsImgDTO dto=new OglasDetailsImgDTO(o, korImeAgenta, agentId, zauzetiTermini, adresa, automobil, cenovnik);
+		return dto;
+	}
 	
 	public List<HashMap<String, Long>> getZauzetiTermini(Long oglasId){
 		List<Narudzbenica> narForOglas=narRep.findAll().stream().filter(x->x.getOglasId().equals(oglasId)).collect(Collectors.toList());

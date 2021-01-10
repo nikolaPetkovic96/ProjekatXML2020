@@ -61,7 +61,7 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 //		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //	}
 	
-	@GetMapping(value="/agent")
+	@GetMapping(value="/user")
 	public ResponseEntity<List<OglasDTO>> getAllAgentsOglas() {
 		
 		List<OglasDTO> all=oglasService.getOglaseForUser();
@@ -77,14 +77,17 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 			return new ResponseEntity<>(o, HttpStatus.OK);
 		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}	
-	
-	@GetMapping(value= "/{id}/details")		//todo
-	public ResponseEntity<OglasDTO> getOglasDetails(@PathVariable("id") Long id){
-		OglasDTO o=oglasService.getOglasDetails(id);
-		if(o!=null)
-			return new ResponseEntity<>(o, HttpStatus.OK);
-		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	@GetMapping(value="/img")
+	List<OglasDetailsImgDTO> getAllOglasWithImg(Principal principal) throws Exception{
+		return oglasService.getAllWithImages();
 	}
+//	@GetMapping(value= "/{id}/details")		//todo
+//	public ResponseEntity<OglasDTO> getOglasDetails(@PathVariable("id") Long id){
+//		OglasDTO o=oglasService.getOglasDetails(id);
+//		if(o!=null)
+//			return new ResponseEntity<>(o, HttpStatus.OK);
+//		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//	}
 	@PostMapping(value="")
 	public ResponseEntity<?> addOglas(Principal principal, @RequestBody OglasNewDTO dto)  throws Exception {
 		String username = principal.getName();
