@@ -1,37 +1,41 @@
 package com.example.Reservation.dto;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import com.example.Reservation.model.Rezervacija;
 
-public class RezervacijaDTO {
+public class RezervacijaFullDTO {
 
 	private Long id;
 	private double ukupnaCena;
 	private Boolean bundle;
 	private String statusRezervacije;
 	private Long commonDataId; 			//Moze se i obrisati jer treba samo za new;
-	private String username; 			//Dodato u DTO- kreirao rezervaciju
-	private Long agentId;				//kreirao oglas
-										//fali napomena
-	public RezervacijaDTO() {
+	private String username; 			//Dodato u DTO
+	private List<NarudzbenicaDTO> narudzbenice;
+	private List<PorukaDTO> poruke;
+	
+	public RezervacijaFullDTO() {
 		
 	}
+	
 	//Dodat String username kako bi se u returnu
 	//POST I PUT zahteva vratila i vrednost username korisnika koji je kreirao/izmeno rezervaciju
-	public RezervacijaDTO(Rezervacija r, String username, Long agentId) {
+	public RezervacijaFullDTO(Rezervacija r, String username, List<NarudzbenicaDTO> narudzbenice, List<PorukaDTO> poruke) {
 		this.id = r.getId();
 		this.ukupnaCena = r.getUkupnaCena();
 		this.bundle = r.getBundle();
 		this.statusRezervacije = r.getStatusRezervacije();
+		
 		this.commonDataId = r.getCommonDataId();
 		this.username = username;
-		this.agentId = agentId;
+
+		this.narudzbenice = narudzbenice;
+		this.poruke = poruke;
 	}
 	
-	public RezervacijaDTO(Long id, double ukupnaCena, Boolean bundle, String statusRezervacije, Long commonDataId, String username,Long agentId) {
+	public RezervacijaFullDTO(Long id, double ukupnaCena, Boolean bundle, String statusRezervacije, Long commonDataId, String username,
+			List<NarudzbenicaDTO> narudzbenice, List<PorukaDTO> poruke) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
@@ -40,7 +44,8 @@ public class RezervacijaDTO {
 		
 		this.commonDataId = commonDataId;
 		this.username = username;
-		this.agentId = agentId;
+		this.narudzbenice = narudzbenice;
+		this.poruke = poruke;
 	}
 
 	public void setId(Long id) {
@@ -90,10 +95,17 @@ public class RezervacijaDTO {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
-	public Long getAgentId() {
-		return agentId;
+
+	public List<NarudzbenicaDTO> getNarudzbenice() {
+		return narudzbenice;
 	}
-	public void setAgentId(Long agentId) {
-		this.agentId = agentId;
+	public void setNarudzbenice(List<NarudzbenicaDTO> narudzbenice) {
+		this.narudzbenice = narudzbenice;
 	}
+	public List<PorukaDTO> getPoruke() {
+		return poruke;
+	}
+	public void setPoruke(List<PorukaDTO> poruke) {
+		this.poruke = poruke;
+	}	
 }
