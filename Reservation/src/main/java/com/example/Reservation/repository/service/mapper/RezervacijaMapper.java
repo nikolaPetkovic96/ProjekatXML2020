@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.example.Reservation.repository.NarudzbenicaRepository;
 import com.example.Reservation.repository.OglasRepository;
 import com.example.Reservation.repository.PorukaRepository;
 import com.example.Reservation.repository.service.NarudzbenicaService;
+import com.example.Reservation.repository.service.PorukaService;
 @Component
 public class RezervacijaMapper {
 
@@ -32,11 +34,11 @@ public class RezervacijaMapper {
 	@Autowired 
 	public NarudzbenicaService narServ;
 	@Autowired
-	private PorukaRepository porRep;
+	private PorukaService porServ;
 	@Autowired
 	private PorukaMapper porMap;
 	
-	public RezervacijaDTO toDTO(Rezervacija r, String username) {
+	public RezervacijaDTO toDTO(Rezervacija r) {
 		
 		CommonData data = commonDataRepository.findById(r.getCommonDataId()).get();
 		//String username = null;//tUserRepository.findById(data.getUserid()).get().getKorisnickoIme();
@@ -46,7 +48,7 @@ public class RezervacijaMapper {
 		//	narudzbenice_id.add(n.getId());
 		//}
 		
-		return new RezervacijaDTO(r, username, data.getUserId());
+		return new RezervacijaDTO(r, data.getUserId());
 	}
 
 	public Rezervacija fromDTO(RezervacijaDTO rezDTO) { //nece raditi, dto nema napomenu
@@ -105,12 +107,8 @@ public class RezervacijaMapper {
 		CommonData data = commonDataRepository.findById(r.getCommonDataId()).get();
 		String username = r.getUsername();
 		List<NarudzbenicaDTO> narudzbenice=narServ.getAllByRez(r.getId());
-		List<PorukaDTO> poruke=porRep.findAll().stream()
-														.filter(x->x.getRezervacijaId().equals(r.getId()))
-														//.sorted((x1,x2)->x1.getCommonDataId().compareTo(x2.getCommonDataId())) //sortiranje poruka, gleda samo vrednost idjeva
-														.map(x->porMap.toDTO(x))
-														.sorted((x1,x2)->x1.getCmdDTO().getDatumKreiranja().compareTo(x2.getCmdDTO().getDatumKreiranja()))
-														.collect(Collectors.toList());
+		//List<PorukaDTO> poruke=porServ.findAllPorukeByRezervId(r.getId()).stream().map(p->porMap.toDTO(p)).collect(Collectors.toList());
+		List<PorukaDTO> poruke=porServ.getAllMessagesByRezerv(r.getId());
 		RezervacijaFullDTO fullDTO=new RezervacijaFullDTO(r, username, narudzbenice, poruke);
 		return fullDTO;
 	}

@@ -207,7 +207,7 @@ public class OglasService {
 		
 		return zauzetiTermini;
 	}
-	
+/***********PRETRAGA*******************/	
 	public List<OglasDetailsImgDTO> pretragaOglasa(Long markaAutId, Long modelAutId,
 			Long klasaAutId, Long tipMenjacaId, Long tipGorivaId,
 			Integer brojSedZaDec, Boolean colDmgWaiv, Float kilometraza,
@@ -235,9 +235,12 @@ public class OglasService {
 		
 		for(Oglas o:pom) {	//proveri svaki pojedinacno oglas sa parametrima zahteva
 			
+			boolean slobodan=terminSlobodan(odDatum,doDatum,getZauzetiTermini(narServ.getAllByOglas(o.getId())),o.getOdDatuma(),o.getDoDatuma());
+			//slobodan je false u slucaju da oglas nije slobodan u trazenom terminu, ili se uopste ne vrsi pretraga po datumima pa je false za oglase koji nisu trenutno aktuelni
+			if(slobodan==false) continue; 
 			//provera datuma
-			if(odDatum != null && odDatum.isAfter(o.getDoDatuma())) continue; //oglas_poc datum pre search_poc datuma 
-			if(odDatum != null && doDatum.isBefore(o.getOdDatuma()) ) continue;  //oglas_kraj datum posle search_poc datuma 
+			//if(odDatum != null && odDatum.isAfter(o.getDoDatuma())) continue; //oglas_poc datum pre search_poc datuma 
+			//if(odDatum != null && doDatum.isBefore(o.getOdDatuma()) ) continue;  //oglas_kraj datum posle search_poc datuma 
 			
 			//provera cenovnika
 			Cenovnik c=cenRep.findById(o.getCenovnikId()).orElse(null);
@@ -268,7 +271,58 @@ public class OglasService {
 		}
 			return retDTO;
 	}
-
+	
+	
+	private boolean terminSlobodan(LocalDateTime odPretraga, LocalDateTime doPretraga,
+			List<HashMap<String, LocalDateTime>> zauzetiTermini, LocalDateTime odOglas, LocalDateTime doOglas) {
+		//uslova da termin bude slobodan = da datum/nterval pretrage bude unutar intervala oglasa, ali da se ne preklapa sa terminima koji su vezani za taj oglas
+		
+		if(odPretraga==null && doPretraga==null) { //nisu unete vredosti datuma za pretragu, proveri da li je oglas trenutno aktuelan
+			LocalDateTime sadasnjost=LocalDateTime.now();	//izbacice oglase koji nisu trenutno aktuelni
+			return danUnutarIntervala(sadasnjost, odOglas, doOglas);	
+		
+		}
+		else if(odPretraga!=null && doPretraga==null) {	//unet samo pocetni datum za pretragu
+			if(!danUnutarIntervala(odPretraga,odOglas,doOglas)) { //ako se pocetni datum pretrage ne nalazi unutar perioda u kojem je oglas aktuelan vrati false	
+				return false;									//ako je aktuelan vrsi se provera nad svim terminima oglasa
+			}
+			for(HashMap<String, LocalDateTime> termin : zauzetiTermini) {	//uporediti sa svim terminima
+				if(danUnutarIntervala(odPretraga, termin.get("od"),  termin.get("do"))) {//ako je dan u pretrazi unutar intervala termina => ima preklopa sa vec zauzetim termino vrati false
+					return false;
+				}
+			}
+		}	
+		else if(doPretraga!=null && odOglas==null)  {	//unet samo krajnji datum za pretragu
+			if(!danUnutarIntervala(odPretraga,odOglas,doOglas)) {	//oglas mora biti aktuelan u periodu za koji je unet krajnji datum, ako nije vrati false
+				return false;										//ako je aktuelan vrsi se provera nad svim terminima
+			}
+			for(HashMap<String, LocalDateTime> termin : zauzetiTermini) {//uporediti sa svim terminima
+				if(danUnutarIntervala(doPretraga, termin.get("od"),  termin.get("do"))) {	//da li je uneti datum za kraj unutar termina
+					//ako jeste znaci da ima preklopa sa vec zauzetim terminom, vraca se false, ne gleda se dalje
+					return false;
+				}
+			}
+		}
+		else {	//situacija u kojoj su uneti i pocetni i kranjji datum za pretragu
+			if(odOglas.isBefore(odPretraga) && doOglas.isAfter(doPretraga)) {
+				//interval od-do pretrage mora biti unutar intervala od-do oglasa, ako je tacno uporediti sa svakim terminom, ne sme biti preklapanja
+				for(HashMap<String, LocalDateTime> termin : zauzetiTermini) {
+					boolean nemaPreklapanja=doPretraga.isBefore(termin.get("od")) || odPretraga.isAfter(termin.get("do"));
+					//opcije da nema preklapanja: 1. kraj pretraga je pre pocetka vec zauzetog termina, ili
+												//2. pocetak pretrage je posle zavrsetka termina.
+					if(nemaPreklapanja==false)	
+						return false;//ima preklapanja, vrati false
+				}
+			}else return false;	//interval od-do pretrage NIJE UNUTAR intervala od-do oglasa,
+		}
+		return true;	//prosao sve provere, oglas je slobodan za navedeni termin
+	}
+	
+	private boolean danUnutarIntervala(LocalDateTime dan, LocalDateTime pocetak, LocalDateTime kraj) {//da li je locadateTime unutar termina
+		//dan mora biti posle pocetka ali i pre kraja da bi bio unutar intervala
+		return dan.isAfter(pocetak) &&  dan.isBefore(kraj);
+	} 
+/*******************************************************KRAJ METODA ZA PRETRAGU***********************************************************************/
 	public List<OglasDetailsImgDTO> getAllWithImages() throws Exception {
 		List<Oglas> pom = oglasRep.findAll();				//pokupi sve oglase
 		List<OglasDetailsImgDTO> retDTO = new ArrayList<>();

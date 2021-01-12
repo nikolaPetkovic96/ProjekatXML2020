@@ -39,21 +39,42 @@ public class RezervacijaController {
 	private RezervacijaService rezervacijaService;
 	@Autowired
 	private CommonDataService commonDataService;
-	
+/**********************ADMIN -GETALL **********************/	
 	@GetMapping(value="/all")//da preuzme sve rezervacije, smeo bi samo admin
-	public List<RezervacijaFullDTO> getAllRezervacija(	){		
+	public List<RezervacijaDTO> getAllRezervacija(	){		
 			return rezervacijaService.getAllRezervacije();
 	}	
-	
-	@GetMapping(value="/allFull")//da preuzme sve rezervacije, smeo bi samo admin
+	@GetMapping(value="/all/full")//da preuzme sve rezervacije, smeo bi samo admin
 	public List<RezervacijaFullDTO> getAllRezervacijaImg(){		
 			return rezervacijaService.getAllRezervacijeFull();
 	}	
-	@GetMapping(value="")
-	public List<RezervacijaFullDTO> getAllRezervacijaUser(	Principal principal){		
-			return rezervacijaService.getAllRezervacijeUser(principal.getName());
+/****************************************************************************/	
+
+/**********************KORISNIK TRENUTNO ULOGOVAN -GETALL **********************/	
+	@GetMapping(value="/user")	//sve rezervacije koje je korisnik kreirao
+	public List<RezervacijaFullDTO> getAllRezervacijaUserFull(	Principal principal){		
+			return rezervacijaService.getAllRezervacijeUserFull(principal.getName());
+	}
+	@GetMapping(value="/user/full")	//sve rezervacije koje je korisnik kreirao
+	public List<RezervacijaDTO> getAllRezervacijaUser(	Principal principal){		
+			return rezervacijaService.getAllRezervacijeUserDTO(principal.getName());
 
 	}
+	
+/****************************************************************************/	
+
+/**********************AGENT TRENUTNO ULOGOVAN  **********************/	
+
+	@GetMapping(value="/agent")	//sve rezervacije vezane za ogalse agenta
+	public List<RezervacijaFullDTO> getAllRezervacijaAgentFull(	Principal principal){		
+			return rezervacijaService.getAllRezervacijeAgentFullDTO(principal.getName());
+	}
+	@GetMapping(value="/agent/full")	//sve rezervacije vezane za ogalse agenta
+	public List<RezervacijaDTO> getAllRezervacijaAgent(	Principal principal){		
+			return rezervacijaService.getAllRezervacijeAgentDTO(principal.getName());
+	}
+/****************************************************************************/	
+
 	@GetMapping(value="/expired")		//sortirani, treba proveriti
 	public List<RezervacijaDTO> getAllFinishedRezervacija(	Principal p){
 			return rezervacijaService.getAllStatusUser(p.getName(), "PAID");
@@ -91,8 +112,5 @@ public class RezervacijaController {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-	}
-	
-	
+	}	
 }

@@ -44,6 +44,14 @@ public class NarudzbenicaService {
 		List<Narudzbenica> lista=narRep.findAll().stream().filter(x->x.getRezervacijaId().equals(rez_id)).collect(Collectors.toList());
 		return lista;	
 	}
+	public List<Narudzbenica> getAllForAgent(Long agentId) {
+		List<Narudzbenica> lista=narRep.findAll().stream().filter(x->x.getAgentId().equals(agentId)).collect(Collectors.toList());
+		return lista;	
+	}
+	public List<Narudzbenica> getAllForUser(Long userId) {
+		List<Narudzbenica> lista=narRep.findAll().stream().filter(x->x.getUserId().equals(userId)).collect(Collectors.toList());
+		return lista;	
+	}
 
 
 	public Narudzbenica add(Narudzbenica novaNar) throws Exception {

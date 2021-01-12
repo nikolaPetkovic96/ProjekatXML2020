@@ -97,9 +97,9 @@ public class IzvestajService {
 		}
 		
 		autoServ.updatePredjenaKilometraza(i.getAutomobilId(),i.getPredjenaKilometraza());
-//		Automobil auto = autoServ.findOne(savedIzvestaj.getAutomobilId());
-//		auto.setPredjenaKilometraza(auto.getPredjenaKilometraza() + savedIzvestaj.getPredjenaKilometraza());
-//		autoServ.updateAutomobil(auto.getId(), auto);
+		Automobil auto = autoServ.findOne(savedIzvestaj.getAutomobilId());
+		auto.setPredjenaKilometraza(auto.getPredjenaKilometraza() + savedIzvestaj.getPredjenaKilometraza());
+		autoServ.updateAutomobil(auto.getId(), auto);
 		
 		
 		return new IzvestajDTO(i);

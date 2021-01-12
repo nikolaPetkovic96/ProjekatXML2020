@@ -21,13 +21,13 @@ public class RezervacijaDTO {
 	}
 	//Dodat String username kako bi se u returnu
 	//POST I PUT zahteva vratila i vrednost username korisnika koji je kreirao/izmeno rezervaciju
-	public RezervacijaDTO(Rezervacija r, String username, Long agentId) {
+	public RezervacijaDTO(Rezervacija r, Long agentId) {
 		this.id = r.getId();
 		this.ukupnaCena = r.getUkupnaCena();
 		this.bundle = r.getBundle();
 		this.statusRezervacije = r.getStatusRezervacije();
 		this.commonDataId = r.getCommonDataId();
-		this.username = username;
+		this.username=r.getUsername();
 		this.agentId = agentId;
 	}
 	

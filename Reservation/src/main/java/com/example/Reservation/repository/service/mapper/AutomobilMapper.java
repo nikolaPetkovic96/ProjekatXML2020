@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import com.example.Reservation.dto.AutomobilDTO;
 
 import com.example.Reservation.model.Automobil;
-import com.example.Reservation.model.auto.TSlikaVozila;
 import com.example.Reservation.repository.CommonDataRepository;
 import com.example.Reservation.repository.auto.TKlasaAutomobilaRepository;
 import com.example.Reservation.repository.auto.TMarkaAutomobilaRepository;

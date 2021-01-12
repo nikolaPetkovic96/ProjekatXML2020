@@ -127,12 +127,12 @@ INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id,usern
 --INSERT INTO Rezervacija(bundle, status_rezerv, ukupna_cena, common_data_id) VALUES(true, 'PAID', 66000, 38) -- istekao
 
 
-INSERT INTO Izvestaj(predjena_km,tekst_izvestaja,narudzbenica_id,automobil_id,rezervacija_id,prekoracena_km,dodatni_troskovi,common_data_id) VALUES(30000,'tekstIzvestaja1',1,1,1,5000,0,37)
+INSERT INTO Izvestaj(predjena_km,tekst_izvestaja,narudzbenica_id,automobil_id,rezervacija_id,prekoracena_km,dodatni_troskovi,common_data_id) VALUES(30000,'tekstIzvestaja1',1,1,1,5000,0,38)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-01-02 21:58:58', null, -4) -- Anna00
 
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Ovo je prva poruka.  Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 2, 1, 38)
+INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id,username) VALUES('Ovo je prva poruka.  Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 2, 1, 39,'Anna')
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-01-02 21:58:58', null, -4) -- Anna00
 
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id) VALUES('Druga poruka, u bazi, hronoloski prva!', 2, 1, 39)
+INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id,username) VALUES('Druga poruka u bazi, hronoloski prva!', 2, 1, 40,'bestUser')
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-01-02 21:58:58', null, -5) -- Anna00
 
