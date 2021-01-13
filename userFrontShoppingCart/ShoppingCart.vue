@@ -7,7 +7,7 @@
     </div>
         
     <div class='container' id='search'>
-      <p class="cart-empty" v-if="oglasi_korpa.length == 0">Your Shopping Cart is Empty!</p>
+      <h3 class="cart-empty" v-if="oglasi_korpa.length == 0">Vaša korpa je prazna!</h3>
       <div class="row" >
         <div  class="col-lg-3 col-md-4 col-sm-6 mb-4" v-bind:key='oglas.id'  v-for="oglas in oglasi_korpa">
           <div class="card h-100 ">
@@ -50,7 +50,7 @@
 <script>
 import UserDataService from '../services/UserDataService'
 import StarRating from "vue-star-rating";
-  export default {
+export default {
     data() {
       return {
         total:0,
@@ -71,7 +71,6 @@ import StarRating from "vue-star-rating";
         oglasi_korpa:[],  //nalaze se samo oglasi zarad prikaza u korpi i manipulaciju njima
         rezervacije:[],
         poruke:[],
- 
       }
     },
     methods:{
@@ -85,14 +84,47 @@ import StarRating from "vue-star-rating";
         }
         return false;
       },
+    //REMOVE Logika
       removeAds:function(id){
-        alert(`Oglas ${id} ce biti uklonjen!`);
-        // Parsirati string iz localStorage u JSON (vec odradjeno this.korpa)
-        // Obrisati element koji zelimo (with slice() )
-        this.korpa = this.removeItem(this.korpa, id);
-        // Konvertovati nazad JSON u string i ponovo ga vratiti u localStorage
-        localStorage.setItem('cart', JSON.stringify(this.korpa));
+        if (confirm('Da li ste sigurni da želite ukloniti ovu rezervaciju?')) { 
+          this.korpa = this.removeItem(this.korpa, id);
+  
+          localStorage.setItem('cart', JSON.stringify(this.korpa));
+        }
       },
+      //Pomocna metoda koja se poziva iz metode removeAds
+      //Sluzi za proveru da li je neki oglas u nekom nizu
+      //Ako jeste brise se iz niza i vraca se niz...
+      removeItem(korpa, oglasId) {
+        console.log('Usao u removeItem');
+        for(let i = 0; i< korpa.length; i ++){
+          if(korpa[i].oglasId == oglasId){
+            console.log('Obrisano: ' + korpa.splice(i, 1));
+            this.removeVisually(oglasId);
+          }
+        }
+        return korpa;
+      },
+      //Pomocna metoda koja se poziva iz metode  removeItem
+      //Sluzi da u slucaju kada se brise iz korpe neki element
+      //se on obirise i vizuelno uklanjanjem tog oglasa iz oglas_korpa
+      removeVisually(oglasId){
+        console.log('Usao u removeVisually!');
+          for(let i = 0; i< this.oglasi_korpa.length; i ++){
+            if(this.oglasi_korpa[i].id == oglasId){
+              console.log('sadadasdsadasdsa');
+              this.oglasi_korpa.splice(i, 1);
+              this.total = 0;
+              for(let i = 0; i < this.oglasi_korpa.length; i++){
+
+                this.countTotalPrice(this.oglasi_korpa[i]);
+              }
+            }
+          }
+      },
+    //<--remove
+
+    //ADD LOGIKA
       //Metoda koja sluzi za kreiranje rezervacija i njihovo slanje na bek
       makeReseravation:function(id){
         let bundle = false;
@@ -131,16 +163,7 @@ import StarRating from "vue-star-rating";
           }
         }
       },
-      //Metoda koja sluzi za prekid rezervacije i brisanje sadrzaja korpe iz localStorage 
-      cancelReservation:function(){
-        if (confirm('Da li ste sigurni da želite odustati? Vaša korpa će biti prazna!')) {
-          localStorage.removeItem('cart');
-          this.$router.push(`/cars`);
-        }
-      },
-      goBack:function(){
-        this.$router.push(`/cars`);
-      },
+
       //Metoda koja sluzi za kreiranje rezervacije sa samo jednom narudzbenicom...
       createSingleReservation:function(oglas){
         for(let i = 0; i < this.korpa.length; i++){
@@ -203,17 +226,17 @@ import StarRating from "vue-star-rating";
             }
           }
         }
-          const rezervacijaOglasDTO = {
-          //rezervacija
-            ukupnaCena: ukupnaCena,
-            statusRezervacije:'PENDING',
-            username:'Happy User 2', //u rezervDTOu za korisnika koji je rezervisao oglas.
-            bundle:true,
-            poruka:'',
-            narudzbenice:narudzbenice, //u bundleReserv je array narudzbenica...
-          }
-          this.rezervacije.push(rezervacijaOglasDTO);
-          localStorage.setItem('reserv', JSON.stringify(this.rezervacije));
+        const rezervacijaOglasDTO = {
+        //rezervacija
+          ukupnaCena: ukupnaCena,
+          statusRezervacije:'PENDING',
+          username:'Happy User 2', //u rezervDTOu za korisnika koji je rezervisao oglas.
+          bundle:true,
+          poruka:'',
+          narudzbenice:narudzbenice, //u bundleReserv je array narudzbenica...
+        }
+        this.rezervacije.push(rezervacijaOglasDTO);
+        localStorage.setItem('reserv', JSON.stringify(this.rezervacije));
       },
     
       //Metoda koja sluzi da razvrsta oglase na one koji su u nekom bundle i one koji su sami.
@@ -264,34 +287,7 @@ import StarRating from "vue-star-rating";
         console.log(`singleAds: ${singleAds.length}`);
         return singleAds;
       },
-      //Pomocna metoda koja se poziva iz metode removeAds
-      //Sluzi za proveru da li je neki oglas u nekom nizu
-      //Ako jeste brise se iz niza i vraca se niz...
-      removeItem(korpa, oglasId) {
-        console.log('Usao u removeItem');
-        for(let i = 0; i< korpa.length; i ++){
-          if(korpa[i].oglasId == oglasId){
-            console.log('Obrisano: ' + korpa.splice(i, 1));
-            this.removeVisually(oglasId);
-          }
-        }
-        return korpa;
-      },
-      //Pomocna metoda koja se poziva iz metode  removeItem
-      //Sluzi da u slucaju kada se brise iz korpe neki element
-      //se on obirise i vizuelno uklanjanjem tog oglasa iz oglas_korpa
-      removeVisually(oglasId){
-        console.log('Usao u removeVisually!');
-          for(let i = 0; i< this.oglasi_korpa.length; i ++){
-            if(this.oglasi_korpa[i].id == oglasId){
-              console.log('sadadasdsadasdsa');
-              this.oglasi_korpa.splice(i, 1);
-            }
-          }
-      },
-      showDetails:function(id){
-        this.$router.push(`/reservation/${id}/details`);
-      },
+
       //Pomocna metoda koja se poziva iz metode putInBundle
       //Sluzi za proveru da li je neki oglas vec u bundlu
       //Ako jeste vraca se true, ako nije false
@@ -303,6 +299,26 @@ import StarRating from "vue-star-rating";
         }
         return false;
       },
+    //<--add
+
+    //BRISANJE, POVRATAK, DETALJI
+      //Metoda koja sluzi za prekid rezervacije i brisanje sadrzaja korpe iz localStorage 
+      cancelReservation:function(){
+        if (confirm('Da li ste sigurni da želite odustati? Vaša korpa će biti prazna!')) {
+          localStorage.removeItem('cart');
+          this.$router.push(`/cars`);
+        }
+      },
+      goBack:function(){
+        this.$router.push(`/cars`);
+      },
+
+      showDetails:function(id){
+        this.$router.push(`/shoppingCart/reservation/${id}/details`);
+      },
+    //<--Del,back,detail
+
+    //POMOCNE METODE ZA DINAMICKU KALKULACIJU 
       //Pomocna metoda za racunanje broja dana na osnovu pocetnog i krajnjeg datuma u narudzbenici...
       calculateNoOfDays(odDatuma,doDatuma){
         //Konvertovanje datuma u broj dana... 
@@ -350,25 +366,44 @@ import StarRating from "vue-star-rating";
           }
         // }
       },
+      /* countNewTotalPrice:function() {
+          //Preuzimanje objekta korpa iz localStorage
+          this.korpa = JSON.parse(localStorage.getItem('cart'));
+          for(let i = 0; i < this.korpa.length; i++){
+          //Traze se svi oglasi iz korpe preko id-ja kako bi se smestili u odabraniOglasi 
+          //i prikazali njihovi podacu i slike vizuelno u korpi...
+          UserDataService.getOglasDetails(this.korpa[i].oglasId).then(response => {
+            this.oglasi_korpa = [];
+            this.oglasi_korpa.push(response.data);  
+            this.countTotalPrice(response.data);
+          });
+        }
+      }*/ 
+    //<--calc
     },
       components: {
         "star-rating": StarRating,
     },
     created(){
       if(JSON.parse(localStorage.getItem('token')) == null){
-           this.$router.push(`/login`);
-        }
+          this.$router.push(`/login`);
+      }
       else{
-        // Preuzimanje objekta korpa iz localStorage
-        this.korpa = JSON.parse(localStorage.getItem('cart'));
-        for(let i = 0; i < this.korpa.length; i++){
-          //Traze se svi oglasi iz korpe preko id-ja kako bi se smestili u odabraniOglasi 
-          //i prikazali njihovi podacu i slike vizuelno u korpi...
-          
-          UserDataService.getOglasDetails(this.korpa[i].oglasId).then(response => {
-            this.oglasi_korpa.push(response.data);  
-            this.countTotalPrice(response.data);
-          });
+
+        if(JSON.parse(localStorage.getItem('cart'))== null){
+          this.korpa = [];
+        }
+        else {
+          // Preuzimanje objekta korpa iz localStorage
+          this.korpa = JSON.parse(localStorage.getItem('cart'));
+          for(let i = 0; i < this.korpa.length; i++){
+            //Traze se svi oglasi iz korpe preko id-ja kako bi se smestili u odabraniOglasi 
+            //i prikazali njihovi podacu i slike vizuelno u korpi...
+            UserDataService.getOglasDetails(this.korpa[i].oglasId).then(response => {
+              this.oglasi_korpa.push(response.data);  
+              this.countTotalPrice(response.data);
+            });
+          }
         }
         // this.countTotalPrice(this.oglasi_korpa);
       }

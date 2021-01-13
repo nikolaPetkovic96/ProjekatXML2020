@@ -1,7 +1,7 @@
 <template>
     <div id="reservation-details">
         <div class="container" id='page-title'>
-            <h1 style="margin-top:10px;color:#35424a;">Detalji <span id='titleEffect'>Rezervacije</span></h1>
+            <h1 style="margin-top:10px;color:#35424a;">Detalji Nove <span id='titleEffect'>Rezervacije</span></h1>
             <hr style='background:#35424a;height:1px;'>
         </div>
         <div class="container" id='main'>
@@ -15,7 +15,7 @@
                     
                     <h4><b>Automobil:</b> {{oglas.automobil.markaAut}} {{oglas.automobil.modelAut}} (marka/model)</h4>
                     <h5><b>Klasa automobila:</b> {{oglas.automobil.klasaAut}}</h5>
-                    <h5><b>Vrsta goriva:</b> {{oglas.automobil.vrstaGoriva}}</h5>
+                    <h5><b>Vrsta goriva:</b> {{oglas.automobil.tipGoriva}}</h5>
                     <h5><b>Tip menjaca:</b> {{oglas.automobil.tipMenjaca}}</h5>
                 </div>
                 <div id='cenovnik' class="car-info">
@@ -37,21 +37,21 @@
                                 <td>{{oglas.cenovnik.cenaPoKilometru}} din</td>
                                 <td>{{oglas.cenovnik.cenaCollisionDamageWaiver}} din</td>
                                 <td>{{oglas.cenovnik.popustZaPreko30Dana}} %</td>
-                            </tr>     
-                        </tbody>            
+                            </tr> 
+                        </tbody>
                     </table>
                 </div>
                 <div class="cart-total">
                     <h5><b>Vrednost popusta:</b> {{dodatneInfo.popust}} dinara</h5>
                     <h5><b>Ukupna cena:</b> {{dodatneInfo.ukupnaCena}} dinara</h5>
-                </div>        
+                </div>
             </div>
         </div>
     </div>
 </template>
 
-
 <script>
+import UserDataService from '../services/UserDataService'
 export default {
     data(){
         return{
@@ -69,13 +69,7 @@ export default {
                 odDatuma:null,
                 doDatuma:null,
                 },
-                {
-                agentId:null,
-                userId:null,
-                oglasId:null,
-                odDatuma:null,
-                doDatuma:null,
-                },
+                ...
             ]
             */
             narudzbenica:{
@@ -89,35 +83,32 @@ export default {
                 popust:0,               //Za prikaz i smestanje vrednosti popusta...
                 ukupnaCena:0,           //izracunata na osnovu broja dana, cene po danu i popusta...
             },
-
             oglas:{
-                //oglas
-                id:1,
-                odDatuma:'25.5.2020',
-                doDatuma:'25.6.2020',
+                // oglas da se namapira
+                id:null,
+                odDatuma:null,
+                doDatuma:null,
                 TAdresa:{
-                    mesto:'Novi Sad',
-                    ulica:'9. Marta',
-                    broj:'bb',
-                    postanskiBroj:'21000',
-                    longitude:'45',
-                    latitude:'54',
+                    mesto:'',
+                    ulica:'',
+                    broj:'',
+                    postanskiBroj:'',
                 },
-                planiranaKilometraza:2000,
-                username:'This host', //U DTO-u za korisnika koji je kreirao oglas.
-                agentId:1,
+                planiranaKilometraza:null,
+                username:null, //U DTO-u za korisnika koji je kreirao oglas.
+                agentId:null,
                 //automobil
                 automobil:{
-                    id:'1',
-                    markaAut:'BMW',
-                    modelAut:'M5',
-                    klasaAut:'SUV',
-                    vrstaGoriva:'dizel',
-                    tipMenjaca:'manuelni',
-                    ukupnaOcena:5,
-                    brojSedistaZaDecu:1,
-                    predjenaKilometraza:5000,
-                    collisionDamageWaiver:true,
+                    id:null,
+                    markaAut:null,
+                    modelAut:null,
+                    klasaAut:null,
+                    vrstaGoriva:null,
+                    tipMenjaca:null,
+                    ukupnaOcena:null,
+                    brojSedistaZaDecu:null,
+                    predjenaKilometraza:null,
+                    collisionDamageWaiver:null,
                 },
                 //cena    
                 cenovnik:{
@@ -145,13 +136,11 @@ export default {
                 }
             }
         },
-
         //Pomocna metoda za racunanje broja dana na osnovu pocetnog i krajnjeg datuma u narudzbenici...
         calculateNoOfDays(odDatuma,doDatuma){
             //Konvertovanje datuma u broj dana... 
             const odDat = new Date(odDatuma);       //konvertujemo input tip u Date
             const doDat = new Date(doDatuma);       //konvertujemo input tip u Date
-
             const NoOfDays = doDat - odDat;         //Dobijeni rezultat je u milisekundama
             const noOFMill = 1000 * 60 * 60 * 24;   //broj milisekundi sa kojima delimo NoOfDays da se dobije broj dana.
             
@@ -159,21 +148,19 @@ export default {
             this.narudzbenica.doDatuma = doDat.toLocaleDateString(); 
             return NoOfDays/noOFMill;
         },
-
         //Metoda za automatsko racunanje cene rezervacija spram cene apartmana * broj nocenja
-		calculatePrice: function () {
-            this.dodatneInfo.ukupnaCena = this.dodatneInfo.odabran_br_dana * this.oglas.cenovnik.cenaPoDanu;
+		calculatePrice: function(oglas) {
+            this.dodatneInfo.ukupnaCena = this.dodatneInfo.odabran_br_dana * oglas.cenovnik.cenaPoDanu;
             if(this.dodatneInfo.odabran_br_dana > 30){
                
                 if(this.oglas.cenovnik.popustZaPreko30Dana != null){
-                    this.dodatneInfo.popust =  this.dodatneInfo.ukupnaCena * (this.oglas.cenovnik.popustZaPreko30Dana/100);
+                    this.dodatneInfo.popust =  this.dodatneInfo.ukupnaCena * (oglas.cenovnik.popustZaPreko30Dana/100);
                 }
                 //Ukoliko korisnik odabere neki cenovnik koji ima popust, a zatim odabere cenovnik koji nema popust
                 //ostaje upamcen popust prethodnog cenovnika... Zato se resetuje na 0;
-                if(this.oglas.cenovnik.popustZaPreko30Dana === null && this.dodatneInfo.popust !== 0){
+                if(oglas.cenovnik.popustZaPreko30Dana === null && this.dodatneInfo.popust !== 0){
                     this.dodatneInfo.popust = 0;
                 }
-
                 this.dodatneInfo.ukupnaCena = this.dodatneInfo.ukupnaCena -  this.dodatneInfo.popust;
                 
             }
@@ -187,28 +174,30 @@ export default {
 		},
 	},
 	created() {
-        // Ako je prazan token znaci da user nije ulogovan pa se preusmerava na login stranicu.
-		// if (!localStorage.getItem('jwt'))
-		// 	this.$router.push('/login');
-
+        // Ako je prazan token znaci da user nije ulogovan pa se preusmerava na login stranicu
+        if(JSON.parse(localStorage.getItem('token')) == null){
+           this.$router.push(`/login`);
+        }
+        else{
+            UserDataService.getOglasDetails(this.id).then(response => {
+                this.oglas = response.data
+                console.log(JSON.stringify(this.oglas));
+                this.calculatePrice(this.oglas);
+            });
+        }
 	},
 	mounted() {
         // getuje se oglas za prosledjeni id.
-		// axios
-		// 	.get('rest/apartment/' + this.id)
-        // 	.then(Response => (this.odabraniOglas = this.Response.data));
+
         this.korpa = JSON.parse(localStorage.getItem('cart'));
         console.log('lenght:', this.korpa.length);
         this.extractDate(this.korpa, this.id);
         this.dodatneInfo.odabran_br_dana = this.calculateNoOfDays(this.dodatneInfo.odDatuma, this.dodatneInfo.doDatuma);
-        this.calculatePrice();
-
 	}
 }
 </script>
 
 <style>
-
 #titleEffect{
   color:gold;
   font-weight: bold;
@@ -220,14 +209,12 @@ export default {
   font-size: 20px;
   font-weight: bold;
 }
-
 #reservation-new textarea {
   display: block;
   width: 100%;
   height: 200px;
   padding:8px;
 }
-
 /* Za cenu */
 #showPriceTable{
     width: 100%;
@@ -236,19 +223,15 @@ export default {
     font-size: 20px;
     border-bottom: 1px solid lightgrey;
 } 
-
 #showPriceTable thead{
     border-bottom: 1px solid lightgrey;
 }
-
 #showPriceTable thead th{
     padding-right:15px;
 }
-
 .margTop{
     margin-top: 15px;
 }
-
 .car-info h4{
     padding:10px;
     margin-bottom:15px;
@@ -258,11 +241,9 @@ export default {
     font-weight: bold;
     border-bottom:2px solid #35424a;;
 }
-
 .car-info b{
     color: #35424a;
 }
-
 .cart-total{
   padding:10px;
   margin-bottom:15px;
@@ -273,5 +254,4 @@ export default {
   font-weight: bold;
   border-bottom:2px solid gold;
 }
-
 </style>

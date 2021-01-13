@@ -129,12 +129,11 @@
                     <h4>i iznajmite <b>automobil</b> vaših snova...</h4>
                 </div>
 
-                <div id='cartbs' v-if='cartIsNotEmpty && !isAlreadySearched' >
-                    <!-- <img src="../../assets/logo.png" alt=""> -->
+                <!-- <div id='cartbs' v-if='cartIsNotEmpty && !isAlreadySearched' >
                     <router-link to="/shoppingCart"><button class="arrow btn btn-lg btn-outline-dark">
                         Korpa
                     </button></router-link>
-                </div>
+                </div> -->
             </div>
 
             <!-- Page Heading  v-if='isAlreadySearched==true'-->
@@ -146,15 +145,15 @@
                 <h5 class='theme-colr'><small> <b>Sortiraj:</b>  </small></h5>
                 <button @click="sort('ocena')" class="arrow btn btn-lg btn-outline-primary"> Ocena
                     <img v-if='currentSortDir == "asc" && currentSort== "ocena"' src='../assets/up-arrow1.1.png'>
-                    <img v-if='currentSortDir == "desc" && currentSort== "ocena" ' src='../assets/up-arrow1.1.png'>
+                    <img v-if='currentSortDir == "desc" && currentSort== "ocena" ' src='../assets/down-arrow1.1.png'>
                 </button>
                 <button @click="sort('cena')" class="arrow btn btn-lg btn-outline-primary"> Cena
                     <img v-if='currentSortDir == "asc"  && currentSort== "cena"' src='../assets/up-arrow1.1.png'>
-                    <img v-if='currentSortDir == "desc"  && currentSort== "cena"' src='../assets/up-arrow1.1.png'>
+                    <img v-if='currentSortDir == "desc"  && currentSort== "cena"' src='../assets/down-arrow1.1.png'>
                 </button>
                 <button @click="sort('predjenaKilometraza')" class="arrow btn btn-lg btn-outline-primary"> Kilometraza
                     <img v-if='currentSortDir == "asc"  && currentSort== "predjenaKilometraza"' src='../assets/up-arrow1.1.png'>
-                    <img v-if='currentSortDir == "desc"  && currentSort== "predjenaKilometraza"' src='../assets/up-arrow1.1.png'>
+                    <img v-if='currentSortDir == "desc"  && currentSort== "predjenaKilometraza"' src='../assets/down-arrow1.1.png'>
                 </button>
                 
                 <div id='cart'>
@@ -169,7 +168,7 @@
             <div class="row" >
                 <div class="col-lg-4 col-sm-6 mb-4" v-bind:key='oglas.id' v-for="oglas in sortedOglasi">
                 <div class="card h-100">
-                    <img id='overview-img' class="card-img-top" v-bind:src="oglas.automobil.slikeVozila.slika[0]" alt="">
+                    <img id='overview-img' class="card-img-top" v-bind:src="oglas.automobil.slikeVozila.slika[0]" alt="" v-on:click='showDetails(oglas.automobil.id)'>
                     <div class="card-body">
                         <div class="card-text">
                             <h4 class="theme-colr"><b>Automobil: </b>{{oglas.automobil.markaAut}} {{oglas.automobil.modelAut}}</h4> 
@@ -276,6 +275,7 @@ export default {
                 to: null
             },
             korpa:[],
+            userId:null,
            
         }
     },
@@ -304,17 +304,17 @@ export default {
             });
         }, 
         addChoosenMarka:function(id){
-        console.log("Usao u addChoosenMarka " + id);
-        this.searchedCar.markaAutId = id;
-        this.modelAutFilt = [];
-        for(let i = 0; i < this.modelAut.length; i++){
-            if(this.modelAut[i].markaAutomobilaId == id){
-                console.log('nasao poklapanje');
-                console.log('id: ' + id);
-                console.log('model.markaAutomobilaId: ' + this.modelAut[i].markaAutomobilaId);
-                this.modelAutFilt.push(this.modelAut[i]);
+            console.log("Usao u addChoosenMarka " + id);
+            this.searchedCar.markaAutId = id;
+            this.modelAutFilt = [];
+            for(let i = 0; i < this.modelAut.length; i++){
+                if(this.modelAut[i].markaAutomobilaId == id){
+                    console.log('nasao poklapanje');
+                    console.log('id: ' + id);
+                    console.log('model.markaAutomobilaId: ' + this.modelAut[i].markaAutomobilaId);
+                    this.modelAutFilt.push(this.modelAut[i]);
+                }
             }
-        }
         },
         addChoosenModel:function(id){
             console.log("Usao u addChoosenModel " + id);
@@ -377,11 +377,12 @@ export default {
             var narudzbenica = {
                 oglasId:odabraniOglas.id,
                 agentId:odabraniOglas.agentId,
-                userId: null,//idUSera koji je trenutno dodao oglas u korpu...
+                userId: this.userId,//idUSera koji je trenutno dodao oglas u korpu...
                 odDatuma:this.odabraniDatum.od,
                 doDatuma:this.odabraniDatum.do,
                 //dodatno svi oni podaci koji mi trebaju da prikazem oglas onako kako je u korpi... vrv samo oglasId je dovoljno pa ga getujemo u created u korpi
             }
+            console.log(JSON.stringify(narudzbenica));
             this.korpa.push(narudzbenica);
             // Put the object into storage
             localStorage.setItem('cart', JSON.stringify(this.korpa));
@@ -513,16 +514,24 @@ export default {
            this.$router.push(`/login`);
         }
         else{        
-        //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
-        this.brojSedZaDec = this.range(0, 5);
-        // Preuzimanje objekta korpa iz localStorage
-        if(JSON.parse(localStorage.getItem('cart'))!= null){
-            this.cartIsNotEmpty = true;
-        }
-        
-        // dobavljanje svih sifrarnika
-        this.getAllOptions();
-        this.getAllOglas();
+            //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
+            this.brojSedZaDec = this.range(0, 5);
+            // Preuzimanje objekta korpa iz localStorage
+            if(JSON.parse(localStorage.getItem('cart'))== null){
+                this.korpa = [];
+            }
+            else{
+                this.cartIsNotEmpty = true;
+                this.korpa = JSON.parse(localStorage.getItem('cart'));
+            }
+            
+
+            let parsToken =  JSON.parse(localStorage.getItem('parsToken'));
+            this.userId = parsToken.jti;
+            console.log('Ulogovani user: ' + this.userId);
+            // dobavljanje svih sifrarnika
+            this.getAllOptions();
+            this.getAllOglas();
         }
     },
     mounted() {
@@ -624,5 +633,9 @@ export default {
     top:35px;
     width:15%;
     padding:5px;
+}
+
+.card-img-top:hover{
+    cursor: pointer;
 }
 </style>
