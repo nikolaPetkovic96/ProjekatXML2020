@@ -129,32 +129,31 @@
                     <h4>i iznajmite <b>automobil</b> vaših snova...</h4>
                 </div>
 
-                <div id='cartbs' v-if='cartIsNotEmpty && !isAlreadySearched' >
-                    <!-- <img src="../../assets/logo.png" alt=""> -->
+                <!-- <div id='cartbs' v-if='cartIsNotEmpty && !isAlreadySearched' >
                     <router-link to="/shoppingCart"><button class="arrow btn btn-lg btn-outline-dark">
                         Korpa
                     </button></router-link>
-                </div>
+                </div> -->
             </div>
 
-            <!-- Page Heading -->
+            <!-- Page Heading  v-if='isAlreadySearched==true'-->
             <h1 v-if='isAlreadySearched==true' class="my-4 theme-colr">
                 <small >Rezultat pretrage</small>
             </h1>
 
-            <div  v-if='isAlreadySearched==true' id='sort'>
+            <div   id='sort'>
                 <h5 class='theme-colr'><small> <b>Sortiraj:</b>  </small></h5>
                 <button @click="sort('ocena')" class="arrow btn btn-lg btn-outline-primary"> Ocena
                     <img v-if='currentSortDir == "asc" && currentSort== "ocena"' src='../assets/up-arrow1.1.png'>
-                    <img v-if='currentSortDir == "desc" && currentSort== "ocena" ' src='../assets/up-arrow1.1.png'>
+                    <img v-if='currentSortDir == "desc" && currentSort== "ocena" ' src='../assets/down-arrow1.1.png'>
                 </button>
                 <button @click="sort('cena')" class="arrow btn btn-lg btn-outline-primary"> Cena
                     <img v-if='currentSortDir == "asc"  && currentSort== "cena"' src='../assets/up-arrow1.1.png'>
-                    <img v-if='currentSortDir == "desc"  && currentSort== "cena"' src='../assets/up-arrow1.1.png'>
+                    <img v-if='currentSortDir == "desc"  && currentSort== "cena"' src='../assets/down-arrow1.1.png'>
                 </button>
                 <button @click="sort('predjenaKilometraza')" class="arrow btn btn-lg btn-outline-primary"> Kilometraza
                     <img v-if='currentSortDir == "asc"  && currentSort== "predjenaKilometraza"' src='../assets/up-arrow1.1.png'>
-                    <img v-if='currentSortDir == "desc"  && currentSort== "predjenaKilometraza"' src='../assets/up-arrow1.1.png'>
+                    <img v-if='currentSortDir == "desc"  && currentSort== "predjenaKilometraza"' src='../assets/down-arrow1.1.png'>
                 </button>
                 
                 <div id='cart'>
@@ -169,7 +168,7 @@
             <div class="row" >
                 <div class="col-lg-4 col-sm-6 mb-4" v-bind:key='oglas.id' v-for="oglas in sortedOglasi">
                 <div class="card h-100">
-                    <img id='overview-img' class="card-img-top" v-bind:src="oglas.automobil.images[0]" alt="">
+                    <img id='overview-img' class="card-img-top" v-bind:src="oglas.automobil.slikeVozila.slika[0]" alt="" v-on:click='showDetails(oglas.automobil.id)'>
                     <div class="card-body">
                         <div class="card-text">
                             <h4 class="theme-colr"><b>Automobil: </b>{{oglas.automobil.markaAut}} {{oglas.automobil.modelAut}}</h4> 
@@ -232,246 +231,7 @@ export default {
                 ColDmgWaiv:null,
                 predjenaKilometraza:null
             },
-            oglasi:[
-                {
-                    //oglas
-                    id:1,
-                    odDatuma:'25.5.2020',
-                    doDatuma:'25.6.2020',
-                    TAdresa:{
-                        mesto:'Novi Sad',
-                        ulica:'9. Marta',
-                        broj:'bb',
-                        postanskiBroj:'21000',
-                    },
-                    planiranaKilometraza:2000,
-                    agentId:1,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'This host',  //u DTOu za korisnika koji je kreirao oglas.
-                    //automobil
-                    automobil:{
-                        id:'1',
-                        markaAut:'BMW',
-                        modelAut:'M5',
-                        klasaAut:'SUV',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        ukupnaOcena:5,
-                        brojSedistaZaDecu:1,
-                        predjenaKilometraza:5000,
-                        collisionDamageWaiver:true,
-                        images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    
-                    },
-                    //cena    
-                    cenovnik:{
-                        id:'1',
-                        cenaPoDanu:100,
-                        nazivCenovnika:'Cenovnik 1',
-                        popustZaPreko30Dana:'10%',
-                        cenaCollisionDamageWaiver:1000,
-                        cenaPoKilometru:10
-                        
-                    },
-                },
-                {
-                    //oglas
-                    id:2,
-                    odDatuma:'18.6.2020',
-                    doDatuma:'25.7.2020',
-                    TAdresa:{
-                        mesto:'Beograd',
-                        ulica:'Ne znanog i znanog junaka',
-                        broj:'bb',
-                        postanskiBroj:'11000',
-                        longitude:'21.23',
-                        latitude:'34.14',
-                    },
-                    planiranaKilometraza:2500,
-                    agentId:2,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'Other host', //u DTOu za korisnika koji je kreirao oglas.
-                    //Oglas/Automobil
-                    automobil:{
-                        id:1,
-                        markaAut:'Audi',
-                        modelAut:'A6',
-                        klasaAut:'Gradski',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        predjenaKilometraza:4500,
-                        ukupnaOcena:4.25,
-                        collisionDamageWaiver:true,
-                        brojSedistaZaDecu:1,
-                        images:['https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    //Oglas/Cenovnik
-                    cenovnik:{ 
-                        id:'2',
-                        cenaPoDanu:500,
-                        nazivCenovnika:'Cenovnik 2',
-                        popustZaPreko30Dana:'20%',
-                        cenaCollisionDamageWaiver:null,
-                        cenaPoKilometru:20
-                    },
-                },
-                {
-                    //oglas
-                    id:3,
-                    odDatuma:'25.5.2020',
-                    doDatuma:'15.6.2020',
-                    TAdresa:{
-                        mesto:'Novi Sad',
-                        ulica:'19. Juna',
-                        broj:'45',
-                        postanskiBroj:'11000',
-                        longitude:'12',
-                        latitude:'21',
-                    },
-                    planiranaKilometraza:3000,
-                    agentId:1,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'This host',  //u DTOu za korisnika koji je kreirao oglas.
-                    //automobil
-                    automobil:{
-                        id:'3',
-                        markaAut:'Audi',
-                        modelAut:'A6',
-                        klasaAut:'Gradski auto',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        ukupnaOcena:3.12,
-                        brojSedistaZaDecu:2,
-                        predjenaKilometraza:12500,
-                        collisionDamageWaiver:false,
-                        images:['https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    cenovnik:{
-                        id:'3',
-                        cenaPoDanu:300,
-                        nazivCenovnika:'Cenovnik 3',
-                        popustZaPreko30Dana:null,
-                        cenaCollisionDamageWaiver:3000,
-                        cenaPoKilometru:30
-                    },
-                },
-                {
-                    //oglas
-                    id:4,
-                    odDatuma:'25.5.2020',
-                    doDatuma:'25.6.2020',
-                    TAdresa:{
-                        mesto:'Novi Sad',
-                        ulica:'9. Marta',
-                        broj:'bb',
-                        postanskiBroj:'21000',
-                        longitude:'45',
-                        latitude:'54',
-                    },
-                    planiranaKilometraza:2000,
-                    agentId:2,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'Other host', //u DTOu za korisnika koji je kreirao oglas.
-                    //automobil
-                    automobil:{
-                        id:'1',
-                        markaAut:'BMW',
-                        modelAut:'M5',
-                        klasaAut:'SUV',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        ukupnaOcena:2,
-                        brojSedistaZaDecu:1,
-                        predjenaKilometraza:12000,
-                        collisionDamageWaiver:true,
-                        images:['https://source.unsplash.com/RCAhiGJsUUE/1920x1080','https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    //cena    
-                    cenovnik:{
-                        id:'1',
-                        cenaPoDanu:80,
-                        nazivCenovnika:'Cenovnik 1',
-                        popustZaPreko30Dana:'10%',
-                        cenaCollisionDamageWaiver:1000,
-                        cenaPoKilometru:10
-                        
-                    },
-                },
-                {
-                    //oglas
-                    id:5,
-                    odDatuma:'18.6.2020',
-                    doDatuma:'25.7.2020',
-                    TAdresa:{
-                        mesto:'Beograd',
-                        ulica:'Ne znanog i znanog junaka',
-                        broj:'bb',
-                        postanskiBroj:'11000',
-                        longitude:'21.23',
-                        latitude:'34.14',
-                    },
-                    planiranaKilometraza:2500,
-                    agentId:3,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'Some totlay other host', //u DTOu za korisnika koji je kreirao oglas.
-                    //Oglas/Automobil
-                    automobil:{
-                        id:1,
-                        markaAut:'Fiat',
-                        modelAut:'Punot',
-                        klasaAut:'Gradski',
-                        vrstaGoriva:'Benzin',
-                        tipMenjaca:'manuelni',
-                        predjenaKilometraza:4800,
-                        ukupnaOcena:3.2,
-                        collisionDamageWaiver:true,
-                        brojSedistaZaDecu:1,
-                        images:['https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    //Oglas/Cenovnik
-                    cenovnik:{ 
-                        id:'2',
-                        cenaPoDanu:1200,
-                        nazivCenovnika:'Cenovnik 2',
-                        popustZaPreko30Dana:'20%',
-                        cenaCollisionDamageWaiver:null,
-                        cenaPoKilometru:20
-                    },
-                },
-                {
-                    //oglas
-                    id:6,
-                    odDatuma:'25.5.2020',
-                    doDatuma:'15.6.2020',
-                    TAdresa:{
-                        mesto:'Novi Sad',
-                        ulica:'19. Juna',
-                        broj:'45',
-                        postanskiBroj:'11000',
-                        longitude:'12',
-                        latitude:'21',
-                    },
-                    planiranaKilometraza:3000,
-                    agentId:3,                  //u DTOu id korisnika koji je kreirao oglas (uzeto iz commonData oglasa).
-                    korisnickoIme:'Some totlay other host', //u DTOu za korisnika koji je kreirao oglas.
-                    //automobil
-                    automobil:{
-                        id:'3',
-                        markaAut:'Fiat',
-                        modelAut:'500L',
-                        klasaAut:'Gradski auto',
-                        vrstaGoriva:'dizel',
-                        tipMenjaca:'manuelni',
-                        ukupnaOcena:1.5,
-                        brojSedistaZaDecu:2,
-                        predjenaKilometraza:6500,
-                        collisionDamageWaiver:false,
-                        images:['https://source.unsplash.com/wfh8dDlNFOk/1920x1080','https://source.unsplash.com/O7fzqFEfLlo/1920x1080'],
-                    },
-                    cenovnik:{
-                        id:'3',
-                        cenaPoDanu:450,
-                        nazivCenovnika:'Cenovnik 3',
-                        popustZaPreko30Dana:null,
-                        cenaCollisionDamageWaiver:3000,
-                        cenaPoKilometru:30
-                    },
-                }
+            oglasi:[        
             ],
             //sortiranje:
             currentSort: 'cena',
@@ -515,10 +275,17 @@ export default {
                 to: null
             },
             korpa:[],
+            userId:null,
            
         }
     },
-    methods:{       
+    methods:{      
+        getAllOglas:function(){
+            UserDataService.getAllOglas().then(response => {
+                this.oglasi = response.data;
+                console.log(JSON.stringify(this.oglasi));
+            });
+        },
         getAllOptions:function(){
             UserDataService.getAllMarkaAut().then(response => {
                 this.markaAut = response.data;
@@ -537,17 +304,17 @@ export default {
             });
         }, 
         addChoosenMarka:function(id){
-        console.log("Usao u addChoosenMarka " + id);
-        this.searchedCar.markaAutId = id;
-        this.modelAutFilt = [];
-        for(let i = 0; i < this.modelAut.length; i++){
-            if(this.modelAut[i].markaAutomobilaId == id){
-                console.log('nasao poklapanje');
-                console.log('id: ' + id);
-                console.log('model.markaAutomobilaId: ' + this.modelAut[i].markaAutomobilaId);
-                this.modelAutFilt.push(this.modelAut[i]);
+            console.log("Usao u addChoosenMarka " + id);
+            this.searchedCar.markaAutId = id;
+            this.modelAutFilt = [];
+            for(let i = 0; i < this.modelAut.length; i++){
+                if(this.modelAut[i].markaAutomobilaId == id){
+                    console.log('nasao poklapanje');
+                    console.log('id: ' + id);
+                    console.log('model.markaAutomobilaId: ' + this.modelAut[i].markaAutomobilaId);
+                    this.modelAutFilt.push(this.modelAut[i]);
+                }
             }
-        }
         },
         addChoosenModel:function(id){
             console.log("Usao u addChoosenModel " + id);
@@ -587,7 +354,7 @@ export default {
             this.searchedCarShow.tipGoriva =  null;
             this.searchedCarShow.tipMenjaca =  null;
 
-            this.getAutomobiliList();
+            this.getAllOglas();
         },
         showDetails:function(id){
             this.$router.push(`/cars/${id}/details`);
@@ -610,11 +377,12 @@ export default {
             var narudzbenica = {
                 oglasId:odabraniOglas.id,
                 agentId:odabraniOglas.agentId,
-                userId: null,//idUSera koji je trenutno dodao oglas u korpu...
+                userId: this.userId,//idUSera koji je trenutno dodao oglas u korpu...
                 odDatuma:this.odabraniDatum.od,
                 doDatuma:this.odabraniDatum.do,
                 //dodatno svi oni podaci koji mi trebaju da prikazem oglas onako kako je u korpi... vrv samo oglasId je dovoljno pa ga getujemo u created u korpi
             }
+            console.log(JSON.stringify(narudzbenica));
             this.korpa.push(narudzbenica);
             // Put the object into storage
             localStorage.setItem('cart', JSON.stringify(this.korpa));
@@ -640,19 +408,16 @@ export default {
                 //Kada se jednom izvrsi pretraga, bila ona uspesna ili neuspesna uklanja se default prikaz stranice....
                 this.isAlreadySearched = true;
   
-                
-                if (!!this.searchedCar.lokacija) {
-                    this.searchedQuery += 'lokacija=' + this.searchedCar.lokacija;
-                }
                 if (!!this.searchedCar.od) {
-                    // let od_datuma = this.searchedCar.od.getTime();
-                    let od_datuma = this.searchedCar.od;
-                    this.searchedQuery += '&od=' + od_datuma;
+                    let od_datuma = this.searchedCar.od.getTime();
+                    this.searchedQuery += 'od=' + od_datuma;
                 }
                 if (!!this.searchedCar.do) {
-                    // let do_datuma = this.searchedCar.do.getTime();
-                    let do_datuma = this.searchedCar.do;
+                    let do_datuma = this.searchedCar.do.getTime();
                     this.searchedQuery += '&do=' + do_datuma;
+                }
+                if (!!this.searchedCar.lokacija) {
+                    this.searchedQuery += '&lokacija=' + this.searchedCar.lokacija;
                 }
                 if (!!this.searchedCar.cenaMin) {
                     this.searchedQuery += '&cenaMin=' + this.searchedCar.cenaMin;
@@ -661,7 +426,7 @@ export default {
                     this.searchedQuery += '&cenaMax=' + this.searchedCar.cenaMax;
                 }
                 if (!!this.searchedCar.markaAutId) {
-                    this.searchedQuery += 'markaAut=' + this.searchedCar.markaAutId;
+                    this.searchedQuery += '&markaAut=' + this.searchedCar.markaAutId;
                 }
                 if (!!this.searchedCar.modelAutId) {
                     this.searchedQuery += '&modelAut=' + this.searchedCar.modelAutId;
@@ -684,18 +449,9 @@ export default {
                 if (!!this.searchedCar.predjenaKilometraza) {
                     this.searchedQuery += '&kilometraza=' + this.searchedCar.predjenaKilometraza;
                 }
-
-                //Ovo obrisati
-                console.log(`Trazite automobil:
-                    ${JSON.stringify(this.searchedCar)}
-                `);
-
-                console.log(`Query:
-                    ${JSON.stringify(this.searchedQuery)}
-                `);
                 
-                UserDataService.searchAutomobil(this.searchedQuery).then(response => {
-                    this.automobili = response.data;
+                UserDataService.searchOglas(this.searchedQuery).then(response => {
+                    this.oglasi = response.data;
                     this.searchedQuery = '?';
                 }).catch(error =>{
                     if (error.response.status === 500 || error.response.status === 404) {
@@ -726,20 +482,25 @@ export default {
         //Prvo se proveri da li je smer sortiranja rastuci ili opadajuci za this.currentSortDir i onda se poredi svaki oglas po prosledjenom 
         //kriterijumu tj po this.currentSort
         sortedOglasi: function () {
+            console.log('Usao u sorted oglasi');
+            console.log(JSON.stringify(this.oglasi));
             return this.oglasi.sort((oglas1, oglas2) => {
                 let modifier = 1;
                 if (this.currentSortDir === 'desc') modifier = -1;
                 if(this.currentSort == 'cena'){
+                    console.log('Usao u cena');
                     if (oglas1.cenovnik.cenaPoDanu < oglas2.cenovnik.cenaPoDanu) return -1 * modifier;
                     if (oglas1.cenovnik.cenaPoDanu > oglas2.cenovnik.cenaPoDanu) return 1 * modifier;
                     return 0;
                 }
                 if(this.currentSort == 'ocena'){
+                    console.log('Usao u ocena');
                     if (oglas1.automobil.ukupnaOcena < oglas2.automobil.ukupnaOcena) return -1 * modifier;
                     if (oglas1.automobil.ukupnaOcena > oglas2.automobil.ukupnaOcena) return 1 * modifier;
                     return 0;
                 }
                 if(this.currentSort == 'predjenaKilometraza'){
+                    console.log('Usao u pk');
                     if (oglas1.automobil.predjenaKilometraza < oglas2.automobil.predjenaKilometraza) return -1 * modifier;
                     if (oglas1.automobil.predjenaKilometraza > oglas2.automobil.predjenaKilometraza) return 1 * modifier;
                     return 0;
@@ -753,15 +514,24 @@ export default {
            this.$router.push(`/login`);
         }
         else{        
-        //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
-        this.brojSedZaDec = this.range(0, 5);
-        // Preuzimanje objekta korpa iz localStorage
-        if(JSON.parse(localStorage.getItem('cart'))!= null){
-            this.cartIsNotEmpty = true;
-        }
-        
-        // dobavljanje svih sifrarnika
-        this.getAllOptions();
+            //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
+            this.brojSedZaDec = this.range(0, 5);
+            // Preuzimanje objekta korpa iz localStorage
+            if(JSON.parse(localStorage.getItem('cart'))== null){
+                this.korpa = [];
+            }
+            else{
+                this.cartIsNotEmpty = true;
+                this.korpa = JSON.parse(localStorage.getItem('cart'));
+            }
+            
+
+            let parsToken =  JSON.parse(localStorage.getItem('parsToken'));
+            this.userId = parsToken.jti;
+            console.log('Ulogovani user: ' + this.userId);
+            // dobavljanje svih sifrarnika
+            this.getAllOptions();
+            this.getAllOglas();
         }
     },
     mounted() {
@@ -863,5 +633,9 @@ export default {
     top:35px;
     width:15%;
     padding:5px;
+}
+
+.card-img-top:hover{
+    cursor: pointer;
 }
 </style>

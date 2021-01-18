@@ -7,7 +7,7 @@
         <br>
         <div id='main' class='container'>
              <div class='container' style='background-color:#35424a;text-align:center;padding:15px;color:#FF8C00'>
-           <h1> NAPRAVLJENE REZERVACIJE </h1>   
+           <h1> NAPRAVLJENE REZERVACIJE OBRISATI!!!!!!!!!!!!!!!!!!!!!!!!!! </h1>   
             </div>
             <table class="table">
                 <thead>

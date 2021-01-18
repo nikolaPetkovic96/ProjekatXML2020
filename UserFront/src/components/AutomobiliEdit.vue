@@ -212,9 +212,10 @@ export default {
         },
         editCar:function(){
             this.fillEditData(this.automobil);
+            console.log(JSON.stringify(this.AutomobilEdit));
             UserDataService.updateAutomobil(this.AutomobilEdit).then(response => {
                 alert('Vaš automobil je uspešno izmenjen!');
-                this.$router.push('/cars');
+                this.$router.push('/carsAgent');
             }).catch(error  => {
                 if (error.response.status === 500 || error.response.status === 404) {
                     this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru, molimo Vas pokusajte ponovo kasnije!</h4>`;
@@ -227,10 +228,9 @@ export default {
             UserDataService.getAutomobil(this.id).then(response => {
                 this.automobil = response.data;
             });
-
         },
         closeEdit:function(){
-            this.$router.push('/cars');
+            this.$router.push('/carsAgent');
         },
         addChoosenMarka:function(id){
             this.AutomobilEdit.markaAutomobilaId = id;
@@ -287,11 +287,9 @@ export default {
     },
     computed: {
         id() {
-            if(JSON.parse(localStorage.getItem('token')) == null){
-                this.$router.push(`/login`);
-            }else{
-                return this.$route.params.id; //preuzimam id automobila na cijoj sam stranici za prikaz detalja
-            }
+
+            return this.$route.params.id; //preuzimam id automobila na cijoj sam stranici za prikaz detalja
+            
         },
     },
     created() {

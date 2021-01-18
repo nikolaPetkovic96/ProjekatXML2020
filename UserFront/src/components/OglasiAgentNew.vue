@@ -206,13 +206,14 @@ export default {
           this.noviOglas.doDatuma = this.dates.to.getTime();
           //Obrisati
 
-          console.log(`Novi oglas:${JSON.stringify(this.noviOglas)}`);
+          // console.log(`Novi oglas:${JSON.stringify(this.noviOglas)}`);
            
           UserDataService.addOglas(this.noviOglas).then(response => {
             alert('Vaš oglas je uspešno dodat!');
-            this.$router.push('/cars');
+            this.$router.push('/carsAgent');
           }).catch(error  => {
-            if (error.response.status === 500 && error.response.data.message === "Ad already exists!") {
+            console.log(error.response.data)
+            if (error.response.status === 500 && error.response.data === "Za odabrani termin vec postoji oglas!") {
                 this.messages.errorResponse = `<h4>Došlo je do preklapanja oglasa! Molimo Vas odaberite drugi interval!</h4>`;
                 setTimeout(() => this.messages.errorResponse = '', 5000);
             }

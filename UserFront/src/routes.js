@@ -14,6 +14,7 @@ import AutomobiliAgentNew from './components/AutomobiliAgentNew'
 
 import Poruke from './components/Poruke' 
 import PorukeOverview from './components/PorukeOverview'
+import ReservationChartDetails from './components/RezervacijaChartDetails'
 import ReservationDetails from './components/RezervacijaDetails'
 import Reservation from './components/Rezervacija'
 import ReservationNew from './components/RezervacijaNew'
@@ -80,6 +81,12 @@ export default [
         name:'ReservationDetails',
         component:ReservationDetails
     },
+    {
+        path:'/shoppingCart/reservation/:id/details',
+        name:'ReservationChartDetails',
+        component:ReservationChartDetails
+    },
+    
     {
         path:'/reservations/',
         name:'Reservation',

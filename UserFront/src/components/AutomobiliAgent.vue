@@ -264,7 +264,7 @@ export default {
                 UserDataService.deleteAutomobil(id).then(response => {
                     this.getAutomobiliList();
                 }).catch(error => {
-                    if (error.response.status === 500 && error.response.data.message === 'There is an ad connected to this car!') {
+                    if(error.response.data === 'There are ads connected to this car!'){
                         this.messages.errorResponse = `<h4>Ne možete obrisati ovaj automobil jer postoji oglas napravljen za njega!</h4>`;
                         setTimeout(() => this.messages.errorResponse = '', 5000);
                     }

@@ -175,7 +175,7 @@ export default {
   },
   methods: {
     addChoosenMarka: function (event) {
-      console.log(event);
+      console.log('Marka id: ' + event.target.value);
       const id = event.target.value;
       this.AutomobilNew.markaAutomobilaId = id;
       this.modelAutFilt = [];

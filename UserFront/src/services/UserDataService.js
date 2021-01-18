@@ -5,6 +5,9 @@ const LOGINREG_API_URL = `${API_URL}/loginreg-service/api/user`;
 const CAR_API_URL = `${API_URL}/automobil-service`; //npr: http://localhost:2020/automobil-service/brand
 const REVIEW_API_URL = `${API_URL}/rating-service`;
 const RESERVATION_API_URL = `${API_URL}/reservation-service`
+const AD_API_URL = `${API_URL}/oglas-service`
+const MESSAGE_API_URL = `${API_URL}/message-service`
+
 
 //Za svaki zahtev se dodaje token za autorizaciju i 
 //autenitifikaciju ulogovanog korisnika u zaglavlje upita
@@ -15,7 +18,7 @@ if(JSON.parse(localStorage.getItem('token')) != null){
 
 class UserDataService{
     
-     //USER
+    //USER
     
     //LoginForm.vue
     userLoginUser(form){
@@ -36,13 +39,7 @@ class UserDataService{
         return axios.put(`${LOGINREG_API_URL}/profile/update`, profile);
     }
 
-     //AUTOMOBILI
-    //ZA USERA KASNIJE
-    // Automobili.vue
-    // searchAutomobil(searchedQuery){
-    //     return axios.get(`${CAR_API_URL}/search${searchedQuery}`);
-    // }
-    //AutomobiliAgent.vue
+    //AUTOMOBILI
     getAllAutomobiliAgent(){
         return axios.get(`${CAR_API_URL}/car/agent`);
     }
@@ -61,36 +58,72 @@ class UserDataService{
         console.log('review id: ' + id);
         return axios.get(`${REVIEW_API_URL}/review/${id}`);
     }
+    deleteAutomobil(id){
+        return axios.delete(`${CAR_API_URL}/car/${id}`);
+    }
+    updateAutomobil(automobil){
+        console.log("Tu");
+        return axios.put(`${CAR_API_URL}/car/`, automobil);
+    }
 
-      //CENOVNIK
+    getAutomobil(id){
+        return axios.get(`${CAR_API_URL}/car/${id}`);
+    }
+
+    //CENOVNIK
     //Cenovnik.vue i OglasiNew.vue
     getAllCenovnik(){
-        return axios.get(`${CAR_API_URL}/price/`);
+        return axios.get(`${AD_API_URL}/price/`);
     }
     getCenovnik(id){
-        return axios.get(`${CAR_API_URL}/price/${id}`);
+        return axios.get(`${AD_API_URL}/price/${i/userd}`);
     }
     addCenovnik(cenovnik){
         console.log('Novi cenovnik: ' + JSON.stringify(cenovnik));
-        return axios.post(`${CAR_API_URL}/price/`, cenovnik);
+        return axios.post(`${AD_API_URL}/price/`, cenovnik);
     }
     updateCenovnik(cenovnik){
         console.log('Edit cenovnik: ' + JSON.stringify(cenovnik));
-        return axios.put(`${CAR_API_URL}/price/`, cenovnik);
+        return axios.put(`${AD_API_URL}/price/`, cenovnik);
     }
     deleteCenovnik(id){
-        return axios.delete(`${CAR_API_URL}/price/${id}`);
+        return axios.delete(`${AD_API_URL}/price/${id}`);
     }
 
+    //REZERVACIJE
+    getAllRezervOsnovnoUser(){
+        return axios.get(`${RESERVATION_API_URL}/reservation/user`);
+    }
+    getAllRezervOsnovnoAgent(){
+        return axios.get(`${RESERVATION_API_URL}/reservation/agent`);
+    }
+    getRezervacijaDetails(id){
+        return axios.get(`${RESERVATION_API_URL}/reservation/${id}/details`);
+    }
+    //Svi isto gadjaju (razdvojeno zbog preglednosti)
+    updateReservationStatusAccept(status){
+        console.log('Accept: ' + status.statusRezervacije);
+        return axios.put(`${RESERVATION_API_URL}/reservation/status`, status);
+    }
+    updateReservationStatusCancel(status){
+        console.log('Cancel: ' + status.statusRezervacije);
+        return axios.put(`${RESERVATION_API_URL}/reservation/status`,status);
+    }
+    updateReservationStatusTest(status){
+        console.log('Test: ' + status.statusRezervacije);
+        return axios.put(`${RESERVATION_API_URL}/reservation/status`,status);
+    }
+    updateReservationStatusPaid(status){
+        console.log('Paid: ' + status.statusRezervacije);
+        return axios.put(`${RESERVATION_API_URL}/reservation/status`,status);
+    }
 
-    // getAllAutomobiliReview(){
-    //     return axios.get(`${REVIEW_API_URL}/comment`)
-    // }
-    // getAllRezervacijeOsnovno(){
-    //     return axios.get(`${RESERVATION_API_URL}/rating`)
-    // }
+    //PORUKA:
+    addPoruka(poruka){
+        return axios.post(`${MESSAGE_API_URL}/message`, poruka);
+    }
 
-  //SIFRARNIK
+    //SIFRARNIK
     //Automobili.vue
     getAllMarkaAut(){
         return axios.get(`${CAR_API_URL}/brand`);
@@ -110,8 +143,34 @@ class UserDataService{
 
     //Reviews(Komentari i ocene)
     addKomentar(komentar){
-        console.log('komentar: ' + JSON.stringify(komentar) );
         return axios.post(`${REVIEW_API_URL}/comment/`, komentar);
+    }
+
+    //OGLASI
+    getAllUsersOglas(){        
+        return axios.get(`${AD_API_URL}/ads/agent`);
+    }
+
+    deleteOglas(id){
+        return axios.delete(`${AD_API_URL}/ads/${id}`);
+    }
+
+    addOglas(oglas){
+        console.log('oglas: ');
+        console.log(JSON.stringify(oglas) );
+        return axios.post(`${AD_API_URL}/ads/`, oglas);
+    }
+    //getAllAutomobiliAgent()
+    searchOglas(searchedQuery){
+        console.log(`${AD_API_URL}/ads/search${searchedQuery}`);
+        return axios.get(`${AD_API_URL}/ads/search${searchedQuery}`);
+    }
+    getAllOglas(){
+        return axios.get(`${AD_API_URL}/ads/img`);
+    }
+    getOglasDetails(id){
+        console.log('ID: ' + id);
+        return axios.get(`${AD_API_URL}/ads/${id}/details`);
     }
 
 }

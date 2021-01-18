@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th>Automobil</th> <!--Marka + model-->
-                        <th>Od</th>
+                        <th>Od (mm:dd:yy)</th>
                         <th>Do</th>
                         <th>Lokacija</th>
                         <th>Planirana km</th>
@@ -25,11 +25,11 @@
                 <tbody>                
                     <tr v-bind:key="oglas.id" v-for='oglas in oglasi'>
                         <td>{{oglas.automobil.markaAut}} {{oglas.automobil.modelAut}} ({{oglas.automobil.klasaAut}})</td>
-                        <td>{{oglas.odDatuma}}</td>
-                        <td>{{oglas.doDatuma}}</td>
+                        <td>{{formatDatuma(oglas.odDatuma)}}</td>
+                        <td>{{formatDatuma(oglas.doDatuma)}}</td>
                         <td>{{oglas.adresa.mesto}}</td>
-                        <td>{{oglas.planiranaKilometraza}} km</td>
-                        <td>{{oglas.cenovnik.nazivCenovnika}}</td>
+                        <td>{{oglas.planiranaKm}} km</td>
+                        <td>{{oglas.cenovnik.nazivCenovnika}}</td> 
                         <td>{{oglas.cenovnik.cenaPoDanu}} din</td>
                         <td>{{oglas.cenovnik.cenaPoKilometru}} din</td>
                         <td>
@@ -63,6 +63,8 @@ export default {
         getAllUsersOglas:function(){
             userDataService.getAllUsersOglas().then(response => {
                 this.oglasi = response.data;
+                console.log("Oglasi: " + JSON.stringify(this.oglasi));
+                
             });
         },
         deleteAds:function(id){
@@ -72,12 +74,18 @@ export default {
                     this.getAllUsersOglas();
                 })
                 .catch(error => {
-                    if(error.response.status === 500 || error.response.data.message === 'There are reservations connected to this ad!'){
+                    console.log(error.response.data);
+                    if(error.response.data === 'There are reservations connected to this ad!'){
+                        
                         this.messages.errorResponse= `<h4>Ne možete obrisati ovaj oglas jer postoje rezervacije vezane za njega!</h4>`;
                         setTimeout(() => this.messages.errorResponse='', 5000);
                     }
                 });
             }
+        },
+        formatDatuma(datum){
+            const date = new Date(datum);       //konvertujemo input tip u Date
+            return date.toLocaleDateString();
         },
     },
     created(){

@@ -1,7 +1,9 @@
 <template>
     <div id="reservation">
         <div class="container" id='page-title'>
-            <h1 style="margin-top:10px;color:#35424a;">Pregled <span id='titleEffect'>Rezervacija</span></h1>
+            <h1 style="margin-top:10px;color:#35424a;">Pregled <span id='titleEffect'>Rezervacija</span> </h1>
+            <h3 style="margin-top:10px;color:#35424a;"> Nad Vašim <span id='titleEffect'>Oglasima </span> </h3>
+            
             <hr style='background:#35424a;height:1px;'>
         </div>
         
@@ -28,18 +30,17 @@
                     <td>
                         <button v-on:click='showDetails(rezervacija.id)' class=" btn-outline-primary"> detalji </button>
                     </td>
-                       <td>
+                    <td>
                         <button v-on:click='openMessage(rezervacija.id)'  :disabled='statusMessage(rezervacija.statusRezervacije)' class=" btn-outline-dark"> poruke </button>
                     </td>
                     <td>
                         <button v-on:click='exceptReserv(rezervacija.id)' :disabled='status(rezervacija.statusRezervacije)' class="btn-outline-success"> prihvati </button>
                         <button v-on:click='rejectReserv(rezervacija.id)' :disabled='status(rezervacija.statusRezervacije)' class="btn-outline-danger"> odbij </button>
+                        <!-- <button v-on:click='testStat(rezervacija.id)'  class="btn-outline-danger"> test </button> -->
                     </td>               
                 </tr>
                 </tbody>
             </table>
-            <!-- <button  v-on:click='newManualReservation()' class="btn  btn-success" style='padding-left: 5px;'>Ručno rezervisanje</button> -->
-        
         </div> <!--main-->
     </div>
 </template>
@@ -71,7 +72,7 @@ export default {
     },
     methods:{
         getAllReservation:function(){
-            userDataService.getAllRezervacijeOsnovno().then(response => {
+            userDataService.getAllRezervOsnovnoAgent().then(response => {
                this.rezervacije = response.data;
             });
         },
@@ -101,18 +102,24 @@ export default {
         showDetails(id){
             this.$router.push(`/reservation/${id}/details`);
         },
-
+        // testStat(id){
+        //         this.promenaStatusa.rezervacijaId = id;
+        //         this.promenaStatusa.statusRezervacije = 'PENDING';
+        //         userDataService.updateReservationStatusAccept(this.promenaStatusa).then(response => {
+        //             alert('Uspešno ste prihvatili rezervaciju!');
+        //             this.getAllReservation();
+        //         });
+        // },
         exceptReserv(id){
             if(confirm("Da li želite da potvrdite ovu rezervaciju?")){
                 this.promenaStatusa.rezervacijaId = id;
                 this.promenaStatusa.statusRezervacije = 'RESERVED';
-                userDataService.updateReservationAccept(this.promenaStatusa).then(response => {
-                    alert('Uspesno ste prihvatili rezervaciju!');
+                userDataService.updateReservationStatusAccept(this.promenaStatusa).then(response => {
+                    alert('Uspešno ste prihvatili rezervaciju!');
                     this.getAllReservation();
-
                 }).catch(error => {
                     if (error.response.status === 500 || error.response.status === 404) {
-                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru, molimo Vas pokušajte ponovo kasnije!</h4>`;
                         setTimeout(() => this.messages.errorResponse = '', 5000);
                     }
                 });
@@ -122,13 +129,12 @@ export default {
             if(confirm("Da li želite da odbijete ovu rezervaciju?")){
                 this.promenaStatusa.rezervacijaId = id;
                 this.promenaStatusa.statusRezervacije = 'CANCELED';
-                userDataService.updateReservationDecline(this.promenaStatusa).then(response => {
-                    alert('Uspesno ste odbili rezervaciju!');
+                userDataService.updateReservationStatusCancel(this.promenaStatusa).then(response => {
+                    alert('Uspešno ste odbili rezervaciju!');
                     this.getAllReservation();
-
                 }).catch(error => {
                     if (error.response.status === 500 || error.response.status === 404) {
-                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru,  molimo Vas pokusajte ponovo kasnije!</h4>`;
+                        this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru, molimo Vas pokusajte ponovo kasnije!</h4>`;
                         setTimeout(() => this.messages.errorResponse = '', 5000);
                     }
                 });

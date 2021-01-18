@@ -23,7 +23,7 @@
                 <div class="card-header">
                     <h4><b>Automobil:</b> {{narudzbenica.oglas.automobil.markaAut}} {{narudzbenica.oglas.automobil.modelAut}} (marka/model)</h4>
                     <h4><b>Klasa automobila:</b> {{narudzbenica.oglas.automobil.klasaAut}}</h4>
-                    <h4><b>Termin rezervacije:</b> {{narudzbenica.odDatuma}} - {{narudzbenica.doDatuma}}</h4>
+                    <h4><b>Termin rezervacije:</b> {{formatDatuma(narudzbenica.odDatuma)}} - {{formatDatuma(narudzbenica.doDatuma)}} (mm:dd:yy)</h4>
                 </div>
                 
                 <div id='all-messages' v-show='toShowMessage' v-bind:key="poruka.id" v-for='poruka in filtriranePoruke(narudzbenica.oglas.automobil)'>   
@@ -42,13 +42,17 @@
                         </div>
                     </div>
                 </div>
-                 <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(narudzbenica.oglas.automobil)'>Nova poruka</button></a>
+                <div style='margin-top:15%;'>
+                    <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(narudzbenica.oglas.automobil)'>Nova poruka</button></a>
+                </div> 
             </div>
             
             
             <hr style='background:lightgray;height:1px;'>
             
         <!-- NOVA PORUKA -->
+            <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
+            <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
             <div v-if='newMessage' id='car-new-message'>
                 <div class="container" id='page-title'>
                     <h1 style="margin-top:10px;color:#35424a;">Nova <span id='titleEffect'>Poruka</span></h1>
@@ -58,8 +62,7 @@
                     <div class="card-header">
                         <h4><b>Za automobil:</b> {{this.automobilPoruka.markaAut}} {{this.automobilPoruka.modelAut}} - {{this.automobilPoruka.klasaAut}} (marka/model/klasa)</h4>
                     </div>
-                    <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
-                    <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
+                  
                     <div>
                         <label for="">Tekst poruke</label>
                         <div v-if='messages.errorText' class="alert alert-danger" v-html="messages.errorText"></div>
@@ -114,20 +117,19 @@ export default {
                 setTimeout(() => this.messages.errorText = '', 3000);
             }
             else {
-                alert(`Nova poruka: 
-                automobilId: ${this.novaPoruka.automobilId},
-                tekstPoruke: ${this.novaPoruka.tekstPoruke},
-                rezervacijaId ${this.novaPoruka.rezervacijaId},`);
-
+                console.log(JSON.stringify(this.novaPoruka));
                 UserDataService.addPoruka(this.novaPoruka).then(response => {
                     this.messages.successResponse = `<h4>Vas poruka je uspesno poslata!</h4>`;
                     setTimeout(() => this.messages.successResponse = '', 3000);
-
+                    this.novaPoruka.tekstPoruke = '';
+                    this.newMessage = false;
                     this.getAllMessages();
                 })
                 .catch(error => {
                     if (error.response.status === 500 || error.response.status === 404) {
                         this.messages.errorResponse = `<h4>Imali smo nekih problema na serveru, molimo Vas pokušajte kasnije!</h4>`;
+                        this.novaPoruka.tekstPoruke = '';
+                        this.newMessage = false;
                         setTimeout(() => this.messages.errorResponse = '', 5000);
                     }
                 });
@@ -137,13 +139,14 @@ export default {
             //ako je vec otvoren prozor za kreiranje nove poruke samo neka se doda drugi id
             if(this.newMessage === true){
                 this.novaPoruka.automobilId = automobil.id;
-                console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
+                this.novaPoruka.tekstPoruke = '';
+                
             }
             //ako je zatvoren prozor klikom na dugme se prvo otvara prozor za kreiranje pa se dodaje i id auta.
             else{
                 this.newMessage = !this.newMessage;
                 this.novaPoruka.automobilId = automobil.id;
-                console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
+                this.novaPoruka.tekstPoruke = '';
             }
 
             this.automobilPoruka = automobil;
@@ -152,11 +155,10 @@ export default {
         closeCreateMessage:function(){
             this.newMessage = !this.newMessage;
             this.novaPoruka.automobilId = '';
-            console.log('this.novaPoruka.automobilId:' + this.novaPoruka.automobilId);
+            this.novaPoruka.tekstPoruke = '';
         },
-        //Metoda koja proverava da li ima 
+        //Metoda koja proverava da li ima poruka za automobil
         isThereMessages:function(rezervacija){   
-            // console.log('asdsad rezervacija.poruke.length: ' + rezervacija.poruke.length);  
             if(rezervacija.poruke === undefined || rezervacija.poruke.length === 0){
               
               return true;
@@ -165,11 +167,12 @@ export default {
                 return false;
             }
         },
+        //Da prikaze samo one poruke koje su vezane za taj automobil
+        //Ako je u pitanju bundle
         filtriranePoruke:function(automobil){
             let filtriranePoruke = [];
             for(let i = 0; i < this.rezervacija.poruke.length; i++){
                 if(this.rezervacija.poruke[i].automobilId == automobil.id){
-                    // console.log('this.rezervacija.poruke[i].automobilId: ' + this.rezervacija.poruke[i].automobilId);
                     filtriranePoruke.push(this.rezervacija.poruke[i]);
                 }
             }
@@ -181,8 +184,12 @@ export default {
         //Ako ima dodeli poruci klasu myMessage u suprotnom customerMessage...
         // isMyMessage:false,
         isMyMessage:function(poruka){
+          
             //prepraviti da proverava id onoga ko je napisao poruku sa id agenta koji je ulogovan u sesiju.
-           if(poruka.commonData.userId === this.userId){
+           if(poruka.commonData.userId == this.userId){
+               console.log('Poklopili se');
+                console.log("this.userId:" + this.userId);
+               console.log("poruka.commonData.userId:" + poruka.commonData.userId);
                return true;
            }
            else {
@@ -190,12 +197,20 @@ export default {
            }
         },
         isCustomerMessage:function(poruka){
-           if(poruka.commonData.userId !== this.userId){
+           if(poruka.commonData.userId != this.userId){
+                console.log('Poklopili se');
+                console.log("this.userId:" + this.userId);
+               console.log("poruka.commonData.userId:" + poruka.commonData.userId);
                return true;
            }
            else {
                 return false; 
            }
+        },
+
+        formatDatuma(datum){
+            const date = new Date(datum);       //konvertujemo input tip u Date
+            return date.toLocaleDateString();
         },
     },
     computed:{
@@ -204,18 +219,16 @@ export default {
         },
     },
     created(){
-        // 1. se getuje rezervacija ciji id je prosledjen u urlu;
         if(JSON.parse(localStorage.getItem('token')) == null){
-           this.$router.push(`/login`);
-        }
-        else{
+            this.$router.push(`/login`);
+        }else{
+            // 1. se getuje rezervacija ciji id je prosledjen u urlu;
             this.novaPoruka.rezervacijaId = this.id;
             const token = JSON.parse(localStorage.getItem('parsToken'));
-            this.userId = token.id;
-
+            this.userId = token.jti;
+            console.log("ID:" + this.userId);
             this.getAllMessages();
         }
-        
     }
 }
 </script>

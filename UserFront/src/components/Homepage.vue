@@ -262,10 +262,10 @@ export default {
            this.$router.push(`/login`);
         }
         else{
-           let parsToken = this.parseJwt(localStorage.getItem('token'));
-           localStorage.setItem('parsToken', JSON.stringify(parsToken));
+            let parsToken = this.parseJwt(localStorage.getItem('token'));
+            localStorage.setItem('parsToken', JSON.stringify(parsToken));
             this.user.username = parsToken.sub;
-
+            console.log('USERNAME: ' + this.user.username);
             this.temp = ""
             try{
                 this.temp = localStorage.getItem("userMode");
@@ -286,8 +286,6 @@ export default {
             } 
         // let parsToken = this.parseJwt(localStorage.getItem('token'));
         const temp = localStorage.getItem("userMode")
-        localStorage.setItem('parsToken', JSON.stringify(parsToken));
-        this.user.username = parsToken.username;
         }
     },
 }
