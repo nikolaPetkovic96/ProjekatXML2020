@@ -181,12 +181,12 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('202
 --57
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-11-04 21:58:58','2020-07-04 18:57:58',-5)
 --Poruka
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je prva poruka usera Anna00 . Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 53, 'Anna00')
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je druga poruka usera Anna00 . Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 54, 'Anna00')
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je Prva poruka moja. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 55, 'BestUser')
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je druga poruka moja.  Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 56, 'BestUser')
+--INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je prva poruka usera Anna00 . Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 53, 'Anna00')
+--INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je druga poruka usera Anna00 . Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 54, 'Anna00')
+--INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je Prva poruka moja. Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 55, 'BestUser')
+--INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je druga poruka moja.  Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 1, 1, 56, 'BestUser')
 
-INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je prva poruka usera Anna00 . Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 4, 1, 57, 'BestUser')
+--INSERT INTO Poruka(tekst_poruke, rezervacija_id, automobil_id, common_data_id, username) VALUES('Ovo je prva poruka usera Anna00 . Dsds adasd sad dasd asdwqe fbnfdj d rdaes.', 4, 1, 57, 'BestUser')
 
 
 --Dodatna rezervacija i 2 narudzb za slucaj kada korisnik rezervise bundle tudj oglas 57 - 59

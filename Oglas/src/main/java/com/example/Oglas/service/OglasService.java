@@ -328,5 +328,28 @@ public class OglasService {
 	public Oglas findOne(Long id) {
 		return oglasRep.findById(id).orElse(null);
 	}
+
+	/***
+	 * 
+	 * @return Metoda koja vraca broj oglasa koje je napravio user
+	 */
+	public int getNumberOfAds() {
+		HttpServletRequest request = 
+		        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
+		                .getRequest();
+		Long userId = Long.parseLong(request.getHeader("userid"));
+		
+		int noOfAds = 0;
+		
+		List<Oglas> oglasi = oglasRep.findAll();
+		for(Oglas o : oglasi) {
+			CommonData cmd = cmdServ.findOne(o.getCommonDataId());
+			if(cmd.getUserId() == userId) {
+				noOfAds++;
+			}
+			
+		}
+		return noOfAds;
+	}
 }	
 

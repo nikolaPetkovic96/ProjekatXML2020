@@ -43,8 +43,6 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 	private OglasService oglasService;
 	@Autowired
 	private CommonDataService comDataService;
-//	@Autowired
-//	private UserService userService;
 	@Autowired
 	private NarudzbenicaService narudzbService;
 	@Autowired
@@ -59,14 +57,10 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-//	@GetMapping(value="/agent")
-//	public ResponseEntity<List<OglasDetailsImgDTO>> getAllOglasImg() {
-//		
-//		List<OglasDetailsImgDTO> all = oglasService.getAllOglasImg();
-//		if(all!=null)
-//			return new ResponseEntity<>(all, HttpStatus.OK);
-//		else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//	}
+	@GetMapping(value="/numberOfAds")
+	public int getNumberOfAds() {
+		return  oglasService.getNumberOfAds();
+	}
 	
 	@GetMapping(value="/agent")
 	public ResponseEntity<List<OglasDTO>> getAllAgentsOglas() {
@@ -102,7 +96,6 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 	@PostMapping(value="")
 	public ResponseEntity<?> addOglas(Principal principal, @RequestBody OglasNewDTO dto)  throws Exception {
 		String username = principal.getName();
-		//System.out.println(username);
 		return oglasService.addOglas(dto, username);
 	}
 	

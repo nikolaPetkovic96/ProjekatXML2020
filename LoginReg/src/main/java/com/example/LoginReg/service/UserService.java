@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +24,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.example.LoginReg.config.TokenUtils;
 import com.example.LoginReg.config.auth.JwtAuthenticationRequest;
 import com.example.LoginReg.model.Authority;
+import com.example.LoginReg.model.PermissionsDTO;
 import com.example.LoginReg.model.TAdresa;
 import com.example.LoginReg.model.TUser;
 import com.example.LoginReg.model.UserDTO;
@@ -383,5 +387,23 @@ public class UserService {
 		String n=SecurityContextHolder.getContext().getAuthentication().getName();
 		TUser u = userRepository.findOneByKorisnickoIme(n);
 		return toDTO(u);
+	}
+
+	public PermissionsDTO getMyPermissions() {
+		HttpServletRequest request = 
+		        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
+		                .getRequest();
+		Long userId = Long.parseLong(request.getHeader("userid"));
+		TUser user = findOne(userId);
+		
+		return new PermissionsDTO(user.isAllowedToCommend(),
+								  user.isAllowedToMessage(),
+								  user.isAllowedToMakeReservation(),
+								  user.getStatus());
+		
+	}
+	
+	public TUser findOne(Long userId) {
+		return userRepository.findById(userId).orElse(null);
 	}
 }

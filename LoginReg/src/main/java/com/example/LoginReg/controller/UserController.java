@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.LoginReg.config.auth.JwtAuthenticationRequest;
+import com.example.LoginReg.model.PermissionsDTO;
 import com.example.LoginReg.model.UserDTO;
 import com.example.LoginReg.model.UserTokenState;
 import com.example.LoginReg.service.UserService;
@@ -133,6 +134,12 @@ public class UserController {
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public UserDTO myProfile() {
 		return userService.getMyProfile();
+	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/getPermissions", method = RequestMethod.GET)
+	public PermissionsDTO myPermissons() {
+		return userService.getMyPermissions();
 	}
 
 }
