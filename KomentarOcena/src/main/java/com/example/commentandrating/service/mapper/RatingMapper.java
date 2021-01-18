@@ -23,9 +23,6 @@ public class RatingMapper {
 
 	public Ocena fromDto(OcenaDTO k) {
 		CommonData data = new CommonData();
-		// data.setUserId(userId); //TODO izvuci iz security kntexta
-		// String username =
-		// tUserRepository.findById(data.getUserid()).get().getKorisnickoIme();
 		Ocena kom = new Ocena();
 		kom.setAutomobilId(k.getAutomobilId());
 		kom.setRezervacijaId(k.getRezervacijaId());
@@ -33,6 +30,7 @@ public class RatingMapper {
 		commonDataRepository.save(data);
 		commonDataRepository.flush();
 		kom.setCommonDataId(data.getId());
+//		kom.setAutor(k.getUsername());
 		return kom;
 	}
 }

@@ -96,7 +96,7 @@ public class AutomobilController {
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public boolean deleteAutomobil(@PathVariable Long id) throws Exception{
+	public ResponseEntity<String> deleteAutomobil(@PathVariable Long id) throws Exception{
 		
 		return autoService.deleteAutomobil(id);
 	}

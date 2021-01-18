@@ -11,14 +11,14 @@ public class RezervacijaNewDTO {
 	private Boolean bundle;                  
 	private String statusRezervacije;   
 	private Long commonDataId;
-	private List<NarudzbenicaNewDTO> narudzbenica;
+	private List<NarudzbenicaNewDTO> narudzbenice;
   
 	
 	public RezervacijaNewDTO() {
 		
 	}
 
-	public RezervacijaNewDTO(Rezervacija r, List<NarudzbenicaNewDTO> narudzbenica) {
+	public RezervacijaNewDTO(Rezervacija r, List<NarudzbenicaNewDTO> narudzbenice) {
 		super();
 		this.id = r.getId();
 		this.ukupnaCena = r.getUkupnaCena();
@@ -26,18 +26,18 @@ public class RezervacijaNewDTO {
 		this.statusRezervacije = r.getStatusRezervacije();
 		this.commonDataId = r.getCommonDataId();
 		
-		this.narudzbenica = narudzbenica;
+		this.narudzbenice = narudzbenice;
 	}
 	
 	public RezervacijaNewDTO(Long id, double ukupnaCena, Boolean bundle, String napomenaRezervacije, String statusRezervacije, 
-			Long commonDataId, List<NarudzbenicaNewDTO> narudzbenica) {
+			Long commonDataId, List<NarudzbenicaNewDTO> narudzbenice) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
 		this.bundle = bundle;
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
-		this.narudzbenica = narudzbenica;
+		this.narudzbenice = narudzbenice;
 	}
 
 
@@ -89,12 +89,12 @@ public class RezervacijaNewDTO {
 		this.commonDataId = commonDataId;
 	}
 
-	public List<NarudzbenicaNewDTO> getNarudzbenica() {
-		return narudzbenica;
+	public List<NarudzbenicaNewDTO> getNarudzbenice() {
+		return narudzbenice;
 	}
 
-	public void setNarudzbenica(List<NarudzbenicaNewDTO> narudzbenica) {
-		this.narudzbenica = narudzbenica;
+	public void setNarudzbenice(List<NarudzbenicaNewDTO> narudzbenice) {
+		this.narudzbenice = narudzbenice;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.example.commentandrating.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,12 +28,12 @@ public class RatingsController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public OcenaDTO getCommentById(@PathVariable("id") Long id) {
+	public OcenaDTO getRatingById(@PathVariable("id") Long id) {
 		return ratingService.getRating(id);
 	}
 
 	@PostMapping(value = "")
-	public OcenaDTO addComment(@RequestBody OcenaDTO kom) {
+	public ResponseEntity<?> addRating(@RequestBody OcenaDTO kom) {
 		return ratingService.createRating(kom);
 	}
 

@@ -2,6 +2,7 @@ package com.example.Automobil.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,10 +30,13 @@ import com.example.Automobil.dto.AutomobilPomDTO;
 import com.example.Automobil.dto.TSlikaVozilaDTO;
 import com.example.Automobil.model.Automobil;
 import com.example.Automobil.model.CommonData;
+import com.example.Automobil.model.Oglas;
 import com.example.Automobil.model.SlikaVozila;
 import com.example.Automobil.model.TSlikaVozila;
 import com.example.Automobil.repository.AutomobilRepository;
+import com.example.Automobil.repository.OglasRepository;
 import com.example.Automobil.service.mapper.AutomobilMapper;
+;
 
 @Service
 public class AutomobilService{
@@ -44,6 +49,9 @@ public class AutomobilService{
 	
 	@Autowired
 	private TSlikaVozilaService slikaVozService;
+	
+	@Autowired
+	private OglasRepository oglasRep;
 	
 	//SEARCH
 	public List<AutomobilDTO> searchAgentsAutomobil(Long markaAutId, Long modelAutId,Long klasaAutId,
@@ -230,25 +238,27 @@ public class AutomobilService{
 	}
 	
 	
-	//DELETE
-	public boolean deleteAutomobil(Long id) throws Exception{
+	
+	public ResponseEntity<String> deleteAutomobil(Long id) {
 		Automobil automobil = findOne(id);
 		if(automobil != null) {
-			
-			//Provera da li postoji neki oglas kreiran za taj automobil
-//			if(oglasService.getAllOglasByAutomobilId(automobil.getId()).size() != 0) {
-//				throw new Exception("There is an ad connected to this car!");
-//			}
-			
-			delAutomobil(id);
-			comDataService.deleteCommonData(automobil.getCommonDataId());
-			return true;
-		}else {
-			throw new DataIntegrityViolationException("No car!");
-		}
+			List<Oglas> imaOglasa = oglasRep.findAllByAutomobilId(id);
+			//Ako nema rezervacija vezanih za sebe
+			if(imaOglasa.size() == 0){
+				delAutomobil(id);
+				comDataService.deleteCommonData(automobil.getCommonDataId());
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}else {
+				//Zbog ovog rucnog errora moramo imati return type Response entity;
+				return  ResponseEntity
+			            .status(HttpStatus.NOT_FOUND)
+			            .body("There are ads connected to this car!");
+			}
+
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} 
 	}
-	
-	
 	
 	//DODATNE METODE:
 	

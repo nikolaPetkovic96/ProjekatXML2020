@@ -24,18 +24,17 @@ public class CommentMapper {
 
 	public Komentar fromDto(KomentarDTO k) {
 		CommonData data = new CommonData();
-		// data.setUserId(userId); //TODO izvuci iz security kntexta
-		// String username =
-		// tUserRepository.findById(data.getUserid()).get().getKorisnickoIme();
+		
 		Komentar kom = new Komentar();
 		kom.setAutomobilId(k.getAutomobilId());
-		kom.setOdobren(true);
+		kom.setOdobren(false);
 		
 		kom.setRezervacijaId(k.getRezervacijaId());
 		kom.setTekstKomentara(k.getTekstKomentara());
 		commonDataRepository.save(data);
 		commonDataRepository.flush();
 		kom.setCommonDataId(data.getId());
+//		kom.setAutor(k.getAutor());
 		return kom;
 	}
 }

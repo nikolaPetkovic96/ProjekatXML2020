@@ -97,26 +97,10 @@ public class Rezervacija {
     @Column(name="commonDataId")
     protected Long commonDataId;
     
-    @Column(name="napomena")
-	private String napomena;
-
+    @XmlElement(name = "Username", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
+    @Column(name="username")
+    protected String username;
     
-    
-    
-	//   @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
-	//   protected TUser firma; obrsati 
-    
-	//    @ManyToMany(mappedBy="rezervacije")
-	//    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
-	//    protected List<Oglas> oglas;
-	//    protected List<Poruka> poruka;
-    
-//    @ManyToMany
-//	@JoinTable(
-//	  name = "rezervacije_oglasi", 
-//	  joinColumns = @JoinColumn(name = "rezervacija_id"), 
-//	  inverseJoinColumns = @JoinColumn(name = "oglas_id"))
-//    protected List<Oglas> oglasi;
     
 
 	public Rezervacija() {
@@ -124,14 +108,14 @@ public class Rezervacija {
 	}
 
 	public Rezervacija(Long id, double ukupnaCena,  Boolean bundle,
-			String statusRezervacije,String napomena, Long commonDataId) {
+			String statusRezervacije, Long commonDataId,String username) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
 		this.bundle = bundle;
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
-		this.napomena=napomena;
+		this.username=username;
 	}
 
 	public Long getId() {
@@ -174,20 +158,13 @@ public class Rezervacija {
 		this.commonDataId = commonDataId;
 	}
 
-	public String getNapomena() {
-		return napomena;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setNapomena(String napomena) {
-		this.napomena = napomena;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-
-//	public List<Oglas> getOglasi() {
-//		return oglasi;
-//	}
-//
-//	public void setOglasi(List<Oglas> oglasi) {
-//		this.oglasi = oglasi;
-//	}
+	
 
 }

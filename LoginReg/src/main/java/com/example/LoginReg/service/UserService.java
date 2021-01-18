@@ -181,17 +181,19 @@ public class UserService {
 	public boolean activateUser(String ids, String secret) {
 		Long id = Long.parseLong(ids);
 		if (!userRepository.existsById(id))// pogrresan id
-			throw new DataIntegrityViolationException("Data not valid!");
+			throw new DataIntegrityViolationException("Id not valid!");
 
 		TUser u = userRepository.findById(id).get();
 		if (u.getStatus().equals("aktivan"))// vec je aktiviran
-			throw new DataIntegrityViolationException("Data not valid!");
-		if (!encoder.encode(u.getEmail()).equals(secret))// pogresan secret
-			throw new DataIntegrityViolationException("Data not valid!");
+			throw new DataIntegrityViolationException("Status not valid!");
+//		if (!encoder.encode(u.getEmail()).equals(secret))// pogresan secret
+		if (!u.getLozinka().equals(secret))// pogresan secret
+			throw new DataIntegrityViolationException("Secret not valid!");
 
 		u.setStatus("aktivan");
 		try {
 			userRepository.saveAndFlush(u);
+		
 		}
 
 		catch (Exception e) {

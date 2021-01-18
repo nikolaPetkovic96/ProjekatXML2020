@@ -106,10 +106,9 @@ public class RezervacijaMapper {
 	public RezervacijaFullDTO toDTOFull(Rezervacija r) {
 		CommonData data = commonDataRepository.findById(r.getCommonDataId()).get();
 		String username = r.getUsername();
-		List<NarudzbenicaDTO> narudzbenice=narServ.getAllByRez(r.getId());
-		//List<PorukaDTO> poruke=porServ.findAllPorukeByRezervId(r.getId()).stream().map(p->porMap.toDTO(p)).collect(Collectors.toList());
-		List<PorukaDTO> poruke=porServ.getAllMessagesByRezerv(r.getId());
-		RezervacijaFullDTO fullDTO=new RezervacijaFullDTO(r, username, narudzbenice, poruke);
+		List<NarudzbenicaDTO> narudzbenice = narServ.getAllByRez(r.getId());
+		List<PorukaDTO> poruke = porServ.getAllMessagesByRezerv(r.getId());
+		RezervacijaFullDTO fullDTO = new RezervacijaFullDTO(r, username, narudzbenice, poruke);
 		return fullDTO;
 	}
 }

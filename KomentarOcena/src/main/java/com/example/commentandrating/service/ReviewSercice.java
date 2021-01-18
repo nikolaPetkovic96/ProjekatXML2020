@@ -34,8 +34,13 @@ public class ReviewSercice {
 		for (KomentarDTO k : comments) {	
 			
 			//Provera da li je komentar ostavio sam agent (onda nema ocene)
-			if(k.getAutorId() == userId /*&& k.isOdobren() == true*/) {
-				ret.add(new ReviewDTO(k));
+//			if(k.getAutorId() == userId && /*&& k.isOdobren() == true*/) {
+//				ret.add(new ReviewDTO(k));
+//				continue;
+//			}
+			
+			//Provera da li je komentar odobren
+			if(k.isOdobren() == false) {
 				continue;
 			}
 			

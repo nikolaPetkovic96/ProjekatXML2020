@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -18,6 +20,7 @@ import com.example.Reservation.model.CommonData;
 import com.example.Reservation.model.Izvestaj;
 import com.example.Reservation.model.Rezervacija;
 import com.example.Reservation.repository.IzvestajRepository;
+import com.example.Reservation.repository.service.impl.EmailService;
 @Service
 public class IzvestajService {
 
@@ -29,8 +32,9 @@ public class IzvestajService {
 	private RezervacijaService rezServ;
 	@Autowired
 	private AutomobilService autoServ;
-//	@Autowired
-//	private EmailService emailService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	public List<IzvestajDTO> getAll() {
 		return izvRep.findAll().stream().map(x->new IzvestajDTO(x)).collect(Collectors.toList());
@@ -61,7 +65,7 @@ public class IzvestajService {
 		return userId;
 	}
 
-	public IzvestajDTO addIZvestaj(IzvestajDTO dto, String name) throws Exception {
+	public ResponseEntity<?> addIzvestaj(IzvestajDTO dto, String name) throws Exception {
 		Izvestaj savedIzvestaj = new Izvestaj();
 
 		CommonData commonData = new CommonData();
@@ -84,7 +88,7 @@ public class IzvestajService {
 		List<Izvestaj> all=izvRep.findAll().stream()	
 				.filter(x->x.getNarudzbenicaId()==savedIzvestaj.getNarudzbenicaId()).collect(Collectors.toList());
 		if(all.size()>0) {//ako je ova lista veca od 0 znaci da u tabeli izvestaja vec postoji izvestaj sa narudzbenicom za koju je pokusano cuvanje 
-			throw new Exception("vec je unet izvestaj za narudzbenicu sa id :"+savedIzvestaj.getNarudzbenicaId());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Već postoji napravljen izveštaj za dati automobil!");
 		}
 		Izvestaj i=izvRep.save(savedIzvestaj);
 		
@@ -92,19 +96,17 @@ public class IzvestajService {
 		CommonData cmdRez=cmdServ.findOne(r.getCommonDataId());
 		//User userWhoMadeReserv = userService.findOne(comData.getUserid());
 		if(savedIzvestaj.getPrekoracenaKilometraza() > 0) {
-//			emailService.sendBillEmail(cmdRez.getUserId(), savedIzvestaj);
-			// TODO Zabraniti korisniku da moze praviti nove rezervacije...
+			emailService.sendBillEmail(cmdRez.getUserId(), savedIzvestaj);
 		}
 		
-		autoServ.updatePredjenaKilometraza(i.getAutomobilId(),i.getPredjenaKilometraza());
 		Automobil auto = autoServ.findOne(savedIzvestaj.getAutomobilId());
 		auto.setPredjenaKilometraza(auto.getPredjenaKilometraza() + savedIzvestaj.getPredjenaKilometraza());
 		autoServ.updateAutomobil(auto.getId(), auto);
 		
-		
-		return new IzvestajDTO(i);
+		return new ResponseEntity<>(new IzvestajDTO(i), HttpStatus.CREATED);
 	}
 
+	//NE KORISTI SE 
 	public IzvestajDTO updateIzvestaj(IzvestajDTO dto) throws Exception {
 		Izvestaj i=findOne(dto.getId());
 		CommonData cmd=cmdServ.findOne(dto.getCommonDataId());
@@ -126,7 +128,8 @@ public class IzvestajService {
 		
 		return new IzvestajDTO(updated);
 	}
-
+	
+	//NE KORISTI SE 
 	public Void deleteIzvestaj(Long id) throws Exception {
 		Izvestaj i=findOne(id);
 		izvRep.delete(i);

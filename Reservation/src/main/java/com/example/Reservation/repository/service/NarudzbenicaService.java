@@ -40,6 +40,10 @@ public class NarudzbenicaService {
 		List<NarudzbenicaDTO> lista=narRep.findAll().stream().filter(x->x.getRezervacijaId().equals(rez_id)).map(x->narMap.toDTO(x)).collect(Collectors.toList());
 		return lista;
 	}
+	public List<Narudzbenica> getAllByRezOg(Long rez_id) {
+		List<Narudzbenica> lista=narRep.findAll().stream().filter(x->x.getRezervacijaId().equals(rez_id)).collect(Collectors.toList());
+		return lista;
+	}
 	public List<Narudzbenica> getAllByRezNar(Long rez_id) {
 		List<Narudzbenica> lista=narRep.findAll().stream().filter(x->x.getRezervacijaId().equals(rez_id)).collect(Collectors.toList());
 		return lista;	
@@ -54,13 +58,13 @@ public class NarudzbenicaService {
 	}
 
 
-	public Narudzbenica add(Narudzbenica novaNar) throws Exception {
-		if(novaNar.getId() != null) {
-			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
-		}
-		Narudzbenica saved=narRep.save(novaNar);
-		return saved;
-	}
+//	public Narudzbenica add(Narudzbenica novaNar) throws Exception {
+//		if(novaNar.getId() != null) {
+//			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
+//		}
+//		Narudzbenica saved=narRep.save(novaNar);
+//		return saved;
+//	}
 	
 	public void delete(Long id) {
 		 Narudzbenica n=narRep.findById(id).orElse(null);
@@ -101,5 +105,21 @@ public class NarudzbenicaService {
 	public List<Narudzbenica> getAllByOglas(Long id) {
 		List<Narudzbenica> lista=narRep.findAll().stream().filter(x->x.getOglasId().equals(id)).collect(Collectors.toList());
 		return lista;
+	}
+	public NarudzbenicaNewDTO add(NarudzbenicaNewDTO nDTO) throws Exception {
+		if(nDTO.getId() != null) {
+			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
+		}
+		
+		CommonData cmd=new CommonData();
+		cmd.setUserId(nDTO.getUserId());
+		cmd.setDatumKreiranja(LocalDateTime.now());
+		cmd.setDatumIzmene(null);
+		cmd=cmdServ.addCommonData(cmd);
+		
+		Narudzbenica saved=narMap.fromNewDTO(nDTO);
+		saved.setCommonDataId(cmd.getId());
+		saved=narRep.save(saved);
+		return new NarudzbenicaNewDTO(saved);
 	}
 }

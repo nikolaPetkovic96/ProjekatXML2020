@@ -101,22 +101,6 @@ public class Rezervacija {
     @Column(name="username")
     protected String username;
     
-    
-	//   @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
-	//   protected TUser firma; obrsati 
-    
-	//    @ManyToMany(mappedBy="rezervacije")
-	//    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
-	//    protected List<Oglas> oglas;
-	//    protected List<Poruka> poruka;
-    
-//    @ManyToMany
-//	@JoinTable(
-//	  name = "rezervacije_oglasi", 
-//	  joinColumns = @JoinColumn(name = "rezervacija_id"), 
-//	  inverseJoinColumns = @JoinColumn(name = "oglas_id"))
-//    protected List<Oglas> oglasi;
-    
 
 	public Rezervacija() {
 		super();

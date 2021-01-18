@@ -32,6 +32,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	private HttpServletResponse httpServletResponse;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
@@ -69,8 +71,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/activate-user", method = RequestMethod.GET)
-	public boolean activateUSer(@RequestParam("id") String id, @RequestParam("secret") String secret) {
-		return userService.activateUser(id, secret);
+	public ResponseEntity<String> activateUSer(@RequestParam("id") String id, @RequestParam("secret") String secret) {
+		if(userService.activateUser(id, secret) == true) {
+			String test = "http://localhost:8082/login";
+			return ResponseEntity.status(302).header("Location", test).body("All good!");
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Bad credentials!");
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

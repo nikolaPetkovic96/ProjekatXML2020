@@ -8,20 +8,20 @@ public class NarudzbenicaNewDTO {
 	
 	private Long id;
 
-	private Long agentId;
+	private Long agentId; 
 	
 	private Long userId;
 	
-	private Long oglasId;
+	private Long oglasId; 
 	
 	private Long rezervacijaId;
 	
-    private LocalDateTime odDatuma;
+    private LocalDateTime odDatuma; 
     
-    private LocalDateTime  doDatuma;
+    private LocalDateTime  doDatuma; 
 
     private Long commonDataId;
-
+ 
 	public NarudzbenicaNewDTO() {
 		super();
 	}

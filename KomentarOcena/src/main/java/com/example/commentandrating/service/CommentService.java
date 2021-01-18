@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -40,22 +42,32 @@ public class CommentService {
 		return commentRepoitory.findById(id).map(comment -> commentMapper.toDTO(comment)).orElse(null);
 	}
 
-	public KomentarDTO createComent(KomentarDTO kom) {
+	public ResponseEntity<?> createComent(KomentarDTO kom) {
 		//TODO provere: da li je realizovana, da li auto priprada toj rezervaciji, da li je vec unet komentar
+		List<Komentar> komentari = commentRepoitory.findAll();
+		for(Komentar k : komentari) {
+			if(kom.getAutomobilId() == k.getAutomobilId() && kom.getRezervacijaId() == k.getRezervacijaId()) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Vec postoji oglas!");
+			}
+		}
 		HttpServletRequest request = 
 		        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
 		                .getRequest();
 		Long userId=Long.parseLong(request.getHeader("userid"));
 		
 		Komentar k = commentMapper.fromDto(kom);
+		
 		CommonData cd=new CommonData();
 		cd.setUserId(userId);
+		cd.setDatumKreiranja(LocalDateTime.now());
+		commonDataRepository.saveAndFlush(cd);
+		
 		String name=SecurityContextHolder.getContext().getAuthentication().getName();
 		k.setAutor(name);
-		commonDataRepository.saveAndFlush(cd);
 		k.setCommonDataId(cd.getId());
 		commentRepoitory.saveAndFlush(k);
-		return commentMapper.toDTO(k);
+		
+		return new ResponseEntity<>(commentMapper.toDTO(k), HttpStatus.CREATED);
 	}
 
 	public KomentarDTO approve(Long id, boolean b) {

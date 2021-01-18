@@ -72,10 +72,10 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 
 --Komentar
 INSERT INTO Komentar(autor, tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('Darkooo91','Od Darkooo91 komentar neki  ocena 4! ', true, 1, 1, 38) --za porse 911
-INSERT INTO Komentar(autor, tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('Anna00',   'Od Anna00 komentar neki ocena 5! ',     true, 2, 1, 39) --za porse 911
-INSERT INTO Komentar(autor, tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('PeraCar996', 'Od PeraCar996 Komentar neki ocena 2', true, 3, 1, 40) --za porse 911
+--INSERT INTO Komentar(autor, tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('Anna00',   'Od Anna00 komentar neki ocena 5! ',     true, 2, 1, 39) --za porse 911
+----INSERT INTO Komentar(autor, tekst_komentara, odobren, rezervacija_id, automobil_id, common_data_id) VALUES('PeraCar996', 'Od PeraCar996 Komentar neki ocena 2', true, 3, 1, 40) --za porse 911
 
 --Ocena
-INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VALUES(4, 1, 1, 41)
-INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VALUES(5, 2, 1, 42)
-INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VALUES(2, 3, 1, 43)
+INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VALUES(5, 1, 2, 41)
+--INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VALUES(5, 2, 2, 42)
+--INSERT INTO Ocena(vredn_ocene, rezervacija_id, automobil_id, common_data_id) VALUES(2, 3, 2, 43)

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.Reservation.dto.NarudzbenicaDTO;
+import com.example.Reservation.dto.NarudzbenicaNewDTO;
 import com.example.Reservation.model.Izvestaj;
 import com.example.Reservation.model.Narudzbenica;
 import com.example.Reservation.repository.IzvestajRepository;
@@ -45,6 +46,15 @@ public class NaruzbenicaMapper {
 												n.getCommonDataId(), oglServ.getOglas(n.getOglasId()));
 		return dto;
 	}
-	
+	public  Narudzbenica fromNewDTO(NarudzbenicaNewDTO dto) {
+		return  new Narudzbenica(	dto.getId(),
+									dto.getAgentId(), 
+									dto.getUserId(),
+									dto.getOglasId(), 
+									dto.getRezervacijaId(), 
+									dto.getOdDatuma(), dto.getDoDatuma(), 
+									null,//izvestaj id,za novu narudzbenica ne postoji
+									null);// commonDataId, za novu narudzebenicu ne postoji)
+	}
 
 }

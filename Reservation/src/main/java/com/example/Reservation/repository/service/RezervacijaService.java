@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -57,7 +58,10 @@ public class RezervacijaService {
 	private NarudzbenicaService narServ;
 	@Autowired
 	private OglasService oglServ;
-/***********************GET *****************************************************/	
+	
+	
+/**************************************GET**************************************/
+	
 	public  RezervacijaDTO getRezervacija(Long rezervacija_id) {	
 		return rezMappper.toDTO(rezervacijaRepository.getOne(rezervacija_id));
 	}
@@ -81,45 +85,24 @@ public class RezervacijaService {
 		}
 		return RezWithOglas;
 	}
-	/***********************GET *****************************************************/		
 	
-/*********************UPDATE STATUS ****************************************/	
-	public RezervacijaDTO prihvatiRezervaciju(Long id) {
-		Rezervacija r=rezervacijaRepository.getOne(id);
-		
-		CommonData data=commonDataRepository.getOne(r.getCommonDataId());
-		data.setDatumIzmene(LocalDateTime.now());
-		commonDataRepository.saveAndFlush(data);
-		
-		r.setStatusRezervacije("RESERVED");
-		rezervacijaRepository.saveAndFlush(r);
-		
-		return rezMappper.toDTO(r);		
-	}
-	public RezervacijaDTO otkaziRezervaciju(Long id) {
-		Rezervacija r=rezervacijaRepository.getOne(id);
-		r.setStatusRezervacije("CANCELED");
-		rezervacijaRepository.saveAndFlush(r);
-		return rezMappper.toDTO(r);		
-	}
-	public RezervacijaDTO platiRezervaciju(Long id) {
-		Rezervacija r=rezervacijaRepository.getOne(id);
-		r.setStatusRezervacije("PAID");
-		rezervacijaRepository.saveAndFlush(r);
-		return rezMappper.toDTO(r);		
-	}
+	
+/*********************************UPDATE STATUS***********************************/	
 	
 	public RezervacijaStatusDTO updateStatus(RezervacijaStatusDTO dto) throws Exception {
-		Rezervacija r=rezervacijaRepository.findById(dto.getRezervacijaId()).orElse(null);
+		Rezervacija r = rezervacijaRepository.findById(dto.getRezervacijaId()).orElse(null);
 		CommonData cmd=commonDataRepository.findById(r.getCommonDataId()).orElse(null);
+		
 		cmd.setDatumIzmene(LocalDateTime.now());
 		cmd=cmdServ.updateCommonData(cmd.getId(), cmd);
+		
 		r.setCommonDataId(cmd.getId());
 		r.setStatusRezervacije(dto.getStatusRezervacije());
-		r=rezervacijaRepository.save(r);
+		r = rezervacijaRepository.save(r);
 		
 		return new RezervacijaStatusDTO(r.getId(), r.getStatusRezervacije());
 	}
+	
 /*********************************************************************************/	
 	
 	public List<RezervacijaDTO> getAllStatus(String status) {
@@ -127,109 +110,72 @@ public class RezervacijaService {
 									filter(r->r.getStatusRezervacije().equals(status)).
 									map(x->rezMappper.toDTO(x)).collect(Collectors.toList());
 	}
-	public List<RezervacijaDTO> getAllStatusUser(String username,String status) {
-		List<RezervacijaDTO> rezervacije=	rezervacijaRepository.findAll().stream().
-											filter(r->r.getStatusRezervacije().equals(status)).
-											map(x->rezMappper.toDTO(x)).
-											collect(Collectors.toList());
-		return sortiraneRezervacije(rezervacije);
+	
+
+	
+/************************************DODAVANJE NOVE**********************************/
+	
+	public List<RezervacijaNewDTO> createRezervacija(List<RezervacijaNewDTO> dtos, String username) throws Exception {
+		List<RezervacijaNewDTO> kreiraneRezervacije = new ArrayList<>();
+		
+
+		
+		for(RezervacijaNewDTO dto : dtos) {
+			//commonData za rezervaciju
+			CommonData commonData = new CommonData();
+			commonData.setId(dto.getCommonDataId());
+			commonData.setDatumKreiranja(LocalDateTime.now());
+			commonData.setDatumIzmene(null);
+			commonData.setUserId(getActiveUserId());
+			commonData=cmdServ.addCommonData(commonData);
+			
+			Rezervacija novaRez=new Rezervacija();
+			novaRez.setCommonDataId(commonData.getId());
+			novaRez.setCommonDataId(commonData.getId());
+			novaRez.setBundle(dto.getBundle());
+			novaRez.setStatusRezervacije(dto.getStatusRezervacije()); 
+			novaRez.setUkupnaCena(dto.getUkupnaCena());
+			novaRez.setUsername(username);
+			
+			novaRez=rezervacijaRepository.save(novaRez);//sacuvaj rezervaciju u bazi i vrati je sa id-jem
+			
+			List<NarudzbenicaNewDTO> kreiraneNarudzbenice = new ArrayList<>();
+			List<NarudzbenicaNewDTO>  test = dto.getNarudzbenice();
+			for(NarudzbenicaNewDTO nDTO : dto.getNarudzbenice()) {
+				nDTO.setRezervacijaId(novaRez.getId());	//postavi id rezervacije
+				nDTO.setId(null);//postavi id na null, za svaki slucaj zbog cuvanja
+				nDTO.setUserId(extractUserId());
+				NarudzbenicaNewDTO n =	narServ.add(nDTO);	//sacuva se narudzbenica u bazu i vraca se u formatu NarudzbenicaNewDTO
+				kreiraneNarudzbenice.add(n);
+			}
+			kreiraneRezervacije.add(new RezervacijaNewDTO(novaRez, kreiraneNarudzbenice));	//dodate sve narudzbenice, dodaj rezervaciju u listu rezervacija
+		}
+		return kreiraneRezervacije;
 	}
 	
-/*************************DODAVANJE NOVE*********************************************/	
-	public RezervacijaNewDTO createRezervacija(RezervacijaNewDTO dto, String username) throws Exception {
-		
-//		CommonData commonData = new CommonData();
-//		commonData.setId(dto.getCommonDataId());
-//		commonData.setDatumKreiranja(LocalDateTime.now());
-//		commonData.setDatumIzmene(LocalDateTime.now());
-//		commonData.setUserId(user.getId());
-//		commonData=cmdServ.addCommonData(commonData);
-//		
-//		Rezervacija novaRez=new Rezervacija();
-//		novaRez.setCommonDataId(commonData.getId());
-//		novaRez.setBundle(dto.getBundle());
-//		novaRez.setNapomena(dto.getNapomenaRezervacije());
-//		novaRez.setStatusRezervacije(dto.getStatusRezervacije()); //defaultStatus?
-//		novaRez.setUkupnaCena(dto.getUkupnaCena());
-//		List<NarudzbenicaNewDTO> kreirane=Collections.emptyList();
-//		for(NarudzbenicaNewDTO nDTO : dto.getNarudzbenica()) {
-//			Oglas o=oglasRep.findById(nDTO.getId()).orElse(null);
-//			CommonData oglasCMD=commonDataRepository.findById(o.getCommonDataId()).orElse(null);
-//			Long agentId=oglasCMD.getUserid();
-//			Narudzbenica novaNar=new Narudzbenica(	null, agentId, user.getId(), nDTO.getOglasId(), nDTO.getRezervacijaId(), 
-//													nDTO.getOdDatuma(), nDTO.getOdDatuma(), null, null);
-//			CommonData narCmd=new CommonData();
-//			narCmd.setDatumKreiranja(LocalDateTime.now());
-//			narCmd.setDatumIzmene(LocalDateTime.now());
-//			narCmd.setUserId(user.getId());
-//			narCmd=cmdServ.addCommonData(narCmd);
-//			novaNar.setCommonDataId(narCmd.getId());
-//			novaNar=narServ.add(novaNar);
-//			kreirane.add(new NarudzbenicaNewDTO(novaNar));
-//		}
-//		return new RezervacijaNewDTO(novaRez, kreirane);
-		return null;
+	public Long extractUserId() {
+		HttpServletRequest request = 
+		        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
+		                .getRequest();
+		return Long.parseLong(request.getHeader("userid"));
 	}
-	//public List<RezervacijaDTO> createRezervacija(RezervacijaDTO rezDTO) {	//ako je bundle true kreira se jedan zahtev, za bundle==false kreira se posebna rezervacija za svaki oglas
-//	
-//	List<RezervacijaDTO> rezervacije=new ArrayList<>();
-//
-//	Set<Long> vlasnici_id=Collections.emptySet();
-//	for(Long id:rezDTO.getOglasi_id()) {
-//		vlasnici_id.add(commonDataRepository.findById(oglasRep.findById(id).get().getCommonDataId()).get().getUserid());
-//	}
-//	for(Long vlas_id : vlasnici_id) {
-//		List<Long> oglasi_od_vlasnika=Collections.emptyList();
-//		for(Long oglas_id : rezDTO.getOglasi_id()) {
-//			if(vlas_id==commonDataRepository.findById(oglasRep.findById(oglas_id).get().getCommonDataId()).get().getUserid())
-//					oglasi_od_vlasnika.add(oglas_id);	//oglas pripada vlasniku, dodati ga u listu
-//		}
-//		RezervacijaDTO temp=rezDTO;	//temp uvek isti, samo ce se menjati lista oglasa zavisno od toga da li je bundle
-//		if(rezDTO.getBundle()) {
-//			temp.setOglasi_id(oglasi_od_vlasnika);
-//			Rezervacija r=rezMappper.fromDTO(temp);
-//			rezervacijaRepository.saveAndFlush(r);
-//			rezervacije.add(rezMappper.toDTO(r));
-//		}else {
-//			for(Long oglas_od_vlasnika : oglasi_od_vlasnika) {
-//				List<Long> pojedinacni_oglas=Collections.emptyList();
-//				pojedinacni_oglas.add(oglas_od_vlasnika);
-//				temp.setOglasi_id(pojedinacni_oglas);
-//				temp.setOglasi_id(oglasi_od_vlasnika);
-//				Rezervacija r=rezMappper.fromDTO(temp);
-//				rezervacijaRepository.saveAndFlush(r);
-//				rezervacije.add(rezMappper.toDTO(r));
-//			}
-//		}
-//				
-//	}
-//
-//	return rezervacije;
-//}
-	/********************************************************************************************************/	
 
-/*******************************GETALL ADMIN*********************************************************/
-//	public List<RezervacijaDTO> getAll() {
-//		return rezervacijaRepository.findAll().stream().map(x->rezMappper.toDTO(x)).collect(Collectors.toList());
-//	}
+/***************************************GET ALL ADMIN*********************************************/
+	
 	public List<RezervacijaFullDTO> getAllRezervacijeFull() {
 		List<RezervacijaFullDTO> lista = rezervacijaRepository.findAll().stream().map(x->rezMappper.toDTOFull(x)).collect(Collectors.toList());
 		lista=sortiraneRezervacijeFull(lista);
 		return lista;
 	}
 	
-//	public List<RezervacijaFullDTO> getAllFull() {
-//		return rezervacijaRepository.findAll().stream().map(x->rezMappper.toDTOFull(x)).collect(Collectors.toList());
-//	}
-	
 	public List<RezervacijaDTO> getAllRezervacije(){//ok
 		List<RezervacijaDTO> allDTO=new ArrayList<>();
 		rezervacijaRepository.findAll().stream().forEach(r->allDTO.add(rezMappper.toDTO(r)));
 		return allDTO;
 	}
-/********************************************************************************************************/
-
-/******************************************************************GETALL AGENT **********************/
+	
+/****************************************GET ALL AGENT*******************************************/
+	
 	public List<Rezervacija> getAllRezervacijeAgent(String name) {	//radi samo za trenutno ulogovanog
 		List<Rezervacija> sveOdAgenta=new ArrayList<>();
 			//List<Narudzbenica> narIds=narServ.getAllForAgent(getActiveUserId())	//;//sve  narudzbenice sa id-jem ogalsa koji se trenutno posmatra
@@ -244,30 +190,70 @@ public class RezervacijaService {
 		}	
 		return sveOdAgenta;
 	}
+	
+	/***
+	 * 
+	 * @param name username trenutno ulogovanog korisnika
+	 * @return listu rezervacijaFullDTO koje su drugi korisnici kreirali nad njegovim oglasima
+	 */
 	public List<RezervacijaFullDTO> getAllRezervacijeAgentFullDTO(String name) {	//konvertuje rezervacije trenuto ulogovano agenta u FullDTO
 		return sortiraneRezervacijeFull(getAllRezervacijeAgent(name).stream().map(r->rezMappper.toDTOFull(r)).collect(Collectors.toList()));
 	}
+	/***
+	 * 
+	 * @param name username trenutno ulogovanog korisnika
+	 * @return listu rezervacijaDTO koje su drugi korisnici kreirali nad njegovim oglasima
+	 */
 	public List<RezervacijaDTO> getAllRezervacijeAgentDTO(String name) {	//konvertuje rezervacije trenuto ulogovano agenta u DTO
 		return sortiraneRezervacije(getAllRezervacijeAgent(name).stream().map(r->rezMappper.toDTO(r)).collect(Collectors.toList()));
 	}
-/********************************************************************************************************/
-/******************************************************************GETALL USER **********************/
+	
+	//placene, zavrsene rezervacije u kojima su oglasi agenta
+	public List<RezervacijaDTO> getAllFinishedForAgent(String name) {
+		List<RezervacijaDTO> agentAll = getAllRezervacijeAgentDTO(name);
+		agentAll=agentAll.stream().filter(r->r.getStatusRezervacije().toUpperCase().equals("PAID")
+											&& getKrajRezervacije(r.getId()).isBefore(LocalDateTime.now())).
+											collect(Collectors.toList());
+		return agentAll;
+	}
+
+/*****************************************GET ALL USER********************************************/
+	
 	public List<RezervacijaFullDTO> getAllRezervacijeUserFull(String name) {
 		// TODO Auto-generated method stub
 		return sortiraneRezervacijeFull(getAllRezervacijeUser(name).stream().map(r->rezMappper.toDTOFull(r)).collect(Collectors.toList()));
 	}
+	/***
+	 * 
+	 * @param name username trenutno ulogovanog korisnika 
+	 * @return listu rezervacija koje je korisnik kreirao nad tudjim oglasima
+	 */
 	public List<RezervacijaDTO> getAllRezervacijeUserDTO(String name) {
 		// TODO Auto-generated method stub
 		return sortiraneRezervacije(getAllRezervacijeUser(name).stream().map(r->rezMappper.toDTO(r)).collect(Collectors.toList()));
 	}
-	public List<Rezervacija> getAllRezervacijeUser(String username){//ok
-		List<Rezervacija> allDTO=new ArrayList<>();
-		rezervacijaRepository.findAll();
-		allDTO.removeIf(r-> !r.getUsername().equals(username));
+	
+	public List<Rezervacija> getAllRezervacijeUser(String username){
+		List<Rezervacija> allDTO = rezervacijaRepository.findAll();
+		allDTO.removeIf(r -> !r.getUsername().equals(username));
 		return allDTO;
 	}
-/********************************************************************************************************/
-/******************************************************************POMOCNE METODE **********************/
+	
+	//placne, zavrsene rezervacije koje je kreirao korisnik
+	public List<RezervacijaDTO> getAllFinishedForUser(String username) {
+		List<RezervacijaDTO> rezervacije =	rezervacijaRepository.findAll().stream().			
+											filter(r->r.getStatusRezervacije().toUpperCase().equals("PAID")
+													&& getKrajRezervacije(r.getId()).isBefore(LocalDateTime.now()) 
+													&& r.getUsername().equals(username)).
+											map(x->rezMappper.toDTO(x)).
+											collect(Collectors.toList());
+		
+		return sortiraneRezervacije(rezervacije);
+	}
+	
+
+/*****************************************POMOCNE METODE ******************************************/
+	
 	public Rezervacija addRezervacija(Rezervacija r) throws Exception {
 		if(r.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
@@ -333,8 +319,28 @@ public class RezervacijaService {
 		System.out.println("Sortirane rezervacije :"+ sortirane);
 		return  new ArrayList<RezervacijaDTO>(sortirane.keySet());
 	}
-/********************************************************************************************************/
-
 	
-}
+	public LocalDateTime getKrajRezervacije(Long id) {
+		List<LocalDateTime> krajnjiDatumi=narServ.getAllByRezOg(id).stream().map(x->x.getDoDatuma()).sorted().collect(Collectors.toList());
+//		for(LocalDateTime datum : krajnjiDatumi){
+//			System.out.println(krajnjiDatumi.indexOf(datum)+". "+datum);
+//		}
+		return krajnjiDatumi.get(krajnjiDatumi.size()-1);
+		//tri linije ispod su za testiranje su koriscenjne u kontroleru za testiranje ove metode u postmenu
+		/*@GetMapping(value="/vremeTest/{id}")
+		public void TestRezervacija(@PathVariable Long id) {
+		rezervacijaService.getKrajRezervacije(id);
+	}*/
+	}
+//		// za unetog korisnika vraca sve rez sa unetim statusom
+//		public List<RezervacijaDTO> getAllStatusUser(String username,String status) {
+//			List<RezervacijaDTO> rezervacije =	rezervacijaRepository.findAll().stream().			
+//												filter(r->r.getStatusRezervacije().equals(status)).
+//												map(x->rezMappper.toDTO(x)).
+//												collect(Collectors.toList());
+//			
+//			return sortiraneRezervacije(rezervacije);
+//		}
 
+
+}

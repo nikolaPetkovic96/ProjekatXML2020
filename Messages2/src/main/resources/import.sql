@@ -34,7 +34,7 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',-5) --pripada BestUser
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',-3)
 
-------------------------------------------------------OGLAS SERVIS------------------------------------------------------
+----------------------------------------------OGLAS SERVIS------------------------------------------------------
 
 --CommonData (Za Cenovnik)	25 - 27
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',-5)
@@ -58,7 +58,7 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-10 21:58:58', null, -4) -- Anna00
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2020-12-02 21:58:58', null, -4) -- Anna00
 
------------------------------------------------------KOMENTARIOCENA----------------------------------------------------
+-----------------------------------------------KOMENTARIOCENA----------------------------------------------------
 
 --CommonData (Za Komentar)	38-40
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',1)
@@ -70,7 +70,7 @@ INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('201
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2018-02-20 21:58:58','2018-10-23 18:57:58',2)
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2019-11-04 21:58:58','2019-07-04 18:57:58',3)
 
-------------------------------------------------------Poruka SERVIS------------------------------------------------------
+-----------------------------------------------Poruka SERVIS------------------------------------------------------
 
 --CommonData (Za Poruke)	 44-47
 INSERT INTO Common_data(datum_kreiranja, datum_izmene, korisnik_id)  VALUES('2017-10-01 21:58:58','2017-10-02 18:57:58',-4)

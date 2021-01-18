@@ -32,54 +32,58 @@ import com.example.Reservation.repository.service.RezervacijaService;
 
 
 @RestController
-@RequestMapping(value="/rezervacija")
+@RequestMapping(value="/reservation")
 public class RezervacijaController {
 
 	@Autowired
 	private RezervacijaService rezervacijaService;
 	@Autowired
 	private CommonDataService commonDataService;
-/**********************ADMIN -GETALL **********************/	
+	
+/**********************ADMINGETALL **********************/
+	
 	@GetMapping(value="/all")//da preuzme sve rezervacije, smeo bi samo admin
-	public List<RezervacijaDTO> getAllRezervacija(	){		
+	public List<RezervacijaDTO> getAllRezervacija(){		
 			return rezervacijaService.getAllRezervacije();
 	}	
 	@GetMapping(value="/all/full")//da preuzme sve rezervacije, smeo bi samo admin
 	public List<RezervacijaFullDTO> getAllRezervacijaImg(){		
 			return rezervacijaService.getAllRezervacijeFull();
 	}	
-/****************************************************************************/	
 
-/**********************KORISNIK TRENUTNO ULOGOVAN -GETALL **********************/	
-	@GetMapping(value="/user")	//sve rezervacije koje je korisnik kreirao
-	public List<RezervacijaFullDTO> getAllRezervacijaUserFull(	Principal principal){		
+/**********************ULOGOVANI KORISNIK U USER MODU**********************/
+	
+	@GetMapping(value="/user/full")	//sve rezervacije koje je korisnik kreirao
+	public List<RezervacijaFullDTO> getAllRezervacijaUserFull(Principal principal){		
 			return rezervacijaService.getAllRezervacijeUserFull(principal.getName());
 	}
-	@GetMapping(value="/user/full")	//sve rezervacije koje je korisnik kreirao
+	@GetMapping(value="/user")	//sve rezervacije koje je korisnik kreirao
 	public List<RezervacijaDTO> getAllRezervacijaUser(	Principal principal){		
 			return rezervacijaService.getAllRezervacijeUserDTO(principal.getName());
 
 	}
-	
-/****************************************************************************/	
+	@GetMapping(value="user/expired")		//placene i zavrsene, rez koje je napravio ovaj korisnik
+	public List<RezervacijaDTO> getAllFinishedRezervacijaForUser(Principal p){
+			return rezervacijaService.getAllFinishedForUser(p.getName());
+	}
 
-/**********************AGENT TRENUTNO ULOGOVAN  **********************/	
+/**********************ULOGOVANI KORISNIK U AGENT MODU**********************/	
 
-	@GetMapping(value="/agent")	//sve rezervacije vezane za ogalse agenta
-	public List<RezervacijaFullDTO> getAllRezervacijaAgentFull(	Principal principal){		
+	@GetMapping(value="/agent/full")	//sve rezervacije vezane za ogalse agenta
+	public List<RezervacijaFullDTO> getAllRezervacijaAgentFull(Principal principal){		
 			return rezervacijaService.getAllRezervacijeAgentFullDTO(principal.getName());
 	}
-	@GetMapping(value="/agent/full")	//sve rezervacije vezane za ogalse agenta
+	@GetMapping(value="/agent")	//sve rezervacije vezane za ogalse agenta
 	public List<RezervacijaDTO> getAllRezervacijaAgent(	Principal principal){		
 			return rezervacijaService.getAllRezervacijeAgentDTO(principal.getName());
 	}
+	@GetMapping(value="/agent/expired")		//placene i zavrsene, rez gde se nalaze oglasi ovog agenta
+	public List<RezervacijaDTO> getAllFinishedRezervacijaForAgent(Principal p){
+			return rezervacijaService.getAllFinishedForAgent(p.getName());
+	}
+	
 /****************************************************************************/	
 
-	@GetMapping(value="/expired")		//sortirani, treba proveriti
-	public List<RezervacijaDTO> getAllFinishedRezervacija(	Principal p){
-			return rezervacijaService.getAllStatusUser(p.getName(), "PAID");
-		
-	}
 	@GetMapping(value="/{id}")
 	public RezervacijaDTO getRezervacija(@PathVariable("id") Long id){
 		return rezervacijaService.getRezervacija(id);
@@ -91,18 +95,14 @@ public class RezervacijaController {
 	}
 	
 	@PostMapping(value="")
-	public RezervacijaNewDTO addRezervacija(Principal principal, @RequestBody RezervacijaNewDTO dto) throws Exception{
-		RezervacijaNewDTO rezervacija=rezervacijaService.createRezervacija(dto, principal.getName());
-		return rezervacija;	
+	public List<RezervacijaNewDTO> addRezervacija(Principal principal, @RequestBody List<RezervacijaNewDTO> dto) throws Exception{
+		List<RezervacijaNewDTO> rezervacije=rezervacijaService.createRezervacija(dto, principal.getName());
+		return rezervacije;	
 	}
 	
 	@PutMapping(value="/status")
 	ResponseEntity<RezervacijaStatusDTO> updateStatusRezervacija(@RequestBody RezervacijaStatusDTO dto) throws Exception{
-		RezervacijaStatusDTO r=rezervacijaService.updateStatus(dto);
-		if(r == null || dto.getStatusRezervacije().equals("CANCELED")) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<RezervacijaStatusDTO>(r,HttpStatus.OK);
+		return new ResponseEntity<RezervacijaStatusDTO>(rezervacijaService.updateStatus(dto), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value="/{id}")
@@ -113,4 +113,5 @@ public class RezervacijaController {
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}	
+		
 }

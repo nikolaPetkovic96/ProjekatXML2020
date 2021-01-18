@@ -49,6 +49,7 @@ public class AuthFilter extends ZuulFilter {
 		HttpHeaders headers = new HttpHeaders();
 		if (ctx.getRequest().getHeader("Authorization") != null) {
 			headers.set("Authorization", ctx.getRequest().getHeader("Authorization"));
+			ctx.addZuulRequestHeader("Authorization", ctx.getRequest().getHeader("Authorization"));
 		}
 
 		HttpEntity<String> entity = new HttpEntity<>(null, headers);
