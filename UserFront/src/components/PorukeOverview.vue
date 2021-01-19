@@ -5,7 +5,7 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
 
-    <!--PRIKAZ PORUKA-->
+    <!--PRIKAZ PORUKA Ista stranica i za agenta i za user mode-->
         <div id='main' class='container'>
             <div id='reservInfo'>
                 <div class="card-header">
@@ -15,6 +15,7 @@
                     <button v-if='!toShowMessage' class="btn btn-lg btn-outline-dark marg" v-on:click='toShowMessage = !toShowMessage'>Prikazi poruke</button>
                     <button v-if='toShowMessage' class="btn  btn-lg btn-outline-dark marg" v-on:click='toShowMessage = !toShowMessage'>Sakrij poruke</button>
                 </div>
+                <h1><small v-if='this.permissions.allowedToMessage == false' style='color:crimson;'>! Slanje poruka zabranjeno </small></h1>
             </div>
             <div v-show='isThereMessages(rezervacija)' class="card-body">
                 <h3>Nema poruke za ovu rezervaciju...</h3>
@@ -43,10 +44,13 @@
                     </div>
                 </div>
                 <div style='margin-top:15%;'>
-                    <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(narudzbenica.oglas.automobil)'>Nova poruka</button></a>
+                    <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(narudzbenica.oglas.automobil)' :disabled='disableMessage()'>Nova poruka</button></a>
                 </div> 
             </div>
-            
+            <!-- Kada nema poruka onda se gornje dugme ne prikazuje pa se prikazuje ovo -->
+            <div v-show='isThereMessages(rezervacija)'>
+                <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(narudzbenica.oglas.automobil)' :disabled='disableMessage()'>Nova poruka</button></a>
+            </div> 
             
             <hr style='background:lightgray;height:1px;'>
             
@@ -103,12 +107,27 @@ export default {
                 errorResponse: '',
                 successResponse: '',
             },
+
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            }
         }
     },
     methods:{
         getAllMessages:function(){
             UserDataService.getRezervacijaDetails(this.id).then(response =>{
                 this.rezervacija = response.data;
+            });
+        },
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                //OBRISATIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                // this.permissions.allowedToMessage = false;
+                console.log(JSON.stringify(this.permissions));
             });
         },
         addMessage:function(){
@@ -212,6 +231,15 @@ export default {
             const date = new Date(datum);       //konvertujemo input tip u Date
             return date.toLocaleDateString();
         },
+
+        disableMessage(){
+            if(this.permissions.allowedToMessage == true && this.permissions.status == 'aktivan'){
+                return false
+            }
+            else{
+                return true;
+            }
+        }
     },
     computed:{
         id() {
@@ -228,6 +256,7 @@ export default {
             this.userId = token.jti;
             console.log("ID:" + this.userId);
             this.getAllMessages();
+            this.getAllPermissions();
         }
     }
 }

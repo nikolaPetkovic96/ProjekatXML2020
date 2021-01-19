@@ -11,25 +11,26 @@ import AutomobiliDetails from './components/AutomobiliDetails'
 import AutomobiliAgent from './components/AutomobiliAgent'
 import AutomobiliEdit from './components/AutomobiliEdit'
 import AutomobiliAgentNew from './components/AutomobiliAgentNew'
-
-import Poruke from './components/Poruke' 
+import AutomobiliAgentComments from './components/AutomobiliAgentComments'
+import AutomobiliAgentCommentsNew from './components/AutomobiliAgentCommentsNew'
+import AutomobiliCommentsNewR from './components/AutomobiliCommentNewR'
+import AutomobiliComments from './components/AutomobiliComment'
 import PorukeOverview from './components/PorukeOverview'
 import ReservationChartDetails from './components/RezervacijaChartDetails'
 import ReservationDetails from './components/RezervacijaDetails'
 import Reservation from './components/Rezervacija'
 import ReservationNew from './components/RezervacijaNew'
 import ReservationAgent from './components/RezervacijaAgent'
+import ReservationAgentNew from './components/RezervacijaAgentNew'
+import ReservationAdsOverview from './components/RezervacijaOglasiOverview'
 import CenovnikAgent from './components/CenovnikAgent'
 import CenovnikAgentEdit from './components/CenovnikAgentEdit'
 import CenovnikAgentNew from './components/CenovnikAgentNew'
 import AdsAgent from './components/OglasiAgent'
 import AdsAgentNew from './components/OglasiAgentNew'
-import ReportAndStatisticsAgent from './components/IzvestajiIStatistikaAgent'
-import ReservationAgentNew from './components/RezervacijaAgentNew'
+import ReportAgent from './components/IzvestajiAgent'
+import ReportNew from './components/IzvestajiNew'
 
-import ReservationAdsOverview from './components/RezervacijaOglasiOverview'
-import AutomobiliAgentComments from './components/AutomobiliAgentComments'
-import AutomobiliAgentCommentsNew from './components/AutomobiliAgentCommentsNew'
 import ShoppingCart from './components/ShoppingCart'
 
 import About from './components/About'
@@ -65,11 +66,6 @@ export default [
         path:'/profile/:id/update',
         name:'UserProfileUpdate',
         component:UserProfileUpdate
-    },
-    {
-        path:'/messages',
-        name:'Poruke',
-        component:Poruke
     },
     {
         path:'/messages/:id/overview',
@@ -148,9 +144,14 @@ export default [
         component:AdsAgentNew
     },
     {
-        path:'/statisticsAgent',
-        name:'IzvestajiIStatistikeAgent',
-        component:ReportAndStatisticsAgent
+        path:'/reportAgent',
+        name:'IzvestajiAgent',
+        component:ReportAgent
+    },
+    {
+        path:'/reportAgent/:id/report',
+        name:'IzvestajNew',
+        component:ReportNew
     },
     {
         path:'/cars/:id/reservationAgent',
@@ -167,8 +168,8 @@ export default [
         name:'RezervacijaOglasiOverview',
         component:ReservationAdsOverview
     },
+    //za agenta
     {
-        // path:'/cars/comments',
         path:'/carsAgent/comments',
         name:'AutomobiliAgentKomentar',
         component:AutomobiliAgentComments
@@ -178,6 +179,28 @@ export default [
         name:'carAgentNewComment',
         component:AutomobiliAgentCommentsNew
     },
+
+    //za usera
+    {
+        path:'/comments',
+        name:'CarComments',
+        component:AutomobiliComments
+    },
+    { 
+        path:'/comments/:id/new',
+        name:'CarCommentsNew',
+        component: AutomobiliCommentsNewR
+    },
+    // {
+    //     path:'/comments/:id/overview',
+    //     name:'CarCommentsOverview',
+    //     component:AutomobiliComments
+    // },
+    // { 
+    //     path:'/comments/:id/overview/:id/new',
+    //     name:'CarCommentsNew',
+    //     component: AutomobiliCommentsNewR
+    // },
     {
         path:'/shoppingCart',
         name:'shoppingCart',

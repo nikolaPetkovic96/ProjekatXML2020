@@ -139,6 +139,7 @@
             <!-- Page Heading  v-if='isAlreadySearched==true'-->
             <h1 v-if='isAlreadySearched==true' class="my-4 theme-colr">
                 <small >Rezultat pretrage</small>
+                <small v-if='disableReservation()' style='color:crimson;'>! Rezervacija zabranjena </small>
             </h1>
 
             <div   id='sort'>
@@ -188,7 +189,7 @@
                             <h5><b>Kilometraža: </b>{{oglas.automobil.predjenaKilometraza}} km</h5>
                         </div>
                         <button class="btn btn-outline-primary margTop" v-on:click='showDetails(oglas.automobil.id)'> Detalji </button>
-                        <button v-if='isAlreadySearched==true' class="btn btn-outline-success margTop" v-on:click='addToCart(oglas)'> Dodaj u korpu </button>
+                        <button v-if='isAlreadySearched==true' class="btn btn-outline-success margTop" v-on:click='addToCart(oglas)' :disabled='disableReservation()'> Dodaj u korpu </button>
                     </div>
                 </div>
                 </div>
@@ -276,6 +277,13 @@ export default {
             },
             korpa:[],
             userId:null,
+
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            }
            
         }
     },
@@ -303,6 +311,14 @@ export default {
                 this.tipGoriva = response.data;
             });
         }, 
+
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+               this.permissions = response.data;
+               console.log(JSON.stringify(this.permissions));
+            });
+        },
+
         addChoosenMarka:function(id){
             console.log("Usao u addChoosenMarka " + id);
             this.searchedCar.markaAutId = id;
@@ -476,6 +492,15 @@ export default {
             }
             this.currentSort = s;
         },
+
+        disableReservation(){
+            if(this.permissions.allowedToMakeReservation == true && this.permissions.status == 'aktivan'){
+                return false
+            }
+            else{
+                return true;
+            }
+        }
     },
     computed: {
         //Ova metoda stalno vrsi poredjenje izmedju oglasa po kriterijumu koji se prosledi klikom na kolonu;
@@ -532,6 +557,7 @@ export default {
             // dobavljanje svih sifrarnika
             this.getAllOptions();
             this.getAllOglas();
+            this.getAllPermissions();
         }
     },
     mounted() {

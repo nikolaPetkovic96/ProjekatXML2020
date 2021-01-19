@@ -134,7 +134,7 @@ export default {
 
     getAutomobilDetails: function () {
       UserDataService.getAutomobilDetails(this.id).then((response) => {
-       
+        
         this.automobil.id = response.data.id;
         this.automobil.markaAut = response.data.markaAut;
         this.automobil.modelAut = response.data.modelAut;
@@ -154,7 +154,7 @@ export default {
     getAutomobilReviews:function(){
       UserDataService.getAutomobilDetailsReviews(this.id).then(response => {
         this.automobil.reviews = response.data;
-        JSON.stringify('this.automobil.reviews: ' + this.automobil.reviews);
+        console.log(JSON.stringify(response.data));
         this.noComment();
       });
     },

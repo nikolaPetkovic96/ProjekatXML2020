@@ -27,6 +27,7 @@
                       <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" v-on:click='submition()'>
                           Sign in
                       </button>
+                      <a class="d-block text-center mt-2 small" href="/registration">Registruj se</a>
                   </form>
                   </div>
               </div>

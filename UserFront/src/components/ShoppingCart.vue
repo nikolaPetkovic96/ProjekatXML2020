@@ -145,14 +145,19 @@ export default {
                 for(let i = 0; i < singleReserv.length; i ++){
                   this.createSingleReservation(singleReserv[i]);
                 }
-              }  
+              }
+              
+              //saljem zahtev na bek
+              console.log('BUNDLE REZERVACIJA PRIHVATIO!');
           }
           //Slucaj ako postoji bundle i on ga odbije
           else{
             console.log('Odustao od bundla ponasa se kao slucaj kada su svi odvojeni!');
             for(let i = 0; i < this.oglasi_korpa.length; i ++){
               this.createSingleReservation(this.oglasi_korpa[i])
-            } 
+            }
+              //saljem zahtev na bek
+              console.log('BUNDLE REZERVACIJA NIJE PRIHVATIO!');
           }
         }
         //Slucaj kada ne postoje narudzbenice za bundle
@@ -161,7 +166,15 @@ export default {
           for(let i = 0; i < this.oglasi_korpa.length; i ++){
             this.createSingleReservation(this.oglasi_korpa[i])
           }
+          console.log('NIJE BUNDLE REZERVACIJA! ');
         }
+            //saljem zahtev na bek
+
+          console.log(JSON.stringify(this.rezervacije));
+          UserDataService.addRezervacija(this.rezervacije).then(respnse => {
+            alert('Vaša rezervacija je uspešno poslata!');
+            this.$$router.push("/cars");
+          });
       },
 
       //Metoda koja sluzi za kreiranje rezervacije sa samo jednom narudzbenicom...
@@ -177,13 +190,14 @@ export default {
               username:'Happy User 2', //u rezervDTOu za korisnika koji je rezervisao oglas.
               bundle:false,
               poruka:'',
-              narudzbenice:{ //u singleReserv je samo 1 narudzbenica
+              
+              narudzbenice:[{ //u singleReserv je samo 1 narudzbenica
               //Narudzbenica
                 oglasId:oglas.id,                   
                 odDatuma:narudzbenica.odDatuma,
                 doDatuma:narudzbenica.doDatuma,
                 agentId:oglas.agentId, // ili samo username pa na beku id da dodelimo...
-              }
+              }]
               //userId:null //Ili Ime i prezime onoga za koga se rezervise da li treba???
               //Na beku se dodaje:
               //commonDataId: u oba

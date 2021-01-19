@@ -8,7 +8,6 @@ const RESERVATION_API_URL = `${API_URL}/reservation-service`
 const AD_API_URL = `${API_URL}/oglas-service`
 const MESSAGE_API_URL = `${API_URL}/message-service`
 
-
 //Za svaki zahtev se dodaje token za autorizaciju i 
 //autenitifikaciju ulogovanog korisnika u zaglavlje upita
 if(JSON.parse(localStorage.getItem('token')) != null){
@@ -102,22 +101,34 @@ class UserDataService{
     }
     //Svi isto gadjaju (razdvojeno zbog preglednosti)
     updateReservationStatusAccept(status){
-        console.log('Accept: ' + status.statusRezervacije);
         return axios.put(`${RESERVATION_API_URL}/reservation/status`, status);
     }
     updateReservationStatusCancel(status){
-        console.log('Cancel: ' + status.statusRezervacije);
         return axios.put(`${RESERVATION_API_URL}/reservation/status`,status);
     }
     updateReservationStatusTest(status){
-        console.log('Test: ' + status.statusRezervacije);
         return axios.put(`${RESERVATION_API_URL}/reservation/status`,status);
     }
     updateReservationStatusPaid(status){
-        console.log('Paid: ' + status.statusRezervacije);
         return axios.put(`${RESERVATION_API_URL}/reservation/status`,status);
     }
+    //IzvestajiAgent.vue
+    getAllRezervacijeExpiredAgent(){
+        return axios.get(`${RESERVATION_API_URL}/reservation/agent/expired`);
+    }
+    //AutomobilCommentUser.vue
+    getAllRezervacijeExpiredUser(){
+        return axios.get(`${RESERVATION_API_URL}/reservation/user/expired`);
+    }
 
+    addRezervacija(rezervacija){
+        return axios.post(`${RESERVATION_API_URL}/reservation/`, rezervacija);
+    }
+    //IzvestajNew.vue
+    addIzvestaj(izvestaj){
+        return axios.post(`${RESERVATION_API_URL}/report/`, izvestaj);
+    }
+    
     //PORUKA:
     addPoruka(poruka){
         return axios.post(`${MESSAGE_API_URL}/message`, poruka);
@@ -145,6 +156,9 @@ class UserDataService{
     addKomentar(komentar){
         return axios.post(`${REVIEW_API_URL}/comment/`, komentar);
     }
+    addOcena(ocena){
+        return axios.post(`${REVIEW_API_URL}/rating/`, ocena);
+    }
 
     //OGLASI
     getAllUsersOglas(){        
@@ -171,6 +185,14 @@ class UserDataService{
     getOglasDetails(id){
         console.log('ID: ' + id);
         return axios.get(`${AD_API_URL}/ads/${id}/details`);
+    }
+
+    getNoOfUsersAds(){
+        return axios.get(`${AD_API_URL}/ads/numberOfAds`);
+    }
+
+    getAllPermissions(){
+        return axios.get(`${LOGINREG_API_URL}/getPermissions`);
     }
 
 }

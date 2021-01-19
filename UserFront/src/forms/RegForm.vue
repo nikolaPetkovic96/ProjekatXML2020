@@ -80,7 +80,7 @@
                 <button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" v-on:click='submition'>
                   Registruj se
                 </button>
-                <a class="d-block text-center mt-2 small" href="#">Sign In</a>
+                <a class="d-block text-center mt-2 small" href="/login">Uloguj se</a>
                 <hr class="my-4">
               </form>
             </div>  
@@ -221,12 +221,12 @@ export default {
 
           console.log('form: ' + JSON.stringify(this.form))
           UserDataService.userRegistration(this.form).then(response => {
-            this.message = `<h4>Hvala <b>${response.data.ime} ${response.data.prezime}</b> što ste se registrovali! Na imejl adresu koju ste uneli Vam je poslat mejl za potvrdu registracije!</h4>`;
+            this.message = `<h4>Hvala <b>${response.data.ime} ${response.data.prezime}</b> što ste se registrovali! Na mejl adresu koju ste uneli Vam je poslat mejl za potvrdu registracije!</h4>`;
             this.submitted = true;
           }).catch(error => {
             // && error.response.data.message==='Username already exists!'
             if(error.response.status === 409){
-              this.messageConfirmPassword = `<h5>Već postoji korisnik sa unetim <b>korisničkim imenom<b> ! Molimo Vas pokušajte uneti druge vrednosti !</h5>`;
+              this.messageConfirmPassword = `<h5>Već postoji korisnik sa unetim <b>korisničkim imenom<b> ili <b>mejl adresom<b>! Molimo Vas pokušajte uneti druge vrednosti !</h5>`;
               setTimeout(()=>this.messageConfirmPassword='',3000);
             }
             else if (error.response.status === 500 || error.response.status === 404 || error.response.status === 504) {

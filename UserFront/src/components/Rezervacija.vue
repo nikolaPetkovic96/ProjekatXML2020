@@ -17,7 +17,6 @@
                         <th>Status</th>
                         <th>Detaljnije</th>
                         <th>Poruke</th>
-                        <th>Komentar</th>
                         <th>Odusta/Plati</th>
                     </tr>
                 </thead>
@@ -34,17 +33,13 @@
                         <button v-on:click='openMessage(rezervacija.id)'  :disabled='statusMessage(rezervacija.statusRezervacije)' class=" btn-outline-dark"> poruke </button>
                     </td>
                     <td>
-                        <button v-on:click='openMessage(rezervacija.id)'  :disabled='statusMessage(rezervacija.statusRezervacije)' class=" btn-outline-dark"> komentar </button>
-                    </td>
-                    <td>
                         <button v-on:click='rejectReserv(rezervacija.id)' :disabled='statusCancel(rezervacija.statusRezervacije)' class="btn-outline-success"> otkaži </button>
                         <button v-on:click='payReserv(rezervacija.id)' :disabled='statusMessage(rezervacija.statusRezervacije)' class="btn-outline-danger"> plati </button>
-                        <!-- <button v-on:click='testStat(rezervacija.id)'  class="btn-outline-primary"> test </button> -->
+                        <button v-on:click='test(rezervacija)'>Test</button>
                     </td> 
                 </tr>
                 </tbody>
             </table>
-        
         </div> <!--main-->
     </div>
 </template>
@@ -53,11 +48,12 @@
 import UserDataService from '../services/UserDataService'
 export default {
     data(){
-        return{
+        return {
             user: {
                 username: '',
                 role: ''
             },
+
             vehId: '',
 
             rezervacije:[],
@@ -70,11 +66,21 @@ export default {
             messages: {
                 errorResponse: '',
                 successResponse: '',
-            }
+            },
+
 
         }
     },
     methods:{
+        test(rezervacija){
+            for(let i = 0; i< this.rezervacije.length; i++){
+                if(rezervacija.id == this.rezervacije[i].id){
+                    this.rezervacije[i].statusRezervacije = 'RESERVED';
+                }
+                
+            } 
+        },
+
         getAllReservation:function(){
             UserDataService.getAllRezervOsnovnoUser().then(response => {
                this.rezervacije = response.data;
@@ -89,19 +95,13 @@ export default {
         },
 
         statusMessage:function (status){
-            if (status === "RESERVED") {
+            //Poruka se salje ako je status rezerveacije reserved i ako korisnik ima pravo da salje poruke
+            if (status === "RESERVED" /*&& this.permissions.allowedToMessage == true*/) {
 				return false; //nemoj disable uraditi
-			}
+            }
 			return true; //za sve ostale ce uraditi disable
         },
-        // testStat(id){
-        //     this.promenaStatusa.rezervacijaId = id;
-        //     this.promenaStatusa.statusRezervacije = 'PENDING';
-        //     UserDataService.updateReservationStatusAccept(this.promenaStatusa).then(response => {
-        //         alert('Uspešno ste prihvatili rezervaciju!');
-        //         this.getAllReservation();
-        //     });
-        // },
+
         payReserv(id){
             if(confirm("Da li želite da potvrdite plaćanje za ovu rezervaciju?")){
                 this.promenaStatusa.rezervacijaId = id;
@@ -117,6 +117,7 @@ export default {
                 });
             }
         },
+
         rejectReserv(id){
             if(confirm("Da li želite da otkažete ovu rezervaciju?")){
                 this.promenaStatusa.rezervacijaId = id;
@@ -132,13 +133,15 @@ export default {
                 });
             }
         },
+
         openMessage:function(id){
            this.$router.push(`/messages/${id}/overview`);
         },
 
         showDetails(id){
             this.$router.push(`/reservation/${id}/details`);
-        }
+        },
+
     },
     created() {
         if(JSON.parse(localStorage.getItem('token')) == null){

@@ -84,18 +84,18 @@
                 </div>
             </div> -->
 
-            <!-- Messages-->
-            <!-- <div class="col-xl-3 col-md-6 mb-4">
+            <!-- Comments User-->
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-0 shadow">
-                    <router-link style='text-decoration: none;color:#35424a;' to="/messages" class="nav-link" exact>
+                    <router-link style='text-decoration: none;color:#35424a;' to="/comments" class="nav-link" exact>
                         <img src="../assets/messageHomeIcon1.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
-                            <h5 class="card-title mb-0">Poruke</h5>
-                            <div class="card-text text-black-50">Razmenite poruke sa korisnicima koji su iznajmili Vaša vozila...</div>
+                            <h5 class="card-title mb-0">Komentari i ocene</h5>
+                            <div class="card-text text-black-50">Ostavite komentar i ocenu i prenesite nam Vaše utiske...</div>
                         </div>
                     </router-link>
                 </div>
-            </div> -->
+            </div>
 
             <!-- Profile-->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -173,11 +173,11 @@
             <!-- Statistics -->
             <div class="col-xl-3 col-md-6 mb-4" >
                 <div class="card border-0 shadow">
-                    <router-link style='text-decoration: none;color:#35424a;' to="/statisticsAgent" class="nav-link" exact>
+                    <router-link style='text-decoration: none;color:#35424a;' to="/reportAgent" class="nav-link" exact>
                         <img src="../assets/statisticHomeIcon1.1.jpg" class="card-img-top" alt="...">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-0">Izvestaji</h5>
-                            <div class="card-text text-black-50">Ostavite izvestaj i pogledajte statistiku o vasim vozilima...</div>
+                            <div class="card-text text-black-50">Ostavite izveštaj o rezervaciji vaših vozilima...</div>
                         </div>
                     </router-link>
                 </div>
@@ -283,7 +283,7 @@ export default {
                 // this.korisnik = true;
                 this.mode = true;
                 }
-            } 
+            }
         // let parsToken = this.parseJwt(localStorage.getItem('token'));
         const temp = localStorage.getItem("userMode")
         }

@@ -90,7 +90,9 @@
                 </form>
             </nav>
         </div>
+        
         <div class="container" id='main'>
+            <h2 v-if='NoOfAds()'>Broj Vaših oglasa je <span id='titleEffect'>{{this.noOfAds}}</span>! Ne možete napraviti novi oglas...</h2> 
             <table class="table">
                 <thead>
                     <tr>
@@ -118,10 +120,10 @@
                         <td>{{automobil.klasaAut}}</td>
                         <td>{{automobil.ukupnaOcena}}</td>
                         <td>{{automobil.predjenaKilometraza}}</td>
-                        <td><button class=" btn-sm btn-outline-primary" v-on:click='showDetails(automobil.id)'> Detalji </button></td>
-                        <td><button class=" btn-sm btn-outline-primary" v-on:click='makeAd(automobil.id)'> Oglas </button></td>
+                        <td><button class="btn-sm btn-outline-primary" v-on:click='showDetails(automobil.id)'> Detalji </button></td>
+                        <td><button class="btn-sm btn-outline-primary" v-on:click='makeAd(automobil.id)' :disabled='NoOfAds()'> Oglas </button></td>
                         <td><button class="btn-sm btn-outline-primary" v-on:click='editCar(automobil.id)'> Izmeni </button></td><!--Delete mozda moze i preko edita da na toj str. bude jedno dugme-->
-                        <td> <button class="btn btn-sm btn-danger" v-on:click='deleteCar(automobil.id)'> Ukloni </button></td>
+                        <td><button class="btn btn-sm btn-danger" v-on:click='deleteCar(automobil.id)'> Ukloni </button></td>
                     </tr>
                 </tbody>
             </table>
@@ -183,6 +185,8 @@ export default {
             tipGoriva:[], 
             tipMenjaca:[],
             brojSedZaDec:null,
+
+            noOfAds:null,
            
         }
     },
@@ -207,6 +211,12 @@ export default {
             });
             UserDataService.getAllTipGoriva().then(response => {
                 this.tipGoriva = response.data;
+            });
+        },
+
+        getNoOfUsersAds:function(){
+            UserDataService.getNoOfUsersAds().then(response => {
+                this.noOfAds = response.data;
             });
         },
 
@@ -279,6 +289,17 @@ export default {
                 ans.push(i);
             }
             return ans;
+        },
+
+        NoOfAds(){
+            //Sme samo 3 oglasa da napravi zato je stavljen prag
+            //da za jedan vise radi disabled 
+            console.log('this.noOfAds: ' + this.noOfAds);
+            if(this.noOfAds < 3){
+                return false;
+            }else{
+                return true;
+            }         
         },
 
         resetFilter:function(){
@@ -380,6 +401,7 @@ export default {
             this.brojSedZaDec = this.range(0, 5);
             this.getAutomobiliList();
             this.getAllOptions();
+            this.getNoOfUsersAds();
         }
     }
 }

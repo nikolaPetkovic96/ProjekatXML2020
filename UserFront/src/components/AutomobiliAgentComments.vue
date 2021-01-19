@@ -7,13 +7,16 @@
             </div>
 
             <div id='main' class='container'>
+                
                 <div class="comments" v-bind:key="automobil.id" v-for='automobil in automobili'>
                     <div id='carInfo'>
                         <div class="card-header">
                             <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
                             <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
                             <h4><b>Ocena:</b> {{automobil.ukupnaOcena}}</h4>
+                            <h4><small v-if='disableComment()' style='color:crimson;'>! Ostavljanje komentara je zabranjeno </small></h4>
                         </div>
+                        
                     </div>
                     <div v-show='isThereReviews(automobil)' class="card-body">
                         <h3>Nema ocene niti komentara za ovaj automobil...</h3>
@@ -37,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-success marg" v-on:click='addComment(automobil.id)'>Ostavi komentar</button>
+                    <button class="btn btn-success marg" v-on:click='addComment(automobil.id)' :disabled='disableComment()'>Ostavi komentar</button>
                 </div> <!--comments-->
             </div>
         </div>
@@ -54,48 +57,41 @@ export default {
             automobili: [],
             reviews:[],
             autovi:[],
+
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            }
         }
     },
     methods: {
         getAgentsAutomobils: function () {
             UserDataService.getAllAutomobiliAgent().then(response => {
                 this.autovi = response.data;
-                console.log('this.automobili.length: ' + this.autovi.length);
-                console.log(`this.automobili: ` + JSON.stringify(this.autovi));
                 this.getAutomobilReviews(this.autovi);
             });
         },
-        // getAutomobilReviews:function(){
-        //     console.log('GET REVIEWS');
-        //     console.log('this.automobili.length: ' + this.automobili.length);
-        //     for(let i = 0; i<this.automobili.length; i++){
-        //         console.log(`this.automobili[${i}].id` + this.automobili[i].id);
-        //         UserDataService.getAutomobilDetailsReviews(this.automobili[i].id).then(response => {
-        //         this.automobili[i].reviews = response.data;
-        //     });
-        //     }  
-        // },
         getAutomobilReviews:function(automobili){
-            console.log('GET REVIEWS2');
-            console.log('this.automobili.length: ' + automobili.length);
-            console.log(`this.automobiliREVIEW: ` + JSON.stringify(automobili));
              for(let i = 0; i< automobili.length; i++){
                 console.log(`this.automobili[${i}].id` + automobili[i].id);
 
                 UserDataService.getAutomobilDetailsReviews(automobili[i].id).then(response => {
-                automobili[i].reviews = response.data;
-                console.log(`REVIEW!: ` + JSON.stringify(response.data));
-                console.log(`automobili[${i}]:`, automobili[i]);
-                console.log(`automobili[${i}].reviews:`, automobili[i].reviews);
-                this.reviews.push(response.data);
-                this.automobili.push(automobili[i]);
-            });
+                    automobili[i].reviews = response.data;
+                    this.reviews.push(response.data);
+                    this.automobili.push(automobili[i]);
+                });
             }  
-            // this.automobili[i] = automobili[i];
-            console.log(`KRAJ: ` + JSON.stringify(this.automobili));
-            console.log(`REVIEWS: ` + JSON.stringify(this.reviews));
         },
-
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                //OBRISATIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+                // this.permissions.allowedToCommend = false;
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         isThereReviews:function(automobil){     
             if(automobil.reviews === undefined || automobil.reviews.length === 0){
               return true;
@@ -106,6 +102,15 @@ export default {
         },
         addComment(id){
             this.$router.push(`/carsAgent/comments/${id}/new`);
+        },
+
+        disableComment(){
+            if(this.permissions.allowedToCommend == true && this.permissions.status == 'aktivan'){
+                return false
+            }
+            else{
+                return true;
+            }
         }
     },
     components: {
@@ -116,6 +121,7 @@ export default {
             this.$router.push(`/login`);
         }else{
             this.getAgentsAutomobils();
+            this.getAllPermissions();
         }
     }
 }

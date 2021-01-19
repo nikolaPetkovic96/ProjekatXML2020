@@ -76,7 +76,7 @@
               <input class="one-forth" placeholder="Unesite broj..." v-model='noviOglas.adresa.broj'>
               <input class="one-forth" placeholder="Unesite postanski broj..." v-model='noviOglas.adresa.postanskiBroj'>
 			      </div>
-
+             <div style="margin-top:20px" v-if='messages.errorDates2' class="alert alert-danger" v-html="messages.errorDates2"></div>
             <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
             <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
             <button class='btn btn-success shadow' v-on:click='newAd()'>Potvrdi</button>
@@ -127,6 +127,7 @@ export default {
             errorPrice: '',
             errorPlannedCm: '',
             errorDates: '',
+            errorDates2: '',
             errorResponse: '',
             successResponse: '',
 			    },
@@ -162,8 +163,8 @@ export default {
           setTimeout(() => this.messages.errorDates = '', 5000);
         }
         else if (this.dates.from > this.dates.to) {
-          this.messages.errorDates = `<h4>Krajnji termin mora biti veći od početnog!</h4>`;
-          setTimeout(() => this.messages.errorDates = '', 5000);
+          this.messages.errorDates2 = `<h4>Krajnji termin mora biti veći od početnog!</h4>`;
+          setTimeout(() => this.messages.errorDates2 = '', 5000);
         }
         else if (this.odabran_cenovnik.id == null) {
           this.messages.errorPrice = `<h4>Morate odabrati cenovnik za oglas!</h4>`;
