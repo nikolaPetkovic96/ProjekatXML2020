@@ -354,7 +354,6 @@ public class AutomobilController {
 		return new ResponseEntity<>(auto,HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_AGENT')")
 	public List<ReviewDTO> getAllReviewsByAutomobilId(Long autoId, String loggedUsername){
 		List<ReviewDTO> reviews = new ArrayList<>();
 		

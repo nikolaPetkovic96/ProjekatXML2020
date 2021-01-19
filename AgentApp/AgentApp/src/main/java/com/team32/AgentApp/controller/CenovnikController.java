@@ -37,11 +37,21 @@ public class CenovnikController {
 	
 	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.GET, value="/cenovnik", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<CenovnikDTO>> getAllCenovnik(){
+	public ResponseEntity<List<CenovnikDTO>> getAllCenovnik(Principal principal){
 		List<Cenovnik> allCenovnik = cenovnikService.getAllCenovnik();
 		List<CenovnikDTO> cenovnikDTO = new ArrayList<>();
+		
+		//Preuzima se user iz sesije koji je trenutno ulogovan
+				String username = principal.getName();
+				User loggedAgent = userService.findByUsername(username);
+	
+		//Vraca samo one cenovnike koje je taj user napravio
 		for(Cenovnik c : allCenovnik) {
-			cenovnikDTO.add(new CenovnikDTO(c));
+		
+			CommonData comData = comDataService.findOne(c.getCommonDataId());
+			if(comData.getUserid() == loggedAgent.getId()) {
+				cenovnikDTO.add(new CenovnikDTO(c));
+			}
 		}
 		return new ResponseEntity<>(cenovnikDTO, HttpStatus.OK);
  	}
@@ -54,6 +64,7 @@ public class CenovnikController {
 		}
 		return new ResponseEntity<>(new CenovnikDTO(cenovnik), HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(method=RequestMethod.POST, value="/cenovnik", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CenovnikDTO> addCenovnik(Principal principal, @RequestBody CenovnikDTO cenovnikDTO) throws Exception{
@@ -111,6 +122,7 @@ public class CenovnikController {
 		updatedCenovnik = cenovnikService.updateCenovnik(updatedCenovnik.getId(), updatedCenovnik);
 		return new ResponseEntity<>(new CenovnikDTO(updatedCenovnik),HttpStatus.OK);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_AGENT')")
 	@RequestMapping(value="/cenovnik/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteCenovnik(@PathVariable Long id){

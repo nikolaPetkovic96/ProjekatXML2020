@@ -230,6 +230,7 @@ public class RezervacijaController {
 		savedRezervacija.setUkupnaCena(dto.getUkupnaCena());
 		savedRezervacija.setBundle(dto.getBundle());
 		savedRezervacija.setStatusRezervacije(dto.getStatusRezervacije());
+//		savedRezervacija.setStatusRezervacije("RESERVED");
 		savedRezervacija.setCommonDataId(commonData.getId());
 		
 		//kreirala se rezervacija i sada njen id se koristi pri kreiranju narudzbenice
@@ -249,6 +250,8 @@ public class RezervacijaController {
 		
 		narudzbenica = narudzbService.addNarudzbenica(narudzbenica);
 		
+		setOtherReservationToCanceled(narudzbenica, loggedUser.getId());
+		
 		return new ResponseEntity<>(new RezervacijaNewDTO(savedRezervacija, new NarudzbenicaNewDTO(narudzbenica)), HttpStatus.CREATED);
 	}
 	
@@ -266,7 +269,6 @@ public class RezervacijaController {
 		if(dto.getStatusRezervacije().equals("CANCELED")) {
 			
 		}
-		
 		
 		Long comDatId = updatedRezervacija.getCommonDataId();
 		
@@ -317,30 +319,36 @@ public class RezervacijaController {
 		return commonData;
 	}
 	
-//REZERVACIJA NE MOZE DA SE MENJA MOZE DA SE MENJA SAMO NJEN STATUS
-//	@RequestMapping(method=RequestMethod.PUT, value="/rezervacija", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<RezervacijaDTO> updateRezervacija(@RequestBody RezervacijaDTO rezervacijaDTO) throws Exception{
-//		
-//		Rezervacija updatedRezervacija = rezervacijaService.findOne(rezervacijaDTO.getId());
-//		if(updatedRezervacija == null) {
-//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//		}
-//		Long comDatId = updatedRezervacija.getCommonDataId();
-//		
-//		CommonData commonData = comDataService.findOne(comDatId);
-//		LocalDateTime now = LocalDateTime.now();
-//		commonData.setDatumIzmene(now);
-//		commonData = comDataService.updateCommonData(comDatId, commonData);
-//		
-//		User user = userService.findOne(commonData.getUserid());
-//		
-//		updatedRezervacija.setId(rezervacijaDTO.getId());
-//		updatedRezervacija.setUkupnaCena(rezervacijaDTO.getUkupnaCena());
-//		updatedRezervacija.setBundle(rezervacijaDTO.getBundle());
-//		updatedRezervacija.setStatusRezervacije(rezervacijaDTO.getStatusRezervacije());
-//		updatedRezervacija.setCommonDataId(comDatId);
-//		
-//		updatedRezervacija = rezervacijaService.updateRezervacija(updatedRezervacija.getId(), updatedRezervacija);
-//		return new ResponseEntity<>(new RezervacijaDTO(updatedRezervacija,user.getKorisnickoIme()),HttpStatus.OK);
-//	}
+	//TODO Dodato
+	/***
+	 *  
+	 * @param Narudzbenica rucno kreirane rezervacije...
+	 * Pomocna metoda koja setuje status svih drugih rezervacija za isti termin na CANCELED
+	 * @throws Exception 
+	 */
+	public void setOtherReservationToCanceled(Narudzbenica rucnaRezNar, Long id) throws Exception{
+		List<Rezervacija> allRezervacija = rezervacijaService.getAllRezervacijaByIdAgenta(id);
+		
+		//Filtiriramo i vracamo samo one rezervacije ciji je status PENDING
+		allRezervacija = rezervacijaService.getAllPendingRezervacije(allRezervacija);
+		
+		for(Rezervacija r : allRezervacija) {
+			//Pruzimamo sve narudzbenice koje su vezane za tu rezervaciju
+			List<Narudzbenica> narudzbenice = narudzbService.getAllNarudzbeniceByRezervId(r.getId());
+			
+			for(Narudzbenica n:narudzbenice) {
+				//Provera da li su rezervacije za bas taj oglas
+				if(rucnaRezNar.getOglasId() == n.getOglasId()) {
+					if(!(rucnaRezNar.getOdDatuma().isAfter(n.getDoDatuma()) || rucnaRezNar.getDoDatuma().isBefore(n.getOdDatuma()))){
+						r.setStatusRezervacije("CANCELED");
+						rezervacijaService.updateRezervacija(r.getId(), r);
+						break;
+					}
+				}
+			}
+		}
+		
+	}
+
+
 }

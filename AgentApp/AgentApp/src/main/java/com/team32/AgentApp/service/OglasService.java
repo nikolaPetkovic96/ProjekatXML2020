@@ -229,7 +229,7 @@ public class OglasService {
 		oglasDTO.setKorImeAgenta(user.getKorisnickoIme());
 
 		oglasDTO.setPlaniranaKilometraza(o.getPlaniranaKilometraza());
-		oglasDTO.setZauzetiTermini(getZauzetiTermini(narudzbService.getAllNarudzbeniceByOglasId(o.getId())));
+		oglasDTO.setZauzetiTermini(getZauzetiTermini(narudzbService.getAllNotPandingNarudzbeniceByOglasId(o.getId())));
 		oglasDTO.setAdresa(new AdresaDTO(adresa));
 		oglasDTO.setAutomobil(automobilDTO);
 		oglasDTO.setCenovnik(new CenovnikDTO(cenovnik));

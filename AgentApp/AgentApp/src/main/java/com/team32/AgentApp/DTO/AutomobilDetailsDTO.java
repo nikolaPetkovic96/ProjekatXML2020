@@ -25,7 +25,6 @@ public class AutomobilDetailsDTO {
 		
 	}
 	
-
 	public AutomobilDetailsDTO(AutomobilDTO dto, List<ReviewDTO> reviews, SlikaVozilaDTO slikeVozila) {	
 		this.id = dto.getId();	
 		this.ukupnaOcena = dto.getUkupnaOcena();
@@ -159,7 +158,5 @@ public class AutomobilDetailsDTO {
 	public void setSlikeVozila(SlikaVozilaDTO slikeVozila) {
 		this.slikeVozila = slikeVozila;
 	}
-	
-	
 
 }

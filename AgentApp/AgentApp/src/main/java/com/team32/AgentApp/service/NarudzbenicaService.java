@@ -11,13 +11,19 @@ import com.team32.AgentApp.DTO.NarudzbenicaDTO;
 import com.team32.AgentApp.DTO.OglasDTO;
 import com.team32.AgentApp.model.entitet.Narudzbenica;
 import com.team32.AgentApp.model.entitet.Oglas;
+import com.team32.AgentApp.model.entitet.Rezervacija;
 import com.team32.AgentApp.repository.NarudzbenicaRepository;
+import com.team32.AgentApp.repository.RezervacijaRepository;
 
 @Service
 public class NarudzbenicaService {
 
 	@Autowired
 	private NarudzbenicaRepository narudzbenicaRepository;
+	
+	//dodato
+	@Autowired
+	private RezervacijaService reservationService;
 	
 	@Autowired
 	private OglasService oglasService;
@@ -59,7 +65,29 @@ public class NarudzbenicaService {
 		
 		return narudzbenicaRepository.findAllByOglasId(oglasId);
 	}
+	
+	//TODO Dodato
+	public List<Narudzbenica> getAllNotPandingNarudzbeniceByOglasId(Long oglasId) {
+		List<Narudzbenica> allNarudzbenice = narudzbenicaRepository.findAllByOglasId(oglasId);
+		
+		//Ako je status narudzbenice u rezervaciji 
+		List<Narudzbenica> returnVal = new ArrayList<>(); 
+		for(Narudzbenica n : allNarudzbenice) {
+			Rezervacija r = reservationService.findOne(n.getRezervacijaId());
+			if(r.getStatusRezervacije().equals("RESERVED") || r.getStatusRezervacije().equals("PAID")) {
+				returnVal.add(n);
+			}
+			
+		}
+		
+		return returnVal;
+	}
 
+	/**
+	 * 
+	 * @param agentId id agenta koji je napravio oglas
+	 * @return listu narudzbenica napravljenih nad oglasima agenta ciji id prosledjujemo
+	 */
 	public List<Narudzbenica> getllNarudzbeniceByAgentId(Long agentId) {
 		
 		return narudzbenicaRepository.findAllByAgentId(agentId);

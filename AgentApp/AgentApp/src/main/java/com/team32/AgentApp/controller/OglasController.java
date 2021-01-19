@@ -74,7 +74,6 @@ public class OglasController {
 		@PreAuthorize("hasRole('ROLE_AGENT')")
 		@RequestMapping(method=RequestMethod.GET, value="/oglas/img", produces = MediaType.APPLICATION_JSON_VALUE)
 		public ResponseEntity<List<OglasDetailsImgDTO>> getAllOglasWithImg(Principal principal) throws Exception {
-		
 
 			//Preuzima se user iz sesije koji je trenutno ulogovan
 			String username = principal.getName();
