@@ -57,7 +57,7 @@
             Ukupna cena: {{rezervacijaOglasDTO.ukupnaCena}} din
         </div>
 
-
+         <div style="margin-top:20px" v-if='messages.errorDates' class="alert alert-danger" v-html="messages.errorDates"></div>
         <!-- <label class='h4'><b>Tekst rezervacije: </b></label>
         <textarea v-model='rezervacijaOglasDTO.napomenaRezervacije' placeholder="message..."></textarea> -->
         <button class="btn btn-lg btn-success margTop" v-on:click='makeReservation()'> Rezerviši </button>
@@ -83,7 +83,7 @@ export default {
             //Rezervacija
                 ukupnaCena:0,                   
                 bundle: false,                  //agent moze samo za pojedinacna vozila da fizicki zauzima...
-                statusRezervacije:'PENDING',    //defaultni status
+                statusRezervacije:'RESERVED',    //defaultni status
                 napomenaRezervacije:'',
                 narudzbenica:{
                     oglasId: null,                   

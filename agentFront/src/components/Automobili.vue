@@ -19,7 +19,7 @@
                             <div id='second-row' class="row"  style="margin-top:5px;">
                                 <span class="col-xl-2 col-md-6 mb-1">
                                     <button style='margin-right:5px;' class='btn btn-outline-primary my-2 my-sm-0' v-on:click="resetFilter()">Reset all</button>
-                                </span>
+                                </span> 
                                 <span class="col-xl-3 col-md-6 mb-1">
                                     <span class="span_search">Marka</span>
                                     <select style="padding:5px;" v-model="searchedCarShow.markaAut">

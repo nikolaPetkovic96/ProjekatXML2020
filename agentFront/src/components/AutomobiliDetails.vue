@@ -239,7 +239,7 @@ export default {
 }
 
 #car-details header .carousel-item {
-  height: 100vh;
+  height: 85vh;
   min-height: 350px;
   background: no-repeat center center scroll;
   -webkit-background-size: cover;
