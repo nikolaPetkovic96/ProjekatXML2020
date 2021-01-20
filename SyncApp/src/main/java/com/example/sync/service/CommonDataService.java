@@ -16,20 +16,22 @@ public class CommonDataService {
 	public CommonDataResponse getCommonDataTypes() {
 		List<Map> trans = (List<Map>) RESTClient.getClient().forService(Services.OGLAS).withPath("/ads/sync/cmd")
 				.withMethod(HttpMethod.GET).send();
-		System.out.println("Pronadjeno cmd : "+trans.size());
+		//System.out.println("Pronadjeno cmd : "+trans.size());
 		List<CommonData> ret = new LinkedList<>();
 		for (Map m : trans) {
 			CommonData t = new CommonData();
 			t.setId(((Number) m.get("id")).longValue());
-			System.out.println("id : "+t.getId());
+			//System.out.println("id : "+t.getId());
 			t.setDatumKreiranja((String) m.get("datumKreiranja"));
-			System.out.println("datumKreiranja : "+t.getDatumKreiranja());
-
+			//System.out.println("datumKreiranja : "+t.getDatumKreiranja() +" : "+(String) m.get("datumKreiranja"));
+			if((Object)m.get("datumIzmene")!=null)
 			t.setDatumIzmene((String) m.get("datumIzmene"));
-			System.out.println("datumIzmene : "+t.getDatumIzmene());
+			else
+			t.setDatumIzmene(t.getDatumKreiranja());
+			//System.out.println("datumIzmene : "+t.getDatumIzmene());
 
 			t.setUserId(((Number) m.get("userId")).longValue());
-			System.out.println("userId : "+t.getUserId());
+			//System.out.println("userId : "+t.getUserId());
 
 			ret.add(t);
 		}

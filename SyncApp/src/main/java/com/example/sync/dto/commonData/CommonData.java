@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CommonData", propOrder = { "id", "datumKreiranja","datumIzmene","userId"})
@@ -18,9 +19,11 @@ public class CommonData {
 	protected Long id;
 
 	@XmlElement(name = "DatumKreiranja", required = true)
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	protected LocalDateTime datumKreiranja;
 
 	@XmlElement(name = "DatumIzmene", required = true)
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	protected LocalDateTime datumIzmene;
 	
 	@XmlElement(name = "UserId", required = true)
@@ -78,8 +81,8 @@ public class CommonData {
 	}
 
 	public void setDatumIzmene(String datumIzmene) {
-		if(datumIzmene.equals("null")) {
-			datumIzmene=null;
+		if(datumIzmene.equals(null)) {
+			this.datumIzmene=null;
 		}else {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDateTime dateTime = LocalDateTime.parse(datumIzmene.replace('T',' ' ), formatter);

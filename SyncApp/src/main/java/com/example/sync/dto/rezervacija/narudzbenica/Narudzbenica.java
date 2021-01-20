@@ -8,6 +8,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.example.sync.dto.commonData.DateAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Narudzbenica", propOrder = { "id", "commonDataId", "agentId",
 											"userId","oglasId","rezervacijaId","odDatuma","doDatuma" })
@@ -28,8 +31,10 @@ public class Narudzbenica {
 	@XmlElement(name = "RezervacijaId", required = true)
 	private Long rezervacijaId;
 	@XmlElement(name = "OdDatuma", required = true)
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	private LocalDateTime odDatuma;
 	@XmlElement(name = "DoDatuma", required = true)
+    @XmlJavaTypeAdapter(DateAdapter.class)
 	private LocalDateTime  doDatuma;
 
 	
