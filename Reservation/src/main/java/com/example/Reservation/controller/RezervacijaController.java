@@ -30,6 +30,7 @@ import com.example.Reservation.model.Rezervacija;
 import com.example.Reservation.repository.RezervacijaRepository;
 import com.example.Reservation.repository.service.CommonDataService;
 import com.example.Reservation.repository.service.RezervacijaService;
+import com.example.Reservation.repository.service.impl.AsynchronousService;
 
 
 @RestController
@@ -119,5 +120,16 @@ public class RezervacijaController {
 	@GetMapping(value="/sync")
 	public List<Rezervacija> sync(){
 		return rRep.findAll();
+	}
+	//tajmeri
+	@Autowired
+	private AsynchronousService asyncServ;
+	@GetMapping(value="/tajmer/placanje/{id}")
+	public void tajmerPlacanje(@PathVariable Long id)  {
+		asyncServ.proveraPlacanja(id);
+	}
+	@GetMapping(value="/tajmer/obrada/{id}")
+	public void tajmerObrada(@PathVariable Long id)  {
+		asyncServ.proveraObrade(id);
 	}
 }
