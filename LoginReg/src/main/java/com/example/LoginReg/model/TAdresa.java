@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @XmlType(name = "TAdresa", namespace = "http://www.ftn.uns.ac.rs/korisnici", propOrder = { "id", "mesto",
-		"postanskiBroj", "ulica", "broj", "kordinate" })
+		"postanskiBroj", "ulica", "broj", })
 public class TAdresa {
 
 	@Id

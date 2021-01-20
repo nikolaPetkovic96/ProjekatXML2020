@@ -348,4 +348,5 @@ public class AutomobilService{
 	public void delAutomobil(Long id) {
 		autoRepository.deleteById(id);
 	}
+
 }

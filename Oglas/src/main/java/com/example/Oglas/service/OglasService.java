@@ -28,11 +28,13 @@ import com.example.Oglas.model.Cenovnik;
 import com.example.Oglas.model.CommonData;
 import com.example.Oglas.model.Narudzbenica;
 import com.example.Oglas.model.Oglas;
+import com.example.Oglas.model.Rezervacija;
 import com.example.Oglas.model.TAdresa;
 import com.example.Oglas.repository.AutomobilRepository;
 import com.example.Oglas.repository.CenovnikRepository;
 import com.example.Oglas.repository.CommonDataRepository;
 import com.example.Oglas.repository.OglasRepository;
+import com.example.Oglas.repository.RezervacijaRepository;
 import com.example.Oglas.service.mapper.OglasMapper;
 
 @Service
@@ -53,7 +55,8 @@ public class OglasService {
 	private AutomobilRepository autoRep;
 	@Autowired
 	private CenovnikRepository cenRep;
-	
+	@Autowired 
+	private RezervacijaRepository rRep;
 	//GET ALL
 	public List<OglasDTO> getAll() {
 		List<Oglas> pom = oglasRep.findAll();
@@ -209,12 +212,16 @@ public class OglasService {
 	public List<HashMap<String, LocalDateTime>> getZauzetiTermini(List<Narudzbenica> narudzbenice) {
 		List<HashMap<String, LocalDateTime>> zauzetiTermini = new  ArrayList<HashMap<String, LocalDateTime>>();
 		for (Narudzbenica n : narudzbenice) {
+			//provera statusa rezervacije, ako je status paid ili reserved smatra se da je termin zauzet
+			Rezervacija r=rRep.findById(n.getRezervacijaId()).orElse(null);
+			if(r.getStatusRezervacije().toLowerCase().equals("paid") || r.getStatusRezervacije().toLowerCase().equals("reserved") ) {
 			
 			HashMap<String, LocalDateTime> hash_map = new HashMap<String, LocalDateTime>();
 			hash_map.put("odDatuma", n.getOdDatuma());
 			hash_map.put("doDatuma", n.getDoDatuma());
 			System.out.println("Initial Mappings are: " + hash_map);
 			zauzetiTermini.add(hash_map);
+			}
 		}
 		
 		return zauzetiTermini;

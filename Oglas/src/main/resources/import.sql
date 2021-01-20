@@ -65,12 +65,12 @@ INSERT INTO TTip_Goriva(naziv_tipa, common_data_id) VALUES('Benizn', 17)
 INSERT INTO TTip_Goriva(naziv_tipa, common_data_id) VALUES('Bezolovno', 18)
 
 --Automobil
---INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (1, true, 1, 1, 1, 56000, 3,1, 3.8, 19)
---INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (2, true, 2, 1, 2, 6700, 1, 2, 4.5, 20)
---INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (1, true, 3, 2, 3, 526000, 2,1, 3.6, 21)
---INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (2, true, 1, 2, 4, 56000, 3,1, 3.8, 22)
---INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (0, true, 2, 3, 5, 6700, 1,2, 4.5, 23)
---INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (4, true, 3, 3, 6, 86000, 2,1, 3.6, 24)
+INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (1, true, 1, 1, 1, 56000, 3,1, 3.8, 19)
+INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (2, true, 2, 1, 2, 6700, 1, 2, 4.5, 20)
+INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (1, true, 3, 2, 3, 526000, 2,1, 3.6, 21)
+INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (2, true, 1, 2, 4, 56000, 3,1, 3.8, 22)
+INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (0, true, 2, 3, 5, 6700, 1,2, 4.5, 23)
+INSERT INTO Automobil(br_sedista_za_decu, col_dmg_waiver, klasa_automobila_id, marka_automobila_id, model_automobila_id, predj_kilom, tip_menjaca_id, vrsta_goriva_id, ukupna_ocena, common_data_id) VALUES (4, true, 3, 3, 6, 86000, 2,1, 3.6, 24)
 
 ------------------------------------------------------OGLAS SERVIS------------------------------------------------------
 
@@ -113,12 +113,12 @@ INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_p
 INSERT INTO Cenovnik(naziv_cenovnika, cena_col_dmge_waiver, cena_po_danu, cena_po_km, popust_30_dan, common_data_id) VALUES('Gradski cenovnik',1800, 2000, 800, 50, 27)
 
 --Oglas (Mogu se obrisati 4,5,6 iz guia)
---INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2021-01-01 21:58:58','2021-01-25 18:57:58',25000,-2, 1, 1, 28, 'BestUser') --reprezentativan
---INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2021-02-01 21:58:58','2021-02-25 18:57:58',3000, -3, 1, 2, 29, 'BestUser')
---INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-01 21:58:58','2020-12-22 18:57:58',12000,-4, 1, 3, 30, 'Ranko')
---INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-02-11 21:58:58','2018-02-15 18:57:58',16500,-5, 1, 1, 31, 'BestUser')
---INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-02-20 21:58:58','2020-02-25 18:57:58',4500, -6, 1, 2 ,32, 'BestUser')
---INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-10 21:58:58','2012-12-20 18:57:58',10500,-7, 2, 3, 33, 'Pera')
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2021-01-01 21:58:58','2021-01-25 18:57:58',25000,-2, 1, 1, 28, 'BestUser') --reprezentativan
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2021-02-01 21:58:58','2021-02-25 18:57:58',3000, -3, 1, 2, 29, 'BestUser')
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-01 21:58:58','2020-12-22 18:57:58',12000,-4, 1, 3, 30, 'Ranko')
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-02-11 21:58:58','2018-02-15 18:57:58',16500,-5, 1, 1, 31, 'BestUser')
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-02-20 21:58:58','2020-02-25 18:57:58',4500, -6, 1, 2 ,32, 'BestUser')
+INSERT INTO Oglas(od_datuma, do_datuma, plan_km, adresa_id, cenovnik_id, automobil_id, common_data_id, username) VALUES('2020-12-10 21:58:58','2012-12-20 18:57:58',10500,-7, 2, 3, 33, 'Pera')
 
 --Narudzbenice za rezervacije
 INSERT INTO Narudzbenica(od_datuma, do_datuma, oglas_id, rezervacija_id, agent_id, common_data_id, izvestaj_id, user_id) VALUES('2021-02-05 21:58:58','2021-02-10 18:57:58', 1, 1, -5, 34, 1, -4)-- jos traje  -- Anna00  Anna00 dve odvojene rezerv (4,5)

@@ -59,46 +59,36 @@ import javax.persistence.JoinColumn;
  * 
  * 
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "oglas",
-    "korisnik",
-    "ukupnaCena",
-    "odDatuma",
-    "doDatuma",
-    "bundle",
-    "statusRezervacije",
-    "poruka"
-})
-@XmlRootElement(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(name = "Rezervacija", propOrder = { "id", "commonDataId", "ukupnaCena","bundle","statusRezervacije","username" })
+ 
+//@XmlRootElement(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
 @Entity 
 public class Rezervacija {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+   // @XmlElement(name= "Id", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
     protected Long id;
     
     @Column(name="ukupna_cena")
-    @XmlElement(name = "Ukupna_cena", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+   // @XmlElement(name = "UkupnaCena", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
     protected double ukupnaCena;
     
     @Column(name="bundle")
-    @XmlElement(name = "Bundle", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+   // @XmlElement(name = "Bundle", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
     protected Boolean bundle;
     
     @Column(name="status_rezerv")
-    @XmlElement(name = "Status_rezervacije", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true, defaultValue = "PENDING")
+   // @XmlElement(name = "StatusRezervacije", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true, defaultValue = "PENDING")
     protected String statusRezervacije;
     
-    //Jedna rezervacija se odnosi samo na jednog korisnika(druga strana bidirekcije)
-    @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
     @Column(name="commonDataId")
+   // @XmlElement(name = "CommonDataId", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
     protected Long commonDataId;
     
-    @XmlElement(name = "Username", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
     @Column(name="username")
+   // @XmlElement(name = "Username", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
     protected String username;
     
 

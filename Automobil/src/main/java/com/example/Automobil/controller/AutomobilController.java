@@ -22,6 +22,7 @@ import com.example.Automobil.dto.AutomobilDetailsDTO;
 import com.example.Automobil.dto.AutomobilImgDTO;
 import com.example.Automobil.dto.AutomobilNewDTO;
 import com.example.Automobil.model.Automobil;
+import com.example.Automobil.repository.AutomobilRepository;
 import com.example.Automobil.service.AutomobilService;
 
 @RestController
@@ -100,5 +101,10 @@ public class AutomobilController {
 		
 		return autoService.deleteAutomobil(id);
 	}
-	
+	@Autowired
+	private AutomobilRepository aRep;
+	@GetMapping("/sync")
+	public List<Automobil> syncAutomobil(){
+		return aRep.findAll();
+		}
 }

@@ -38,6 +38,7 @@ import com.example.Reservation.model.Narudzbenica;
 import com.example.Reservation.model.Oglas;
 import com.example.Reservation.model.Rezervacija;
 import com.example.Reservation.repository.CommonDataRepository;
+import com.example.Reservation.repository.NarudzbenicaRepository;
 import com.example.Reservation.repository.OglasRepository;
 import com.example.Reservation.repository.RezervacijaRepository;
 import com.example.Reservation.repository.service.mapper.RezervacijaMapper;
@@ -322,25 +323,28 @@ public class RezervacijaService {
 	
 	public LocalDateTime getKrajRezervacije(Long id) {
 		List<LocalDateTime> krajnjiDatumi=narServ.getAllByRezOg(id).stream().map(x->x.getDoDatuma()).sorted().collect(Collectors.toList());
-//		for(LocalDateTime datum : krajnjiDatumi){
-//			System.out.println(krajnjiDatumi.indexOf(datum)+". "+datum);
-//		}
 		return krajnjiDatumi.get(krajnjiDatumi.size()-1);
-		//tri linije ispod su za testiranje su koriscenjne u kontroleru za testiranje ove metode u postmenu
-		/*@GetMapping(value="/vremeTest/{id}")
-		public void TestRezervacija(@PathVariable Long id) {
-		rezervacijaService.getKrajRezervacije(id);
-	}*/
 	}
-//		// za unetog korisnika vraca sve rez sa unetim statusom
-//		public List<RezervacijaDTO> getAllStatusUser(String username,String status) {
-//			List<RezervacijaDTO> rezervacije =	rezervacijaRepository.findAll().stream().			
-//												filter(r->r.getStatusRezervacije().equals(status)).
-//												map(x->rezMappper.toDTO(x)).
-//												collect(Collectors.toList());
-//			
-//			return sortiraneRezervacije(rezervacije);
-//		}
-
+	public LocalDateTime getPocetakRezervacije(Long id) {
+		List<LocalDateTime> krajnjiDatumi=narServ.getAllByRezOg(id).stream().map(x->x.getDoDatuma()).sorted().collect(Collectors.toList());
+		return krajnjiDatumi.get(krajnjiDatumi.size()-1);
+	}
+	
+	@Autowired
+	private NarudzbenicaRepository narudzbenicaRepository;
+	public void otkaziOstale(Rezervacija savedRezervcaija, Narudzbenica narudzbenica ) {
+		//nadji sve narudzbenice koje nisu iz ove rezervacije, a odnose se na oglas za koji je vezana ova narudzbenica
+		List<Narudzbenica> ostaleNarudzbeniceUBazi=narudzbenicaRepository.findAll().stream()
+																		.filter(x->x.getRezervacijaId()!=narudzbenica.getRezervacijaId() && x.getOglasId()==narudzbenica.getOglasId()) 
+																		.collect(Collectors.toList());
+		for(Narudzbenica n : ostaleNarudzbeniceUBazi) {
+			//nema preklapanja ako se jenda zavrsava pre nego sto druga pocne ili jedna pocinje nakon sto se druga zavrsi
+			boolean nemaPreklapanja= n.getDoDatuma().isBefore(narudzbenica.getOdDatuma()) || n.getOdDatuma().isAfter(narudzbenica.getDoDatuma());
+			if(!nemaPreklapanja) {
+				Rezervacija r=rezervacijaRepository.findById(n.getRezervacijaId()).orElse(null);
+				//ovo je rezervacija iz baze koja se preklapa sa rezervacijom koju smo napravili
+			}
+		}
+	}
 
 }

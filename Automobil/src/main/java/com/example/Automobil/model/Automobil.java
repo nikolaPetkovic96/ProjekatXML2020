@@ -20,11 +20,9 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "komentar",
-    "ocena"
-})
+@XmlType(name = "Automobil", propOrder = { "id", "commonDataId", "markaAutomobilaId","modelAutomobilaId","klasaAutomobilaId",
+		"vrstaGorivaId","tipMenjaca","predjenaKilometraza","collisionDamageWaiver", 
+		"brojSedistaZaDecu","ukupnaOcena"})
 
 @XmlRootElement(name = "Automobil")
 @Entity

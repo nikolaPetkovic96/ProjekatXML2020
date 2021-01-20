@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Reservation.dto.NarudzbenicaDTO;
 import com.example.Reservation.dto.NarudzbenicaNewDTO;
 import com.example.Reservation.model.Narudzbenica;
+import com.example.Reservation.model.Rezervacija;
 import com.example.Reservation.repository.NarudzbenicaRepository;
 import com.example.Reservation.repository.service.CommonDataService;
 import com.example.Reservation.repository.service.NarudzbenicaService;
@@ -67,6 +68,11 @@ public class NarudzbenicaController {
 		NarudzbenicaNewDTO izmenjena=narServ.updateNar(dto);
 		return new ResponseEntity<>(izmenjena, HttpStatus.OK);	
 	}
-
+	@Autowired
+	private NarudzbenicaRepository nRep;
+	@GetMapping(value="/sync")
+	public List<Narudzbenica> sync(){
+		return nRep.findAll();
+	}
 	
 }

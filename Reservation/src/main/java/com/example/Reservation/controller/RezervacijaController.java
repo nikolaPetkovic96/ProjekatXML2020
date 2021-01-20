@@ -27,6 +27,7 @@ import com.example.Reservation.dto.RezervacijaStatusDTO;
 import com.example.Reservation.model.CommonData;
 import com.example.Reservation.model.Oglas;
 import com.example.Reservation.model.Rezervacija;
+import com.example.Reservation.repository.RezervacijaRepository;
 import com.example.Reservation.repository.service.CommonDataService;
 import com.example.Reservation.repository.service.RezervacijaService;
 
@@ -113,5 +114,10 @@ public class RezervacijaController {
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}	
-		
+	@Autowired
+	private RezervacijaRepository rRep;
+	@GetMapping(value="/sync")
+	public List<Rezervacija> sync(){
+		return rRep.findAll();
+	}
 }

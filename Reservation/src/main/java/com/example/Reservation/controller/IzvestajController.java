@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Reservation.dto.IzvestajDTO;
+import com.example.Reservation.model.Izvestaj;
+import com.example.Reservation.model.Narudzbenica;
+import com.example.Reservation.repository.IzvestajRepository;
+import com.example.Reservation.repository.NarudzbenicaRepository;
 import com.example.Reservation.repository.service.IzvestajService;
 
 @RestController
@@ -46,5 +50,12 @@ public class IzvestajController {
 	@DeleteMapping(value="/{id}")
 	public Void deleteIzvestaj(@PathVariable Long id) throws Exception {
 		return izvServ.deleteIzvestaj(id);
+	}
+	
+	@Autowired
+	private IzvestajRepository iRep;
+	@GetMapping(value="/sync")
+	public List<Izvestaj> sync(){
+		return iRep.findAll();
 	}
 }

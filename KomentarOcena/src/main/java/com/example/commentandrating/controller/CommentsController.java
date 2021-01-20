@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.commentandrating.dto.KomentarDTO;
+import com.example.commentandrating.model.Komentar;
+import com.example.commentandrating.repository.CommentRepoitory;
 import com.example.commentandrating.service.CommentService;
 
 @RestController
@@ -43,4 +45,10 @@ public class CommentsController {
 		return commentService.approve(id,Boolean.parseBoolean(approved));
 	}
 
+	@Autowired
+	private CommentRepoitory cRep;
+	@GetMapping(value = "/sync")
+	private List<Komentar> sync(){
+		return cRep.findAll();
+	}
 }

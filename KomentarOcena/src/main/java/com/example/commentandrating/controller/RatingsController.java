@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.commentandrating.dto.OcenaDTO;
+import com.example.commentandrating.model.Komentar;
+import com.example.commentandrating.model.Ocena;
+import com.example.commentandrating.repository.CommentRepoitory;
+import com.example.commentandrating.repository.RatingRepository;
 import com.example.commentandrating.service.RatingService;
 
 @RestController
@@ -36,5 +40,10 @@ public class RatingsController {
 	public ResponseEntity<?> addRating(@RequestBody OcenaDTO kom) {
 		return ratingService.createRating(kom);
 	}
-
+	@Autowired
+	private RatingRepository cRep;
+	@GetMapping(value = "/sync")
+	private List<Ocena> sync(){
+		return cRep.findAll();
+	}
 }

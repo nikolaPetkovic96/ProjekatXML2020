@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.LoginReg.config.auth.JwtAuthenticationRequest;
 import com.example.LoginReg.model.PermissionsDTO;
+import com.example.LoginReg.model.TAdresa;
+import com.example.LoginReg.model.TUser;
 import com.example.LoginReg.model.UserDTO;
 import com.example.LoginReg.model.UserTokenState;
+import com.example.LoginReg.repository.TAdresaRepository;
+import com.example.LoginReg.repository.TUserRepository;
 import com.example.LoginReg.service.UserService;
 
 @RestController
@@ -141,5 +146,18 @@ public class UserController {
 	public PermissionsDTO myPermissons() {
 		return userService.getMyPermissions();
 	}
-
+	//syncapp
+	@Autowired
+	private TUserRepository userRep;
+	@GetMapping(value="/sync")
+	public List<TUser> syncUser(){
+		return userRep.findAll();
+	}
+	@Autowired
+	private TAdresaRepository adresaRep;
+	@GetMapping(value="/adresa/sync")
+	public List<TAdresa> syncAdresa(){
+		return adresaRep.findAll();
+	}
+	
 }

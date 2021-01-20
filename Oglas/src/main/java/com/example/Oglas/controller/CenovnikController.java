@@ -1,5 +1,6 @@
 package com.example.Oglas.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Oglas.dto.CenovnikDTO;
+import com.example.Oglas.model.Cenovnik;
+import com.example.Oglas.model.Oglas;
+import com.example.Oglas.repository.CenovnikRepository;
+import com.example.Oglas.repository.OglasRepository;
 import com.example.Oglas.service.CenovnikService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +56,13 @@ public class CenovnikController {
 	public boolean deleteCenovnik(@PathVariable Long id){
 		return cenovnikService.deleteCenovnik(id);
 	}
+	
+	@Autowired
+	private CenovnikRepository ogRep;
+	@GetMapping(value="/sync")
+	public List<Cenovnik> getAllOglasSync() {
+		List<Cenovnik> all=ogRep.findAll();
+		
+		return all;	
+		}
 }

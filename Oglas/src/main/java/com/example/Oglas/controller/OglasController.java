@@ -31,6 +31,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.example.Oglas.dto.OglasDTO;
 import com.example.Oglas.dto.OglasDetailsImgDTO;
 import com.example.Oglas.dto.OglasNewDTO;
+import com.example.Oglas.model.CommonData;
+import com.example.Oglas.model.Oglas;
+import com.example.Oglas.repository.CommonDataRepository;
+import com.example.Oglas.repository.OglasRepository;
 import com.example.Oglas.repository.TAdresaRepository;
 import com.example.Oglas.service.CommonDataService;
 import com.example.Oglas.service.NarudzbenicaService;
@@ -136,5 +140,18 @@ public class OglasController {		//za pokretanje i testiranje eureka, zuul, login
 											odDatuma ,doDatuma
 											,username);
 	}
-
+	
+	@Autowired
+	private OglasRepository ogRep;
+	@GetMapping(value="/sync")
+	public List<Oglas> getAllOglasSync() {
+		List<Oglas> all=ogRep.findAll();
+		return all;	
+		}
+	@Autowired
+	private CommonDataRepository cmdRep;
+	@GetMapping(value="/sync/cmd")
+	public List<CommonData> syncCommonData(){
+		return cmdRep.findAll();
+	}
 }
