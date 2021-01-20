@@ -16,9 +16,8 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
-
 
 /**
  * <p>Java class for TMarka_automobila complex type.
@@ -45,28 +44,25 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TMarka_automobila", propOrder = {
-    "id",
-    "nazivMarke",
-    "commonData",
-    "modelAutomobila"
-})
+@XmlType(name = "Brand", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivMarke" })
 @Entity
+@XmlRootElement(name =  "Brand", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class MarkaAutomobila {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
     protected Long id;
 	
 	@Column(name = "naziv_marke", nullable = false)
-    @XmlElement(name = "naziv_marke", required = true)
+    @XmlElement(name = "Name", required = true)
     protected String nazivMarke;
 	
-    @XmlElement(name = "Common_data", required = true)
+	@Column(name = "common_data_id", nullable = false)
+	@XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
 	
 	//Jedna marka ima vise modela, id marke se dodaje kao nova kolona u tabeli TMarkaAutombila
-	
 	public MarkaAutomobila() {
 		
 	}

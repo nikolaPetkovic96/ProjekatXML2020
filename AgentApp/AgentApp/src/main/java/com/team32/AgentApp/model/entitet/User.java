@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
@@ -58,22 +59,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TUser", namespace = "http://www.ftn.uns.ac.rs/korisnici", propOrder = {
-    "id",
-    "korisnickoIme",
-    "lozinka",
-    "adresa",
-    "email",
-    "status"
-})
-@XmlSeeAlso({
-
-})
-
+@XmlType(name = "UserType", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivTipa", "korisnickoIme","Loznika","email","status","adresaId",
+		"pol","ime","prezime","jmbg",
+		"nazivFirme","poslovniMaticniBroj",
+		"allowedToCommend","allowedToMessage","allowedToMakeReservation"})
+@XmlRootElement(name = "UserType", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 @Table(name="Users")
 public class User implements UserDetails {
-	
+
 	/**
 	 * 
 	 */
@@ -81,57 +75,70 @@ public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
     protected Long id;
 	
 	@Column(name = "korisnicko_ime", unique = true, nullable = false)
-    @XmlElement(name = "Korisnicko_ime", required = true)
+	@XmlElement(name = "KorisnickoIme", required = true)
     protected String korisnickoIme;
 	
 	@Column(name = "lozinka", nullable = false)
-    @XmlElement(name = "Lozinka", required = true)
+	@XmlElement(name = "Lozinka", required = true)
     protected String lozinka;
 	
 	@Column(name = "email", nullable = false)
-    @XmlElement(name = "Email", required = true)
+	@XmlElement(name = "Email", required = true)
     protected String email;
 	
 	@Column(name = "status", nullable = false)
-    @XmlElement(name = "Status", required = true, defaultValue = "aktivan")
+//  @XmlElement(name = "Status", required = true, defaultValue = "aktivan")
+	@XmlElement(name = "Status", required = true)
     protected String status;
 	
-    @XmlElement(name = "Adresa", required = true)
     @Column(name = "adresa_id", nullable = false)
+    @XmlElement(name = "AdresaId", required = true)
     protected Long adresaId;
     
 	//za agenta osoba
     
 	@Column(name = "ime",  nullable = true)
-    @XmlElement(name = "Ime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+	@XmlElement(name = "Ime", required = true)
     protected String ime;
     
 	@Column(name = "prezime",  nullable = true)
-    @XmlElement(name = "Prezime", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+	@XmlElement(name = "Prezime", required = true)
     protected String prezime;
     
 	@Column(name = "jmbg",  nullable = true)
-    @XmlElement(name = "JMBG", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+	@XmlElement(name = "Jmbg", required = true)
     protected String jmbg;
 	
 	@Column(name = "pol",  nullable = true)
+	@XmlElement(name = "Pol", required = true)
 	protected String pol;
     
 	//za agenta firma
 	
     @Column(name = "naziv",  nullable = true)
-    @XmlElement(name = "Naziv", namespace = "http://www.ftn.uns.ac.rs/korisnici")
+	@XmlElement(name = "NazivFirme", required = true)
     protected String naziv;
 	
 	@Column(name = "pib", unique = true, nullable = true)
-    @XmlElement(name = "poslovni_maticni_broj", namespace = "http://www.ftn.uns.ac.rs/korisnici", required = true)
+	@XmlElement(name = "PoslovniMaticniBroj", required = true)
     protected String poslovniMaticniBroj;
 	
     @Column(name="common_data_id", nullable = false)
+    @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
+    
+	@XmlElement(name = "AllowedToCommend", required = true)
+	private boolean allowedToCommend;
+	
+	@XmlElement(name = "AllowedToMessage", required = true)
+	private boolean allowedToMessage;
+	
+	@XmlElement(name = "AllowedToMakeReservation", required = true)
+	private boolean allowedToMakeReservation;
     
     
     //ZA SECURITY
@@ -170,25 +177,6 @@ public class User implements UserDetails {
 		this.authorities = authorities;
 	
 	}
-
-//	public User(Long id, String korisnickoIme, String lozinka, String email, String status,/* boolean enabled,*/ Long adresaId, String ime,
-//			String prezime, String jmbg, String naziv, String poslovniMaticniBroj, String pol, Long commonDataId) {
-//		super();
-//		this.id = id;
-//		this.korisnickoIme = korisnickoIme;
-//		this.lozinka = lozinka;
-//		this.email = email;
-//		this.status = status;
-//		this.adresaId = adresaId;
-//		this.ime = ime;
-//		this.prezime = prezime;
-//		this.jmbg = jmbg;
-//		this.naziv = naziv;
-//		this.poslovniMaticniBroj = poslovniMaticniBroj;
-//		this.commonDataId = commonDataId;
-//		this.pol = pol;
-////		this.enabled = enabled;
-//	}
 
 	public Long getId() {
         return id;
@@ -348,7 +336,6 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
 
 	public Timestamp getLastPasswordResetDate() {
 		return lastPasswordResetDate;

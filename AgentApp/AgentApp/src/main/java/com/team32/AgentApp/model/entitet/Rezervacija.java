@@ -52,56 +52,50 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "oglas",
-    "korisnik",
-    "ukupnaCena",
-    "odDatuma",
-    "doDatuma",
-    "bundle",
-    "statusRezervacije",
-    "poruka"
-})
-@XmlRootElement(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+@XmlType(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "ukupnaCena","bundle","statusRezervacije","username" })
+@XmlRootElement(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity 
 public class Rezervacija {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+	@XmlElement(name = "Id", required = true)
     protected Long id;
     
     @Column(name="ukupna_cena")
-    @XmlElement(name = "Ukupna_cena", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+	@XmlElement(name = "UkupnaCena", required = true)
     protected double ukupnaCena;
     
     @Column(name="bundle")
-    @XmlElement(name = "Bundle", namespace = "http://www.ftn.uns.ac.rs/Rezervacija")
+    @XmlElement(name = "Bundle", required = true)
     protected Boolean bundle;
     
     @Column(name="status_rezerv")
-    @XmlElement(name = "Status_rezervacije", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true, defaultValue = "PENDING")
+    @XmlElement(name = "StatusRezervacije", required = true)
     protected String statusRezervacije;
     
-    @Column(name="napomena_rezerv")
-    private String napomenaRezervacije;
-    
-    //Jedna rezervacija se odnosi samo na jednog korisnika(druga strana bidirekcije)
-    @XmlElement(name = "Korisnik", namespace = "http://www.ftn.uns.ac.rs/Rezervacija", required = true)
+//	Ne treba
+//  @Column(name="napomena_rezerv")
+//  private String napomenaRezervacije;
+  
     @Column(name="commonDataId")
+    @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
+    
+    //dodato
+	@XmlElement(name = "Username", required = true)
+	private String usename;
 
 	public Rezervacija() {
 		super();
 	}
 
-	public Rezervacija(Long id, double ukupnaCena, Boolean bundle, String napomenaRezervacije, String statusRezervacije, Long commonDataId) {
+	public Rezervacija(Long id, double ukupnaCena, Boolean bundle/*, String napomenaRezervacije*/, String statusRezervacije, Long commonDataId) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
 		this.bundle = bundle;
-		this.napomenaRezervacije = napomenaRezervacije;
+//		this.napomenaRezervacije = napomenaRezervacije;
 		this.statusRezervacije = statusRezervacije;
 		this.commonDataId = commonDataId;
 	}
@@ -131,13 +125,13 @@ public class Rezervacija {
 		this.bundle = bundle;
 	}
 	
-	public String getNapomenaRezervacije() {
-		return napomenaRezervacije;
-	}
-
-	public void setNapomenaRezervacije(String napomenaRezervacije) {
-		this.napomenaRezervacije = napomenaRezervacije;
-	}
+//	public String getNapomenaRezervacije() {
+//		return napomenaRezervacije;
+//	}
+//
+//	public void setNapomenaRezervacije(String napomenaRezervacije) {
+//		this.napomenaRezervacije = napomenaRezervacije;
+//	}
 
 	public String getStatusRezervacije() {
 		return statusRezervacije;

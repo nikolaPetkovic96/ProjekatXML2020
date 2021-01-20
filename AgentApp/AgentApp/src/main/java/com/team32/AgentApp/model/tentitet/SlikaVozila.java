@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -39,32 +40,27 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TSlika_vozila", propOrder = {
-    "id",
-    "slika",
-    "commonData"
-})
-
+@XmlType(name = "Slika", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "slika", "automobilId" })
+@XmlRootElement(name = "Slika", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class SlikaVozila {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
     protected Long id;
 	
 	@Column(name = "slika", nullable = false)
-    @XmlElement(required = true)
-	
+	@XmlElement(name = "Slika", required = true)
     protected String[] slika;
     
-    @XmlElement(name = "Common_data", required = true)
     @Column(name = "common_data_id", nullable = false)
+    @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
 
-	 //Jedna slika se odnosi na samo jedan autombil(druga strana bidirekcije)
     @Column(name = "automobil_id", nullable = false)
+	@XmlElement(name = "AutomobilId", required = true)
     private Long automobilId;
-
 
 	public SlikaVozila() {
 		super();
@@ -111,7 +107,5 @@ public class SlikaVozila {
 	public void setAutomobilId(Long automobilId) {
 		this.automobilId = automobilId;
 	}
-
-
 
 }

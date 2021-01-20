@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -39,25 +40,23 @@ import javax.xml.bind.annotation.XmlType;
 // * 
 // */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TTip_menjaca", propOrder = {
-    "id",
-    "nazivMenjaca",
-    "commonData"
-})
 
+@XmlType(name = "TransmissionType", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivTipa" })
+@XmlRootElement(name = "TransmissionType", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class TipMenjaca {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
     protected Long id;
 	
 	@Column(name = "naziv_menjaca", nullable = false)
-    @XmlElement(name = "naziv_menjaca", required = true)
+	@XmlElement(name = "Name", required = true)
     protected String nazivMenjaca;
     
-    @XmlElement(name = "Common_data", required = true)
 	@Column(name = "common_data_id", nullable = false)
+    @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
 
   	public TipMenjaca() {
@@ -94,6 +93,5 @@ public class TipMenjaca {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
-
 
 }

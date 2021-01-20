@@ -5,36 +5,55 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Izvestaj", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId","predjenaKilometraza","tekstIzvestaja","narudzbenicaId","automobilId",
+												"rezervacijaId","prekoracenaKilometraza","dodatniTroskovi"})
+@XmlRootElement(name = "Izvestaj", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class Izvestaj {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
 	private Long id;
 	
 	@Column(name="predjena_km", nullable = false)
+	@XmlElement(name = "PredjenaKilometraza", required = true)
 	private float predjenaKilometraza;
 	
 	@Column(name="tekst_izvestaja")
+	@XmlElement(name = "TekstIzvestaja", required = true)
 	private String tekstIzvestaja;
 	
 	@Column(name="narudzbenica_id", nullable = false)
+	@XmlElement(name = "NarudzbenicaId", required = true)
 	private Long narudzbenicaId;
 	
 	@Column(name="automobil_id", nullable = false)
+	@XmlElement(name = "Automobilid", required = true)
 	private Long automobilId;
 	
 	@Column(name="rezervacija_id", nullable = false)
+	@XmlElement(name = "RezervacijaId", required = true)
 	private Long rezervacijaId;
 	
 	@Column(name="prekoracena_km", nullable = false)
+	@XmlElement(name = "PrekoracenaKilometraza", required = true)
 	private Long prekoracenaKilometraza;
     
     @Column(name="dodatni_troskovi", nullable = false)
+    @XmlElement(name = "DodataniTroskovi", required = true)
 	private Long dodatniTroskovi;
 	
 	@Column(name="common_data_id", nullable = false)
+	@XmlElement(name = "CommonDataId", required = true)
 	private Long commonDataId;
 
 	public Izvestaj() {

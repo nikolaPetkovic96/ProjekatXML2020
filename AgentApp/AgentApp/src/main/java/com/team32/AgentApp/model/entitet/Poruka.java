@@ -48,32 +48,33 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "korisnik",
-    "tekstPoruke"
+@XmlType(name = "Poruka", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = {
+		"id", "commonDataId", "tekstPoruke","rezervacijaId","automobilId" 
 })
-@XmlRootElement(name = "Poruka")
+@XmlRootElement(name = "Poruka", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class Poruka {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
     protected Long id;
     
 	@Column(name = "tekst_poruke", nullable = false)
-    @XmlElement(name = "Tekst_poruke", required = true)
+	@XmlElement(name = "TekstPoruke", required = true)
     protected String tekstPoruke;
 
     //Jedan komentar se odnosi na samo jedan automobil(druga strana bidirekcije)
     @Column(name = "automobil_id", nullable = false)
+    @XmlElement(name = "AutomobilId", required = true)
     private Long automobilId;
     
     //Jedna poruka se odnosi samo na jednu rezervaciju(druga strana bidirekcije))	
 	@Column(name = "rezervacija_id", nullable = false)
+	@XmlElement(name = "RezervacijaId", required = true)
     private Long rezervacijaId;
     
-    @XmlElement(name = "Common_data", required = true)
+	@XmlElement(name = "CommonDataId", required = true)
     @Column(name = "common_data_id", nullable = false)
     protected Long commonDataId;
     

@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
@@ -45,36 +46,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "common_data", namespace = "http://www.ftn.uns.ac.rs/AdminKlijent", propOrder = { "datumKreiranja",
-		"datumIzmene", "korisnik" })
+@XmlType(name = "CommonData", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "datumKreiranja","datumIzmene","userId"})
+
 @Entity
+@XmlRootElement(name = "CommonData", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class CommonData {
 
 	@Id
-	@XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
 	protected Long id;
 
 	@Column(name = "datum_kreiranja", nullable = false)
-	@XmlElement(name = "Datum_kreiranja", required = true)
+	@XmlElement(name = "DatumKreiranja", required = true)
 	@XmlSchemaType(name = "dateTime")
 	protected LocalDateTime datumKreiranja;
 
 	@Column(name = "datum_izmene")
-	@XmlElement(name = "Datum_izmene", required = true)
+	@XmlElement(name = "DatumIzmene", required = true)
 	@XmlSchemaType(name = "dateTime")
 	protected LocalDateTime datumIzmene;
 
 	//Jedna promena(commonData) se odnosi na samo jednog korisnika
-	@XmlElement(name = "Korisnik", required = true)
+	@XmlElement(name = "UserId", required = true)
 	@Column(name = "korisnik_id")
 	protected Long userId;
 	
-
 	public CommonData() {
 		super();
 	}
-	
 
 	public CommonData(Long id, LocalDateTime datumKreiranja, LocalDateTime datumIzmene, Long userId) {
 		super();
@@ -83,7 +83,6 @@ public class CommonData {
 		this.datumIzmene = datumIzmene;
 		this.userId = userId;
 	}
-
 
 	public Long getId() {
 		return id;

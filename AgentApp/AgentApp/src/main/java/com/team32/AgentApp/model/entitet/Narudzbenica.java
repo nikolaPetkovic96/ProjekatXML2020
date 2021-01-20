@@ -7,35 +7,52 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Narudzbenica", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "agentId",
+											"userId","oglasId","rezervacijaId","odDatuma","doDatuma" })
+@XmlRootElement(name = "Narudzbenica", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class Narudzbenica {
+	
 	
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
+		@XmlElement(name = "Id", required = true)
 		private Long id;
 	
 		//UserId iz commonData od Oglasa 
 		@Column(name = "agent_id", nullable = false)
+		@XmlElement(name = "AgentId", required = true)
 		private Long agentId;
 		
 //		//UserId iz commonData od te Narudzbenice
-//		@Column(name = "user_id", nullable = false)
-//		private Long userId;
+		@XmlElement(name = "UserId", required = true)
+		private Long userId;
 	
 		@Column(name = "oglas_id", nullable = false)
+		@XmlElement(name = "OglasId", required = true)
 		private Long oglasId;
 		
 		@Column(name = "rezervacija_id", nullable = false)
+		@XmlElement(name = "RezervacijaId", required = true)
 		private Long rezervacijaId;
 		
 		@Column(name = "od_datuma", nullable = false)
+		@XmlElement(name = "OdDatuma", required = true)
 	    private LocalDateTime odDatuma;
 	    
 	    @Column(name = "do_datuma", nullable = false)
+		@XmlElement(name = "DoDatuma", required = true)
 	    private LocalDateTime  doDatuma;
 	    
 	    @Column(name="common_data_id", nullable = false)
+	    @XmlElement(name = "CommonDataId", required = true)
 	    private Long commonDataId;
 
 		public Narudzbenica() {

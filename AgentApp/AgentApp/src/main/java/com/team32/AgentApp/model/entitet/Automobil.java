@@ -43,56 +43,57 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "komentar",
-    "ocena"
-})
+@XmlType(name = "Automobil", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "markaAutomobilaId","modelAutomobilaId","klasaAutomobilaId",
+											"vrstaGorivaId","tipMenjaca","predjenaKilometraza","collisionDamageWaiver", 
+											"brojSedistaZaDecu","ukupnaOcena"})
 
-@XmlRootElement(name = "Automobil")
+@XmlRootElement(name = "Automobil", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class Automobil {
 	
 	@Id
+	@XmlElement(name = "Id", required = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 	
 	@Column(name = "marka_aut_id", nullable = false)
-    @XmlElement(name = "Marka_automobila", required = true)
+	@XmlElement(name = "MarkaAutomobilaId", required = true)
     protected Long markaAutomobilaId;
     
 	@Column(name = "model_aut_id", nullable = false)
-    @XmlElement(name = "Model_automobila", required = true)
+	@XmlElement(name = "ModelutomobilaId", required = true)
     protected Long modelAutomobilaId;
     
 	@Column(name = "klasa_aut_id", nullable = false)
-    @XmlElement(name = "Klasa_automobila", required = true)
+	@XmlElement(name = "KlasaAutomobilaId", required = true)
     protected Long klasaAutomobilaId;
 
 	@Column(name = "tip_goriva_id", nullable = false)
-    @XmlElement(name = "Tip_goriva", required = true)
+	@XmlElement(name = "VrstaGorivaId", required = true)
     protected Long tipGorivaId;
     
 	@Column(name = "tip_menjaca_id", nullable = false)
-    @XmlElement(name = "Tip_menjaca", required = true)
+	@XmlElement(name = "TipMenjacaId", required = true)
     protected Long tipMenjacaId;
     
 	@Column(name = "predj_kilom", nullable = false)
-    @XmlElement(name = "Predjena_kilometraza")
+	@XmlElement(name = "PredjenaKilometraza", required = true)
     protected float predjenaKilometraza;
 	
 	@Column(name = "ukupna_ocena", nullable = false)
+	@XmlElement(name = "UkupnaOcena", required = true)
     protected float ukupnaOcena;
     
 	@Column(name = "col_dmg_waiver", nullable = false)
-    @XmlElement(name = "Collision_Damage_Waiver")
+	@XmlElement(name = "CollisionDamageWaiver", required = true)
     protected boolean collisionDamageWaiver;
     
 	@Column(name = "br_sedista_za_decu", nullable = false)
-    @XmlElement(name = "Broj_sedista_za_decu")
+	@XmlElement(name = "BrojSedistaZaDecu", required = true)
     protected int brojSedistaZaDecu;
 	
 	@Column(name="common_data_id", nullable = false)
+	@XmlElement(name = "CommonDataId", required = true)
     private Long commonDataId;
   
 

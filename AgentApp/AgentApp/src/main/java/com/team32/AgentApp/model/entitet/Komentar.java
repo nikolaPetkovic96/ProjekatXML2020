@@ -47,39 +47,47 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "korisnik",
-    "tekstKomentara",
-    "odobren"
-})
-
-@XmlRootElement(name = "Komentar")
+@XmlType(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = {
+		"id",
+		"commonDataId",
+		"tekstKomentara",
+		"odobren",
+		"automobilId",
+		"rezervacijaId",
+		"autor" })
+@XmlRootElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class Komentar {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(name = "Id")
+	@XmlElement(name = "Id", required = true)
     protected Long id;
     
     @Column(name = "tekst_komentara", nullable = false)
-    @XmlElement(name = "tekst_komentara", required = true)
+    @XmlElement(name = "Tekstkomentara", required = true)
     protected String tekstKomentara;
     
     @Column(name = "odobren")
-    @XmlElement(defaultValue = "false")
+//    @XmlElement(defaultValue = "false") ?????
+    @XmlElement(name = "Odobren", required = true)
     protected boolean odobren;
     
     @Column(name="automobil_id")
+    @XmlElement(name = "AutomobilId", required = true)
     private Long automobilId;
     
     @Column(name="rezervacija_id")
+    @XmlElement(name = "RezervacijaId", required = true)
     private Long rezervacijaId;
     
-    @XmlElement(name = "Korisnik", required = true)
     @Column(name="common_data_id")
+    @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
+    
+    //Ovo nemam....
+	@XmlElement(name = "Autor", required = true)
+	protected String autor;
     
 
     public Komentar() {

@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -39,28 +40,26 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TModel_automobila", propOrder = {
-    "id",
-    "nazivModela",
-    "commonData"
-})
+@XmlType(name = "Model", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivModela","markaAutomobilaId" })
+@XmlRootElement(name = "Model", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class ModelAutomobila {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
     protected Long id;
 	
 	@Column(name = "naziv_modela", nullable = false)
-    @XmlElement(name = "naziv_modela", required = true)
+	@XmlElement(name = "Name", required = true)
     protected String nazivModela;
 	
-    @XmlElement(name = "Common_data", required = true)
     @Column(name = "common_data_id", nullable = false)
+    @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
     
-	//Jedan TModelAutomobilaa se odnosi na samo jednu TMarkaAutomobila(druga strana bidirekcije)
     @Column(name = "marka_automobila_id", nullable = false)
+    @XmlElement(name="MarkaAutomobilaId", required = true)
     private Long markaAutomobilaId;
 
   	

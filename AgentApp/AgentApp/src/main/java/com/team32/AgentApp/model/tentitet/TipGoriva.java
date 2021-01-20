@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -39,25 +40,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TTip_goriva", propOrder = {
-    "id",
-    "nazivTipa",
-    "commonData"
-})
-
+@XmlType(name = "FuelType", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivTipa" })
+@XmlRootElement(name = "FuelType", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class TipGoriva {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
     protected Long id;
     
     @Column(name = "naziv_tipa", nullable = false)
-    @XmlElement(name = "naziv_tipa", required = true)
+	@XmlElement(name = "Name", required = true)
     protected String nazivTipa;
     
-    @XmlElement(name = "Common_data", required = true)
+    
     @Column(name = "common_data_id", nullable = false)
+    @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
 
     public TipGoriva() {

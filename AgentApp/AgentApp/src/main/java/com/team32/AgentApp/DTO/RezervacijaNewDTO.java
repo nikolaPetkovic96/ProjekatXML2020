@@ -8,7 +8,7 @@ public class RezervacijaNewDTO {
 	private double ukupnaCena;                   
 	private Boolean bundle;                  
 	private String statusRezervacije;   
-	private String napomenaRezervacije; //napomena u rezerv
+//	private String napomenaRezervacije; //napomena u rezerv
 	private Long commonDataId;
 	private NarudzbenicaNewDTO narudzbenica;
   
@@ -23,20 +23,20 @@ public class RezervacijaNewDTO {
 		this.ukupnaCena = r.getUkupnaCena();
 		this.bundle = r.getBundle();
 		this.statusRezervacije = r.getStatusRezervacije();
-		this.napomenaRezervacije = r.getNapomenaRezervacije();
+//		this.napomenaRezervacije = r.getNapomenaRezervacije();
 		this.commonDataId = r.getCommonDataId();
 		
 		this.narudzbenica = narudzbenica;
 	}
 	
-	public RezervacijaNewDTO(Long id, double ukupnaCena, Boolean bundle, String napomenaRezervacije, String statusRezervacije, String poruka,
+	public RezervacijaNewDTO(Long id, double ukupnaCena, Boolean bundle/*, String napomenaRezervacije*/, String statusRezervacije, String poruka,
 			Long commonDataId, NarudzbenicaNewDTO narudzbenica) {
 		super();
 		this.id = id;
 		this.ukupnaCena = ukupnaCena;
 		this.bundle = bundle;
 		this.statusRezervacije = statusRezervacije;
-		this.napomenaRezervacije = poruka;
+//		this.napomenaRezervacije = poruka;
 		this.commonDataId = commonDataId;
 		this.narudzbenica = narudzbenica;
 	}
@@ -82,14 +82,14 @@ public class RezervacijaNewDTO {
 	}
 
 
-	public String getNapomenaRezervacije() {
-		return napomenaRezervacije;
-	}
-
-
-	public void setNapomenaRezervacije(String poruka) {
-		this.napomenaRezervacije = poruka;
-	}
+//	public String getNapomenaRezervacije() {
+//		return napomenaRezervacije;
+//	}
+//
+//
+//	public void setNapomenaRezervacije(String poruka) {
+//		this.napomenaRezervacije = poruka;
+//	}
 
 
 	public Long getCommonDataId() {

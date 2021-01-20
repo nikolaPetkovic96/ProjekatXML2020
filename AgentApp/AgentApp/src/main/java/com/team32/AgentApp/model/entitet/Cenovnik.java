@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
-
-
 package com.team32.AgentApp.model.entitet;
 
 import javax.persistence.Column;
@@ -18,7 +16,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  * <p>Java class for anonymous complex type.
@@ -49,47 +46,47 @@ import javax.xml.bind.annotation.XmlType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "cenaPoDanu",
-    "nazivCenovnika",
-    "popustZaPreko30Dana",
-    "cenaCollisionDamageWaiver",
-    "cenaPoKilometru"
-})
+@XmlType(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/sync" , propOrder = {
+		"Id",
+		"CommonDataId" ,
+		"cenaPoDanu",
+		"NazivCenovnika" ,
+		"PopustZaPreko30Dana" ,
+		"CenaCollisionDamageWaiver" ,
+		"CenaPoKilometru" })
 
-@XmlRootElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
+@XmlRootElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class Cenovnik {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/cenovnik")
+	@XmlElement(name = "Id", required = true)
     protected Long id;
 	
 	@Column(name = "naziv_cenovnika", nullable = false)
-    @XmlElement(name = "Naziv_cenovnika", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
+	@XmlElement(name = "NazivCenovnika", required = true)
     protected String nazivCenovnika;
 	
 	@Column(name = "cena_po_danu", nullable = false)
-    @XmlElement(name = "CenaPoDanu", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
+    @XmlElement(name = "CenaPoDanu", required = true)
     protected float cenaPoDanu;
     
 	@Column(name = "popust_30_dan", nullable = false)
-    @XmlElement(name = "PopustZaPreko30Dana", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
+	@XmlElement(name = "PopustZaPreko30Dana", required = true)
     protected float popustZaPreko30Dana;
     
 	@Column(name = "cenaColDmgeWaiver", nullable = false)
-    @XmlElement(name = "CenaCollisionDamageWaiver", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
+	@XmlElement(name = "CenaCollisionDamageWaiver", required = true)
     protected float cenaCollisionDamageWaiver;
     
 	@Column(name = "cena_po_km", nullable = false)
-    @XmlElement(name = "CenaPoKilometru", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
+	@XmlElement(name = "CenaPoKilometru", required = true)
     protected float cenaPoKilometru;
 	
-	 @Column(name="common_data_id")
+	@Column(name="common_data_id", nullable = false)
+	@XmlElement(name = "CommonDataId", required = true)
 	private Long commonDataId;
-	
 	
     public Cenovnik() {
 		super();

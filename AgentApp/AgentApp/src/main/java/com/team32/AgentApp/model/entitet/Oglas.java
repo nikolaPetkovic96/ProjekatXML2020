@@ -5,7 +5,6 @@
 // Generated on: 2020.06.02 at 07:25:52 PM CEST 
 //
 
-
 package com.team32.AgentApp.model.entitet;
 
 import java.time.LocalDateTime;
@@ -45,47 +44,51 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "id",
-    "automobil",
-    "odDatuma",
-    "doDatuma",
-    "cenovnik"
-})
-@XmlRootElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
+@XmlType(name = "", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "odDatuma","doDatuma",
+		"cenovnikId","automobilId","planiranaKilometraza","adresaId", "username" })
+
+@XmlRootElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity 
 public class Oglas {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa")
+	@XmlElement(name = "Id", required = true)
     protected Long id; 
     
-    @XmlElement(name = "Od_datuma", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
-    @XmlSchemaType(name = "dateTime")
+//  @XmlSchemaType(name = "dateTime")
     @Column(name = "od_datuma", nullable = false)
+    @XmlElement(name = "OdDatuma", required = true)
     protected LocalDateTime odDatuma;
-    
-    @XmlElement(name = "Do_datuma", namespace = "http://www.ftn.uns.ac.rs/KreiranjeOglasa", required = true)
-    @XmlSchemaType(name = "dateTime")
+	
+//  @XmlSchemaType(name = "dateTime")
     @Column(name = "do_datuma", nullable = false)
+    @XmlElement(name = "DoDatuma", required = true)
     protected LocalDateTime  doDatuma;
     
     @Column(name = "adresa_id", nullable = false)
+    @XmlElement(name = "AdresaId", required = true)
     protected Long adresaId;
     
-    @XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
     @Column(name="cenovnik_id")
+	@XmlElement(name = "CenovnikId", required = true)
     protected Long cenovnikId;
 	
     @Column(name="automobil_id")
+    @XmlElement(name = "AutomobilId", required = true)
 	private Long automobilId;
     
     @Column(name="plan_km")
+    @XmlElement(name = "PlaniranaKm", required = true)
     private float planiranaKilometraza;
     
     @Column(name="common_data_id")
+    @XmlElement(name = "CommonDataId", required = true)
 	private Long commonDataId;
+    
+    //dodato
+	@XmlElement(name = "Username", required = true)
+	private String username;
     
     public Oglas() {
 		super();

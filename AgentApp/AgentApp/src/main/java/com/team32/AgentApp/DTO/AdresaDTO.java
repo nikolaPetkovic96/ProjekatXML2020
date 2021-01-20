@@ -5,14 +5,14 @@ import com.team32.AgentApp.model.tentitet.Adresa;
 public class AdresaDTO {
 	private Long id;
 	private String mesto;
-	private int postanskiBroj;
+	private String postanskiBroj;
 	private String ulica;
-	private int broj;
+	private String broj;
     private Long commonDataId;
 	
 	public AdresaDTO() {}
 	
-	public AdresaDTO(Long id, String mesto, int postanskiBroj, String ulica, int broj, Long commonDataId) {
+	public AdresaDTO(Long id, String mesto, String postanskiBroj, String ulica, String broj, Long commonDataId) {
 		super();
 		this.id = id;
 		this.mesto = mesto;
@@ -44,10 +44,10 @@ public class AdresaDTO {
 	public void setMesto(String mesto) {
 		this.mesto = mesto;
 	}
-	public int getPostanskiBroj() {
+	public String getPostanskiBroj() {
 		return postanskiBroj;
 	}
-	public void setPostanskiBroj(int postanskiBroj) {
+	public void setPostanskiBroj(String postanskiBroj) {
 		this.postanskiBroj = postanskiBroj;
 	}
 	public String getUlica() {
@@ -56,10 +56,10 @@ public class AdresaDTO {
 	public void setUlica(String ulica) {
 		this.ulica = ulica;
 	}
-	public int getBroj() {
+	public String getBroj() {
 		return broj;
 	}
-	public void setBroj(int broj) {
+	public void setBroj(String broj) {
 		this.broj = broj;
 	}
 

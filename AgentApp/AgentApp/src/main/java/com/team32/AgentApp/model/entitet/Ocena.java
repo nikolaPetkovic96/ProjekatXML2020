@@ -51,28 +51,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "id", "korisnik", "vrednostOcene" })
-@XmlRootElement(name = "Ocena")
+@XmlType(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "vrednostOcene","automobilId","rezervacijaId","autor" })
+@XmlRootElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class Ocena {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
 	protected Long id;
 
 	@Column(name = "vredn_ocene")
-	@XmlElement(name = "Vrednost_ocene")
+	@XmlElement(name = "VrednostOcene", required = true)
 	protected int vrednostOcene;
 	
     @Column(name="automobil_id")
+    @XmlElement(name = "AutomobilId", required = true)
     private Long automobilId;
     
     @Column(name="rezervacija_id")
+    @XmlElement(name = "RezervacijaId", required = true)
     private Long rezervacijaId;
 
-    @XmlElement(name = "Korisnik", required = true)
     @Column(name="common_data_id")
+    @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
+    
+    //dodato
+	@XmlElement(name = "Autor", required = true)
+	private String autor;
     
 
 	public Ocena() {
@@ -127,9 +134,5 @@ public class Ocena {
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
 	}
-
-
-	
-	
 
 }

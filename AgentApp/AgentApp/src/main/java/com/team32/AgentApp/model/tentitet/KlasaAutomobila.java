@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 //import com.example.Messages.SchemaToJava2.model.entitet.CommonData;
 
@@ -41,24 +42,22 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TKlasa_automobila", propOrder = {
-    "id",
-    "nazivKlase",
-    "commonData"
-})
+@XmlType(name = "Klasa", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivKlase" })
 @Entity
+@XmlRootElement(name = "Klasa", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class KlasaAutomobila {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
     protected Long id;
 	
 	@Column(name = "naziv_klase", nullable = false)
-    @XmlElement(name = "naziv_klase", required = true)
+	@XmlElement(name = "Name", required = true)
     protected String nazivKlase;
 	
-    @XmlElement(name = "Common_data", required = true)
     @Column(name = "commonDataId", nullable = false)
+    @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
 
   	public KlasaAutomobila() {

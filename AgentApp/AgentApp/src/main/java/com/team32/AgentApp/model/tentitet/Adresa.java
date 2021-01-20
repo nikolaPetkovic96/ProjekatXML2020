@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -65,7 +66,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-@XmlType(name = "TAdresa", namespace = "http://www.ftn.uns.ac.rs/korisnici", propOrder = {
+@XmlType(name = "TAdresa", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = {
     "id",
     "mesto",
     "postanskiBroj",
@@ -73,9 +74,12 @@ import javax.xml.bind.annotation.XmlType;
     "broj",
     "kordinate"
 })
+
+@XmlRootElement(name = "TAdresa", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class Adresa {
 	
 	@Id
+	@XmlElement(name = "Id", required = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 	
@@ -84,8 +88,8 @@ public class Adresa {
     protected String mesto;
     
 	@Column(name = "postanski_broj", nullable = false)
-    @XmlElement(name = "Postanski_broj")
-    protected int postanskiBroj;
+    @XmlElement(name = "PostanskiBroj")
+    protected String postanskiBroj;
     
 	@Column(name = "ulica", nullable = false)
     @XmlElement(name = "Ulica", required = true)
@@ -93,16 +97,18 @@ public class Adresa {
     
 	@Column(name = "broj")
     @XmlElement(name = "Broj")
-    protected int broj;
+    protected String broj;
+
 	
 	@Column(name="common_data_id", nullable = false)
+	@XmlElement(name = "CommonDataId", required = true)
 	private Long commonDataId;
 
     public Adresa() {
 		super();
 	}
 
-	public Adresa(Long id, String mesto, int postanskiBroj, String ulica, int broj, /*Long oglasId, Long userId,*/Long commonDataId) {
+	public Adresa(Long id, String mesto, String postanskiBroj, String ulica, String broj, /*Long oglasId, Long userId,*/Long commonDataId) {
 		super();
 		this.id = id;
 		this.mesto = mesto;
@@ -128,11 +134,11 @@ public class Adresa {
         this.mesto = value;
     }
 
-    public int getPostanskiBroj() {
+    public String getPostanskiBroj() {
         return postanskiBroj;
     }
 
-    public void setPostanskiBroj(int value) {
+    public void setPostanskiBroj(String value) {
         this.postanskiBroj = value;
     }
 
@@ -144,11 +150,11 @@ public class Adresa {
         this.ulica = value;
     }
 
-    public int getBroj() {
+    public String getBroj() {
         return broj;
     }
 
-    public void setBroj(int value) {
+    public void setBroj(String value) {
         this.broj = value;
     }
 
