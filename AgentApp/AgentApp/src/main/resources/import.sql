@@ -16,8 +16,8 @@ INSERT INTO USER_AUTHORITY(user_id, authority_id) VALUES (2, 1)
 
 -- Test users
 INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id,allowed_to_commend,allowed_to_message,allowed_to_make_reserv) VALUES ('Darkooo91', 'pass1', 'nmaster@gmail.com', 4, 'aktivan','Darko', 'Darkovic', '213123124','Muski',NULL, NULL, 24, true, true,true)
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id,allowed_to_commend,allowed_to_message,allowed_to_make_reserv) VALUES ('Anna00', 'pass2', 'blage500@gmail.com', 4, 'aktivan','Ana', 'Anic', '213123124','Zenski',NULL, NULL, 24, true, true, true
-INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id,allowed_to_commend,allowed_to_message,allowed_to_make_reserv) VALUES ('PeraCar996', 'pass2', 'nmaster@gmail.com', 4, 'aktivan','Petar', 'Petrovic', '213123124','Zenski',NULL, NULL, 24, NULL, NULL, NULL)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id,allowed_to_commend,allowed_to_message,allowed_to_make_reserv) VALUES ('Anna00', 'pass2', 'blage500@gmail.com', 4, 'aktivan','Ana', 'Anic', '213123124','Zenski',NULL, NULL, 24, true, true, true)
+INSERT INTO Users(korisnicko_ime, lozinka, email, adresa_id, status, ime, prezime, jmbg, pol, naziv, pib, common_data_id,allowed_to_commend,allowed_to_message,allowed_to_make_reserv) VALUES ('PeraCar996', 'pass2', 'nmaster@gmail.com', 4, 'aktivan','Petar', 'Petrovic', '213123124','Zenski',NULL, NULL, 24, true, true, true)
 
 
 --CommonData (Za KlasaAutomobila) 1 - 3
