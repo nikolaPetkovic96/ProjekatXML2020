@@ -5,6 +5,11 @@
             <hr style='background:#35424a;height:1px;'>
         </div>
         <div id='main' class='container'>
+            <router-link to="/istorijatIzvestaja" class="nav-link" exact>
+                <button class="btn-outline-primary">
+                    Pregled istorijata
+                </button>
+            </router-link>
             <table class="table">
                 <thead>
                     <tr>

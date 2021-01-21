@@ -168,6 +168,10 @@ class AgentDataService{
     getAllTipGoriva(){
         return axios.get(`${API_URL}/tipGoriva/`);
     }
+
+    getAgentIzvestaji(){
+        return axios.get(`${API_URL}/izvestaj`)
+    }
 }
 
 export default new AgentDataService();

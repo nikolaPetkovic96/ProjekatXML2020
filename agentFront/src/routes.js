@@ -24,6 +24,7 @@ import ReservationAdsOverview from './components/RezervacijaOglasiOverview'
 import Ads from './components/Oglasi'
 import AdsNew from './components/OglasiNew'
 import MessagesOvervieNew from './components/PorukeOverviewNew'
+import IzvestajiOverview from './components/IzvestajiOverview'
 
 export default [
     {
@@ -149,5 +150,10 @@ export default [
         name:'IzvestajNew',
         component:ReportNew
     },
+    {
+        path:'/istorijatIzvestaja',
+        name:'IzvestajiOverview',
+        component:IzvestajiOverview
+    }
     
 ]
