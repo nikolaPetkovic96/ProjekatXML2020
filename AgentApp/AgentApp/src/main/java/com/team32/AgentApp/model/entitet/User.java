@@ -131,15 +131,19 @@ public class User implements UserDetails {
     @XmlElement(name = "CommonDataId", required = true)
     protected Long commonDataId;
     
-	@XmlElement(name = "AllowedToCommend", required = true)
+	@XmlElement(name = "AllowedToCommend")
+	@Column(name="allowed_to_commend", nullable = true)
 	private boolean allowedToCommend;
 	
-	@XmlElement(name = "AllowedToMessage", required = true)
+	@XmlElement(name = "AllowedToMessage")
+	@Column(name="allowed_to_message", nullable = true)
 	private boolean allowedToMessage;
 	
-	@XmlElement(name = "AllowedToMakeReservation", required = true)
+	@XmlElement(name = "AllowedToMakeReservation")
+	@Column(name="allowed_to_make_reserv", nullable = true)
 	private boolean allowedToMakeReservation;
-    
+
+	
     
     //ZA SECURITY
 	

@@ -56,7 +56,7 @@ public class AuthenticationController {
 			HttpServletResponse response) {
 		
 		//Svaki put 
-		userRep.saveAll(komunikacijaClient.getAllUsers());
+//		userRep.saveAll(komunikacijaClient.getAllUsers());
 
 		Authentication authentication = authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
@@ -70,12 +70,12 @@ public class AuthenticationController {
 		int expiresIn = tokenUtils.getExpiredIn();
 		
 		//Treba jos get
-		TokenResponse bekToken = komunikacijaClient.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-		user.setToken(bekToken.getToken());
+//		TokenResponse bekToken = komunikacijaClient.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+//		user.setToken(bekToken.getToken());
 		
-		userRep.save(user);
-	
-		syncService.init();
+//		userRep.save(user);
+//	
+//		syncService.init();
 
 		// Vrati token kao odgovor na uspesnu autentifikaciju
 		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));

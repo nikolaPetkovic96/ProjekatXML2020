@@ -13,7 +13,7 @@ import com.team32.AgentApp.model.tentitet.ModelAutomobila;
 import com.team32.AgentApp.model.tentitet.SlikaVozila;
 import com.team32.AgentApp.model.tentitet.TipGoriva;
 import com.team32.AgentApp.model.tentitet.TipMenjaca;
-import com.team32.AgentApp.security.config.SoapMessageSender;
+import com.team32.AgentApp.soap.SoapMessageSender;
 import com.team32.AgentApp.soap.dto.automobil.AutoSuccessResponse;
 import com.team32.AgentApp.soap.dto.automobil.AutomobilRequest;
 import com.team32.AgentApp.soap.dto.automobil.AutomobilResponse;

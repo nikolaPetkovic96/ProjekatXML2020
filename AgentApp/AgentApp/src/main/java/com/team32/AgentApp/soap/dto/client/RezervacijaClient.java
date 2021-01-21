@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.team32.AgentApp.model.entitet.Izvestaj;
 import com.team32.AgentApp.model.entitet.Narudzbenica;
 import com.team32.AgentApp.model.entitet.Rezervacija;
-import com.team32.AgentApp.security.config.SoapMessageSender;
+import com.team32.AgentApp.soap.SoapMessageSender;
 import com.team32.AgentApp.soap.dto.izvestaj.IzvestajRequest;
 import com.team32.AgentApp.soap.dto.izvestaj.IzvestajResponse;
 import com.team32.AgentApp.soap.dto.izvestaj.IzvestajSuccessResponse;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.team32.AgentApp.model.entitet.Cenovnik;
 import com.team32.AgentApp.model.entitet.Oglas;
 import com.team32.AgentApp.model.tentitet.Adresa;
-import com.team32.AgentApp.security.config.SoapMessageSender;
+import com.team32.AgentApp.soap.SoapMessageSender;
 import com.team32.AgentApp.soap.dto.adresa.AdresaRequest;
 import com.team32.AgentApp.soap.dto.adresa.AdresaResponse;
 import com.team32.AgentApp.soap.dto.adresa.AdresaSuccessResponse;

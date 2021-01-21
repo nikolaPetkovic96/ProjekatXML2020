@@ -9,7 +9,7 @@ import com.team32.AgentApp.model.entitet.Komentar;
 import com.team32.AgentApp.model.entitet.Ocena;
 import com.team32.AgentApp.model.entitet.Poruka;
 import com.team32.AgentApp.model.entitet.User;
-import com.team32.AgentApp.security.config.SoapMessageSender;
+import com.team32.AgentApp.soap.SoapMessageSender;
 import com.team32.AgentApp.soap.dto.komentar.KomentarRequest;
 import com.team32.AgentApp.soap.dto.komentar.KomentarResponse;
 import com.team32.AgentApp.soap.dto.komentar.KomentarSuccessResponse;
@@ -22,7 +22,6 @@ import com.team32.AgentApp.soap.dto.token.TokenRequest;
 import com.team32.AgentApp.soap.dto.token.TokenResponse;
 import com.team32.AgentApp.soap.dto.user.UserRequest;
 import com.team32.AgentApp.soap.dto.user.UserResponse;
-import com.team32.AgentApp.soap.dto.user.UserSuccessResponse;
 
 @Component
 public class KomunikacijaClient {

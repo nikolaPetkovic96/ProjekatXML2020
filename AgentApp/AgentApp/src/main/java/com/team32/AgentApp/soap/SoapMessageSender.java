@@ -1,4 +1,4 @@
-package com.team32.AgentApp.security.config;
+package com.team32.AgentApp.soap;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
@@ -18,6 +19,7 @@ import org.springframework.ws.transport.http.HttpUrlConnection;
 import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.repository.UserRepository;
 
+@Component
 public class SoapMessageSender extends WebServiceGatewaySupport {
 	
 	private String url = "http://localhost:2020/sync-service/soapWS";
