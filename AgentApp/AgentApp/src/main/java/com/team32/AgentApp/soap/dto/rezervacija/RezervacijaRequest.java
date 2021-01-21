@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetRezervacijaTypesRequest")
 @XmlRootElement(name = "GetRezervacijaTypesRequest")
-public class RezervacijaTypesRequest {
+public class RezervacijaRequest {
 
-	public RezervacijaTypesRequest() {
+	public RezervacijaRequest() {
 		// TODO Auto-generated constructor stub
 	}
 

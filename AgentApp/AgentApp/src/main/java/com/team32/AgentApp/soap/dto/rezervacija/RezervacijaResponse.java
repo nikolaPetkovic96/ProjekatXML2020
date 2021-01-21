@@ -22,14 +22,14 @@ public class RezervacijaResponse {
 	@XmlElement(name = "Rezervacija", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<Rezervacija> types;
 
-	public List<Rezervacija> getTypes() {
+	public List<Rezervacija> getReservations() {
 		if (types == null) {
 			types = new ArrayList<Rezervacija>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<Rezervacija> types) {
+	public void setReservation(List<Rezervacija> types) {
 		this.types = types;
 	}
 

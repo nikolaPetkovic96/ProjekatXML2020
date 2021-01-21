@@ -19,6 +19,7 @@ import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.model.entitet.UserTokenState;
 import com.team32.AgentApp.security.auth.JwtAuthenticationRequest;
 import com.team32.AgentApp.security.security.TokenUtils;
+import com.team32.AgentApp.soap.SyncService;
 
 
 //Kontroler zaduzen za autentifikaciju korisnika
@@ -34,6 +35,10 @@ public class AuthenticationController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private SyncService syncService;
+	
 
 	// Prvi endpoint koji pogadja korisnik kada se loguje.
 	// Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
@@ -52,7 +57,10 @@ public class AuthenticationController {
 		String jwt = tokenUtils.generateToken(user.getUsername(),"ROLE_AGENT", user.getId());
 		int expiresIn = tokenUtils.getExpiredIn();
 		
-	
+		//Treba jos get
+		
+//		User.getAllUser();
+		syncService.init();
 
 		// Vrati token kao odgovor na uspesnu autentifikaciju
 		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));

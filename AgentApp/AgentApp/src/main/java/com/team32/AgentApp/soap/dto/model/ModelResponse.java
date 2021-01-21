@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.springframework.ui.Model;
+import com.team32.AgentApp.model.tentitet.ModelAutomobila;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetModelResponse", propOrder = { "types" })
@@ -20,16 +20,16 @@ public class ModelResponse {
 		// TODO Auto-generated constructor stub
 	}
 	@XmlElement(name = "Model", namespace = "http://www.ftn.uns.ac.rs/sync")
-	protected List<Model> types;
+	protected List<ModelAutomobila> types;
 
-	public List<Model> getModels() {
+	public List<ModelAutomobila> getModels() {
 		if (types == null) {
-			types = new ArrayList<Model>();
+			types = new ArrayList<ModelAutomobila>();
 		}
 		return this.types;
 	}
 
-	public void setModels(List<Model> types) {
+	public void setModels(List<ModelAutomobila> types) {
 		this.types = types;
 	}
 }

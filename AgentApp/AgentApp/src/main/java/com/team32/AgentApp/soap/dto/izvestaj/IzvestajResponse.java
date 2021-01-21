@@ -23,14 +23,14 @@ public class IzvestajResponse {
 	@XmlElement(name = "Izvestaj", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<Izvestaj> types;
 
-	public List<Izvestaj> getTypes() {
+	public List<Izvestaj> getIzvestaji() {
 		if (types == null) {
 			types = new ArrayList<Izvestaj>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<Izvestaj> types) {
+	public void setIzvestaj(List<Izvestaj> types) {
 		this.types = types;
 	}
 

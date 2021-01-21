@@ -23,14 +23,14 @@ public class CenovnikResponse {
 	@XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<Cenovnik> types;
 
-	public List<Cenovnik> getTypes() {
+	public List<Cenovnik> getPrices() {
 		if (types == null) {
 			types = new ArrayList<Cenovnik>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<Cenovnik> types) {
+	public void setPrice(List<Cenovnik> types) {
 		this.types = types;
 	}
 

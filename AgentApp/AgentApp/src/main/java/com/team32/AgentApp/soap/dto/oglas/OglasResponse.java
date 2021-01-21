@@ -22,14 +22,14 @@ public class OglasResponse {
 	@XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<Oglas> types;
 
-	public List<Oglas> getTypes() {
+	public List<Oglas> getAds() {
 		if (types == null) {
 			types = new ArrayList<Oglas>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<Oglas> types) {
+	public void setAd(List<Oglas> types) {
 		this.types = types;
 	}
 

@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 import com.team32.AgentApp.model.entitet.Ocena;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetOcecnaResponse", propOrder = { "types" })
+@XmlType(name = "GetOcenaResponse", propOrder = { "types" })
 @XmlRootElement(name = "GetOcenaResponse")
 
 public class OcenaResponse {
@@ -23,14 +23,14 @@ public class OcenaResponse {
 	@XmlElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<Ocena> types;
 
-	public List<Ocena> getTypes() {
+	public List<Ocena> getRating() {
 		if (types == null) {
 			types = new ArrayList<Ocena>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<Ocena> types) {
+	public void setRating(List<Ocena> types) {
 		this.types = types;
 	}
 

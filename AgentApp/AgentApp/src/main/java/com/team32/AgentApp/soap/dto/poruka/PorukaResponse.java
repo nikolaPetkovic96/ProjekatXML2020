@@ -23,14 +23,14 @@ public class PorukaResponse {
 	@XmlElement(name = "Poruka", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<Poruka> types;
 
-	public List<Poruka> getTypes() {
+	public List<Poruka> getMessages() {
 		if (types == null) {
 			types = new ArrayList<Poruka>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<Poruka> types) {
+	public void setMessage(List<Poruka> types) {
 		this.types = types;
 	}
 }

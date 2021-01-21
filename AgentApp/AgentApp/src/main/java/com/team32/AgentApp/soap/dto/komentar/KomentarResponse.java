@@ -21,14 +21,14 @@ public class KomentarResponse {
 	@XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<Komentar> types;
 
-	public List<Komentar> getTypes() {
+	public List<Komentar> getComments() {
 		if (types == null) {
 			types = new ArrayList<Komentar>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<Komentar> types) {
+	public void setComments(List<Komentar> types) {
 		this.types = types;
 	}
 

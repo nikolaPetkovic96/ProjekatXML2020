@@ -22,14 +22,14 @@ public class AdresaResponse {
 	@XmlElement(name = "Adresa", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<Adresa> list;
 
-	public List<Adresa> get() {
+	public List<Adresa> getAddress() {
 		if (list == null) {
 			list = new ArrayList<Adresa>();
 		}
 		return this.list;
 	}
 
-	public void set(List<Adresa> adrese) {
+	public void setAddress(List<Adresa> adrese) {
 		this.list = adrese;
 	}
 

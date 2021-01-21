@@ -65,6 +65,12 @@ public class ModelAutomobilaController {
 			savedModelAuto.setMarkaAutomobilaId(dto.getMarkaAutomobilaId());
 			savedModelAuto.setCommonDataId(commonData.getId());
 			
+//			a = accommodationClient.createNewAccommodation(a);
+//			if (a != null) {
+//				accommodationRepository.saveAndFlush(a);
+//				return a.getId();
+//			}
+			
 			savedModelAuto = modelAutoService.addModelAutomobila(savedModelAuto);
 			return new ResponseEntity<>(new ModelAutomobilaDTO(savedModelAuto), HttpStatus.CREATED);
 		}

@@ -22,14 +22,14 @@ public class NarudzbenicaResponse {
 	@XmlElement(name = "Narudzbenica", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<Narudzbenica> types;
 
-	public List<Narudzbenica> getTypes() {
+	public List<Narudzbenica> getNarudzbenice() {
 		if (types == null) {
 			types = new ArrayList<Narudzbenica>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<Narudzbenica> types) {
+	public void setNarudzbenica(List<Narudzbenica> types) {
 		this.types = types;
 	}
 

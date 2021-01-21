@@ -153,6 +153,11 @@ public class User implements UserDetails {
 		inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "authority_id"))
 	private List<Authority> authorities;
 	
+	
+	//ZA SOPA dodato	
+	@XmlElement(name = "Token", required = true)
+	protected String token;
+	
 	public User() {
 		super();
 	}
@@ -348,5 +353,18 @@ public class User implements UserDetails {
 	public void setAuthorities(List<Authority> authorities) {
 		this.authorities = authorities;
 	}
+
+
+	//Za SOAP
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+
 
 }

@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetOglasTypesRequest")
 @XmlRootElement(name = "GetOglasTypesRequest")
-public class OglasTypesRequest {
+public class OglasRequest {
 
-	public OglasTypesRequest() {
+	public OglasRequest() {
 		// TODO Auto-generated constructor stub
 	}
 
