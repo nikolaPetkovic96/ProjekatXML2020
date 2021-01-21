@@ -55,7 +55,7 @@ public class AuthenticationController {
 	public ResponseEntity<UserTokenState> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
 			HttpServletResponse response) {
 		
-		//Svaki put 
+		//Svaki put getuje sve usere OTKOMENTARISATI
 //		userRep.saveAll(komunikacijaClient.getAllUsers());
 
 		Authentication authentication = authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -69,10 +69,10 @@ public class AuthenticationController {
 		String jwt = tokenUtils.generateToken(user.getUsername(),"ROLE_AGENT", user.getId());
 		int expiresIn = tokenUtils.getExpiredIn();
 		
-		//Treba jos get
+		//OTKOMENTARISATI SVE
 //		TokenResponse bekToken = komunikacijaClient.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 //		user.setToken(bekToken.getToken());
-		
+//		//cuva se user sa dodatim tokenom sa glavnog beka
 //		userRep.save(user);
 //	
 //		syncService.init();
