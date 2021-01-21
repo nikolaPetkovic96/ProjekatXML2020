@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.ftn.uns.ac.rs/sync"
 	xmlns="http://www.ftn.uns.ac.rs/sync" version="1.0">
-	<!-- proveriti slike(linija 169), datume-->
+	<!-- proveriti slike(linija 169)-->
 	
 <!-- ADRESA -->
 	<xs:element name="Adresa">
@@ -656,9 +656,30 @@
 				<xs:element name="AllowedToCommend" type="xs:boolean"/>
 				<xs:element name="AllowedToCommend" type="xs:boolean"/>
 				<xs:element name="AllowedToMakeReservation" type="xs:boolean"/>
+				<xs:element name="Authorities" type="AuthorityTypes"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+<!---->		<xs:complexType name="AuthorityTypes">
+			<xs:sequence>
+				<xs:element name="AuthorityType"></xs:element>
+			</xs:sequence>
+		</xs:complexType>			
+	
+	
+<!-- 		<xs:complexType  name="AuthorityTypes">
+			<xs:sequence>
+				<xs:element name="Authority" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+		
+		<xs:simpleType name="authList">
+			<xs:list itemType="AuthorityTypes"/>
+		</xs:simpleType>-->
+	
+	
+	
 
 	<xs:element name="GetUserType">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
@@ -682,5 +703,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+
 		
 </xs:schema>

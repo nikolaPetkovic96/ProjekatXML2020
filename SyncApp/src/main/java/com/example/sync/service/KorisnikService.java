@@ -1,5 +1,7 @@
 package com.example.sync.service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,7 @@ import java.util.Map;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
+import com.example.sync.dto.user.Authority;
 import com.example.sync.dto.user.UserType;
 import com.example.sync.dto.user.UserTypesResponse;
 
@@ -66,8 +69,17 @@ public class KorisnikService {
 
 			t.setAllowedToMakeReservation((boolean) m.get("allowedToMakeReservation"));
 			System.out.println("reservation : "+t.isAllowedToMakeReservation());
-
 			
+			//t.setAuthorities(m.get("authorities"));
+			List<LinkedHashMap<String,String>> list=(List<LinkedHashMap<String,String>> ) m.get("authorities");
+			//System.out.println(list.get(0).get("authority")+" , "+ list.size());
+			Authority a=new Authority();
+			a.setAuthority(list.get(0).get("authority"));
+			List<Authority> newList=new ArrayList<>();
+			newList.add(a);
+			t.setAuthorities(newList);
+			System.out.println(t.getAuthorities().get(0).getAuthority());
+
 			ret.add(t);
 		}
 		UserTypesResponse res = new UserTypesResponse();
@@ -82,7 +94,7 @@ public class KorisnikService {
 		UserType body=new UserType(id,  korisnickoIme, lozinka, email,
 								status, adresaId, pol, ime, prezime, jmbg, 
 								nazivFirme, poslovniMaticniBroj,
-								allowedToCommend, allowedToMessage, allowedToMakeReservation);
+								allowedToCommend, allowedToMessage, allowedToMakeReservation,null);
 		List<Map> trans = (List<Map>) RESTClient.getClient().forService(Services.LOGIN).withPath("api/user/sync")
 				.withMethod(HttpMethod.POST).withBody(body).send();
 		List<UserType> ret = new LinkedList<>();

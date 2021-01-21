@@ -1,5 +1,7 @@
 package com.example.sync.dto.user;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "UserType", propOrder = { "id", "korisnickoIme","lozinka","email","status","adresaId",
 													"pol","ime","prezime","jmbg",
 													"nazivFirme","poslovniMaticniBroj",
-													"allowedToCommend","allowedToMessage","allowedToMakeReservation"})
+													"allowedToCommend","allowedToMessage","allowedToMakeReservation","authorities"})
 @XmlRootElement(name = "UserType")
 public class UserType {
 	
@@ -48,6 +50,8 @@ public class UserType {
 	private boolean allowedToMessage;
 	@XmlElement(name = "AllowedToMakeReservation", required = true)
 	private boolean allowedToMakeReservation;
+	@XmlElement(name = "Authorities", required = true)
+	private List<Authority> authorities;
 	
 	public UserType() {
 		// TODO Auto-generated constructor stub
@@ -56,7 +60,7 @@ public class UserType {
 	public UserType(Long id, String korisnickoIme, String lozinka, String email, String status,
 			Long adresaId, String pol, String ime, String prezime, String jmbg, String nazivFirme,
 			String poslovniMaticniBroj, boolean allowedToCommend, boolean allowedToMessage,
-			boolean allowedToMakeReservation) {
+			boolean allowedToMakeReservation,List<Authority> authorities) {
 		super();
 		this.id = id;
 		this.korisnickoIme = korisnickoIme;
@@ -73,6 +77,7 @@ public class UserType {
 		this.allowedToCommend = allowedToCommend;
 		this.allowedToMessage = allowedToMessage;
 		this.allowedToMakeReservation = allowedToMakeReservation;
+		this.authorities=authorities;
 	}
 
 	public Long getId() {
@@ -193,6 +198,14 @@ public class UserType {
 
 	public void setAllowedToMakeReservation(boolean allowedToMakeReservation) {
 		this.allowedToMakeReservation = allowedToMakeReservation;
+	}
+
+	public List<Authority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
 	}
 
 }
