@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetOglasTypesRequest")
-@XmlRootElement(name = "GetOglasTypesRequest")
+@XmlType(name = "GetOglasRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "GetOglasRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class OglasRequest {
 
 	public OglasRequest() {

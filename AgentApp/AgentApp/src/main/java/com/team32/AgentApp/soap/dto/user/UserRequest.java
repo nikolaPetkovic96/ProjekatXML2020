@@ -6,11 +6,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetUserTypesRequest")
-@XmlRootElement(name = "GetUserTypesRequest")
-public class UserTypesRequest {
+@XmlType(name = "GetUserTypesRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "GetUserTypesRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+public class UserRequest {
 
-	public UserTypesRequest() {
+	public UserRequest() {
 		// TODO Auto-generated constructor stub
 	}
 

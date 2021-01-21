@@ -12,8 +12,8 @@ import javax.xml.bind.annotation.XmlType;
 import com.team32.AgentApp.model.entitet.Izvestaj;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IzvestajResponse", propOrder = { "types" })
-@XmlRootElement(name = "IzvestajResponse")
+@XmlType(name = "GetIzvestajResponse", propOrder = { "types" })
+@XmlRootElement(name = "GetIzvestajResponse")
 
 public class IzvestajResponse {
 

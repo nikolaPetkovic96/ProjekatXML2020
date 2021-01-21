@@ -1,10 +1,17 @@
 package com.team32.AgentApp.soap.dto.rezervacija;
 
 import javax.xml.bind.annotation.XmlElement;
-
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "RezevacijaSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync", propOrder = {
+"rezevacijaId",
+"successful"
+})
+@XmlRootElement(name = "RezevacijaSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync")
 public class RezevacijaSuccessResponse {
 
-  @XmlElement(name = "automobilId")
+  @XmlElement(name = "RezervacijaId")
   protected Long rezevacijaId;
   
   @XmlElement(name = "Successful", defaultValue = "false")

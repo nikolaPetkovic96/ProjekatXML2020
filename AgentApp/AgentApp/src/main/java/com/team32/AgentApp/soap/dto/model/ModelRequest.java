@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetModelRequest")
-@XmlRootElement(name = "GetModelRequest")
+@XmlType(name = "GetModelRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "GetModelRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class ModelRequest {
 
 	public ModelRequest() {

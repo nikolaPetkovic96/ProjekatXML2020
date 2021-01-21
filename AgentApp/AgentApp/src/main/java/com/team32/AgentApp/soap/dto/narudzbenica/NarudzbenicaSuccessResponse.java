@@ -1,10 +1,17 @@
 package com.team32.AgentApp.soap.dto.narudzbenica;
 
 import javax.xml.bind.annotation.XmlElement;
-
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "NarudzbenicaSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync", propOrder = {
+"narudzbenicaId",
+"successful"
+})
+@XmlRootElement(name = "NarudzbenicaSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync")
 public class NarudzbenicaSuccessResponse {
 
-  @XmlElement(name = "narudzbenicaId")
+  @XmlElement(name = "NarudzbenicaId")
   protected Long narudzbenicaId;
   
   @XmlElement(name = "Successful", defaultValue = "false")

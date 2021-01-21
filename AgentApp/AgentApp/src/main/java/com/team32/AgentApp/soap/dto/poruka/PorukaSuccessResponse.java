@@ -1,13 +1,19 @@
 package com.team32.AgentApp.soap.dto.poruka;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-import org.springframework.stereotype.Component;
 
-@Component
+//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "PorukaSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync", propOrder = {
+"porukaId",
+"successful"
+})
+@XmlRootElement(name = "PorukaSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync")
 public class PorukaSuccessResponse {
 
-	  @XmlElement(name = "porukaId")
+	  @XmlElement(name = "PorukaId")
 	  protected Long porukaId;
 	  
 	  @XmlElement(name = "Successful", defaultValue = "false")

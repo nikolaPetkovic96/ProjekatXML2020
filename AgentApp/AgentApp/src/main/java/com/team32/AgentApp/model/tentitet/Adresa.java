@@ -66,16 +66,15 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-@XmlType(name = "TAdresa", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = {
+@XmlType(name = "Adresa", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = {
     "id",
     "mesto",
     "postanskiBroj",
     "ulica",
     "broj",
-    "kordinate"
 })
 
-@XmlRootElement(name = "TAdresa", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "Adresa", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class Adresa {
 	
 	@Id

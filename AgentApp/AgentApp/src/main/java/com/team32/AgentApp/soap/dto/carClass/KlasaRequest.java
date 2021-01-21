@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetKlasaRequest")
-@XmlRootElement(name = "GetKlasaRequest")
+@XmlType(name = "GetKlasaRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "GetKlasaRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class KlasaRequest {
 
 	public KlasaRequest() {

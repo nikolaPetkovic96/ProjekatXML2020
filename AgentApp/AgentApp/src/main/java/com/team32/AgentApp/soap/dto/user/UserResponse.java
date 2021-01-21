@@ -14,22 +14,22 @@ import com.team32.AgentApp.model.entitet.User;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetUserTypesResponse", propOrder = { "types" })
 @XmlRootElement(name = "GetUserTypesResponse")
-public class UserTypesResponse {
+public class UserResponse {
 
-	public UserTypesResponse() {
+	public UserResponse() {
 		// TODO Auto-generated constructor stub
 	}
 	@XmlElement(name = "UserType", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<User> types;
 
-	public List<User> getTypes() {
+	public List<User> getUsers() {
 		if (types == null) {
 			types = new ArrayList<User>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<User> types) {
+	public void setUser(List<User> types) {
 		this.types = types;
 	}
 

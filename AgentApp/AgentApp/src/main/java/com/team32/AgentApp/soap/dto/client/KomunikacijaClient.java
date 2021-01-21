@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.team32.AgentApp.model.entitet.Komentar;
 import com.team32.AgentApp.model.entitet.Ocena;
 import com.team32.AgentApp.model.entitet.Poruka;
+import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.security.config.SoapMessageSender;
 import com.team32.AgentApp.soap.dto.komentar.KomentarRequest;
 import com.team32.AgentApp.soap.dto.komentar.KomentarResponse;
@@ -17,6 +18,11 @@ import com.team32.AgentApp.soap.dto.ocena.OcenaResponse;
 import com.team32.AgentApp.soap.dto.poruka.PorukaRequest;
 import com.team32.AgentApp.soap.dto.poruka.PorukaResponse;
 import com.team32.AgentApp.soap.dto.poruka.PorukaSuccessResponse;
+import com.team32.AgentApp.soap.dto.token.TokenRequest;
+import com.team32.AgentApp.soap.dto.token.TokenResponse;
+import com.team32.AgentApp.soap.dto.user.UserRequest;
+import com.team32.AgentApp.soap.dto.user.UserResponse;
+import com.team32.AgentApp.soap.dto.user.UserSuccessResponse;
 
 @Component
 public class KomunikacijaClient {
@@ -47,6 +53,24 @@ public class KomunikacijaClient {
 				.sendMessage(request);
 		
 		return response.getMessages();
+	}
+	
+	public List<User> getAllUsers() {
+		UserRequest request = new UserRequest();
+		UserResponse response = (UserResponse) soapMessageSender
+				.sendMessage(request);
+		
+		return response.getUsers();
+	}
+	
+	public TokenResponse login(String usename,String passwod) {
+		TokenRequest request = new TokenRequest();
+		request.setUsername(usename);
+		request.setPassword(passwod);
+		TokenResponse response = (TokenResponse) soapMessageSender
+				.sendMessage(request);
+		
+		return response;
 	}
 	
 	

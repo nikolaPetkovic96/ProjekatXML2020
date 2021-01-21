@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Brand", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivMarke" })
 @Entity
-@XmlRootElement(name =  "Brand", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "Brand", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class MarkaAutomobila {
 
 	@Id

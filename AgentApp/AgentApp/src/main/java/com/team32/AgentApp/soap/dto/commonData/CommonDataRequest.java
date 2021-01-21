@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetCommonDataRequest")
-@XmlRootElement(name = "GetCommonDataRequest")
+@XmlType(name = "GetCommonDataRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "GetCommonDataRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class CommonDataRequest {
 
 	public CommonDataRequest() {

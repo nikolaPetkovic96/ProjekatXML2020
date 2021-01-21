@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetRezervacijaTypesRequest")
-@XmlRootElement(name = "GetRezervacijaTypesRequest")
+@XmlType(name = "GetRezervacijaRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "GetRezervacijaRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class RezervacijaRequest {
 
 	public RezervacijaRequest() {

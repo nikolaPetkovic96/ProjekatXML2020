@@ -13,7 +13,7 @@ import com.team32.AgentApp.model.entitet.Oglas;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetOglasResponse", propOrder = { "types" })
-@XmlRootElement(name = "GetTOglasResponse")
+@XmlRootElement(name = "GetOglasResponse")
 public class OglasResponse {
 
 	public OglasResponse() {

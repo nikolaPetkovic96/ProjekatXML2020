@@ -22,14 +22,14 @@ public class CommonDataResponse {
 	@XmlElement(name = "CommonData", namespace = "http://www.ftn.uns.ac.rs/sync")
 	protected List<CommonData> types;
 
-	public List<CommonData> getTypes() {
+	public List<CommonData> getCommonDatas() {
 		if (types == null) {
 			types = new ArrayList<CommonData>();
 		}
 		return this.types;
 	}
 
-	public void setTypes(List<CommonData> types) {
+	public void setCommonData(List<CommonData> types) {
 		this.types = types;
 	}
 }

@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.model.entitet.UserTokenState;
+import com.team32.AgentApp.repository.UserRepository;
 import com.team32.AgentApp.security.auth.JwtAuthenticationRequest;
 import com.team32.AgentApp.security.security.TokenUtils;
 import com.team32.AgentApp.soap.SyncService;
+import com.team32.AgentApp.soap.dto.client.KomunikacijaClient;
+import com.team32.AgentApp.soap.dto.token.TokenResponse;
 
 
 //Kontroler zaduzen za autentifikaciju korisnika
@@ -37,7 +40,13 @@ public class AuthenticationController {
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
+	private KomunikacijaClient komunikacijaClient;
+	
+	@Autowired
 	private SyncService syncService;
+	
+	@Autowired
+	private UserRepository userRep;
 	
 
 	// Prvi endpoint koji pogadja korisnik kada se loguje.
@@ -45,6 +54,9 @@ public class AuthenticationController {
 	@PostMapping("/login")
 	public ResponseEntity<UserTokenState> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
 			HttpServletResponse response) {
+		
+		//Svaki put 
+		userRep.saveAll(komunikacijaClient.getAllUsers());
 
 		Authentication authentication = authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
@@ -58,8 +70,11 @@ public class AuthenticationController {
 		int expiresIn = tokenUtils.getExpiredIn();
 		
 		//Treba jos get
+		TokenResponse bekToken = komunikacijaClient.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		user.setToken(bekToken.getToken());
 		
-//		User.getAllUser();
+		userRep.save(user);
+	
 		syncService.init();
 
 		// Vrati token kao odgovor na uspesnu autentifikaciju

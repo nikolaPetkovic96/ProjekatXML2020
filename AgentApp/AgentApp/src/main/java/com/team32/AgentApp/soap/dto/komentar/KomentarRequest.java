@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetKomentarRequest")
-@XmlRootElement(name = "GetKomentarRequest")
+@XmlType(name = "GetKomentarRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "GetKomentarRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class KomentarRequest {
 
 	public KomentarRequest() {

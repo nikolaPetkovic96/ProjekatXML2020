@@ -68,7 +68,7 @@ public class CommonData {
 	protected LocalDateTime datumIzmene;
 
 	//Jedna promena(commonData) se odnosi na samo jednog korisnika
-	@XmlElement(name = "UserId", required = true)
+	@XmlElement(name = "UserId")
 	@Column(name = "korisnik_id")
 	protected Long userId;
 	

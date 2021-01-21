@@ -1,10 +1,18 @@
 package com.team32.AgentApp.soap.dto.cenovnik;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "CenovnikSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync", propOrder = {
+"cenovnikId",
+"successful"
+})
 
+@XmlRootElement(name = "CenovnikSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync")
 public class CenovnikSuccessResponse {
 
-  @XmlElement(name = "cenovnikId")
+  @XmlElement(name = "CenovnikId")
   protected Long cenovnikId;
   
   @XmlElement(name = "Successful", defaultValue = "false")

@@ -1,10 +1,18 @@
 package com.team32.AgentApp.soap.dto.izvestaj;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "IzvestajSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync", propOrder = {
+"izvestajId",
+"successful"
+})
 
+@XmlRootElement(name = "IzvestajSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync")
 public class IzvestajSuccessResponse {
 
-  @XmlElement(name = "izvestajId")
+  @XmlElement(name = "IzvestajId")
   protected Long izvestajId;
   
   @XmlElement(name = "Successful", defaultValue = "false")

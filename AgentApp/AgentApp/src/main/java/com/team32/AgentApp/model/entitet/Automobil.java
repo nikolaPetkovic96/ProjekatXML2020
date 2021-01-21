@@ -52,8 +52,8 @@ import javax.xml.bind.annotation.XmlType;
 public class Automobil {
 	
 	@Id
-	@XmlElement(name = "Id", required = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlElement(name = "Id", required = true)
     protected Long id;
 	
 	@Column(name = "marka_aut_id", nullable = false)

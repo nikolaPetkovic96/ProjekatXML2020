@@ -1,10 +1,19 @@
 package com.team32.AgentApp.soap.dto.adresa;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "AdresaSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync", propOrder = {
+  "adresaId",
+  "successful"
+})
+
+@XmlRootElement(name = "AdresaSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync")
 public class AdresaSuccessResponse {
 
-  @XmlElement(name = "adresaId")
+  @XmlElement(name = "AdresaId")
   protected Long adresaId;
   
   @XmlElement(name = "Successful", defaultValue = "false")

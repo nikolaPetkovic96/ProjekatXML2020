@@ -11,8 +11,8 @@ import javax.xml.bind.annotation.XmlType;
 import com.team32.AgentApp.model.tentitet.TipGoriva;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetFuelTypesResponse", propOrder = { "types" })
-@XmlRootElement(name = "GetFuelTypesResponse")
+@XmlType(name = "GetFuelTypeResponse", propOrder = { "types" })
+@XmlRootElement(name = "GetFuelTypeResponse")
 public class FuelTypeResponse {
 
 	public FuelTypeResponse() {

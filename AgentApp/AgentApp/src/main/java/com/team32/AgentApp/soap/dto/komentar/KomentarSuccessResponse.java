@@ -1,13 +1,19 @@
 package com.team32.AgentApp.soap.dto.komentar;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-import org.springframework.stereotype.Component;
+//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "KomentarSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync", propOrder = {
+"komentarId",
+"successful"
+})
 
-@Component
+@XmlRootElement(name = "KomentarSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync")
 public class KomentarSuccessResponse {
 
-	  @XmlElement(name = "komentarId")
+	  @XmlElement(name = "KomentarId")
 	  protected Long komentarId;
 	  
 	  @XmlElement(name = "Successful", defaultValue = "false")

@@ -1,40 +1,37 @@
-package com.team32.AgentApp.soap.dto.automobil;
+package com.team32.AgentApp.soap.dto.user;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
-
 //@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AutoSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync", propOrder = {
-    "automobilId",
-    "successful"
+@XmlType(name = "UserSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync", propOrder = {
+"userId",
+"successful"
 })
+@XmlRootElement(name = "UserSuccessResponse", namespace="http://www.ftn.uns.ac.rs/sync")
+public class UserSuccessResponse {
 
-@XmlRootElement(name = "AutoSuccessResponse",namespace="http://www.ftn.uns.ac.rs/sync")
-public class AutoSuccessResponse {
-
-  @XmlElement(name = "AutomobilId")
-  protected Long automobilId;
+  @XmlElement(name = "UserId")
+  protected Long userId;
   
   @XmlElement(name = "Successful", defaultValue = "false")
   protected boolean successful;  
   
   
   /**
-   * Gets the value of the automobilId property.
+   * Gets the value of the userId property.
    * 
    */
-  public Long getAutomobilId() {
-      return automobilId;
+  public Long getUserId() {
+      return userId;
   }
 
   /**
-   * Sets the value of the automobilId property.
+   * Sets the value of the userId property.
    * 
    */
-  public void setAutomobilId(Long value) {
-      this.automobilId = value;
+  public void setUserId(Long value) {
+      this.userId = value;
   }
 
   /**

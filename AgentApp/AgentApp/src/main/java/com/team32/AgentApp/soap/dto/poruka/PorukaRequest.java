@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetPorukaRequest")
-@XmlRootElement(name = "GetPorukaRequest")
+@XmlType(name = "GetPorukaRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "GetPorukaRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class PorukaRequest {
 
 	public PorukaRequest() {

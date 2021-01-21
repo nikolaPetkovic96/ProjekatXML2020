@@ -6,11 +6,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetFuelTypesRequest")
-@XmlRootElement(name = "GetFuelTypesRequest")
-public class FuelTypesRequest {
+@XmlType(name = "GetFuelTypeRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlRootElement(name = "GetFuelTypeRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+public class FuelTypeRequest {
 
-	public FuelTypesRequest() {
+	public FuelTypeRequest() {
 	}
 
 	
