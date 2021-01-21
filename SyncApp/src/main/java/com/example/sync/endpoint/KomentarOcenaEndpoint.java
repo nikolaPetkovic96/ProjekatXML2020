@@ -25,15 +25,4 @@ public class KomentarOcenaEndpoint {
 	public OcenaResponse getOcenaTypes() {
 		return  typesService.getOcena();
 	}
-//POST
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostKomentarResponse")
-	@ResponsePayload
-	public KomentarResponse postKomentarTypes(Long id, Long commonDataId, String tekstKomentara, boolean odobren, Long automobilId, Long rezervacijaId, String autor) {
-		return  typesService.postKomentar(id, commonDataId, tekstKomentara, odobren, automobilId, rezervacijaId, autor);
-	}
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostOcenaResponse")
-	@ResponsePayload
-	public OcenaResponse postOcenaTypes(Long id, Long commonDataId, int vrednostOcene, Long automobilId, Long rezervacijaId, String autor){
-		return  typesService.postOcena(id, commonDataId, vrednostOcene, automobilId, rezervacijaId, autor);
-	}
 }

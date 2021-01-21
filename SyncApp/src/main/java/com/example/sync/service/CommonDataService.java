@@ -39,24 +39,5 @@ public class CommonDataService {
 		res.setTypes(ret);
 		return res;
 	}
-	
-	public CommonDataResponse postCommonData(Long id, Long userId, LocalDateTime datumKreiranja, LocalDateTime datumIzmene ) {
-		CommonData cmd=new CommonData(id,datumKreiranja,datumIzmene, userId);
-		
-		List<Map> trans = (List<Map>) RESTClient.getClient().forService(Services.CAR).withPath("/commonData")
-				.withMethod(HttpMethod.GET).send();
-		List<CommonData> ret = new LinkedList<>();
-		for (Map m : trans) {
-			CommonData t = new CommonData();
-			t.setId(((Number) m.get("id")).longValue());
-			t.setDatumKreiranja((LocalDateTime) m.get("datumKreiranja"));
-			t.setDatumIzmene((LocalDateTime) m.get("datumIzmene"));
-			t.setUserId((Long) m.get("userId"));
-			ret.add(t);
-		}
-		CommonDataResponse res = new CommonDataResponse();
-		res.setTypes(ret);	//vraca commonData koji je unetu u korisnicku bazu
-		return res;
-	}
 
 }

@@ -31,25 +31,4 @@ public class PorukaService {
 		res.setTypes(ret);
 		return res;
 	}
-	//post
-	public PorukaResponse postPoruka(Long id, Long commonDataId, String tekstPoruke, Long rezervacijaId, Long automobilId) {
-		Poruka body=new Poruka(id, commonDataId, tekstPoruke, rezervacijaId, automobilId);
-		List<Map> trans = (List<Map>) RESTClient.getClient().forService(Services.MESSAGE).withPath("/message")
-				.withMethod(HttpMethod.POST).send();
-		List<Poruka> ret = new LinkedList<>();
-		for (Map m : trans) {
-			Poruka t = new Poruka();
-			t.setId(((Number) m.get("id")).longValue());
-			t.setCommonDataId(((Number) m.get("commonDataId")).longValue());
-			t.setAutomobilId((Long) m.get("automobilid"));
-			t.setRezervacijaId((Long) m.get("rezervacijaId"));
-			t.setTekstPoruke((String) m.get("tekstPoruke"));
-			
-			ret.add(t);
-		}
-		PorukaResponse res = new PorukaResponse();
-		res.setTypes(ret);
-		return res;
-	}
-
 }

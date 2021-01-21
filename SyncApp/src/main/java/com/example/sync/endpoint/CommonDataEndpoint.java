@@ -20,10 +20,4 @@ public class CommonDataEndpoint {
 	public CommonDataResponse getCommonDataTypes() {
 		return  typesService.getCommonDataTypes();
 	}
-	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostCommonDataResponse")
-	@ResponsePayload
-	public CommonDataResponse getCommonDataTypes(Long id, Long userId, LocalDateTime datumKreiranja, LocalDateTime datumIzmene ) {
-		return  typesService.postCommonData(id, userId, datumKreiranja, datumIzmene);
-	}
 }

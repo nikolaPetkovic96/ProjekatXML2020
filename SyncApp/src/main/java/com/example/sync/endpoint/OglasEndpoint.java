@@ -27,21 +27,4 @@ public class OglasEndpoint {
 	public OglasResponse getOglas() {
 		return  typesService.getOglas();
 	}
-	
-	//POST
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostOglasResponse")
-	@ResponsePayload
-	public OglasResponse postOglas(Long id, Long commonDataId, LocalDateTime odDatuma, LocalDateTime doDatuma, Long cenovnikId,
-			Long automobilId, float planiranaKm, Long adresaId, String username) {
-		return  typesService.postOglas(id, commonDataId, odDatuma, doDatuma, cenovnikId,
-				automobilId, planiranaKm, adresaId, username);
-	}
-	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostCenovnikResponse")
-	@ResponsePayload
-	public CenovnikResponse postCenovnik(Long id, Long commonDataId, float cenaPoDanu, String nazivCenovnika,
-			float popustZaPreko30Dana, float cenaCollisionDamageWaiver, float cenaPoKilometru) {
-		return  typesService.postCenovnik(id, commonDataId, cenaPoDanu, nazivCenovnika,
-				popustZaPreko30Dana, cenaCollisionDamageWaiver, cenaPoKilometru);
-	}
 }

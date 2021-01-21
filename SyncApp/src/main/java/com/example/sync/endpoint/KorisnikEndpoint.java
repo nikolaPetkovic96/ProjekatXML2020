@@ -19,17 +19,4 @@ public class KorisnikEndpoint {
 	public UserTypesResponse getUser() {
 		return  typesService.getUser();
 	}
-	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostUserTypesResponse")
-	@ResponsePayload
-	public UserTypesResponse postUser(Long id, String korisnickoIme, String lozinka, String email,
-			String status, Long adresaId, String pol, String ime, String prezime, String jmbg,
-			String nazivFirme, String poslovniMaticniBroj, 
-			boolean allowedToCommend, boolean allowedToMessage, boolean allowedToMakeReservation) {
-		return  typesService.postUser(id, korisnickoIme, lozinka, email,
-				status, adresaId, pol, ime, prezime, jmbg, 
-				nazivFirme, poslovniMaticniBroj,
-				allowedToCommend, allowedToMessage, allowedToMakeReservation);
-	}
-
 }

@@ -33,31 +33,4 @@ public class RezervacijaEndpoint {
 	public NarudzbenicaResponse getNarudzbenica() {
 		return  typesService.getNarudzbenica();
 	}
-	//POST
-	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostRezervacijaResponse")
-	@ResponsePayload
-	public RezervacijaResponse postRezervacija(Long id, Long commonDataId, float ukupnaCena, boolean bundle, String statusRezervacije, String napomena) {
-		return  typesService.postRezervacija(id, commonDataId, ukupnaCena, bundle, statusRezervacije, napomena);
-	}
-	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostNarudzbenicaResponse")
-	@ResponsePayload
-	public NarudzbenicaResponse postNarudzbenica(Long id, Long commonDataId, Long agentId, Long userId, 
-			Long oglasId, Long rezervacijaId, LocalDateTime odDatuma, LocalDateTime doDatuma) {
-		return  typesService.postNarudzbenica(id, commonDataId, agentId, userId, 
-				oglasId, rezervacijaId, odDatuma, doDatuma);
-	}
-	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostIzvestajResponse")
-	@ResponsePayload
-	public IzvestajResponse postIzvestaj(Long id, Long commonDataId, float predjenaKilometraza, String tekstIzvestaja, 
-			Long narudzbenicaId, Long automobilId, Long rezervacijaId,
-			Long prekoracenaKilometraza, Long dodatniTroskovi) {
-		return  typesService.postIzvestaj(id, commonDataId, predjenaKilometraza, tekstIzvestaja, 
-				narudzbenicaId, automobilId, rezervacijaId, 
-				prekoracenaKilometraza, dodatniTroskovi);
-	}
-	
-	
 }

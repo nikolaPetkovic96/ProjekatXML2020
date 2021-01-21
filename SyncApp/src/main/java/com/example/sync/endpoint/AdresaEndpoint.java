@@ -20,11 +20,4 @@ public class AdresaEndpoint {
 	public AdresaResponse getAdresa() {
 		return  typesService.getAdresa();
 	}
-	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "PostAdresaResponse")
-	@ResponsePayload
-	public AdresaResponse postAdresa(Long id, String mesto, String postanskiBroj, String ulica, String broj) {
-		return  typesService.postAdresa(id, mesto, postanskiBroj, ulica, broj);
-	}
-
 }

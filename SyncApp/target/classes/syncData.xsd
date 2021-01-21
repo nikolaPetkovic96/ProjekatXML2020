@@ -18,7 +18,7 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetAdresa">
+	<xs:element name="GetAdresaRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
@@ -31,16 +31,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-	<xs:element name="PostAdresaResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Adresa" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
+		
 <!-- Automobil -->
 	<xs:element name="Automobil">
 		<xs:complexType>
@@ -60,7 +51,7 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetAutomobil">
+	<xs:element name="GetAutomobilRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
@@ -74,14 +65,6 @@
 		</xs:complexType>
 	</xs:element>
 	
-	<xs:element name="PostAutomobilResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Automobil" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
 	
 <!-- Brand -->
 	<xs:element name="Brand">
@@ -94,20 +77,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetBrand">
+	<xs:element name="GetBrandRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetBrandResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Brand" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="PostBrandResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Brand" maxOccurs="unbounded"
@@ -127,21 +102,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetKlasa">
+	<xs:element name="GetKlasaRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetKlasaResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Klasa" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostKlasaResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Klasa" maxOccurs="unbounded"
@@ -175,15 +141,6 @@
 		</xs:complexType>
 	</xs:element>
 	
-	<xs:element name="PostFuelTypesResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="FuelType" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
 <!-- Model -->
 	<xs:element name="Model">
 		<xs:complexType>
@@ -196,7 +153,7 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetModel">
+	<xs:element name="GetModelRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
@@ -210,14 +167,6 @@
 		</xs:complexType>
 	</xs:element>
 	
-	<xs:element name="PostModelResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Model" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
 	
 <!-- Slika -->
 	<xs:element name="Slika">
@@ -235,21 +184,12 @@
    					<xs:list itemType="xs:string"/>
 	</xs:simpleType>	
 
-	<xs:element name="GetSlika">
+	<xs:element name="GetSlikaRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetSlikaResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Slika" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostSlikaResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Slika" maxOccurs="unbounded"
@@ -269,7 +209,7 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetTransmissionTypes">
+	<xs:element name="GetTransmissionTypesRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
@@ -282,18 +222,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-	<xs:element name="PostTransmissionTypesResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="TransmissionType" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	
-	
+		
 <!-- CommonData -->
 	<xs:element name="CommonData">
 		<xs:complexType>
@@ -306,21 +235,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetCommonData">
+	<xs:element name="GetCommonDataRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetCommonDataResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="CommonData" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostCommonDataResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="CommonData" maxOccurs="unbounded"
@@ -344,7 +264,7 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetKomentar">
+	<xs:element name="GetKomentarRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
@@ -358,14 +278,6 @@
 		</xs:complexType>
 	</xs:element>
 	
-	<xs:element name="PostKomentarResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Komentar" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
 <!-- Ocena -->
 	<xs:element name="Ocena">
 		<xs:complexType>
@@ -380,21 +292,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetOcena">
+	<xs:element name="GetOcenaRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetOcenaResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Ocena" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostOcenaResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Ocena" maxOccurs="unbounded"
@@ -420,21 +323,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetOglas">
+	<xs:element name="GetOglasRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetOglasResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Oglas" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostOglasResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Oglas" maxOccurs="unbounded"
@@ -458,21 +352,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetCenovnik">
+	<xs:element name="GetCenovnikRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetCenovnikResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Cenovnik" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostCenovnikResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Cenovnik" maxOccurs="unbounded"
@@ -494,21 +379,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetPoruka">
+	<xs:element name="GetPorukaRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetPorukaResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Poruka" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostPorukaResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Poruka" maxOccurs="unbounded"
@@ -531,21 +407,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetRezervacija">
+	<xs:element name="GetRezervacijaRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetRezervacijaResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Rezervacija" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostRezervacijaResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Rezervacija" maxOccurs="unbounded"
@@ -571,21 +438,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetIzvestaj">
+	<xs:element name="GetIzvestajRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetIzvestajResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Izvestaj" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostIzvestajResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Izvestaj" maxOccurs="unbounded"
@@ -610,21 +468,12 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="GetNarudzbenica">
+	<xs:element name="GetNarudzbenicaRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
 	<xs:element name="GetNarudzbenicaResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="Narudzbenica" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostNarudzbenicaResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="Narudzbenica" maxOccurs="unbounded"
@@ -681,7 +530,7 @@
 	
 	
 
-	<xs:element name="GetUserType">
+	<xs:element name="GetUserTypesRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
@@ -693,17 +542,5 @@
 					minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="PostUserTypesResponse">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="UserType" maxOccurs="unbounded"
-					minOccurs="0" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	
-
-		
+	</xs:element>		
 </xs:schema>
