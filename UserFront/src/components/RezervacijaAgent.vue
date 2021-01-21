@@ -34,8 +34,8 @@
                         <button v-on:click='openMessage(rezervacija.id)'  :disabled='statusMessage(rezervacija.statusRezervacije)' class=" btn-outline-dark"> poruke </button>
                     </td>
                     <td>
-                        <button v-on:click='exceptReserv(rezervacija.id)' :disabled='status(rezervacija.statusRezervacije)' class="btn-outline-success"> prihvati </button>
-                        <button v-on:click='rejectReserv(rezervacija.id)' :disabled='status(rezervacija.statusRezervacije)' class="btn-outline-danger"> odbij </button>
+                        <button v-on:click='exceptReserv(rezervacija.id)' :disabled='btnEnabled' class="btn-outline-success"> prihvati </button>
+                        <button v-on:click='rejectReserv(rezervacija.id)' :disabled='btnEnabled' class="btn-outline-danger"> odbij </button>
                         <!-- <button v-on:click='testStat(rezervacija.id)'  class="btn-outline-danger"> test </button> -->
                     </td>               
                 </tr>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import userDataService from '../services/UserDataService'
+import UserDataService from '../services/UserDataService'
 export default {
     data(){
         return{
@@ -66,17 +66,32 @@ export default {
             messages: {
                 errorResponse: '',
                 successResponse: '',
-            }
+            },
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false
 
         }
     },
     methods:{
         getAllReservation:function(){
-            userDataService.getAllRezervOsnovnoAgent().then(response => {
+            UserDataService.getAllRezervOsnovnoAgent().then(response => {
                this.rezervacije = response.data;
             });
         },
-
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         status:function (status){
             if (status === "PENDING") {
 				return false; //nemoj disable uraditi
@@ -114,7 +129,7 @@ export default {
             if(confirm("Da li želite da potvrdite ovu rezervaciju?")){
                 this.promenaStatusa.rezervacijaId = id;
                 this.promenaStatusa.statusRezervacije = 'RESERVED';
-                userDataService.updateReservationStatusAccept(this.promenaStatusa).then(response => {
+                UserDataService.updateReservationStatusAccept(this.promenaStatusa).then(response => {
                     alert('Uspešno ste prihvatili rezervaciju!');
                     this.getAllReservation();
                 }).catch(error => {
@@ -129,7 +144,7 @@ export default {
             if(confirm("Da li želite da odbijete ovu rezervaciju?")){
                 this.promenaStatusa.rezervacijaId = id;
                 this.promenaStatusa.statusRezervacije = 'CANCELED';
-                userDataService.updateReservationStatusCancel(this.promenaStatusa).then(response => {
+                UserDataService.updateReservationStatusCancel(this.promenaStatusa).then(response => {
                     alert('Uspešno ste odbili rezervaciju!');
                     this.getAllReservation();
                 }).catch(error => {
@@ -147,6 +162,7 @@ export default {
         }
         else{
             this.getAllReservation();
+            this.getAllPermissions();
         }
         
     }

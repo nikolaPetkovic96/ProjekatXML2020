@@ -42,7 +42,7 @@
                 </ul>
 
                 <div id='buttonUpdate'>
-                    <button type='button' class="btn btn-lg btn-success marg" v-on:click='updateUser(profile.id)'> Update</button> 
+                    <button :disabled='btnEnabled' type='button' class="btn btn-lg btn-success marg" v-on:click='updateUser(profile.id)'> Update</button> 
                 </div>
             </form>
         </div>
@@ -54,6 +54,13 @@ import UserDataService from '../services/UserDataService'
 export default {
     data(){
         return{
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false,
             //Ostaviti proil objekat zbog mapiranja
             profile: {
                 //Osoba
@@ -76,6 +83,15 @@ export default {
         }
     },
     methods:{
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         getUserProfileData(id){
             UserDataService.getUser(id).then(response => {
                 this.profile = response.data;
@@ -98,7 +114,8 @@ export default {
         }
         else{
             let parsToken = JSON.parse(localStorage.getItem('parsToken'));
-        this.getUserProfileData(parsToken.jti);
+            this.getUserProfileData(parsToken.jti);
+            this.getAllPermissions();
         }
         
     },

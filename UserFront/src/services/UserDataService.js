@@ -194,6 +194,10 @@ class UserDataService{
     getAllPermissions(){
         return axios.get(`${LOGINREG_API_URL}/getPermissions`);
     }
+    getAgentIzvestaji(){
+        //TREBA IZMENITI ZAVISNO OD TOGA KOJI MIKROSERVIS OPSLUZUJE IZVESTAJE
+        return axios.get(`${RESERVATION_API_URL}/report`);
+    }
 
 }
 

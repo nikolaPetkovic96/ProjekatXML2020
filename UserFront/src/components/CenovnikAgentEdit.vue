@@ -28,8 +28,8 @@
               
             <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
             <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
-            <button class="btn btn-success" v-on:click='editPrice()'>Potvrdi</button>
-            <button class="btn btn-danger" v-on:click='closeEdit()'>Odustani</button>
+            <button :disabled='btnEnabled' class="btn btn-success" v-on:click='editPrice()'>Potvrdi</button>
+            <button :disabled='btnEnabled' class="btn btn-danger" v-on:click='closeEdit()'>Odustani</button>
         </div>
     </div>
 </template>
@@ -48,6 +48,13 @@ export default {
                 cenaCollisionDamageWaiver:'',
                 cenaPoKilometru:''
             },
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false,
             messages:{
                 errorNaziv:'',
                 errorCenaPoDanu:'',
@@ -122,6 +129,15 @@ export default {
                 });
             }
         },
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         closeEdit:function(){
             this.$router.push('/price');
         },
@@ -147,6 +163,7 @@ export default {
             this.$router.push(`/login`);
         }else{
             this.getPrice();
+            this.getAllPermissions();
         }
     }
 }

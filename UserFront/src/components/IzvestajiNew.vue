@@ -26,7 +26,7 @@
                     <td>{{narudzbenica.oglas.cenovnik.cenaPoDanu}} din</td>
                     <td>{{narudzbenica.oglas.cenovnik.cenaPoKilometru}} din</td>
                     <td>
-                        <a href="#new-report" v-if='narudzbenica.izvestajId ==null '><button v-on:click='showCreateReport(narudzbenica.oglas, narudzbenica.id)' class="btn-outline-primary"> izvestaj </button></a>
+                        <a href="#new-report" v-if='narudzbenica.izvestajId ==null '><button :disabled='btnEnabled' v-on:click='showCreateReport(narudzbenica.oglas, narudzbenica.id)' class="btn-outline-primary"> izvestaj </button></a>
                         <p v-if='narudzbenica.izvestajId !=null ' style="color:crimson;"> ! Postoji izveštaj</p>
                     </td>
                 </tr>
@@ -76,8 +76,8 @@
                 <textarea v-model='izvestaj.tekstIzvestaja' placeholder="Unesi info..."></textarea>
                 <br>
                
-                <button class="btn btn-lg btn-success shadow" v-on:click='addReport()'> Potvrdi </button>
-                <button class="btn btn-lg btn-danger shadow" v-on:click='cancelNewReport()'> Odustani </button>
+                <button :disabled='btnEnabled' class="btn btn-lg btn-success shadow" v-on:click='addReport()'> Potvrdi </button>
+                <button :disabled='btnEnabled' class="btn btn-lg btn-danger shadow" v-on:click='cancelNewReport()'> Odustani </button>
             </div>
         </div>
     </div>
@@ -112,7 +112,13 @@ export default {
                 dodatniTroskovi:0,
                 tekstIzvestaja:'',
             },
-            
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false,
             rezervacija:{
             },
             
@@ -132,7 +138,15 @@ export default {
                 console.log(JSON.stringify(this.rezervacija.oglas));
             });
         },
-
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         showCreateReport(oglas, narudzbenicaId){
             //ako je vec otvoren prozor za kreiranje novog izvestaja samo neka se doda drugi id
             if(this.showNewReport === true){
@@ -234,6 +248,7 @@ export default {
         if(JSON.parse(localStorage.getItem('token')) == null){
             this.$router.push(`/login`);
         }else{
+            this.getAllPermissions();
             this.getAllNarudzbenice();
         }
     },

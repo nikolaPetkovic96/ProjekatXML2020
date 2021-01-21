@@ -27,7 +27,7 @@
                         <button v-on:click='showDetails(rezervacija.id)' class="btn-outline-primary"> detalji </button>
                     </td>
                     <td>
-                        <button v-on:click='writeReport(rezervacija.id)' class="btn-outline-primary"> komentar </button>
+                        <button :disabled='btnEnabled' v-on:click='writeReport(rezervacija.id)' class="btn-outline-primary"> komentar </button>
                     </td>
                 </tr>
                 </tbody>
@@ -48,6 +48,13 @@ export default {
             bestByRat:false,
             //Za ocenu i komentar rezervacije sa statusom PAID koje su zavrsene
             rezervacije:[],
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false
         }
     },
     methods:{
@@ -62,7 +69,15 @@ export default {
         showDetails(id){
             this.$router.push(`/reservation/${id}/details`);
         },
-
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         disableReservation(){
             if(this.permissions.allowedToMakeReservation == true && this.permissions.status == 'aktivan'){
                 return false
@@ -79,6 +94,7 @@ export default {
         }
         else{
             this.getAllExpiredReservation();
+            this.getAllPermissions();
         }   
     }
 }

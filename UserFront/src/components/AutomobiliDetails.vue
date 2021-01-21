@@ -112,6 +112,13 @@ export default {
   name: "Car-details",
   data: function () {
     return {
+      permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+      },
+      btnEnabled:false,
       isOtherImgs: true,
       noReview: false,
       automobil: {
@@ -157,6 +164,15 @@ export default {
         console.log(JSON.stringify(response.data));
         this.noComment();
       });
+    },
+    getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
     },
     getFirstImg: function () {
       //provera da li ima slika za dati stan
@@ -231,6 +247,7 @@ export default {
     if(JSON.parse(localStorage.getItem('token')) == null){
         this.$router.push(`/login`);
     }else{
+      this.getAllPermissions();
       this.getAutomobilDetails();
       this.getAutomobilReviews();
       this.noComment();

@@ -54,8 +54,8 @@
                     v-model="review.star"></star-rating>
                 <br>
             
-                <button class="btn btn-lg btn-success shadow" v-on:click='addComment'> Potvrdi </button>
-                <button class="btn btn-lg btn-danger shadow" v-on:click='cancelNewReport()'> Odustani </button>
+                <button class="btn btn-lg btn-success shadow" :disabled='btnEnabled' v-on:click='addComment'> Potvrdi </button>
+                <button class="btn btn-lg btn-danger shadow" :disabled='btnEnabled' v-on:click='cancelNewReport()'> Odustani </button>
             </div>
         </div>
     </div>
@@ -69,7 +69,13 @@ export default {
     data:function(){
         return {
             showNewReport:false,
-            
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false,
             review: {
                 usertId: '',
                 carId: '',
@@ -125,8 +131,9 @@ export default {
         getAllPermissions:function(){
             UserDataService.getAllPermissions().then(response => {
                 this.permissions = response.data;
-                //OBRISATIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-                // this.permissions.allowedToCommend = false;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
                 console.log(JSON.stringify(this.permissions));
             });
         },

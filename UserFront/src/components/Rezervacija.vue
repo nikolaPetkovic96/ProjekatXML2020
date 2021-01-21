@@ -33,9 +33,9 @@
                         <button v-on:click='openMessage(rezervacija.id)'  :disabled='statusMessage(rezervacija.statusRezervacije)' class=" btn-outline-dark"> poruke </button>
                     </td>
                     <td>
-                        <button v-on:click='rejectReserv(rezervacija.id)' :disabled='statusCancel(rezervacija.statusRezervacije)' class="btn-outline-success"> otkaži </button>
-                        <button v-on:click='payReserv(rezervacija.id)' :disabled='statusMessage(rezervacija.statusRezervacije)' class="btn-outline-danger"> plati </button>
-                        <button v-on:click='test(rezervacija)'>Test</button>
+                        <button v-on:click='rejectReserv(rezervacija.id)' :disabled='btnEnabled' class="btn-outline-success"> otkaži </button>
+                        <button v-on:click='payReserv(rezervacija.id)' :disabled='btnEnabled' class="btn-outline-danger"> plati </button>
+                        <!-- <button v-on:click='test(rezervacija)'>Test</button> -->
                     </td> 
                 </tr>
                 </tbody>
@@ -67,8 +67,13 @@ export default {
                 errorResponse: '',
                 successResponse: '',
             },
-
-
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false
         }
     },
     methods:{
@@ -80,7 +85,15 @@ export default {
                 
             } 
         },
-
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         getAllReservation:function(){
             UserDataService.getAllRezervOsnovnoUser().then(response => {
                this.rezervacije = response.data;
@@ -149,6 +162,7 @@ export default {
         }
         else{
             this.getAllReservation();
+            this.getAllPermissions();
         }
         
     }

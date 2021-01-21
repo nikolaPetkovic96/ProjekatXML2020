@@ -29,8 +29,8 @@
                  -->
                 <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
                 <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
-                <button class="btn btn-success" v-on:click='addPrice()'>Potvrdi</button>
-                <button class="btn btn-danger" v-on:click='closeNew()'>Odustani</button>
+                <button :disabled='btnEnabled' class="btn btn-success" v-on:click='addPrice()'>Potvrdi</button>
+                <button :disabled='btnEnabled' class="btn btn-danger" v-on:click='closeNew()'>Odustani</button>
             </div>
         </div>
     </div>
@@ -57,7 +57,14 @@ export default {
                 // errorCena30Dana:'',
                 errorResponse:'',
                 successResponse:'',
-            }
+            },
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false
         }
     },
     methods:{
@@ -128,6 +135,15 @@ export default {
             //isNaN(num) returns true if the variable does NOT contain a valid number
             return isNaN(num);
         },
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         resetFields(){
             this.noviCenovnik.id = '';
             this.noviCenovnik.nazivCenovnika= '';
@@ -138,7 +154,11 @@ export default {
         }
     },
     created(){
-     
+     if(JSON.parse(localStorage.getItem('token')) == null){
+            this.$router.push(`/login`);
+        }else{
+            this.getAllPermissions();
+        }
     },
 }
 </script>

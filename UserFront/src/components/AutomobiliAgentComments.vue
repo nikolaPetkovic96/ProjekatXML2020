@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-success marg" v-on:click='addComment(automobil.id)' :disabled='disableComment()'>Ostavi komentar</button>
+                    <button class="btn btn-success marg" button :disabled='btnEnabled' v-on:click='addComment(automobil.id)'>Ostavi komentar</button>
                 </div> <!--comments-->
             </div>
         </div>
@@ -63,7 +63,8 @@ export default {
                 allowedToMessage:null,
                 allowedToMakeReservation:null,
                 status:null,
-            }
+            },
+            btnEnabled:false
         }
     },
     methods: {
@@ -87,8 +88,9 @@ export default {
         getAllPermissions:function(){
             UserDataService.getAllPermissions().then(response => {
                 this.permissions = response.data;
-                //OBRISATIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-                // this.permissions.allowedToCommend = false;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
                 console.log(JSON.stringify(this.permissions));
             });
         },

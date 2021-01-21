@@ -30,7 +30,7 @@ import AdsAgent from './components/OglasiAgent'
 import AdsAgentNew from './components/OglasiAgentNew'
 import ReportAgent from './components/IzvestajiAgent'
 import ReportNew from './components/IzvestajiNew'
-
+import IzvestajiOverview from './components/IzvestajiOverview'
 import ShoppingCart from './components/ShoppingCart'
 
 import About from './components/About'
@@ -215,6 +215,11 @@ export default [
         path:'/about',
         name:'About',
         component:About 
+    },
+    {
+        path:'/istorijatIzvestaja',
+        name:'IzvestajiOverview',
+        component: IzvestajiOverview
     }
 
 ]

@@ -79,8 +79,8 @@
              <div style="margin-top:20px" v-if='messages.errorDates2' class="alert alert-danger" v-html="messages.errorDates2"></div>
             <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
             <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
-            <button class='btn btn-success shadow' v-on:click='newAd()'>Potvrdi</button>
-            <button class='btn btn-danger shadow' v-on:click='cancelNew()'>Odustani</button>
+            <button :disabled='btnEnabled' class='btn btn-success shadow' v-on:click='newAd()'>Potvrdi</button>
+            <button :disabled='btnEnabled' class='btn btn-danger shadow' v-on:click='cancelNew()'>Odustani</button>
         </div>
   </div>
 </template>
@@ -92,6 +92,13 @@ export default {
     name: 'Ads-new',
     data:function(){
         return {
+          permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+          },
+          btnEnabled:false,
           noviOglas:{
             odDatuma:null,
             doDatuma:null,
@@ -140,6 +147,7 @@ export default {
           disabledDates: {
             to: null
           },
+          
         }
     },
     methods:{
@@ -153,6 +161,15 @@ export default {
           this.cenovnici = response.data;
         });
       },
+      getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
       newAd:function(){
         if (this.dates.from == null) {
           this.messages.errorDates = `<h4>Morate odabrati početni termin oglasa!</h4>`;
@@ -261,6 +278,7 @@ export default {
       if(JSON.parse(localStorage.getItem('token')) == null){
           this.$router.push(`/login`);
       }else{
+        this.getAllPermissions();
         this.getAllPrices();
         this.getAutomobil();
       }

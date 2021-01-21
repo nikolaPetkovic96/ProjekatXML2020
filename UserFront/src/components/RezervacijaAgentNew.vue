@@ -59,7 +59,7 @@
 
         <label>Tekst rezervacije:</label>
         <textarea v-model='rezervacijaOglasDTO.poruka' placeholder="message..."></textarea>
-        <button class="btn btn-lg btn-success margTop" v-on:click='makeReservation()'> Rezerviši </button>
+        <button :disabled='btnEnabled' class="btn btn-lg btn-success margTop" v-on:click='makeReservation()'> Rezerviši </button>
     </div>
 </div>
 </template>
@@ -70,6 +70,13 @@ import Datepicker from 'vuejs-datepicker'
 export default {
     data(){
         return{
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false,
             user: {
                 username: '',
                 role: ''
@@ -183,6 +190,15 @@ export default {
         }
     },
     methods:{
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         //Metoda koja se poziva u create fazi stranice
         //Sluzi da se iz oglasa izvuce interval od kada do kada oglas vazi,
         //Kao i zauzeti podintervali, tako sto se uzima od do datum svih rezervacija(narudzbenica) vezanih za taj oglas.  
@@ -321,7 +337,7 @@ export default {
            this.$router.push(`/login`);
         }
         else{
-            
+            this.getAllPermissions();
         }
 
 	},

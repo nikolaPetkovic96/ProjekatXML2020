@@ -67,7 +67,7 @@
 					<input type="password" class="form-control" v-model="changedPassword.newPasswordRepeat" placeholder="Ponovite novu loznku..."  />
 				</fieldset>
 
-				<button type="button" class="btn btn-lg btn-success" v-on:click='updateProfile'> Potvrdi </button>
+				<button :disabled='btnEnabled' type="button" class="btn btn-lg btn-success" v-on:click='updateProfile'> Potvrdi </button>
 				<hr>
 				<div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
 				<div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
@@ -82,6 +82,13 @@ import UserDataService from '../services/UserDataService'
 export default {
     data(){
         return{
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false,
             profile: {
             	id:null,
                 korisnickoIme:null,
@@ -122,6 +129,15 @@ export default {
         }
     },
     methods:{
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         getUserProfileData:function(){
             UserDataService.getUser().then(response => {
                 this.profile = response.data;
@@ -255,6 +271,7 @@ export default {
         }else{
             let parsToken = JSON.parse(localStorage.getItem('parsToken'));
             this.getUserProfileData();
+            this.getAllPermissions();
         }
     },
 }

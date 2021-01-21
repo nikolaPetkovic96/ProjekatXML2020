@@ -53,7 +53,7 @@
                             <h5><b>Kilometraža: </b>{{oglas.automobil.predjenaKilometraza}} km</h5>
                         </div>
                         <button class="btn btn-outline-primary margTop" v-on:click='showDetails(oglas.automobil.id)'> Detalji </button>
-                        <button class="btn btn-outline-success margTop" v-on:click='makeReseravation(oglas.id)'> Reservisi </button>
+                        <button :disabled='btnEnabled' class="btn btn-outline-success margTop" v-on:click='makeReseravation(oglas.id)'> Reservisi </button>
                     </div>
                 </div>
                 </div>
@@ -69,6 +69,13 @@ import StarRating from 'vue-star-rating'
 export default{
     data(){
         return{
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false,
             //za prikaz kada su oglasi prazni (obrisati kasnije)
             oglasip:[],
             isAlreadySearched:false,
@@ -344,6 +351,15 @@ export default{
         }
     },
     methods:{
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         makeReseravation:function(id){
             //alert(`Za automobil id ${id} ce biti napravljena rezervacija!`);
             this.$router.push(`/cars/${id}/reservation`);
@@ -426,8 +442,9 @@ export default{
            this.$router.push(`/login`);
         }
         else{
+            this.getAllPermissions();
             //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
-        this.brojSedZaDec = this.range(0, 5);
+            this.brojSedZaDec = this.range(0, 5);
         }
         
     },

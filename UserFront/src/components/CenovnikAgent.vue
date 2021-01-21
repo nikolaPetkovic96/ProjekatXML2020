@@ -24,12 +24,12 @@
                     <td>{{cenovnik.cenaPoKilometru}} din</td>
                     <td>{{cenovnik.cenaCollisionDamageWaiver}} din</td>
                     <!-- <td>{{cenovnik.popustZaPreko30Dana}} %</td> -->
-                    <td><button v-on:click='openEdit(cenovnik.id)'  class="btn-sm btn-outline-primary"> Izmeni </button></td>
-                    <td><button v-on:click='deletePrice(cenovnik.id)'  class="btn btn-sm btn-danger"> Ukloni </button></td>
+                    <td><button :disabled='btnEnabled' v-on:click='openEdit(cenovnik.id)'  class="btn-sm btn-outline-primary"> Izmeni </button></td>
+                    <td><button :disabled='btnEnabled' v-on:click='deletePrice(cenovnik.id)'  class="btn btn-sm btn-danger"> Ukloni </button></td>
                 </tr>
                 </tbody>
             </table>
-            <button  v-on:click='openNew()' class="btn  btn-success" style='padding-left: 5px;'>Dodaj cenovnik</button>
+            <button :disabled='btnEnabled'  v-on:click='openNew()' class="btn  btn-success" style='padding-left: 5px;'>Dodaj cenovnik</button>
         </div>
     </div>
 </template>
@@ -42,6 +42,13 @@ export default {
    data(){
         return{
             cenovnici:[],
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false
         }
    },
    methods: {
@@ -50,6 +57,15 @@ export default {
             .then(response => {
                 this.cenovnici = response.data;
             })
+        },
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
         },
         deletePrice(id){
             if (confirm('Da li ste sigurni da želite obrisati ovaj cenovnik?')) {
@@ -71,6 +87,7 @@ export default {
             this.$router.push(`/login`);
         }else{
             this.showAllPrices();
+            this.getAllPermissions();
         }
     }
 }

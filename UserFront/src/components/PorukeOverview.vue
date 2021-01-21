@@ -44,12 +44,12 @@
                     </div>
                 </div>
                 <div style='margin-top:15%;'>
-                    <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(narudzbenica.oglas.automobil)' :disabled='disableMessage()'>Nova poruka</button></a>
+                    <a href="#car-new-message"><button :disabled='btnEnabled' class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(narudzbenica.oglas.automobil)'>Nova poruka</button></a>
                 </div> 
             </div>
             <!-- Kada nema poruka onda se gornje dugme ne prikazuje pa se prikazuje ovo -->
             <div v-show='isThereMessages(rezervacija)'>
-                <a href="#car-new-message"><button class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(narudzbenica.oglas.automobil)' :disabled='disableMessage()'>Nova poruka</button></a>
+                <a href="#car-new-message"><button :disabled='btnEnabled' class="btn btn-lg btn-outline-success marg" v-on:click='createMessage(narudzbenica.oglas.automobil)'>Nova poruka</button></a>
             </div> 
             
             <hr style='background:lightgray;height:1px;'>
@@ -71,8 +71,8 @@
                         <label for="">Tekst poruke</label>
                         <div v-if='messages.errorText' class="alert alert-danger" v-html="messages.errorText"></div>
                         <textarea v-model='novaPoruka.tekstPoruke' placeholder="Unesite tekst..."></textarea>
-                        <button class="btn btn-success marg" v-on:click='addMessage()'>Potvrdi</button>
-                        <button class="btn btn-danger marg" v-on:click='closeCreateMessage()'>Odustani</button>
+                        <button :disabled='btnEnabled' class="btn btn-success marg" v-on:click='addMessage()'>Potvrdi</button>
+                        <button :disabled='btnEnabled' class="btn btn-danger marg" v-on:click='closeCreateMessage()'>Odustani</button>
                         <hr style='background:lightgray;height:1px;'>
                     </div>
                     
@@ -107,7 +107,7 @@ export default {
                 errorResponse: '',
                 successResponse: '',
             },
-
+            btnEnabled:false,
             permissions:{
                 allowedToCommend:null,
                 allowedToMessage:null,

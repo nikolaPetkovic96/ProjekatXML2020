@@ -33,7 +33,7 @@
                         <td>{{oglas.cenovnik.cenaPoDanu}} din</td>
                         <td>{{oglas.cenovnik.cenaPoKilometru}} din</td>
                         <td>
-                            <button v-on:click='deleteAds(oglas.id)' class="btn-danger"> ukloni </button>
+                            <button :disabled='btnEnabled' v-on:click='deleteAds(oglas.id)' class="btn-danger"> ukloni </button>
                         </td>
                     </tr>
                 </tbody>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import userDataService from '../services/UserDataService'
+import UserDataService from '../services/UserDataService'
 export default {
     name: 'ads',
     data:function(){
@@ -56,21 +56,37 @@ export default {
 				errorDates: '',
 				errorResponse: '',
 				successResponse: '',
-			},
+            },
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false
         }
     },
     methods:{
         getAllUsersOglas:function(){
-            userDataService.getAllUsersOglas().then(response => {
+            UserDataService.getAllUsersOglas().then(response => {
                 this.oglasi = response.data;
                 console.log("Oglasi: " + JSON.stringify(this.oglasi));
                 
             });
         },
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
         deleteAds:function(id){
             if (confirm('Da li ste sigurni da želite obrisati ovaj oglas?')) {
                 console.log(`Usao u delete ads za ${id}`);
-                userDataService.deleteOglas(id).then(response => {
+                UserDataService.deleteOglas(id).then(response => {
                     this.getAllUsersOglas();
                 })
                 .catch(error => {
@@ -94,6 +110,7 @@ export default {
         }
         else{
             this.getAllUsersOglas();
+            this.getAllPermissions();
         }
         
     }

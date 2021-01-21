@@ -11,7 +11,7 @@
             <br>        
             <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
             <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>
-            <button class="btn btn-lg btn-success shadow" v-on:click='addComment'> Potvrdi </button>
+            <button class="btn btn-lg btn-success shadow" :disabled='btnEnabled' v-on:click='addComment'> Potvrdi </button>
         </div>
     </div>
 </template>
@@ -31,7 +31,14 @@ export default {
                 errorText: '',
                 errorResponse: '',
                 successResponse: '',
-            }
+            },
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false
         }
     },
     methods:{
@@ -61,6 +68,15 @@ export default {
                 });
             }
         },
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        }
     },
 
     computed: {
@@ -73,6 +89,7 @@ export default {
         if(JSON.parse(localStorage.getItem('token')) == null){
             this.$router.push(`/login`);
         }else{
+            this.getAllPermissions();
             this.noviKomentar.automobilId = this.id;
         }
         

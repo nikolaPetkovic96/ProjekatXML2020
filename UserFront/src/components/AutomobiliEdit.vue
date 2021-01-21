@@ -112,8 +112,8 @@
      
             <div v-if='messages.errorResponse' class="alert alert-danger" v-html="messages.errorResponse"></div>
 		    <div v-if='messages.successResponse' class="alert alert-success" v-html="messages.successResponse"></div>  
-            <button class="btn btn-success shadow" v-on:click='editCar()'>Save</button>
-            <button class="btn btn-danger shadow" v-on:click='closeEdit()'>Close</button>
+            <button :disabled='btnEnabled' class="btn btn-success shadow" v-on:click='editCar()'>Save</button>
+            <button :disabled='btnEnabled' class="btn btn-danger shadow" v-on:click='closeEdit()'>Close</button>
            
         </div> <!--container-->
     </div> <!--Automobil-new-->
@@ -133,7 +133,13 @@ export default {
             tipGoriva:[], 
             tipMenjaca:[],
             brojSedZaDec:null,
-
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false,
             odabranaKompon:{
                 markaAutomobila:null,
                 modelAutomobila:null,
@@ -256,6 +262,15 @@ export default {
         addChoosenGorivo:function(id){
             this.AutomobilEdit.tipGorivaId = id;
         },
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
 
         getAllOptions:function(){
             UserDataService.getAllMarkaAut().then(response => {
@@ -297,6 +312,7 @@ export default {
            this.$router.push(`/login`);
         }else{
             //prilikom kreiranja stranice opcija za broj sedista za decu se postavi na od 1 - 5;
+            this.getAllPermissions();
             this.brojSedZaDec = this.range(0, 5);
             this.getAllOptions();
             this.getAutomobil();

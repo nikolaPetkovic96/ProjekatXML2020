@@ -30,7 +30,7 @@
                       <h6><b>Kilometraža: </b>{{oglas.automobil.predjenaKilometraza}} km</h6>
                   </div>
                     <button class="btn-sm btn-outline-primary" v-on:click='showDetails(oglas.id)'> Detalji </button>
-                    <button class="btn-sm btn-outline-danger" v-on:click='removeAds(oglas.id)'> Ukloni </button>
+                    <button :disabled='btnEnabled' class="btn-sm btn-outline-danger" v-on:click='removeAds(oglas.id)'> Ukloni </button>
                     <div v-bind:id='oglas.id'>
                     </div>
               </div>
@@ -41,8 +41,8 @@
         <span>Ukupno</span>
         <span>{{total}} din</span>
       </div>
-      <button class="btn-lg btn-success" v-on:click='makeReseravation()'> Potvrdi </button>
-      <button class="btn-lg btn-danger" v-on:click='cancelReservation()'> Odustani </button>
+      <button :disabled='btnEnabled' class="btn-lg btn-success" v-on:click='makeReseravation()'> Potvrdi </button>
+      <button :disabled='btnEnabled' class="btn-lg btn-danger" v-on:click='cancelReservation()'> Odustani </button>
     </div>
   </div>
 </template>
@@ -53,6 +53,13 @@ import StarRating from "vue-star-rating";
 export default {
     data() {
       return {
+        permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+        },
+        btnEnabled:false,
         total:0,
         korpa:[], //nalaze se narudzbenice preuzete iz localStorage
         /*
@@ -74,6 +81,15 @@ export default {
       }
     },
     methods:{
+      getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
       //metoda koja sluzi da proveri da li za svaki od oglasa postoji bar jos neki oglas (a da to nije on) u korpi koji pripada istom agentu
       //Ako ima prikazuje se dugme bundle za posmatrani oglas...
       isBundle:function(oglas){
@@ -403,7 +419,7 @@ export default {
           this.$router.push(`/login`);
       }
       else{
-
+        this.getAllPermissions();
         if(JSON.parse(localStorage.getItem('cart'))== null){
           this.korpa = [];
         }

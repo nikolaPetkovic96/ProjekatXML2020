@@ -4,7 +4,13 @@
             <h1 style="margin-top:10px;color:#35424a;">Lista završenih <span id='titleEffect'>rezervacija</span></h1>
             <hr style='background:#35424a;height:1px;'>
         </div>
+        
         <div id='main' class='container'>
+            <router-link to="/istorijatIzvestaja" class="nav-link" exact>
+                <button class="btn-outline-primary">
+                    Pregled istorijata
+                </button>
+            </router-link>
             <table class="table">
                 <thead>
                     <tr>
@@ -26,8 +32,16 @@
                         <button v-on:click='showDetails(rezervacija.id)' class="btn-outline-primary"> detalji </button>
                     </td>
                     <td>
-                        <button v-on:click='writeReport(rezervacija.id)' class="btn-outline-primary"> izvestaj </button>
+                        <button :disabled='btnEnabled' v-on:click='writeReport(rezervacija.id)' class="btn-outline-primary"> izvestaj </button>
                     </td>
+                    <!-- <td>
+                        <router-link to="/istorijatIzvestaja" class="nav-link" exact>
+                            <button class="btn-outline-primary">
+                                Pregled istorijata
+                            </button>
+                        </router-link>
+                        
+                    </td> -->
                 </tr>
                 </tbody>
             </table>
@@ -38,7 +52,7 @@
 </template>
 
 <script>
-import userDataService from '../services/UserDataService'
+import UserDataService from '../services/UserDataService'
 export default {
     name: 'Messages',
     data:function(){
@@ -49,11 +63,18 @@ export default {
             bestByRat:false,
             //Za izvestaj rezervacije sa statusom PAID koje su zavrsene
             rezervacije:[],
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false
         }
     },
     methods:{
         getAllExpiredReservation(){
-            userDataService.getAllRezervacijeExpiredAgent().then(response =>{
+            UserDataService.getAllRezervacijeExpiredAgent().then(response =>{
                 this.rezervacije = response.data;
             });
         },
@@ -62,7 +83,16 @@ export default {
         },
         showDetails(id){
             this.$router.push(`/reservation/${id}/details`);
-        }
+        },
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+                this.permissions = response.data;
+                if(this.permissions.status != "aktivan"){
+                    btnEnabled = true
+                }
+                console.log(JSON.stringify(this.permissions));
+            });
+        },
 
     },
     created(){
@@ -71,6 +101,7 @@ export default {
         }
         else{
             this.getAllExpiredReservation();
+            this.getAllPermissions();
         }   
     }
 }

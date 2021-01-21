@@ -128,7 +128,7 @@
                 </tbody>
             </table>
             <div id='options'>
-                <router-link to="/carsAgent/new"> <button class=' btn btn-lg classButton shadow'>+ Dodaj vozilo</button>
+                <router-link to="/carsAgent/new"> <button :disabled='btnEnabled' class=' btn btn-lg classButton shadow'>+ Dodaj vozilo</button>
                 </router-link>
                 <router-link to="/carsAgent/comments"> <button class='btn classButton shadow'>Komentari</button>
                 </router-link>
@@ -187,7 +187,13 @@ export default {
             brojSedZaDec:null,
 
             noOfAds:null,
-           
+            permissions:{
+                allowedToCommend:null,
+                allowedToMessage:null,
+                allowedToMakeReservation:null,
+                status:null,
+            },
+            btnEnabled:false
         }
     },
     methods:{
@@ -211,6 +217,21 @@ export default {
             });
             UserDataService.getAllTipGoriva().then(response => {
                 this.tipGoriva = response.data;
+            });
+        },
+
+        getAllPermissions:function(){
+            UserDataService.getAllPermissions().then(response => {
+               this.permissions = response.data;
+               //this.permissions.status = response.data[3]
+               if(this.permissions.status != "aktivan"){
+                   console.log("NALOG NIJE AKTIVAN")
+                   this.btnEnabled = true
+               }
+               else{
+                   console.log("Nalog je AKTIVAN")
+               }
+               console.log(JSON.stringify(this.permissions));
             });
         },
 
@@ -402,6 +423,7 @@ export default {
             this.getAutomobiliList();
             this.getAllOptions();
             this.getNoOfUsersAds();
+            this.getAllPermissions();
         }
     }
 }
