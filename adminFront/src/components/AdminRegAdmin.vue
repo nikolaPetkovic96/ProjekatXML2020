@@ -155,8 +155,8 @@ export default {
                 setTimeout(() => this.errorAdresa = '', 5000);
             }
             else if(this.isNumeric(this.noviAdmin.tadresa.postanskiBroj)){
-                this.messages.errorJMBG = `<h4>Vrednost poštanskog broj mora biti broj!</h4>`;
-                setTimeout(() => this.messages.errorJMBG = '', 5000);
+                this.messages.errorAdresa = `<h4>Vrednost poštanskog broj mora biti broj!</h4>`;
+                setTimeout(() => this.messages.errorAdresa = '', 5000);
             }
             else {
                 console.log('Admin: ' + JSON.stringify(this.noviAdmin));
