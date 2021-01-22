@@ -70,12 +70,13 @@ public class AuthenticationController {
 		int expiresIn = tokenUtils.getExpiredIn();
 		
 		//OTKOMENTARISATI SVE
-//		TokenResponse bekToken = komunikacijaClient.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-//		user.setToken(bekToken.getToken());
-//		//cuva se user sa dodatim tokenom sa glavnog beka
-//		userRep.save(user);
-//	
-//		syncService.init();
+		TokenResponse bekToken = komunikacijaClient.login(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		//.out.println("Agent, dobijeni token sa syncApp : "+bekToken.getToken());
+		user.setToken(bekToken.getToken());
+		//cuva se user sa dodatim tokenom sa glavnog beka
+		userRep.save(user);
+	
+		syncService.init();
 
 		// Vrati token kao odgovor na uspesnu autentifikaciju
 		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));

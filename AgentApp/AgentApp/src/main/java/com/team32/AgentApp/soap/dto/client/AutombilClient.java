@@ -54,7 +54,7 @@ public class AutombilClient {
 		BrandRequest request = new BrandRequest();
 		BrandResponse response = (BrandResponse) soapMessageSender
 				.sendMessage(request);
-		
+		//System.out.println("BrandSync");
 		return response.getBrands();
 	}
 	

@@ -354,32 +354,38 @@ public class AutomobilController {
 		return new ResponseEntity<>(auto,HttpStatus.OK);
 	}
 	
-	public List<ReviewDTO> getAllReviewsByAutomobilId(Long autoId, String loggedUsername){
+	public List<ReviewDTO> getAllReviewsByAutomobilId(Long autoId, String loggedUsername) {
 		List<ReviewDTO> reviews = new ArrayList<>();
-		
-		//Komentari i ocene se poklapaju po 2 kriterijuma po automobilu i po rezervaciji
-		//Vadimo sve komentare i rezervacije za jedan isti automobil;
+
+		// Komentari i ocene se poklapaju po 2 kriterijuma po automobilu i po
+		// rezervaciji ali i po onome ko ih je ostavio.
+		// Vadimo sve komentare i rezervacije za jedan isti automobil;
 		List<Komentar> sviKomentAutomob = komentarService.getAllKomentarByAutomobilId(autoId);
 		List<Ocena> sveOceneAutomob = ocenaService.getAllOcenaByAutomobilId(autoId);
-		
-		//Prolazimo kroz rezulat i proveravamo koji od njih pripadaju istoj rezervaciji
-		for(Komentar k : sviKomentAutomob) {
-			//Provera da li je komentar ostavio sam agent (onda nema ocene)
-			CommonData comData = comDataService.findOne(k.getCommonDataId());
-			User u = userService.findOne(comData.getUserid());
-			
-			if(u.getKorisnickoIme().equals(loggedUsername)  && k.isOdobren() == true) {
+
+		// Prolazimo kroz rezulat i proveravamo koji od njih pripadaju istoj rezervaciji
+		for (Komentar k : sviKomentAutomob) {
+			// Provera da li je komentar ostavio sam agent (onda nema ocene)
+			CommonData comDataKom = comDataService.findOne(k.getCommonDataId());
+			User u = userService.findOne(comDataKom.getUserid());
+
+			if (u.getKorisnickoIme().equals(loggedUsername) && k.isOdobren() == true) {
 				reviews.add(new ReviewDTO(new KomentarDTO(k, u.getKorisnickoIme())));
 				continue;
 			}
-			for(Ocena o : sveOceneAutomob) {
-				if(k.getRezervacijaId() == o.getRezervacijaId() && k.isOdobren() == true) {
-					
-					reviews.add(new ReviewDTO(new OcenaDTO(o), new KomentarDTO(k, u.getKorisnickoIme())));
+			for (Ocena o : sveOceneAutomob) {
+				CommonData comDataOc = comDataService.findOne(o.getCommonDataId());
+				User uOc = userService.findOne(comDataOc.getUserid());
+				if (k.getRezervacijaId() == o.getRezervacijaId() && k.isOdobren() == true) {
+					// Ako je i isti user obe napravio onda pripadaju istoj
+					if (u.getId() == uOc.getId()) {
+						reviews.add(new ReviewDTO(new OcenaDTO(o), new KomentarDTO(k, u.getKorisnickoIme())));
+					}
+
 				}
 			}
 		}
-		
+
 		return reviews;
 	}
 	

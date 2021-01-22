@@ -47,13 +47,13 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/sync" , propOrder = {
-		"Id",
-		"CommonDataId" ,
+		"id",
+		"commonDataId" ,
 		"cenaPoDanu",
-		"NazivCenovnika" ,
-		"PopustZaPreko30Dana" ,
-		"CenaCollisionDamageWaiver" ,
-		"CenaPoKilometru" })
+		"nazivCenovnika" ,
+		"popustZaPreko30Dana" ,
+		"cenaCollisionDamageWaiver" ,
+		"cenaPoKilometru" })
 
 @XmlRootElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity

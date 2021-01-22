@@ -59,10 +59,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UserType", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivTipa", "korisnickoIme","Loznika","email","status","adresaId",
+@XmlType(name = "UserType", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "korisnickoIme","lozinka","email","status","adresaId",
 		"pol","ime","prezime","jmbg",
-		"nazivFirme","poslovniMaticniBroj",
-		"allowedToCommend","allowedToMessage","allowedToMakeReservation"})
+		"naziv","poslovniMaticniBroj",
+		"allowedToCommend","allowedToMessage","allowedToMakeReservation",
+		"lastPasswordResetDate","authorities","token"})
 @XmlRootElement(name = "UserType", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 @Table(name="Users")

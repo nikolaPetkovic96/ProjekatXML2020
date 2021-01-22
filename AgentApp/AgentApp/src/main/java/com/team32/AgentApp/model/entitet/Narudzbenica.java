@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.team32.AgentApp.soap.LocalDateTimeAdapter;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -45,10 +48,12 @@ public class Narudzbenica {
 		
 		@Column(name = "od_datuma", nullable = false)
 		@XmlElement(name = "OdDatuma", required = true)
+		@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	    private LocalDateTime odDatuma;
 	    
 	    @Column(name = "do_datuma", nullable = false)
 		@XmlElement(name = "DoDatuma", required = true)
+		@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	    private LocalDateTime  doDatuma;
 	    
 	    @Column(name="common_data_id", nullable = false)

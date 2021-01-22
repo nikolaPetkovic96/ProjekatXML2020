@@ -112,7 +112,7 @@ public class SyncService {
 		pullKomentare();
 		pullOcene();
 		pullPoruke();
-		pullUser();
+		//pullUser();
 
 		pullOglas();
 		pullAdresa();
@@ -162,6 +162,8 @@ public class SyncService {
 		}
 		public void pullCommonData() {
 			List<CommonData> cmd = autombilClient.getAllCommonData();
+			for(CommonData c : cmd)
+			System.out.println(c.getDatumKreiranja() + " " +c.getDatumIzmene());
 			commonDataRep.saveAll(cmd);
 			commonDataRep.flush();
 		}

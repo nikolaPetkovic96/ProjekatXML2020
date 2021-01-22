@@ -8,18 +8,25 @@
 package com.team32.AgentApp.model.entitet;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.team32.AgentApp.soap.LocalDateTimeAdapter;
 
 /**
  * <p>
@@ -46,7 +53,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CommonData", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "datumKreiranja","datumIzmene","userId"})
+@XmlType(name = "CommonData", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "datumKreiranja","datumIzmene","userId"})
 
 @Entity
 @XmlRootElement(name = "CommonData", namespace = "http://www.ftn.uns.ac.rs/sync")
@@ -60,11 +67,13 @@ public class CommonData {
 	@Column(name = "datum_kreiranja", nullable = false)
 	@XmlElement(name = "DatumKreiranja", required = true)
 	@XmlSchemaType(name = "dateTime")
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	protected LocalDateTime datumKreiranja;
 
 	@Column(name = "datum_izmene")
 	@XmlElement(name = "DatumIzmene", required = true)
 	@XmlSchemaType(name = "dateTime")
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	protected LocalDateTime datumIzmene;
 
 	//Jedna promena(commonData) se odnosi na samo jednog korisnika
@@ -115,5 +124,20 @@ public class CommonData {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+	public void setDatumKreiranja(String datumKreiranja) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime dateTime = LocalDateTime.parse(datumKreiranja.replace('T',' ' ), formatter);
+		this.datumKreiranja = dateTime;
+		
+	}
 
+	public void setDatumIzmene(String datumIzmene) {
+		if(datumIzmene.equals(null)) {
+			this.datumIzmene=null;
+		}else {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime dateTime = LocalDateTime.parse(datumIzmene.replace('T',' ' ), formatter);
+		this.datumIzmene = dateTime;	
+		}
+	}
 }

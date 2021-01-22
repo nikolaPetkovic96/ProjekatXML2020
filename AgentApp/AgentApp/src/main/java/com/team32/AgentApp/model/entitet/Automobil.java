@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Automobil", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "markaAutomobilaId","modelAutomobilaId","klasaAutomobilaId",
-											"vrstaGorivaId","tipMenjaca","predjenaKilometraza","collisionDamageWaiver", 
+											"tipGorivaId","tipMenjacaId","predjenaKilometraza","collisionDamageWaiver", 
 											"brojSedistaZaDecu","ukupnaOcena"})
 
 @XmlRootElement(name = "Automobil", namespace = "http://www.ftn.uns.ac.rs/sync")
@@ -61,7 +61,7 @@ public class Automobil {
     protected Long markaAutomobilaId;
     
 	@Column(name = "model_aut_id", nullable = false)
-	@XmlElement(name = "ModelutomobilaId", required = true)
+	@XmlElement(name = "ModelAutomobilaId", required = true)
     protected Long modelAutomobilaId;
     
 	@Column(name = "klasa_aut_id", nullable = false)

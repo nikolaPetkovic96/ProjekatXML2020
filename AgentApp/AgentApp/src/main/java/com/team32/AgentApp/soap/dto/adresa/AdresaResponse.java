@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 import com.team32.AgentApp.model.tentitet.Adresa;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetAdresaResponse")
+@XmlType(name = "GetAdresaResponse", propOrder = { "list" })
 @XmlRootElement(name = "GetAdresaResponse")
 public class AdresaResponse {
 

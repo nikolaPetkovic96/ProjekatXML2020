@@ -84,7 +84,7 @@ public class Rezervacija {
     
     //dodato
 	@XmlElement(name = "Username", required = true)
-	private String usename;
+	private String username;
 
 	public Rezervacija() {
 		super();
@@ -147,6 +147,14 @@ public class Rezervacija {
 
 	public void setCommonDataId(Long commonDataId) {
 		this.commonDataId = commonDataId;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

@@ -19,7 +19,7 @@ import org.springframework.ws.transport.http.HttpUrlConnection;
 import com.team32.AgentApp.model.entitet.User;
 import com.team32.AgentApp.repository.UserRepository;
 
-@Component
+//@Component
 public class SoapMessageSender extends WebServiceGatewaySupport {
 	
 	private String url = "http://localhost:2020/sync-service/soapWS";

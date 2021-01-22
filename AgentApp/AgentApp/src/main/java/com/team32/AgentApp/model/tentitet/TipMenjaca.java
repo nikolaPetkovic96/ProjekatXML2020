@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlType;
 // */
 @XmlAccessorType(XmlAccessType.FIELD)
 
-@XmlType(name = "TransmissionType", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivTipa" })
+@XmlType(name = "TransmissionType", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = { "id", "commonDataId", "nazivMenjaca" })
 @XmlRootElement(name = "TransmissionType", namespace = "http://www.ftn.uns.ac.rs/sync")
 @Entity
 public class TipMenjaca {

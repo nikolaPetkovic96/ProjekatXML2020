@@ -15,6 +15,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.team32.AgentApp.soap.LocalDateTimeAdapter;
 
 //import com.example.Messages.SchemaToJava2.model.user.Firma;
 //import com.example.Messages.SchemaToJava2.model.user.RegistrovaniKorisnik;
@@ -59,11 +62,13 @@ public class Oglas {
 //  @XmlSchemaType(name = "dateTime")
     @Column(name = "od_datuma", nullable = false)
     @XmlElement(name = "OdDatuma", required = true)
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     protected LocalDateTime odDatuma;
 	
 //  @XmlSchemaType(name = "dateTime")
     @Column(name = "do_datuma", nullable = false)
     @XmlElement(name = "DoDatuma", required = true)
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     protected LocalDateTime  doDatuma;
     
     @Column(name = "adresa_id", nullable = false)

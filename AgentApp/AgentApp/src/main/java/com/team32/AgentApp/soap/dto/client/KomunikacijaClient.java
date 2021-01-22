@@ -63,6 +63,7 @@ public class KomunikacijaClient {
 	}
 	
 	public TokenResponse login(String usename,String passwod) {
+		System.out.println("LOGIN : "+usename+ " "+passwod);
 		TokenRequest request = new TokenRequest();
 		request.setUsername(usename);
 		request.setPassword(passwod);

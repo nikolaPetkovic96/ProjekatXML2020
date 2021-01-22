@@ -14,6 +14,7 @@
 				<xs:element name="PostanskiBroj" type="xs:string" />
 				<xs:element name="Ulica" type="xs:string" />
 				<xs:element name="Broj" type="xs:string" />
+				<xs:element name="CommonDataId" type="xs:long" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -228,8 +229,8 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="DatumKreiranja" type="xs:dateTime" />
-				<xs:element name="DatumIzmene" type="xs:dateTime" />
+				<xs:element name="DatumKreiranja" type="xs:string" />
+				<xs:element name="DatumIzmene" type="xs:string" />
 				<xs:element name="UserId" type="xs:long" />
 			</xs:sequence>
 		</xs:complexType>

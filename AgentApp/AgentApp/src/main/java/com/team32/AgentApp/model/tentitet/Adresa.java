@@ -68,6 +68,7 @@ import javax.xml.bind.annotation.XmlType;
 @Entity
 @XmlType(name = "Adresa", namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = {
     "id",
+    "commonDataId",
     "mesto",
     "postanskiBroj",
     "ulica",

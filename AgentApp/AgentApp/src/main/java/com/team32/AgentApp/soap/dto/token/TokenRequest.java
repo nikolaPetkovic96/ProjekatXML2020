@@ -7,13 +7,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetTokenRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
+@XmlType(name = "GetTokenRequest",namespace = "http://www.ftn.uns.ac.rs/sync", propOrder = {
+	    "username",
+	    "password"})
 @XmlRootElement(name = "GetTokenRequest", namespace = "http://www.ftn.uns.ac.rs/sync")
 public class TokenRequest {
 
-	@XmlElement(name = "Username", required = true)
+	@XmlElement(name = "Username",namespace = "http://www.ftn.uns.ac.rs/sync", required = true)
 	protected String username;
-	@XmlElement(name = "Password", required = true)
+	@XmlElement(name = "Password", namespace = "http://www.ftn.uns.ac.rs/sync", required = true)
 	protected String password;
 
 	public TokenRequest() {
