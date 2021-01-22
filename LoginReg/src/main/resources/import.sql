@@ -10,6 +10,7 @@ INSERT INTO tuser(id, adresa_id, email, ime, jmbg, korisnicko_ime, lozinka, nazi
 --INSERT INTO tuser(id, adresa_id, email, ime, jmbg, korisnicko_ime, lozinka, naziv_firme, pol, poslovni_maticni_broj, prezime, status,allowed_to_commend, allowed_to_make_reservation, allowed_to_message) VALUES (-4, -1, 'blage500@gmail.com', 'Ana', '185213464', 'Anna00', '$2a$10$5Uh8nWhoBIuh1SuSWlvJLOD7J32rWAYhM.DtkzoJnh3TRLRlbmvpC', null, 'zenski', null,'Admin', 'aktivan',true,false,true)
 INSERT INTO tuser(id, adresa_id, email, ime, jmbg, korisnicko_ime, lozinka, naziv_firme, pol, poslovni_maticni_broj, prezime, status,allowed_to_commend, allowed_to_make_reservation, allowed_to_message) VALUES (-4, -1, 'anna500@gmail.com', 'Ana', '185213464', 'Anna00', '$2a$10$5Uh8nWhoBIuh1SuSWlvJLOD7J32rWAYhM.DtkzoJnh3TRLRlbmvpC', null, 'zenski', null,'Admin', 'aktivan',true,false,true)
 INSERT INTO tuser(id, adresa_id, email, ime, jmbg, korisnicko_ime, lozinka, naziv_firme, pol, poslovni_maticni_broj, prezime, status,allowed_to_commend, allowed_to_make_reservation, allowed_to_message) VALUES (-5, -1, 'testxml2020@gmail.com', 'User', '101004510101', 'BestUser', '$2a$10$5Uh8nWhoBIuh1SuSWlvJLOD7J29rWAYhM.DtkzoJnh3TRLRlbmvpC', null, 'muski', null,'Korisnikovic', 'aktivan',true,true,true)
+INSERT INTO tuser(id, adresa_id, email, ime, jmbg, korisnicko_ime, lozinka, naziv_firme, pol, poslovni_maticni_broj, prezime, status,allowed_to_commend, allowed_to_make_reservation, allowed_to_message) VALUES (-6, -1, '	testxml2020@gmail.com', 'User', '101004510101', 'test', '$2a$10$786OZQwAuZ.Y8Nw6dm12SeyXW7r/M7sHb6aJZNHerDEjIGt4FlJlS', null, 'muski', null,'Korisnikovic', 'aktivan',true,true,true)
 
 INSERT INTO tuser(id, adresa_id, email, ime, jmbg, korisnicko_ime, lozinka, naziv_firme, pol, poslovni_maticni_broj, prezime, status,allowed_to_commend, allowed_to_make_reservation, allowed_to_message) VALUES (-7, -1, 'testaxml2020@gmail.com', 'Duser', '10102130101', 'DataUser', '$2a$10$5Uh8nWhoBIuh1SuSWlvJLOD7J29rWAYhM.DtkzoJnh3TRLRlbmvpC', null, 'muski', null,'Podatkovic', 'aktivan',true,true,true)
 
@@ -18,5 +19,6 @@ INSERT INTO tuser_authorities(tuser_id, authorities_id) VALUES (-2, 2)
 INSERT INTO tuser_authorities(tuser_id, authorities_id) VALUES (-3, 2)
 INSERT INTO tuser_authorities(tuser_id, authorities_id) VALUES (-4, 2)
 INSERT INTO tuser_authorities(tuser_id, authorities_id) VALUES (-5, 2)
+INSERT INTO tuser_authorities(tuser_id, authorities_id) VALUES (-6, 3)
 
 INSERT INTO tuser_authorities(tuser_id, authorities_id) VALUES (-7, 2)

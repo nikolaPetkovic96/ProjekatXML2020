@@ -21,22 +21,22 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private TUserRepository userRepository;
 
 	// Funkcija koja na osnovu username-a iz baze vraca objekat User-a
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		TUser user = userRepository.findOneByKorisnickoIme(username);
-		if (user == null) {
-			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
-		} else {
-			boolean enabled = user.getStatus().equals("aktivan") ? true : false;
-
-			User u = new User(user.getKorisnickoIme(), user.getLozinka(), enabled, enabled, true, !user.getStatus().equals("blokiran"),
-					user.getAuthorities());
-			// User u = new User(user.getKorisnickoIme(), user.getLozinka(),
-			// user.getAuthorities());
-
-			return u;
-		}
-	}
+//	@Override
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		TUser user = userRepository.findOneByKorisnickoIme(username);
+//		if (user == null) {
+//			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+//		} else {
+//			boolean enabled = user.getStatus().equals("aktivan") ? true : false;
+//
+//			User u = new User(user.getKorisnickoIme(), user.getLozinka(), enabled, enabled, true, !user.getStatus().equals("blokiran"),
+//					user.getAuthorities());
+//			// User u = new User(user.getKorisnickoIme(), user.getLozinka(),
+//			// user.getAuthorities());
+//
+//			return u;
+//		}
+//	}
 
 	/*
 	 * // Funkcija pomocu koje korisnik menja svoju lozinku public void
@@ -66,5 +66,28 @@ public class CustomUserDetailsService implements UserDetailsService {
 	 * 
 	 * }
 	 */
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		TUser user = userRepository.findOneByKorisnickoIme(username);
+		if (user == null) {
+			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+		} else {
+//		boolean enabled = user.getStatus().equals("aktivan") ? true : false;
+			boolean enabled = false;
+			if (user.getStatus().equals("aktivan") || user.getStatus().equals("neaktivan")) {
+				enabled = true;
+			}
+			System.out.println("LOGIN DEBUG: ");
+			System.out.println("Status: " + user.getStatus());
+			System.out.println("enabled " + enabled);
+
+			User u = new User(user.getKorisnickoIme(), user.getLozinka(), enabled, enabled, true,
+					!user.getStatus().equals("obrisan"), user.getAuthorities());
+			// User u = new User(user.getKorisnickoIme(), user.getLozinka(),
+			// user.getAuthorities());
+
+			return u;
+		}
+	}
 
 }

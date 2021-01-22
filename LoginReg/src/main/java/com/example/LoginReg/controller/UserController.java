@@ -44,8 +44,12 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
 			HttpServletResponse response) throws IOException {
+		System.out.println("Pogodjen loginendpoint");
 		try {
+			System.out.println("username : "+ authenticationRequest.getUsername());
+			System.out.println("password : " +authenticationRequest.getPassword());
 			UserTokenState a = userService.login(authenticationRequest);
+			System.out.println("Token : "+a.getAccessToken());
 			return ResponseEntity.ok(a);
 		} catch (AuthenticationException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Bad credentials!");
@@ -159,5 +163,16 @@ public class UserController {
 	public List<TAdresa> syncAdresa(){
 		return adresaRep.findAll();
 	}
+	
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
+//			HttpServletResponse response) throws IOException {
+//		try {
+//			UserTokenState a = userService.login(authenticationRequest);
+//			return ResponseEntity.ok(a);
+//		} catch (AuthenticationException e) {
+//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Bad credentials!");
+//		}
+//	}
 	
 }
