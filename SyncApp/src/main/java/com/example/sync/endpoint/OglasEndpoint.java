@@ -17,12 +17,12 @@ public class OglasEndpoint {
 	@Autowired
 	private OglasService typesService;
 	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetCenovnikResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetCenovnikRequest")
 	@ResponsePayload
 	public CenovnikResponse getCenovnik() {
 		return  typesService.getCenovnik();
 	}
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetOglasResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetOglasRequest")
 	@ResponsePayload
 	public OglasResponse getOglas() {
 		return  typesService.getOglas();

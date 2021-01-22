@@ -15,7 +15,7 @@ public class PorukaEndpoint {
 	@Autowired
 	private PorukaService service;
 	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetPorukaResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetPorukaRequest")
 	@ResponsePayload
 	public PorukaResponse getPoruka() {
 		return  service.getPoruka();

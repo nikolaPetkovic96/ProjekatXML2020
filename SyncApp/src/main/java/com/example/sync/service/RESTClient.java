@@ -63,6 +63,7 @@ public class RESTClient {
 		if (body != null) {
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			try {
+				headers.set("Content-Type","application/json");
 				rBody = ow.writeValueAsString(body);
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();

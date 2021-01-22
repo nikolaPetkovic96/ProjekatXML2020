@@ -9,8 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetFuelTypesResponse", propOrder = { "types" })
-@XmlRootElement(name = "GetFuelTypesResponse")
+@XmlType(name = "GetFuelTypeResponse", propOrder = { "types" })
+@XmlRootElement(name = "GetFuelTypeResponse")
 public class FuelTypeResponse {
 
 	public FuelTypeResponse() {

@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GetFuelTypesRequest")
-@XmlRootElement(name = "GetFuelTypesRequest")
+@XmlType(name = "GetFuelTypeRequest")
+@XmlRootElement(name = "GetFuelTypeRequest")
 public class FuelTypesRequest {
 
 	public FuelTypesRequest() {

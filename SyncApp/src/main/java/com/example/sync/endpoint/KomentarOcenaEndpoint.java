@@ -15,12 +15,12 @@ public class KomentarOcenaEndpoint {
 	@Autowired
 	private KomentarOcenaService typesService;
 	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetKomentarResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetKomentarRequest")
 	@ResponsePayload
 	public KomentarResponse getKomentarTypes() {
 		return  typesService.getKomentar();
 	}
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetOcenaResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetOcenaRequest")
 	@ResponsePayload
 	public OcenaResponse getOcenaTypes() {
 		return  typesService.getOcena();

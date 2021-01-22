@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IzvestajResponse", propOrder = { "types" })
-@XmlRootElement(name = "IzvestajResponse")
+@XmlType(name = "GetIzvestajResponse", propOrder = { "types" })
+@XmlRootElement(name = "GetIzvestajResponse")
 
 public class IzvestajResponse {
 

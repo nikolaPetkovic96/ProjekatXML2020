@@ -14,7 +14,7 @@ public class KorisnikEndpoint {
 	@Autowired
 	private KorisnikService typesService;
 	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetUserTypesResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetUserTypesRequest")
 	@ResponsePayload
 	public UserTypesResponse getUser() {
 		return  typesService.getUser();

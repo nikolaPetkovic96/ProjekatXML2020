@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
+import com.example.sync.dto.automobil.AutoSuccessResponse;
 import com.example.sync.dto.automobil.Automobil;
 import com.example.sync.dto.automobil.AutomobilResponse;
 import com.example.sync.dto.automobil.brand.Brand;
@@ -125,38 +126,65 @@ public class AutomobilService {
 	public AutomobilResponse getAutomobil() {
 		List<Map> trans = (List<Map>) RESTClient.getClient().forService(Services.CAR).withPath("/car/sync")
 				.withMethod(HttpMethod.GET).send();
-		System.out.println("Prondajeno automobila:"+trans.size());
+		//System.out.println("Prondajeno automobila:"+trans.size());
 		List<Automobil> ret = new LinkedList<>();
 		for (Map m : trans) {
-			Automobil t = new Automobil();
-			t.setId(((Number) m.get("id")).longValue());
-//			System.out.println("Id "+t.getId());
-			t.setBrojSedistaZaDecu(((Number)m.get("brojSedistaZaDecu")).intValue());
-//			System.out.println("sedistaDeca"+t.getBrojSedistaZaDecu());
-			t.setCollisionDamageWaiver((boolean) m.get("collisionDamageWaiver"));
-//			System.out.println("colDmgWaiv "+t.isCollisionDamageWaiver());
-			t.setCommonDataId(((Number) m.get("commonDataId")).longValue());
-//			System.out.println("cmdId "+t.getCommonDataId());
-			t.setKlasaAutomobilaId(((Number) m.get("klasaAutomobilaId")).longValue());
-//			System.out.println("klasaId "+t.getKlasaAutomobilaId());
-			t.setMarkaAutomobilaId(((Number) m.get("markaAutomobilaId")).longValue());
-//			System.out.println("MarkaId"+t.getMarkaAutomobilaId());
-			t.setModelAutomobilaId(((Number) m.get("modelAutomobilaId")).longValue());
-//			System.out.println("ModelId "+t.getModelAutomobilaId());
-			t.setPredjenaKilometraza(((Number) m.get("predjenaKilometraza")).floatValue());	
-//			System.out.println("predjanaKm "+t.getPredjenaKilometraza());
-			t.setTipMenjacaId(((Number) m.get("tipMenjacaId")).longValue());
-//			System.out.println("TipMenjaca "+t.getTipMenjacaId());
-			t.setUkupnaOcena(((Number) m.get("ukupnaOcena")).floatValue());	
-//			System.out.println("OcenaUkupna "+t.getUkupnaOcena());
-			t.setVrstaGorivaId(((Number) m.get("vrstaGorivaId")).longValue());
-			//System.out.println("GorivaoId "+t.getVrstaGorivaId());
-
+			Automobil t=mapToAutomobil(m);
 			ret.add(t);
 		}
+		System.out.println(ret.size());
 		AutomobilResponse res = new AutomobilResponse();
 		res.setTypes(ret);
 		return res;
+		
+	}
+	
+	private Automobil mapToAutomobil(Map m) {
+		Automobil t = new Automobil();
+		t.setId(((Number) m.get("id")).longValue());
+//		System.out.println("Id "+t.getId());
+		t.setBrojSedistaZaDecu(((Number)m.get("brojSedistaZaDecu")).intValue());
+//		System.out.println("sedistaDeca"+t.getBrojSedistaZaDecu());
+		t.setCollisionDamageWaiver(((Boolean)m.get("collisionDamageWaiver")).booleanValue());
+//		System.out.println("colDmgWaiv "+t.isCollisionDamageWaiver());
+		t.setCommonDataId(((Number) m.get("commonDataId")).longValue());
+//		System.out.println("cmdId "+t.getCommonDataId());
+		t.setKlasaAutomobilaId(((Number) m.get("klasaAutomobilaId")).longValue());
+//		System.out.println("klasaId "+t.getKlasaAutomobilaId());
+		t.setMarkaAutomobilaId(((Number) m.get("markaAutomobilaId")).longValue());
+//		System.out.println("MarkaId"+t.getMarkaAutomobilaId());
+		t.setModelAutomobilaId(((Number) m.get("modelAutomobilaId")).longValue());
+		System.out.println("ModelId "+t.getModelAutomobilaId());
+		t.setPredjenaKilometraza(((Number) m.get("predjenaKilometraza")).floatValue());	
+//		System.out.println("predjanaKm "+t.getPredjenaKilometraza());
+		t.setTipMenjacaId(((Number) m.get("tipMenjacaId")).longValue());
+//		System.out.println("TipMenjaca "+t.getTipMenjacaId());
+		t.setUkupnaOcena(((Number) m.get("ukupnaOcena")).floatValue());	
+//		System.out.println("OcenaUkupna "+t.getUkupnaOcena());
+		t.setVrstaGorivaId(((Number) m.get("vrstaGorivaId")).longValue());
+		//System.out.println("GorivaoId "+t.getVrstaGorivaId());
+		return t;
+	}
+
+	public AutoSuccessResponse postAutomobil(Automobil a) {
+		List<Map> trans = (List<Map>) RESTClient.getClient().forService(Services.CAR).withPath("/car/agent/push")
+				.withMethod(HttpMethod.POST).send();
+		Automobil responseSaServera=new Automobil();
+		//preuzmi auto iz mape
+		List<Long> Ids = new LinkedList<>();
+		for (Map m : trans) {
+			Long noviId=((Number)m.get("id")).longValue();
+			Ids.add(noviId);
+		}
+		AutoSuccessResponse response=new AutoSuccessResponse(a.getId(),false);
+
+		if(Ids.get(0)!=null) {
+			response.setAutomobilId(Ids.get(0));
+			response.setSuccessful(true);
+		}
+		
+		return response;
+
 		
 	}
 

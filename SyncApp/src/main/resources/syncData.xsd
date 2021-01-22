@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.ftn.uns.ac.rs/sync"
-	xmlns="http://www.ftn.uns.ac.rs/sync" version="1.0">
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ftn.uns.ac.rs/sync" xmlns="http://www.ftn.uns.ac.rs/sync" version="1.0">
 	<!-- proveriti slike(linija 169)-->
-	
-<!-- ADRESA -->
+
+	<!-- ADRESA -->
 	<xs:element name="Adresa">
 		<xs:complexType>
 			<xs:sequence>
@@ -14,6 +12,7 @@
 				<xs:element name="PostanskiBroj" type="xs:string" />
 				<xs:element name="Ulica" type="xs:string" />
 				<xs:element name="Broj" type="xs:string" />
+				<xs:element name="CommonDataId" type="xs:long" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -26,13 +25,12 @@
 	<xs:element name="GetAdresaResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Adresa" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Adresa" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-		
-<!-- Automobil -->
+
+	<!-- Automobil -->
 	<xs:element name="Automobil">
 		<xs:complexType>
 			<xs:sequence>
@@ -59,14 +57,13 @@
 	<xs:element name="GetAutomobilResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Automobil" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Automobil" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-	
-<!-- Brand -->
+
+
+	<!-- Brand -->
 	<xs:element name="Brand">
 		<xs:complexType>
 			<xs:sequence>
@@ -85,13 +82,12 @@
 	<xs:element name="GetBrandResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Brand" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Brand" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- Klasa -->
+
+	<!-- Klasa -->
 	<xs:element name="Klasa">
 		<xs:complexType>
 			<xs:sequence>
@@ -110,13 +106,12 @@
 	<xs:element name="GetKlasaResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Klasa" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Klasa" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- GORIVO -->
+
+	<!-- GORIVO -->
 	<xs:element name="FuelType">
 		<xs:complexType>
 			<xs:sequence>
@@ -132,16 +127,15 @@
 			nakon dok datuma ... mada nije neophodno -->
 	</xs:element>
 
-	<xs:element name="GetFuelTypesResponse">
+	<xs:element name="GetFuelTypeResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="FuelType" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="FuelType" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- Model -->
+
+	<!-- Model -->
 	<xs:element name="Model">
 		<xs:complexType>
 			<xs:sequence>
@@ -161,28 +155,27 @@
 	<xs:element name="GetModelResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Model" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Model" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-	
-<!-- Slika -->
+
+
+	<!-- Slika -->
 	<xs:element name="Slika">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
 				<xs:element name="CommonDataId" type="xs:long" />
 				<xs:element name="AutomobilId" type="xs:long" />
-				<xs:element name="Slika" type="slikaList"/>
+				<xs:element name="Slika" type="slikaList" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<!-- lista za slike-stringove -->
-	<xs:simpleType name="slikaList">	
-   					<xs:list itemType="xs:string"/>
-	</xs:simpleType>	
+	<xs:simpleType name="slikaList">
+		<xs:list itemType="xs:string" />
+	</xs:simpleType>
 
 	<xs:element name="GetSlikaRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
@@ -192,13 +185,12 @@
 	<xs:element name="GetSlikaResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Slika" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Slika" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-		
-<!-- MENJAC -->
+
+	<!-- MENJAC -->
 	<xs:element name="TransmissionType">
 		<xs:complexType>
 			<xs:sequence>
@@ -217,19 +209,18 @@
 	<xs:element name="GetTransmissionTypesResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="TransmissionType" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="TransmissionType" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-		
-<!-- CommonData -->
+
+	<!-- CommonData -->
 	<xs:element name="CommonData">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="DatumKreiranja" type="xs:dateTime" />
-				<xs:element name="DatumIzmene" type="xs:dateTime" />
+				<xs:element name="DatumKreiranja" type="xs:string" />
+				<xs:element name="DatumIzmene" type="xs:string" />
 				<xs:element name="UserId" type="xs:long" />
 			</xs:sequence>
 		</xs:complexType>
@@ -243,23 +234,22 @@
 	<xs:element name="GetCommonDataResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="CommonData" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="CommonData" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- Komentar -->
+
+	<!-- Komentar -->
 	<xs:element name="Komentar">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="CommonDataId" type="xs:long"/>
-				<xs:element name="Tekstkomentara" type="xs:string"/>
-				<xs:element name="Odobren" type="xs:boolean"/>
-				<xs:element name="AutomobilId" type="xs:long"/>
-				<xs:element name="RezervacijaId" type="xs:long"/>
-				<xs:element name="Autor" type="xs:string"/>
+				<xs:element name="CommonDataId" type="xs:long" />
+				<xs:element name="Tekstkomentara" type="xs:string" />
+				<xs:element name="Odobren" type="xs:boolean" />
+				<xs:element name="AutomobilId" type="xs:long" />
+				<xs:element name="RezervacijaId" type="xs:long" />
+				<xs:element name="Autor" type="xs:string" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -272,22 +262,21 @@
 	<xs:element name="GetKomentarResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Komentar" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Komentar" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- Ocena -->
+
+	<!-- Ocena -->
 	<xs:element name="Ocena">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="CommonDataId" type="xs:long"/>
-				<xs:element name="VrednostOcene" type="xs:string"/>
-				<xs:element name="AutomobilId" type="xs:long"/>
-				<xs:element name="RezervacijaId" type="xs:long"/>
-				<xs:element name="Autor" type="xs:string"/>
+				<xs:element name="CommonDataId" type="xs:long" />
+				<xs:element name="VrednostOcene" type="xs:string" />
+				<xs:element name="AutomobilId" type="xs:long" />
+				<xs:element name="RezervacijaId" type="xs:long" />
+				<xs:element name="Autor" type="xs:string" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -300,25 +289,24 @@
 	<xs:element name="GetOcenaResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Ocena" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Ocena" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-		
-<!-- Oglas -->
+
+	<!-- Oglas -->
 	<xs:element name="Oglas">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="CommonDataId" type="xs:long"/>
-				<xs:element name="OdDatuma" type="xs:dateTime"/>
-				<xs:element name="DoDatuma" type="xs:dateTime"/>
-				<xs:element name="CenovnikId" type="xs:long"/>
-				<xs:element name="AutomobilId" type="xs:long"/>
-				<xs:element name="PlaniranaKm" type="xs:float"/>
-				<xs:element name="AdresaId" type="xs:long"/>
-				<xs:element name="Username" type="xs:string"/>
+				<xs:element name="CommonDataId" type="xs:long" />
+				<xs:element name="OdDatuma" type="xs:dateTime" />
+				<xs:element name="DoDatuma" type="xs:dateTime" />
+				<xs:element name="CenovnikId" type="xs:long" />
+				<xs:element name="AutomobilId" type="xs:long" />
+				<xs:element name="PlaniranaKm" type="xs:float" />
+				<xs:element name="AdresaId" type="xs:long" />
+				<xs:element name="Username" type="xs:string" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -331,23 +319,22 @@
 	<xs:element name="GetOglasResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Oglas" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Oglas" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- Cenovnik -->
+
+	<!-- Cenovnik -->
 	<xs:element name="Cenovnik">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="CommonDataId" type="xs:long"/>
-				<xs:element name="CenaPoDanu" type="xs:float"/>
-				<xs:element name="NazivCenovnika" type="xs:string"/>
-				<xs:element name="PopustZaPreko30Dana" type="xs:float"/>
-				<xs:element name="CenaCollisionDamageWaiver" type="xs:float"/>
-				<xs:element name="CenaPoKilometru" type="xs:float"/>
+				<xs:element name="CommonDataId" type="xs:long" />
+				<xs:element name="CenaPoDanu" type="xs:float" />
+				<xs:element name="NazivCenovnika" type="xs:string" />
+				<xs:element name="PopustZaPreko30Dana" type="xs:float" />
+				<xs:element name="CenaCollisionDamageWaiver" type="xs:float" />
+				<xs:element name="CenaPoKilometru" type="xs:float" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -360,21 +347,20 @@
 	<xs:element name="GetCenovnikResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Cenovnik" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Cenovnik" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 
-<!-- Poruka -->
+	<!-- Poruka -->
 	<xs:element name="Poruka">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="CommonDataId" type="xs:long"/>
-				<xs:element name="TekstPoruke" type="xs:string"/>
-				<xs:element name="RezervacijaId" type="xs:long"/>
-				<xs:element name="AutomobilId" type="xs:long"/>
+				<xs:element name="CommonDataId" type="xs:long" />
+				<xs:element name="TekstPoruke" type="xs:string" />
+				<xs:element name="RezervacijaId" type="xs:long" />
+				<xs:element name="AutomobilId" type="xs:long" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -387,22 +373,21 @@
 	<xs:element name="GetPorukaResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Poruka" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Poruka" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- Rezervacija -->
+
+	<!-- Rezervacija -->
 	<xs:element name="Rezervacija">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="CommonDataId" type="xs:long"/>
-				<xs:element name="UkupnaCena" type="xs:double"/>
-				<xs:element name="Bundle" type="xs:boolean"/>
-				<xs:element name="StatusRezervacije" type="xs:string"/>
-				<xs:element name="Username" type="xs:string"/>
+				<xs:element name="CommonDataId" type="xs:long" />
+				<xs:element name="UkupnaCena" type="xs:double" />
+				<xs:element name="Bundle" type="xs:boolean" />
+				<xs:element name="StatusRezervacije" type="xs:string" />
+				<xs:element name="Username" type="xs:string" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -415,25 +400,24 @@
 	<xs:element name="GetRezervacijaResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Rezervacija" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Rezervacija" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- Izvestaj -->
+
+	<!-- Izvestaj -->
 	<xs:element name="Izvestaj">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="CommonDataId" type="xs:long"/>
-				<xs:element name="PredjenaKilometraza" type="xs:float"/>
-				<xs:element name="TekstIzvestaja" type="xs:string"/>
-				<xs:element name="NarudzbenicaId" type="xs:long"/>
-				<xs:element name="Automobilid" type="xs:long"/>
-				<xs:element name="RezervacijaId" type="xs:long"/>
-				<xs:element name="PrekoracenaKilometraza" type="xs:long"/>
-				<xs:element name="DodataniTroskovi" type="xs:long"/>
+				<xs:element name="CommonDataId" type="xs:long" />
+				<xs:element name="PredjenaKilometraza" type="xs:float" />
+				<xs:element name="TekstIzvestaja" type="xs:string" />
+				<xs:element name="NarudzbenicaId" type="xs:long" />
+				<xs:element name="Automobilid" type="xs:long" />
+				<xs:element name="RezervacijaId" type="xs:long" />
+				<xs:element name="PrekoracenaKilometraza" type="xs:long" />
+				<xs:element name="DodataniTroskovi" type="xs:long" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -446,24 +430,23 @@
 	<xs:element name="GetIzvestajResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Izvestaj" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Izvestaj" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- Narudzbenica -->
+
+	<!-- Narudzbenica -->
 	<xs:element name="Narudzbenica">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				<xs:element name="CommonDataId" type="xs:long"/>
-				<xs:element name="AgentId" type="xs:long"/>
-				<xs:element name="UserId" type="xs:string"/>
-				<xs:element name="OglasId" type="xs:long"/>
-				<xs:element name="RezervacijaId" type="xs:long"/>
-				<xs:element name="OdDatuma" type="xs:dateTime"/>
-				<xs:element name="DoDatuma" type="xs:dateTime"/>
+				<xs:element name="CommonDataId" type="xs:long" />
+				<xs:element name="AgentId" type="xs:long" />
+				<xs:element name="UserId" type="xs:string" />
+				<xs:element name="OglasId" type="xs:long" />
+				<xs:element name="RezervacijaId" type="xs:long" />
+				<xs:element name="OdDatuma" type="xs:dateTime" />
+				<xs:element name="DoDatuma" type="xs:dateTime" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -476,48 +459,48 @@
 	<xs:element name="GetNarudzbenicaResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="Narudzbenica" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="Narudzbenica" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!-- UserType -->
+
+	<!-- UserType -->
 	<xs:element name="UserType">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
-				
-				<xs:element name="KorisnickoIme" type="xs:string"/>
-				<xs:element name="Lozinka" type="xs:string"/>
-				<xs:element name="Email" type="xs:string"/>
-				<xs:element name="Status" type="xs:string"/>
-				<xs:element name="AdresaId" type="xs:long"/>
-				
-				<xs:element name="Pol" type="xs:string"/>
-				<xs:element name="Ime" type="xs:string"/>
-				<xs:element name="Prezime" type="xs:string"/>
-				<xs:element name="Jmbg" type="xs:string"/>
-				
-				<xs:element name="NazivFirme" type="xs:string"/>
-				<xs:element name="PoslovniMaticniBroj" type="xs:string"/>
-				
-				<xs:element name="AllowedToCommend" type="xs:boolean"/>
-				<xs:element name="AllowedToCommend" type="xs:boolean"/>
-				<xs:element name="AllowedToMakeReservation" type="xs:boolean"/>
-				<xs:element name="Authorities" type="AuthorityTypes"/>
+
+				<xs:element name="KorisnickoIme" type="xs:string" />
+				<xs:element name="Lozinka" type="xs:string" />
+				<xs:element name="Email" type="xs:string" />
+				<xs:element name="Status" type="xs:string" />
+				<xs:element name="AdresaId" type="xs:long" />
+
+				<xs:element name="Pol" type="xs:string" />
+				<xs:element name="Ime" type="xs:string" />
+				<xs:element name="Prezime" type="xs:string" />
+				<xs:element name="Jmbg" type="xs:string" />
+
+				<xs:element name="NazivFirme" type="xs:string" />
+				<xs:element name="PoslovniMaticniBroj" type="xs:string" />
+
+				<xs:element name="AllowedToCommend" type="xs:boolean" />
+				<xs:element name="AllowedToCommend" type="xs:boolean" />
+				<xs:element name="AllowedToMakeReservation" type="xs:boolean" />
+				<xs:element name="Authorities" type="AuthorityTypes" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
-<!---->		<xs:complexType name="AuthorityTypes">
-			<xs:sequence>
-				<xs:element name="AuthorityType"></xs:element>
-			</xs:sequence>
-		</xs:complexType>			
-	
-	
-<!-- 		<xs:complexType  name="AuthorityTypes">
+
+	<!---->
+	<xs:complexType name="AuthorityTypes">
+		<xs:sequence>
+			<xs:element name="AuthorityType"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- 		<xs:complexType  name="AuthorityTypes">
 			<xs:sequence>
 				<xs:element name="Authority" type="xs:string"/>
 			</xs:sequence>
@@ -526,9 +509,6 @@
 		<xs:simpleType name="authList">
 			<xs:list itemType="AuthorityTypes"/>
 		</xs:simpleType>-->
-	
-	
-	
 
 	<xs:element name="GetUserTypesRequest">
 		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
@@ -538,9 +518,53 @@
 	<xs:element name="GetUserTypesResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="UserType" maxOccurs="unbounded"
-					minOccurs="0" />
+				<xs:element ref="UserType" maxOccurs="unbounded" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
-	</xs:element>		
+	</xs:element>
+
+	<xs:element name="AutoSuccessResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="autombilId" type="xs:string"></xs:element>
+				<xs:element name="Successful" type="xs:boolean"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="PostAutomobilRequest">
+		<xs:complexType>
+			<xs:sequence></xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- Dodato za successResponse -->
+
+	<xs:element name="GetTokenRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Username" type="xs:string" />
+				<xs:element name="Password" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="GetTokenResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Token" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="AdresaSuccessResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AdresaId" type="xs:long" />
+				<xs:element name="Successful" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
 </xs:schema>

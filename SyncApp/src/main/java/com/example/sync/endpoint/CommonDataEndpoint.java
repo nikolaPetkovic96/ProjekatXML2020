@@ -15,7 +15,7 @@ public class CommonDataEndpoint {
 
 	@Autowired
 	private CommonDataService typesService;
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetCommonDataResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetCommonDataRequest")
 	@ResponsePayload
 	public CommonDataResponse getCommonDataTypes() {
 		return  typesService.getCommonDataTypes();

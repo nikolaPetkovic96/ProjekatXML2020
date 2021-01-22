@@ -1,6 +1,5 @@
 package com.example.sync.endpoint;
 
-import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -18,17 +17,17 @@ public class RezervacijaEndpoint {
 	@Autowired
 	private RezervacijaService typesService;
 	
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetRezervacijaResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetRezervacijaRequest")
 	@ResponsePayload
 	public RezervacijaResponse getRezervacija() {
 		return  typesService.getRezervacija();
 	}
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetIzvestajResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetIzvestajRequest")
 	@ResponsePayload
 	public IzvestajResponse getIzvestaj() {
 		return  typesService.getIzvestaj();
 	}
-	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetNarudzbenicaResponse")
+	@PayloadRoot(namespace = "http://www.ftn.uns.ac.rs/sync", localPart = "GetNarudzbenicaRequest")
 	@ResponsePayload
 	public NarudzbenicaResponse getNarudzbenica() {
 		return  typesService.getNarudzbenica();

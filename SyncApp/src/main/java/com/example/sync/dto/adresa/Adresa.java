@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Adresa", propOrder = { "id", "mesto","postanskiBroj","ulica","broj" })
+@XmlType(name = "Adresa", propOrder = { "id", "mesto","postanskiBroj","ulica","broj","commonDataId" })
 @XmlRootElement(name = "Adresa")
 public class Adresa {
 	
@@ -21,9 +21,12 @@ public class Adresa {
 	protected String ulica;
 	@XmlElement(name = "Broj", required = true)
 	protected String broj;
+	@XmlElement(name = "CommonDataId", required = true)
+	protected Long commonDataId;
 
 	public Adresa() {
 		// TODO Auto-generated constructor stub
+		this.commonDataId=Long.parseLong("-1");
 	}
 
 	public Adresa(Long id,  String mesto, String postanskiBroj, String ulica, String broj) {
@@ -33,6 +36,7 @@ public class Adresa {
 		this.postanskiBroj = postanskiBroj;
 		this.ulica = ulica;
 		this.broj = broj;
+		this.commonDataId=Long.parseLong("-1");
 	}
 
 	public Long getId() {
@@ -73,6 +77,14 @@ public class Adresa {
 
 	public void setBroj(String broj) {
 		this.broj = broj;
+	}
+
+	public Long getCommonDataId() {
+		return commonDataId;
+	}
+
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
 	}
 
 }

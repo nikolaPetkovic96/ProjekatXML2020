@@ -85,6 +85,7 @@ public class RezervacijaService {
 			t.setTekstIzvestaja((String) m.get("tekstIzvestaja"));
 			ret.add(t);
 		}
+		System.out.println("Obradjenih izvestaja :"+ ret.size());
 		IzvestajResponse res = new IzvestajResponse();
 		res.setTypes(ret);
 		return res;
