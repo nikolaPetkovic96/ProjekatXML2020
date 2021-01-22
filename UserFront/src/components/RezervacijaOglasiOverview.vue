@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import UserDataService from '../services/UserDataService'
 import Datepicker from 'vuejs-datepicker'
 import StarRating from 'vue-star-rating'
 export default{

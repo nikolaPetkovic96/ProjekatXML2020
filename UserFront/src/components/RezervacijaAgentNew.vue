@@ -65,7 +65,7 @@
 </template>
 
 <script>
-//import KlijentDataService from './components/KlijentDataService'
+import UserDataService from '../services/UserDataService'
 import Datepicker from 'vuejs-datepicker'
 export default {
     data(){

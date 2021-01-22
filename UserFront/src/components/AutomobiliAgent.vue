@@ -317,9 +317,9 @@ export default {
             //da za jedan vise radi disabled 
             console.log('this.noOfAds: ' + this.noOfAds);
             if(this.noOfAds < 3){
-                return false;
+                return this.btnEnabled=false;
             }else{
-                return true;
+                return this.btnEnabled=true;
             }         
         },
 

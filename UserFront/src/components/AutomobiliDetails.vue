@@ -98,7 +98,7 @@
         </div>
 
         <div v-show="noReview" class="card-body">
-          <h3>There are no reviews for this apartment...</h3>
+          <h3>There are no reviews for this car...</h3>
         </div>
       </div>
     </div>

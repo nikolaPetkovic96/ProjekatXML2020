@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import userDataService from '../services/UserDataService'
+import UserDataService from '../services/UserDataService'
 export default {
     name: 'Messages',
     data:function(){
@@ -59,7 +59,7 @@ export default {
     },
     methods:{
         getAllExpiredReservation(){
-            userDataService.getAllRezervacijeExpiredUser().then( response =>{
+            UserDataService.getAllRezervacijeExpiredUser().then( response =>{
                 this.rezervacije = response.data;
             });
         },

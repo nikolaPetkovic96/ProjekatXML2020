@@ -3,7 +3,7 @@
         <section id="showcase"> 
             <div class="container">
                <h1>Najbolje softversko rešenje na polju oglašavanja automobila</h1>
-                <h5>Ako tražite brz i jednostavan način za iznajmljivanje svojih vozila, pregled statistike o iznajmljivanju, kao i jednostavnu komunikaciju sa korisnicima <span id="AppBold">RentaAgentApp</span> je aplikacija za Vas!</h5>
+                <h5>Ako tražite brz i jednostavan način za iznajmljivanje svojih vozila, pregled statistike o iznajmljivanju, kao i jednostavnu komunikaciju sa korisnicima <span id="AppBold">RentaUserApp</span> je aplikacija za Vas!</h5>
                 </div>
         </section>
 
