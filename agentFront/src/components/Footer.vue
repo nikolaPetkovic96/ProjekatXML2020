@@ -1,6 +1,6 @@
 <template>
   <div id="footer">
-      <p>Copyrights &copy; 2020 Team32 AgentAplication</p>
+      <p>Copyrights &copy; 2020 Team37 AgentAplication</p>
   </div>
 </template>
 
