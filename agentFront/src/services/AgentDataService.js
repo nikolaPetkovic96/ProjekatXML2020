@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // 2. Definisati url i smestiti token u header
-const API_URL = "http://localhost:8080";
+const API_URL = "http://localhost:8081";
 
 if(JSON.parse(localStorage.getItem('token')) != null){
     const token = JSON.parse(localStorage.getItem('token'));
@@ -168,6 +168,7 @@ class AgentDataService{
     getAllTipGoriva(){
         return axios.get(`${API_URL}/tipGoriva/`);
     }
+
 
     getAgentIzvestaji(){
         return axios.get(`${API_URL}/izvestaj`)

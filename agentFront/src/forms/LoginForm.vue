@@ -63,7 +63,7 @@ export default {
       submition: function () {
         console.log(this.username);
         console.log(this.password);
-        axios.post(`http://localhost:8080/auth/login`, {
+        axios.post(`http://localhost:8081/auth/login`, {
           username:this.username,
           password:this.password,
          }).then(response => {
@@ -77,7 +77,7 @@ export default {
               bus.$emit('loggedIn',true);
               this.$router.push('/home');
               
-            }           
+            }
           }).catch(error => {
             if(error.response.status === 500  && error.response.data.message==='Bad credentials'){
               this.errorMessage = `<h4>Username ili password su pogresno uneti!</h4>`;

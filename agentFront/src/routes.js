@@ -155,5 +155,4 @@ export default [
         name:'IzvestajiOverview',
         component:IzvestajiOverview
     }
-    
 ]

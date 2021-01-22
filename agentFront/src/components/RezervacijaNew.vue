@@ -53,6 +53,9 @@
         </div>
 
         <div class="reserv_end">
+            <span v-if='this.odabraniOglas.automobil.collisionDamageWaiver == true && this.odabraniOglas.cenovnik.cenaCollisionDamageWaiver != 0'>
+            Vrednost cdw: {{odabraniOglas.cenovnik.cenaCollisionDamageWaiver}} din
+            </span><br>
             Vrednost popusta: {{popust}} din<br>
             Ukupna cena: {{rezervacijaOglasDTO.ukupnaCena}} din
         </div>
@@ -84,7 +87,7 @@ export default {
                 ukupnaCena:0,                   
                 bundle: false,                  //agent moze samo za pojedinacna vozila da fizicki zauzima...
                 statusRezervacije:'RESERVED',    //defaultni status
-                napomenaRezervacije:'',
+                // napomenaRezervacije:'',
                 narudzbenica:{
                     oglasId: null,                   
                     odDatuma: null,
@@ -155,6 +158,7 @@ export default {
         //Sluzi da se iz oglasa izvuce interval od kada do kada oglas vazi,
         //Kao i zauzeti podintervali, tako sto se uzima od do datum svih rezervacija(narudzbenica) vezanih za taj oglas.  
         setAd: function (data) {
+            console.log(JSON.stringify(data));
             this.odabraniOglas = data;
             //Moraju da se obrnu datumi jer tako datapicker ogranicava intervale 
             //Sve pre pocetnog datuma i sve nakon zavrsnog datuma 
@@ -244,10 +248,16 @@ export default {
 		//Metoda za automatsko racunanje krajnjeg datuma spram broja nocenja i cene rezervacija spram cene apartmana * broj nocenja
 		calculatePriceAndDate: function () {
             this.rezervacijaOglasDTO.ukupnaCena = this.odabran_br_dana * this.odabraniOglas.cenovnik.cenaPoDanu;
+            console.log('BROJ DANA: ', this.odabran_br_dana);
+            console.log('CENA PO DANU: ', this.odabraniOglas.cenovnik.cenaPoDanu);
+            console.log('UKUPNA CENA: ', this.rezervacijaOglasDTO.ukupnaCena);
+            
+            this.popust = 0;
             if(this.odabran_br_dana > 30){
-               
+                console.log('BROJ DANA VECI OD 30! ');
                 if(this.odabraniOglas.cenovnik.popustZaPreko30Dana != null){
                     this.popust =  this.rezervacijaOglasDTO.ukupnaCena * (this.odabraniOglas.cenovnik.popustZaPreko30Dana/100);
+                    console.log('IMA POPUST! POPUST = ' + this.popust);
                 }
                 //Ukoliko korisnik odabere neki cenovnik koji ima popust, a zatim odabere cenovnik koji nema popust
                 //ostaje upamcen popust prethodnog cenovnika... Zato se resetuje na 0;
@@ -255,15 +265,25 @@ export default {
                     this.popust = 0;
                 }
 
-                this.rezervacijaOglasDTO.ukupnaCena = this.rezervacijaOglasDTO.ukupnaCena -  this.popust;
-                
+                this.rezervacijaOglasDTO.ukupnaCena -= this.popust;
+                console.log('UKUPNA CENA SA POPUSTOM: ', this.rezervacijaOglasDTO.ukupnaCena);
             }
+            //Ukoliko korisnik odabere neki cenovnik koji ima popust, a zatim odabere cenovnik koji nema popust
+            //ili je broj dana < 30 ostaje upamcen popust prethodnog cenovnika... Zato se resetuje na 0;
+            
+             if(this.odabraniOglas.automobil.collisionDamageWaiver == true && this.odabraniOglas.cenovnik.cenaCollisionDamageWaiver != 0){
+                console.log('CDW: ', this.odabraniOglas.automobil.collisionDamageWaiver);
+                console.log('CENA CDW: ', this.odabraniOglas.cenovnik.cenaCollisionDamageWaiver);
+                this.rezervacijaOglasDTO.ukupnaCena += this.odabraniOglas.cenovnik.cenaCollisionDamageWaiver;
+                console.log('UKUPNA CENA sa CDW: ', this.rezervacijaOglasDTO.ukupnaCena);
+            }
+
             this.dates.from = new Date(this.rezervacijaOglasDTO.narudzbenica.odDatuma);
 			this.dates.to = new Date(this.dates.from.getTime() + this.odabran_br_dana * 1000 * 60 * 60 * 24);
             this.error = false;
 
-            console.log('VREME NARUDZB OD: ' + this.dates.from.getTime());
-            console.log('VREME NARUDZB DO: ' + this.dates.to.getTime());
+            // console.log('VREME NARUDZB OD: ' + this.dates.from.getTime());
+            // console.log('VREME NARUDZB DO: ' + this.dates.to.getTime());
 
         },
 
@@ -293,7 +313,7 @@ export default {
         }else{
             agentDataService.getOglasDetails(this.id).
             then(response => (this.setAd(response.data)));
-
+            
             const token = JSON.parse(localStorage.getItem('parsToken'));
             this.rezervacijaOglasDTO.narudzbenica.agentId = token.id;
         }
