@@ -133,7 +133,7 @@ export default {
             UserDataService.getAllPermissions().then(response => {
                 this.permissions = response.data;
                 if(this.permissions.status != "aktivan"){
-                    btnEnabled = true
+                    this.btnEnabled = true
                 }
                 console.log(JSON.stringify(this.permissions));
             });
