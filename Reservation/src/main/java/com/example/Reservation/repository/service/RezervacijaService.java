@@ -41,6 +41,7 @@ import com.example.Reservation.repository.CommonDataRepository;
 import com.example.Reservation.repository.NarudzbenicaRepository;
 import com.example.Reservation.repository.OglasRepository;
 import com.example.Reservation.repository.RezervacijaRepository;
+import com.example.Reservation.repository.service.impl.AsynchronousService;
 import com.example.Reservation.repository.service.mapper.RezervacijaMapper;
 
 @Service
@@ -59,6 +60,8 @@ public class RezervacijaService {
 	private NarudzbenicaService narServ;
 	@Autowired
 	private OglasService oglServ;
+	@Autowired
+	private AsynchronousService async;
 	
 	
 /**************************************GET**************************************/
@@ -150,6 +153,7 @@ public class RezervacijaService {
 				kreiraneNarudzbenice.add(n);
 			}
 			kreiraneRezervacije.add(new RezervacijaNewDTO(novaRez, kreiraneNarudzbenice));	//dodate sve narudzbenice, dodaj rezervaciju u listu rezervacija
+			async.proveraObrade(novaRez.getId());											//kreiran tajmer, ako nije obradjen pri isteku bice otakzana
 		}
 		return kreiraneRezervacije;
 	}

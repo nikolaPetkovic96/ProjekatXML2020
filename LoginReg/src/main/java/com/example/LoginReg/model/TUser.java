@@ -117,7 +117,7 @@ public /* abstract */ class TUser /* implements UserDetails */ {
 		return lozinka;
 	}
 
-	@JsonIgnore
+	//@JsonIgnore
 	public void setLozinka(String value) {
 		this.lozinka = value;
 	}

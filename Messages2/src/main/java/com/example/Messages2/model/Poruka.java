@@ -7,16 +7,24 @@
 
 package com.example.Messages2.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.id.IdentifierGenerator;
+import org.hibernate.id.IdentityGenerator;
 
 
 /**
@@ -59,6 +67,10 @@ public class Poruka {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@SequenceGenerator(name = "mySeqGen", sequenceName = "mySeq", initialValue = -99999, allocationSize = 1)
+	//@SequenceGenerator(name = "mySeqGen", sequenceName = "mySeq", initialValue = -99999)
+	 //@GeneratedValue(generator = "mySeqGen", strategy = GenerationType.AUTO)
+	@Column(name = "id", updatable = false, nullable = false)
     protected Long id;
     
 	@Column(name = "tekst_poruke", nullable = false)
@@ -144,8 +156,7 @@ public class Poruka {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	
-	
-   
+	}  
+
 }
+

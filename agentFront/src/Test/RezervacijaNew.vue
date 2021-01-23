@@ -1,0 +1,387 @@
+<template>
+    <div id="reservation-new">
+    <div class="container" id='page-title'>
+        <h1 style="margin-top:10px;color:#35424a;">Kreiranje <span id='titleEffect'>Rezervacije</span></h1>
+        <hr style='background:#35424a;height:1px;'>
+    </div>
+    <h1>Prosledjen je oglas</h1>
+    <div id='main' class='container'>
+       <div id='carInfo'>
+            <div class="card-header">
+                <h4><b>Automobil:</b> {{automobil.markaAut}} {{automobil.modelAut}} (marka/model)</h4>
+                <h4><b>Klasa automobila:</b> {{automobil.klasaAut}}</h4>
+            </div>
+        </div>
+        <label>Datum pocetka rezervacije:</label>
+        <vuejsDatepicker placeholder="Select Start Date" :disabled-dates="disabledDates" :highlighted="dates"
+            v-model="rezervacijaOglasDTO.odDatuma" v-on:input="calculatePriceAndDate()">
+        </vuejsDatepicker>
+        <label>Broj dana:</label>
+        <select style="padding:7px; margin-right: 10px" id='NoOfDays' v-model="odabran_br_dana"
+            v-on:click="calculatePriceAndDate()">
+            <option disabled value="">Broj dana</option>
+            <option v-bind:key="dan" v-for='dan in br_dana'>{{dan}}</option>
+        </select>
+
+        <div id='cenovnik'>
+            <div id='odabirCene'>
+                <label>Cenovnik:</label>
+                <select style="padding:7px; margin-right: 10px" id='prices' v-model="odabran_cenovnik.nazivCenovnika">
+                    <option disabled value="">Cenovnici</option>
+                    <option  v-on:click="addChoosenPrice()" v-bind:key="cenovnik.id" v-for='cenovnik in cenovnici'>{{cenovnik.nazivCenovnika}}</option>
+                </select>
+            </div>
+            <table v-if='odabran_cenovnik.nazivCenovnika !== ""' id='showPriceTable'>
+                <thead>
+                    <tr><b>Cenovnik sadrzi:</b></tr>
+                    <tr>
+                        <th>Naziv cenovnika</th>
+                        <th>Cena po danu</th>
+                        <th>Cena po kilometru</th>
+                        <th>CDW</th>
+                        <th>Popust preko 30 dana</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{odabran_cenovnik.nazivCenovnika}}</td>
+                        <td>{{odabran_cenovnik.cenaPoDanu}}</td>
+                        <td>{{odabran_cenovnik.cenaPoKilometru}}</td>
+                        <td>{{odabran_cenovnik.cenaCollisionDamageWaiver}}</td>
+                        <td>{{odabran_cenovnik.popustZaPreko30Dana}}</td>
+                    </tr>     
+                </tbody>            
+            </table>
+        </div>
+
+        <h5><label for="">Popust</label> </h5>
+        <h5>{{popust}} din</h5>
+
+        <label>Ukupna cena:</label>
+        <h4>{{rezervacijaOglasDTO.ukupnaCena}} din</h4>
+
+        <label>Tekst rezervacije:</label>
+        <textarea v-model='rezervacijaOglasDTO.poruka' placeholder="message..."></textarea>
+        <button class="btn btn-lg btn-success margTop" v-on:click='makeReservation()'> Rezerviši </button>
+    </div>
+</div>
+</template>
+
+<script>
+//import KlijentDataService from './components/KlijentDataService'
+import Datepicker from 'vuejs-datepicker'
+export default {
+    data(){
+        return{
+            user: {
+                username: '',
+                role: ''
+            },
+            vehId: '',
+            isAdmin: false,
+            isHost: false,
+            isGuest: true,
+
+            //PITATI da li da ovako ostane DTO ili kao objetki i datume da li da ostanu kao sada ili pocetni i krajnji da se unose...
+            //Prilikom rucnog dodavanja rezervacije kreira se odmah i oglas koji je rezervisan za taj termin,
+            //DTO koji spaja atribute rezervacije i oglasa.
+            rezervacijaOglasDTO:{
+                //Ime i prezime onoga za koga se rezervise da li treba???
+                //rezervacija
+                ukupnaCena:0, //cena_po_danu * broj_dana
+                bundle: false, //agent moze samo za pojedinacna vozila da fizicki zauzima...
+                statusRezervacije:'PENDING', //defaultni status
+                poruka:'',
+                //oglas
+                automobilId:null,
+                cenovnikId:null,
+                //za oba isto
+                odDatuma: null,
+                doDatuma: null,
+                //commonDataId:
+                datumKreiranja:'',
+                userId:null,
+            },
+
+            odabraniOglas:{
+                //oglas
+                id:1,
+                odDatuma:'25.5.2020',
+                doDatuma:'25.6.2020',
+                lokacija:'9. Marta bb Novi Sad',
+                TAdresa:{
+                    mesto:'Novi Sad',
+                    ulica:'9. Marta',
+                    broj:'bb',
+                    postanskiBroj:'21000',
+                    longitude:'45',
+                    latitude:'54',
+                },
+                planiranaKilometraza:2000,
+                username:'This host', //u DTOu za korisnika koji je kreirao oglas.
+                //automobil
+                automobil:{
+                    id:'1',
+                    markaAut:'BMW',
+                    modelAut:'M5',
+                    klasaAut:'SUV',
+                    vrstaGoriva:'dizel',
+                    tipMenjaca:'manuelni',
+                    ukupnaOcena:5,
+                    brojSedistaZaDecu:1,
+                    predjenaKilometraza:5000,
+                    collisionDamageWaiver:true,
+                },
+                //cena    
+                cenovnik:{
+                    id:'1',
+                    cenaPoDanu:100,
+                    nazivCenovnika:'Cenovnik 1',
+                    popustZaPreko30Dana:10,
+                    cenaCollisionDamageWaiver:1000,
+                    cenaPoKilometru:10
+                },
+            },
+
+
+            messages: {
+				errorType: '',
+				errorRooms: '',
+				errorBundle: '',
+				errorLocation: '',
+				errorAddress: '',
+				errorPrice: '',
+				errorCheckInOut: '',
+				errorDates: '',
+				errorAmenities: '',
+				errorResponse: '',
+				successResponse: '',
+			},
+
+            odabran_br_dana: null, //za racunanje ukupne cene i doDatuma
+            br_dana: null, //broj dana od 1-28
+            
+            //Za prikaz podataka o automobilu napraviti ovakav DTO na beku
+            automobil:{
+                id:'1',
+                markaAut:'BMW',
+                modelAut:'M5',
+                klasaAut:'SUV',
+                tipMenjaca:'',
+                vrstaGoriva:'',
+                predjenaKilometraza:500,
+                // planiranaKilometraza:250, ovo ide u oglase
+                brojSedistaZaDecu:3,
+                collisionDamageWaiver: true,
+                ukupna_ocena:5, //ovo treba dodati u automobil
+            },
+
+            //lista svih cenovnika koji se getuju prilikom kreiranja stranice;
+            cenovnici:[
+               {
+                    id:'1',
+                    cenaPoDanu:100,
+                    nazivCenovnika:'Cenovnik 1',
+                    popustZaPreko30Dana:10,
+                    cenaCollisionDamageWaiver:1000,
+                    cenaPoKilometru:10
+                },
+                {
+                    id:'2',
+                    cenaPoDanu:200,
+                    nazivCenovnika:'Cenovnik 2',
+                    popustZaPreko30Dana:20,
+                    cenaCollisionDamageWaiver:null,
+                    cenaPoKilometru:20
+                },
+                {
+                    id:'3',
+                    cenaPoDanu:300,
+                    nazivCenovnika:'Cenovnik 3',
+                    popustZaPreko30Dana:null,
+                    cenaCollisionDamageWaiver:3000,
+                    cenaPoKilometru:30
+                },
+                {
+                    id:'4',
+                    cenaPoDanu:400,
+                    nazivCenovnika:'Cenovnik 4',
+                    popustZaPreko30Dana:30,
+                    cenaCollisionDamageWaiver:null,
+                    cenaPoKilometru:40
+                },
+                {
+                    id:'5',
+                    cenaPoDanu:500,
+                    nazivCenovnika:'Cenovnik 5',
+                    popustZaPreko30Dana:null,
+                    cenaCollisionDamageWaiver:5000,
+                    cenaPoKilometru:50
+                },
+            ],
+
+            odabran_cenovnik:{
+                id:null,
+                cenaPoDanu:null,
+                nazivCenovnika:'',
+                popustZaPreko30Dana:null,
+                cenaCollisionDamageWaiver:null,
+                cenaPoKilometru:null
+            },
+
+            popust:0,
+
+            // prikaz datuma koji su zuzeti
+			disabledDates: {
+				to: null,
+				from: null,
+				ranges: [],
+			},
+
+            //za odabir datuma 
+			dates: {
+				from: new Date,
+				to: null,
+				includeDisabled: true
+            },
+            
+            //poruke za error ili success odgovore.
+			messages: {
+                errorDates: '',
+                errorPrice:'',
+				errorMessage: '',
+				errorResponse: '',
+				successResponse: '',
+			},
+			error: false,
+        }
+    },
+    methods:{
+        makeReservation(){
+            console.log(`Rezervacija koja`);
+        },
+
+        // pomocna metoda za ogranicen odabir dana:
+		range: function (start = 1, end) {
+			var ans = [];
+			for (let i = start; i <= end; i++) {
+				ans.push(i);
+			}
+			return ans;
+		},
+
+        addChoosenPrice:function(){
+            for(let i = 0; i < this.cenovnici.length; i++){
+                console.log(this.cenovnici[i].nazivCenovnika);
+                if(this.odabran_cenovnik.nazivCenovnika === this.cenovnici[i].nazivCenovnika){
+                    this.odabran_cenovnik.id = this.cenovnici[i].id;
+                    this.odabran_cenovnik.cenaPoDanu = this.cenovnici[i].cenaPoDanu;
+                    this.odabran_cenovnik.popustZaPreko30Dana = this.cenovnici[i].popustZaPreko30Dana;
+                    this.odabran_cenovnik.cenaCollisionDamageWaiver = this.cenovnici[i].cenaCollisionDamageWaiver;
+                    this.odabran_cenovnik.cenaPoKilometru = this.cenovnici[i].cenaPoKilometru;
+                    this.calculatePriceAndDate();
+                }
+            }
+        },
+		//Metoda za automatsko racunanje krajnjeg datuma spram broja nocenja i cene rezervacija spram cene apartmana * broj nocenja
+		calculatePriceAndDate: function () {
+            this.rezervacijaOglasDTO.ukupnaCena = this.odabran_br_dana * this.odabran_cenovnik.cenaPoDanu;
+            if(this.odabran_br_dana > 20){
+               
+                if(this.odabran_cenovnik.popustZaPreko30Dana != null){
+                    this.popust =  this.rezervacijaOglasDTO.ukupnaCena * (this.odabran_cenovnik.popustZaPreko30Dana/100);
+                }
+                //Ukoliko korisnik odabere neki cenovnik koji ima popust, a zatim odabere cenovnik koji nema popust
+                //ostaje upamcen popust prethodnog cenovnika... Zato se resetuje na 0;
+                if(this.odabran_cenovnik.popustZaPreko30Dana === null && this.popust !== 0){
+                    this.popust = 0;
+                }
+
+                this.rezervacijaOglasDTO.ukupnaCena = this.rezervacijaOglasDTO.ukupnaCena -  this.popust;
+                
+            }
+            this.dates.from = new Date(this.rezervacijaOglasDTO.odDatuma);
+			this.dates.to = new Date(this.dates.from.getTime() + this.odabran_br_dana * 1000 * 60 * 60 * 24);
+			this.error = false;
+        },
+
+		insertReservData: function () {
+			// dodaje se u rezervaciju id automobila za koji se pravi rezervacija
+			this.rezervacijaOglasDTO.automobilId = this.automobilId;
+
+			// dodaje se u rezervaciju id agenta koji pravi rezervaciju
+			// this.rezervacijaOglasDTO.userId = this.user.id iz cookia; ovo moze i na beku da se odradi 
+
+			// dodaje se u rezervaciju inicijalni broj dana koji je uvek bar 1
+			this.odabran_br_dana = 1;
+
+			// dodaje se u rezervaciju cene rezervacije spram cene_po_danu * broj_dana kao i krajnji datum(odDatuma + br_dana);
+			this.calculatePriceAndDate();
+		},
+    },
+ 	components: {
+		vuejsDatepicker:Datepicker,
+    },
+	computed: {
+		id() {
+			return this.$route.params.id; //preuzimam id oglasa za koji zelim da napravim rezervaciju.
+		},
+	},
+	created() {
+    this.insertReservData();
+        // Ako je prazan token znaci da user nije ulogovan pa se preusmerava na login stranicu.
+		// if (!localStorage.getItem('jwt'))
+		// 	this.$router.push('/login');
+
+	},
+	mounted() {
+		//dodaje se opseg dana za izbor trajanja iznajmljivanja
+		this.br_dana = this.range(1, 28);
+
+		// axios
+		// 	.get('rest/apartment/' + this.$route.params.id)
+		// 	.then(Response => (this.setApartment(Response.data)));
+	}
+}
+</script>
+
+<style>
+#titleEffect{
+  color:gold;
+  font-weight: bold;
+}
+                        
+#reservation-new label {
+  display: block;
+  margin: 20px 0 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#reservation-new textarea {
+  display: block;
+  width: 100%;
+  height: 200px;
+  padding:8px;
+}
+
+/* Za ocenu */
+#showPriceTable{
+    color:crimson;
+    margin-top:10px;
+    border-bottom: 1px solid lightgrey;
+} 
+
+#showPriceTable thead{
+    border-bottom: 1px solid lightgrey;
+}
+
+#showPriceTable thead th{
+    padding-right:15px;
+}
+
+.margTop{
+    margin-top: 15px;
+}
+
+</style>

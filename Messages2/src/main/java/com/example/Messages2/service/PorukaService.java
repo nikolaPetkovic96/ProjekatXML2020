@@ -66,7 +66,19 @@ public class PorukaService {
 		
 		//ADD (bitno)
 		public PorukaDTO createPoruka(PorukaDTO dto, String username) throws Exception {
-			
+//			//get id
+//			Long id=(long) 0;
+//			List<Long> ids=porukaRepository.findAll().stream().map(x->x.getId()).collect(Collectors.toList());
+//			if(ids.isEmpty()) {
+//				id=(long) -1;
+//			}else {
+//				ids.sort((x1,x2)->x1.compareTo(x2));
+//				for(Long x : ids)
+//					System.out.print(x+", ");
+//				System.out.println();
+//				id=ids.get(0);
+//				id-=1;
+//			}
 			Poruka savedPoruka = new Poruka();
 			
 			//Ovako se izvalaci id usera iz zahteva
@@ -103,11 +115,18 @@ public class PorukaService {
 
 		
 		public Poruka addPoruka(Poruka poruka)throws Exception{
-			  if (poruka.getId() != null) {
-		            throw new Exception(
-		                    "Id mora biti null prilikom perzistencije novog entiteta.");
-		        }
+			  //if (poruka.getId() != null) {
+		       //     throw new Exception(
+		         //           "Id mora biti null prilikom perzistencije novog entiteta.");
+		        //}
 			  Poruka savedPoruka = porukaRepository.save(poruka);
+		        return savedPoruka;
+			
+		}
+		public Poruka updatePoruka(Poruka stara, Poruka nova)throws Exception{
+			 porukaRepository.delete(stara);
+			  Poruka savedPoruka = porukaRepository.save(nova);
+			  porukaRepository.flush();
 		        return savedPoruka;
 			
 		}

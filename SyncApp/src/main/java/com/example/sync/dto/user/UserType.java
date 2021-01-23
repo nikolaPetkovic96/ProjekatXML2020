@@ -9,16 +9,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "UserType", propOrder = { "id", "korisnickoIme","lozinka","email","status","adresaId",
+@XmlType(name = "UserType", propOrder = { "id", "commonDataId","korisnickoIme","lozinka","email","status","adresaId",
 													"pol","ime","prezime","jmbg",
 													"nazivFirme","poslovniMaticniBroj",
-													"allowedToCommend","allowedToMessage","allowedToMakeReservation","authorities"})
+													"allowedToCommend","allowedToMessage","allowedToMakeReservation","authorities","token"})
 @XmlRootElement(name = "UserType")
 public class UserType {
 	
 	@XmlElement(name = "Id", required = true)
 	protected Long id;	
-	
+	@XmlElement(name = "CommonDataId", required = true)
+	protected Long commonDataId;	
 	@XmlElement(name = "KorisnickoIme", required = true)
 	protected String korisnickoIme;
 	@XmlElement(name = "Lozinka", required = true)
@@ -52,9 +53,13 @@ public class UserType {
 	private boolean allowedToMakeReservation;
 	@XmlElement(name = "Authorities", required = true)
 	private List<Authority> authorities;
+	@XmlElement(name = "Token", required = true)
+	protected String token;
 	
 	public UserType() {
 		// TODO Auto-generated constructor stub
+		this.token="none";
+		this.commonDataId=(long) -1;
 	}
 
 	public UserType(Long id, String korisnickoIme, String lozinka, String email, String status,
@@ -78,6 +83,8 @@ public class UserType {
 		this.allowedToMessage = allowedToMessage;
 		this.allowedToMakeReservation = allowedToMakeReservation;
 		this.authorities=authorities;
+		this.token="none";
+		this.commonDataId=(long) -1;
 	}
 
 	public Long getId() {
@@ -206,6 +213,22 @@ public class UserType {
 
 	public void setAuthorities(List<Authority> authorities) {
 		this.authorities = authorities;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Long getCommonDataId() {
+		return commonDataId;
+	}
+
+	public void setCommonDataId(Long commonDataId) {
+		this.commonDataId = commonDataId;
 	}
 
 }

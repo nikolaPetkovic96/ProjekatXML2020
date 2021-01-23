@@ -16,7 +16,7 @@ import com.example.sync.dto.oglas.cenovnik.CenovnikResponse;
 public class OglasService {
 
 	public OglasResponse getOglas() {
-		List<Map> trans = (List<Map>) RESTClient.getClient().forService(Services.OGLAS).withPath("/ads")
+		List<Map> trans = (List<Map>) RESTClient.getClient().forService(Services.OGLAS).withPath("/ads/sync")
 				.withMethod(HttpMethod.GET).send();
 		List<Oglas> ret = new LinkedList<>();
 		for (Map m : trans) {

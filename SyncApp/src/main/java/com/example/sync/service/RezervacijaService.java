@@ -14,6 +14,8 @@ import com.example.sync.dto.rezervacija.izvestaj.Izvestaj;
 import com.example.sync.dto.rezervacija.izvestaj.IzvestajResponse;
 import com.example.sync.dto.rezervacija.narudzbenica.Narudzbenica;
 import com.example.sync.dto.rezervacija.narudzbenica.NarudzbenicaResponse;
+import com.example.sync.dto.timer.ReservedTimerRequest;
+import com.example.sync.dto.timer.ReservedTimerResponse;
 @Service
 public class RezervacijaService {
 
@@ -89,6 +91,12 @@ public class RezervacijaService {
 		IzvestajResponse res = new IzvestajResponse();
 		res.setTypes(ret);
 		return res;
+	}
+	public ReservedTimerResponse createReservedTimer(ReservedTimerRequest req) {
+		List<Map> trans = (List<Map>) RESTClient.getClient().forService(Services.RESERVATION).withPath("/tajmer/placanje/"+req.getRezId())
+				.withMethod(HttpMethod.GET).send();
+		return new ReservedTimerResponse();
+		
 	}
 	
 }

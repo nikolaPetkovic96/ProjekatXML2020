@@ -469,6 +469,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Id" type="xs:long" />
+				<xs:element name="CommonDataId" type="xs:long"/>
 
 				<xs:element name="KorisnickoIme" type="xs:string" />
 				<xs:element name="Lozinka" type="xs:string" />
@@ -487,15 +488,17 @@
 				<xs:element name="AllowedToCommend" type="xs:boolean" />
 				<xs:element name="AllowedToCommend" type="xs:boolean" />
 				<xs:element name="AllowedToMakeReservation" type="xs:boolean" />
-				<xs:element name="Authorities" type="AuthorityTypes" />
+				<xs:element name="Authorities" type="AuthorityType" />
+				<xs:element name="Token" type="xs:string"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 
 	<!---->
-	<xs:complexType name="AuthorityTypes">
+	<xs:complexType name="AuthorityType">
 		<xs:sequence>
-			<xs:element name="AuthorityType"></xs:element>
+			<xs:element name="Id" type="xs:long"></xs:element>
+			<xs:element name="Authority" type="xs:string"></xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -566,5 +569,16 @@
 		</xs:complexType>
 	</xs:element>
 
-
+<xs:element name="ReservedTimerRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ResId" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ReservedTimerResponse">
+		<!-- moze se dodati neki datum, pa da se vraca samo ono sto je menjano 
+			nakon dok datuma ... mada nije neophodno -->
+	</xs:element>
+	
 </xs:schema>
