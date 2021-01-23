@@ -21,4 +21,8 @@ public class RewievController {
 	public List<ReviewDTO> getRatings(@PathVariable("id") Long carId) {
 		return reviewService.getReviews(carId);
 	}
+	@GetMapping(value = "admin/{id}")
+	public List<ReviewDTO> getAdminRatings(@PathVariable("id") Long carId) {
+	return reviewService.getReviewsForAdmin(carId);
+	}
 }
