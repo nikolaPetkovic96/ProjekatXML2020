@@ -35,7 +35,7 @@
                             <a href="#edit-amenity"><button v-if='korisnik.status=="neaktivan"'  class=" btn-sm btn-outline-primary" v-on:click='activateUser(korisnik.id)'> aktiviraj </button></a>
                             <a href="#edit-amenity"><button v-if='korisnik.status=="aktivan"' class=" btn-sm btn-outline-primary" v-on:click='blockUser(korisnik.id)'> blokiraj </button></a>
                         </td>
-                         <td><a href="#change-permision"><button class="btn-sm btn-outline-primary" v-on:click='checkPermission(korisnik)'> permisije </button></a>
+                        <td><a href="#change-permision"><button class="btn-sm btn-outline-primary" :disabled='disablePermission(korisnik)' v-on:click='checkPermission(korisnik)'> permisije </button></a>
                         <td><button class="btn-sm btn-danger" v-on:click='deleteUser(korisnik.id)'> ukloni </button>
                         </td>
                     </tr>
@@ -128,6 +128,12 @@ export default {
         }
     },
     methods:{
+        disablePermission(korisnik){
+            if(korisnik.status=="obrisan"){
+                return true;
+            }
+            return false;
+        },
         getAllUsers:function(){
             adminDataService.getAllUsers().then(response => {
                 console.log("response: " + response.data);

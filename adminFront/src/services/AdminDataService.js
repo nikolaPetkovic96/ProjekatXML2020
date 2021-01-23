@@ -143,7 +143,7 @@ class AdminDataService{
     getAllReviws(){
         //vraca samo za automobil sa id=1; preurediti da vraca za sve automobile
         const id=1;
-        return axios.get(`${REVIEW_API_URL}/review/${id}`);
+        return axios.get(`${REVIEW_API_URL}/review/admin/${id}`);
     }
     approveComment(id, approved){
         console.log('id: ' + id);
